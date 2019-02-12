@@ -17,7 +17,7 @@ async function* getFiles(dir) {
 async function forEachNcFileInWhitelist (callback, whitelist) {
   for await (const f of getFiles('/mnt/c/H+405 PROGRAM VAULT')) {
     if (/NC$/.test(f) && intersection(whitelist, f.split('/')).length > 0) {
-      callback(f)
+      return callback(f)
     }
   }
 }
