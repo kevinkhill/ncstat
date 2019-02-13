@@ -76,7 +76,7 @@ module.exports = StateMachine.factory(Program, {
       if (toolpath.hasFeedrates()) {
         let feedrates = toolpath.getFeedrates()
 
-        let toolNum = colors.magenta(('   '+toolpath.tool.num).slice(-3))
+        let toolNum = colors.magenta(('  T'+toolpath.tool.num).slice(-3))
         let toolDesc = colors.blue((toolpath.tool.desc+'                                        ').slice(0, 40))
 
         let minFeedrate = colors.red.bold(_.min(feedrates).toFixed(3))
