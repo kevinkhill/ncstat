@@ -8,9 +8,7 @@ const dirWhitelist = [
 ]
 
 async function createProgram (filepath) {
-  let program = new Program()
-
-  program.open(filepath)
+  let program = new Program(filepath)
 
   await program.process()
 
@@ -25,6 +23,7 @@ async function getPrograms(cb) {
  */
 try {
   getPrograms(programs => {
+    console.log('')
     console.log(`Processed ${programs.length} NC files.`)
   })
 } catch (err) {
