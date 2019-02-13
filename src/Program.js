@@ -41,19 +41,6 @@ class Program {
       }
     }
   }
-
-  outputToolpathStats(toolpath) {
-    if (toolpath.hasFeedrates()) {
-      let feedrates = toolpath.getFeedrates()
-
-      let toolNum = colors.magenta(('   '+toolpath.tool.num).slice(-3))
-      let toolDesc = colors.blue(toolpath.tool.desc)
-      let average = _.sum(feedrates) / feedrates.length
-      let averageFeedrate = colors.red(average.toFixed(3))
-
-      debug.out(toolNum + ' | ' + toolDesc + ' | ' + averageFeedrate)
-    }
-  }
 }
 
 module.exports = StateMachine.factory(Program, {
@@ -78,10 +65,24 @@ module.exports = StateMachine.factory(Program, {
     },
     onOpen(lc) {
       debug.out('')
-      debug.out(colors.green.bold(`>> Opening ${this.filepath}`))
+      debug.out(colors.green.bold(`Processing ${this.filepath}`))
     },
     onEndToolpath(lc, toolpath) {
-      this.outputToolpathStats(toolpath)
+      if (toolpath.hasFeedrates()) {
+        let feedrates = toolpath.getFeedrates()
+
+        let toolNum = colors.magenta(('   '+toolpath.tool.num).slice(-3))
+        let toolDesc = colors.blue((toolpath.tool.desc+'                                                  ').slice(0, 50))
+
+        let minFeedrate = colors.red.bold(_.min(feedrates).toFixed(3))
+
+        let average = _.sum(feedrates) / feedrates.length
+        let averageFeedrate = colors.red.bold(average.toFixed(3))
+
+        let maxFeedrate = colors.red.bold(_.max(feedrates).toFixed(3))
+
+        debug.out(toolNum + ' | ' + toolDesc + ' | MIN: ' + minFeedrate + ' AVE: ' + averageFeedrate + ' MAX: ' + maxFeedrate)
+      }
 
       this.toolpaths.push(toolpath)
     },
