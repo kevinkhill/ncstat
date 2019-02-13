@@ -81,14 +81,14 @@ module.exports = StateMachine.factory(Program, {
 
         let minFeedrate = colors.red.bold(_.min(feedrates).toFixed(3))
 
-        let average = _.sum(feedrates) / feedrates.length
-        let averageFeedrate = colors.red.bold(average.toFixed(3))
+        // let average = _.sum(feedrates) / feedrates.length
+        // let averageFeedrate = colors.red.bold(average.toFixed(3))
 
         let meanFeedrate = colors.red.bold(_.mean(feedrates).toFixed(3))
 
         let maxFeedrate = colors.red.bold(_.max(feedrates).toFixed(3))
 
-        debug.out(toolNum + ' | ' + toolDesc + ' | MIN: ' + minFeedrate + ' AVE: ' + meanFeedrate + ' MAX: ' + maxFeedrate)
+        debug.out(toolNum + ' | ' + toolDesc + ' | MIN: ' + minFeedrate + ' MAX: ' + maxFeedrate + ' MEAN: ' + meanFeedrate)
       }
 
       this.toolpaths.push(toolpath)
