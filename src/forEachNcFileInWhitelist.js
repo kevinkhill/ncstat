@@ -8,13 +8,13 @@ const debug = require('./debug')
 
 
 async function* getFiles(dir) {
-  const subdirs = await readdir(dir);
+  const subdirs = await readdir(dir)
   for (const subdir of subdirs) {
-    const res = resolve(dir, subdir);
+    const res = resolve(dir, subdir)
     if ((await stat(res)).isDirectory()) {
-      yield* getFiles(res);
+      yield* getFiles(res)
     } else {
-      yield res;
+      yield res
     }
   }
 }
@@ -24,8 +24,6 @@ async function forEachNcFileInWhitelist (callback, whitelist) {
 
   for await (const f of getFiles('/mnt/c/H+405 PROGRAM VAULT')) {
     if (/NC$/.test(f) && intersection(whitelist, f.split('/')).length > 0) {
-      debug.out(colors.yellow(`processing ${f}`))
-
       collection.push(await callback(f))
     }
   }

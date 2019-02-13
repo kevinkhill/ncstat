@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const fs = require('fs')
 const colors = require('colors/safe')
 const readline = require('readline')
@@ -13,10 +14,6 @@ class Program {
     this._fsm()
     this.lines = []
     this.filepath = filepath
-    this.fileStream = readline.createInterface({
-      input: fs.createReadStream(this.filepath),
-      crlfDelay: Infinity
-    })
   }
 
   async process() {
@@ -33,31 +30,38 @@ class Program {
         }
 
         if (this.is('idle')) {
-          debug.out(colors.blue(`==> Toolpath for ${line}`))
-
           toolpath = new Toolpath(line.toString())
 
           this.startToolpath()
         }
       }
 
-      if (this.is('toolpathing') && line !== '') {
+      if (this.is('toolpathing') && line !== '' && line !== ' ' ) {
         toolpath.lines.push(line)
       }
     }
+  }
 
-    return this
+  outputToolpathStats(toolpath) {
+    if (toolpath.hasFeedrates()) {
+      let feedrates = toolpath.getFeedrates()
+
+      let toolNum = colors.magenta(('   '+toolpath.tool.num).slice(-3))
+      let toolDesc = colors.blue(toolpath.tool.desc)
+      let average = _.sum(feedrates) / feedrates.length
+      let averageFeedrate = colors.red(average.toFixed(3))
+
+      debug.out(toolNum + ' | ' + toolDesc + ' | ' + averageFeedrate)
+    }
   }
 }
 
 module.exports = StateMachine.factory(Program, {
-  init: 'idle',
+  init: 'closed',
   transitions: [
-    { name: 'start-toolpath', from: 'idle',   to: 'toolpathing' },
-    { name: 'end-toolpath', from: 'toolpathing', to: 'idle'  },
-
-    // { name: 'toolpathing', from: 'idle', to: 'toolpathing'  },
-    { name: 'toolchange', from: 'toolpathing', to: 'idle'  },
+    { name: 'open',           from: 'closed',      to: 'idle' },
+    { name: 'start-toolpath', from: 'idle',        to: 'toolpathing' },
+    { name: 'end-toolpath',   from: 'toolpathing', to: 'idle'  },
   ],
   data () {
     return {
@@ -65,7 +69,20 @@ module.exports = StateMachine.factory(Program, {
     }
   },
   methods: {
+    onBeforeOpen(lc, filepath) {
+      this.filepath = filepath
+      this.fileStream = readline.createInterface({
+        input: fs.createReadStream(this.filepath),
+        crlfDelay: Infinity
+      })
+    },
+    onOpen(lc) {
+      debug.out('')
+      debug.out(colors.green.bold(`>> Opening ${this.filepath}`))
+    },
     onEndToolpath(lc, toolpath) {
+      this.outputToolpathStats(toolpath)
+
       this.toolpaths.push(toolpath)
     },
   }

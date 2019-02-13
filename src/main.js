@@ -2,13 +2,15 @@ const Program = require('./Program')
 const forEachNcFileInWhitelist = require('./forEachNcFileInWhitelist')
 
 const dirWhitelist = [
-  'HB PARTS',
+  '94'
+  // 'HB PARTS',
   // 'JOB SPECIFIC'
 ]
 
 async function createProgram (filepath) {
-  let program = new Program(filepath)
+  let program = new Program()
 
+  program.open(filepath)
   await program.process()
 
   return program
@@ -20,10 +22,22 @@ async function getPrograms(cb) {
   cb(programs)
 }
 
+function processToolpath (program) {
+  return program.toolpaths[0]
+}
+
+/**
+ * Main Program
+ */
 try {
   getPrograms(programs => {
-    console.log('DONE!')
     console.log(`Processed ${programs.length} NC files.`)
+
+    // programs.forEach(processToolpath)
+
+    // let result = processToolpath(programs[0])
+
+    // console.log(result)
   })
 } catch (err) {
   console.error(err)
