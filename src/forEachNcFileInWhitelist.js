@@ -1,6 +1,11 @@
-const { resolve } = require('path');
+const colors = require('colors/safe')
+
+const { resolve } = require('path')
 const { intersection } = require('lodash')
-const { readdir, stat } = require('fs').promises;
+const { readdir, stat } = require('fs-extra')
+
+const debug = require('./debug')
+
 
 async function* getFiles(dir) {
   const subdirs = await readdir(dir);
@@ -15,13 +20,17 @@ async function* getFiles(dir) {
 }
 
 async function forEachNcFileInWhitelist (callback, whitelist) {
+  let collection = []
+
   for await (const f of getFiles('/mnt/c/H+405 PROGRAM VAULT')) {
     if (/NC$/.test(f) && intersection(whitelist, f.split('/')).length > 0) {
-      return callback(f)
+      debug.out(colors.yellow(`processing ${f}`))
+
+      collection.push(await callback(f))
     }
   }
+
+  return collection
 }
 
-module.exports = {
-  forEachNcFileInWhitelist
-}
+module.exports = forEachNcFileInWhitelist

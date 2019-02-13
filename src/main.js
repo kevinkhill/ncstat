@@ -1,25 +1,30 @@
+const Program = require('./Program')
+const forEachNcFileInWhitelist = require('./forEachNcFileInWhitelist')
 
-(async () => {
-  const Program = require('./Program')
-  const { forEachNcFileInWhitelist } = require('./forEachNcFileInWhitelist')
+const dirWhitelist = [
+  'HB PARTS',
+  // 'JOB SPECIFIC'
+]
 
-  try {
-    const programs = []
+async function createProgram (filepath) {
+  let program = new Program(filepath)
 
-    await forEachNcFileInWhitelist(async (filepath) => {
-      let program = new Program(filepath)
+  await program.process()
 
-      await program.process()
+  return program
+}
 
-      programs.push(program)
-    }, [
-      'RD81-14-2-11-XX',
-      // 'HB PARTS',
-      // 'JOB SPECIFIC'
-    ])
+async function getPrograms(cb) {
+  const programs = await forEachNcFileInWhitelist(createProgram, dirWhitelist)
 
-    console.log(programs)
-  } catch (err) {
-    console.error(err)
-  }
-})()
+  cb(programs)
+}
+
+try {
+  getPrograms(programs => {
+    console.log('DONE!')
+    console.log(`Processed ${programs.length} NC files.`)
+  })
+} catch (err) {
+  console.error(err)
+}

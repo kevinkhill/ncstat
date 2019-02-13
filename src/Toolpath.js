@@ -4,10 +4,12 @@ function uncomment(str) {
   return str.replace('(', '').replace(')', '').trim()
 }
 
-function Toolpath (line) {
-  this.t = line.match(nLineRegex)[1]
-  this.toolDesc = uncomment(line.replace(`N${this.t}`, ''))
-  this.lines = []
+class Toolpath {
+  constructor(line) {
+    this.t = line.match(nLineRegex)[1];
+    this.toolDesc = uncomment(line.replace(`N${this.t}`, ''));
+    this.lines = [];
+  }
 }
 
 module.exports = Toolpath
