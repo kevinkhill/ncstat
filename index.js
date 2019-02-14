@@ -4,9 +4,8 @@ const NcFileCollector = require('./src/NcFileCollector')
 const collector = new NcFileCollector({
   dir: '/mnt/c/H+405 PROGRAM VAULT',
   whitelist: [
-    '96',
-    // 'HB PARTS',
-    // 'JOB SPECIFIC',
+    'HB PARTS',
+    'JOB SPECIFIC',
   ]
 })
 
