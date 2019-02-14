@@ -70,7 +70,7 @@ module.exports = StateMachine.factory(Program, {
       debug.out(colors.green.bold(`Opening ${this.filepath}`))
     },
     onClose() {
-      debug.out(`Processed ${this.toolpaths.length} toolpaths.`)
+      debug.out(`Processed: ${this.toolpaths.length} toolpaths`)
     },
     onEndToolpath(lc, toolpath) {
       if (toolpath.hasFeedrates()) {
