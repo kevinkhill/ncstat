@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const chalk = require('chalk')
 const { resolve } = require('path')
 const { readdir, stat } = require('fs-extra')
 
@@ -20,11 +21,12 @@ async function* getFiles(dir) {
 
 
 class NcScanner {
-  constructor(config) {
-    this.files = []
+  constructor(dir, config) {
+    this.dir = dir
+    this.whitelist = config.whitelist
+    this.describeToolpaths = config.describeToolpaths || false
 
-    this.dir = config.dir
-    this.whitelist = config.whitelist || ['']
+    this.files = []
   }
 
   getFileCount() {
@@ -45,13 +47,20 @@ class NcScanner {
       ) {
         const program = new Program(filepath)
 
+        console.log('')
+        console.log(chalk.green.bold(`Found: ${filepath}`))
+
         await program.process()
+
+        if (this.describeToolpaths) {
+          program.describeToolpaths()
+        }
 
         this.files.push(program)
       }
     }
 
-    if (callback) return callback(this.files)
+    if (callback) return callback(this)
   }
 }
 

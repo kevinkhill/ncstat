@@ -1,30 +1,46 @@
 #!/usr/bin/env node
-const cli = require('commander')
 
+/**
+ * Module dependencies.
+ */
+const cli = require('commander')
+const pkg = require('../package.json')
 const NcScanner = require('../index.js')
 
-cli.option('-d, --dir <dir>', 'Directory of NC files to analyze')
-   .option('-w, --whitelist [dirs]', 'Whitelist of dirs to scan', (val) => val.split(','))
+/**
+ * Configure CLI interface.
+ */
+cli.version(pkg.version)
+   .description('An app for scanning directories and analyzing NC files')
+  //  .option('-d, --dir <dir>', 'Directory of NC files to analyze') Mandatory
+   .option('-t, --describe-toolpaths', 'Analyze and describe the toolpaths')
+   .option('-o, --output-file <file>', 'Path to log file to write output')
+   .option('-w, --whitelist <dirs>', 'Whitelist of dirs to scan', val => val.split(','))
    .parse(process.argv)
 
-async function main(vault) {
-  await vault.process()
 
-  console.log(`\nAnalyzed ${vault.getToolpathCount()} toolpaths in ${vault.getFileCount()} NC files`)
-}
+// if (cli.args.length === 0)
+// console.log(cli)
+
 
 try {
-  if (cli.dir) {
-    main(new NcScanner({
-      dir: cli.dir,
-      whitelist: [
-        'HB PARTS',
-        'JOB SPECIFIC',
-      ]
-    }))
+  const vault = new NcScanner(cli.args[0], {
+    describeToolpaths: cli.describeToolpaths,
+    whitelist: cli.whitelist || [
+      'RD PARTS',
+      'HB PARTS',
+      'JOB SPECIFIC',
+    ]
+  })
+
+  if (cli.args.length == 0) {
+    throw 'ERR: You must provide a path to scan'
   }
 
-  throw 'ERR: You must provide a path to scan'
+  vault.process(vault => {
+    console.log(`\nAnalyzed ${vault.getToolpathCount()} toolpaths in ${vault.getFileCount()} NC files`)
+  })
 } catch (err) {
   console.error(err)
+  cli.help()
 }

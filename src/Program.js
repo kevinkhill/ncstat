@@ -1,6 +1,6 @@
 const _ = require('lodash')
-const fs = require('fs')
-const colors = require('colors/safe')
+const fs = require('fs-extra')
+const chalk = require('chalk')
 const readline = require('readline')
 const StateMachine = require('javascript-state-machine')
 
@@ -12,6 +12,32 @@ class Program {
     this._fsm()
     this.lines = []
     this.filepath = filepath
+  }
+
+  describeToolpaths() {
+    console.log('Toolpaths:')
+
+    this.toolpaths.forEach(toolpath => {
+      if (toolpath.hasFeedrates()) {
+        let feedrates = toolpath.getFeedrates()
+
+        let toolNum = chalk.magenta(('  T'+toolpath.tool.num).slice(-3))
+        let toolDesc = chalk.blue((toolpath.tool.desc+'                                        ').slice(0, 40))
+
+        let minFeedrate = chalk.red.bold(_.min(feedrates).toFixed(3))
+
+        // let average = _.sum(feedrates) / feedrates.length
+        // let averageFeedrate = chalk.red.bold(average.toFixed(3))
+
+        let meanFeedrate = chalk.red.bold(_.mean(feedrates).toFixed(3))
+
+        let maxFeedrate = chalk.red.bold(_.max(feedrates).toFixed(3))
+
+        console.log(toolNum + ' | ' + toolDesc + ' | MIN: ' + minFeedrate + ' MAX: ' + maxFeedrate + ' MEAN: ' + meanFeedrate)
+      }
+    })
+
+    console.log(`Processed: ${this.toolpaths.length} toolpaths`)
   }
 
   async process() {
@@ -64,32 +90,13 @@ module.exports = StateMachine.factory(Program, {
         crlfDelay: Infinity
       })
     },
-    onOpen(lc) {
-      console.log('')
-      console.log(colors.green.bold(`Opening ${this.filepath}`))
+    onOpen() {
+      //
     },
     onClose() {
-      console.log(`Processed: ${this.toolpaths.length} toolpaths`)
+      //
     },
     onEndToolpath(lc, toolpath) {
-      if (toolpath.hasFeedrates()) {
-        let feedrates = toolpath.getFeedrates()
-
-        let toolNum = colors.magenta(('  T'+toolpath.tool.num).slice(-3))
-        let toolDesc = colors.blue((toolpath.tool.desc+'                                        ').slice(0, 40))
-
-        let minFeedrate = colors.red.bold(_.min(feedrates).toFixed(3))
-
-        // let average = _.sum(feedrates) / feedrates.length
-        // let averageFeedrate = colors.red.bold(average.toFixed(3))
-
-        let meanFeedrate = colors.red.bold(_.mean(feedrates).toFixed(3))
-
-        let maxFeedrate = colors.red.bold(_.max(feedrates).toFixed(3))
-
-        console.log(toolNum + ' | ' + toolDesc + ' | MIN: ' + minFeedrate + ' MAX: ' + maxFeedrate + ' MEAN: ' + meanFeedrate)
-      }
-
       this.toolpaths.push(toolpath)
     }
   }
