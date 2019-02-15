@@ -1,0 +1,30 @@
+#!/usr/bin/env node
+const cli = require('commander')
+
+const NcScanner = require('../index.js')
+
+cli.option('-d, --dir <dir>', 'Directory of NC files to analyze')
+   .option('-w, --whitelist [dirs]', 'Whitelist of dirs to scan', (val) => val.split(','))
+   .parse(process.argv)
+
+async function main(vault) {
+  await vault.process()
+
+  console.log(`\nAnalyzed ${vault.getToolpathCount()} toolpaths in ${vault.getFileCount()} NC files`)
+}
+
+try {
+  if (cli.dir) {
+    main(new NcScanner({
+      dir: cli.dir,
+      whitelist: [
+        'HB PARTS',
+        'JOB SPECIFIC',
+      ]
+    }))
+  }
+
+  throw 'ERR: You must provide a path to scan'
+} catch (err) {
+  console.error(err)
+}

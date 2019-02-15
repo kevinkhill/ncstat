@@ -1,6 +1,6 @@
+const _ = require('lodash')
 const { resolve } = require('path')
 const { readdir, stat } = require('fs-extra')
-const intersection = require('lodash/intersection')
 
 const Program = require('./Program')
 
@@ -18,19 +18,30 @@ async function* getFiles(dir) {
   }
 }
 
-class NcFileCollector {
+
+class NcScanner {
   constructor(config) {
     this.files = []
 
     this.dir = config.dir
-    this.whitelist = config.whitelist || []
+    this.whitelist = config.whitelist || ['']
   }
 
-  async getPrograms() {
+  getFileCount() {
+    return this.files.length
+  }
+
+  getToolpathCount () {
+    return _.sumBy(this.files, program => {
+      return program.toolpaths.length
+    })
+  }
+
+  async process(callback) {
     for await (const filepath of getFiles(this.dir)) {
       if (
         filepath.toUpperCase().slice(-2) == 'NC' &&
-        intersection(this.whitelist, filepath.split('/')).length > 0
+        _.intersection(this.whitelist, filepath.split('/')).length > 0
       ) {
         const program = new Program(filepath)
 
@@ -39,7 +50,9 @@ class NcFileCollector {
         this.files.push(program)
       }
     }
+
+    if (callback) return callback(this.files)
   }
 }
 
-module.exports = NcFileCollector
+module.exports = NcScanner

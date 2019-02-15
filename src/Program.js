@@ -4,7 +4,6 @@ const colors = require('colors/safe')
 const readline = require('readline')
 const StateMachine = require('javascript-state-machine')
 
-const debug = require('./debug')
 const Toolpath = require('./Toolpath')
 
 
@@ -66,11 +65,11 @@ module.exports = StateMachine.factory(Program, {
       })
     },
     onOpen(lc) {
-      debug.out('')
-      debug.out(colors.green.bold(`Opening ${this.filepath}`))
+      console.log('')
+      console.log(colors.green.bold(`Opening ${this.filepath}`))
     },
     onClose() {
-      debug.out(`Processed: ${this.toolpaths.length} toolpaths`)
+      console.log(`Processed: ${this.toolpaths.length} toolpaths`)
     },
     onEndToolpath(lc, toolpath) {
       if (toolpath.hasFeedrates()) {
@@ -88,7 +87,7 @@ module.exports = StateMachine.factory(Program, {
 
         let maxFeedrate = colors.red.bold(_.max(feedrates).toFixed(3))
 
-        debug.out(toolNum + ' | ' + toolDesc + ' | MIN: ' + minFeedrate + ' MAX: ' + maxFeedrate + ' MEAN: ' + meanFeedrate)
+        console.log(toolNum + ' | ' + toolDesc + ' | MIN: ' + minFeedrate + ' MAX: ' + maxFeedrate + ' MEAN: ' + meanFeedrate)
       }
 
       this.toolpaths.push(toolpath)
