@@ -17,10 +17,14 @@ class Program {
     this.filepath = filepath
   }
 
+  __toString() {
+    return this.lines.join('\n')
+  }
+
   describeToolpaths() {
     console.log('Toolpaths:')
 
-    console.log(this.toolpaths)
+    // console.log(this.toolpaths)
 
     this.toolpaths.forEach((toolpath) => {
       if (toolpath.hasFeedrates()) {
