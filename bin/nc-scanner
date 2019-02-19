@@ -20,7 +20,7 @@ cli.version(pkg.version)
 
 
 // if (cli.args.length === 0)
-// console.log(cli)
+// process.stdout.write(cli)
 
 
 try {
@@ -30,17 +30,20 @@ try {
       'RD PARTS',
       'HB PARTS',
       'JOB SPECIFIC',
-    ]
+    ],
   })
 
-  if (cli.args.length == 0) {
-    throw 'ERR: You must provide a path to scan'
+  if (cli.args.length === 0) {
+    process.stderr.write('ERR: You must provide a path to scan')
+    process.abort()
   }
 
-  vault.process(vault => {
-    console.log(`\nAnalyzed ${vault.getToolpathCount()} toolpaths in ${vault.getFileCount()} NC files`)
+  vault.process(() => {
+    process.stdout.write(`\nAnalyzed ${vault.getToolpathCount()} toolpaths in ${vault.getFileCount()} NC files`)
+
+    console.log(vault.files[0].blocks)
   })
 } catch (err) {
-  console.error(err)
+  process.stderr.write(err)
   cli.help()
 }

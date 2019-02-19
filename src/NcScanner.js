@@ -19,10 +19,14 @@ async function* getFiles(dir) {
   }
 }
 
+function consoleWriter(str) {
+  return process.stdout.write(`${str}\n`)
+}
 
 class NcScanner {
   constructor(dir, config) {
     this.dir = dir
+    this.output = config.outputStream || consoleWriter
     this.whitelist = config.whitelist
     this.describeToolpaths = config.describeToolpaths || false
 
@@ -33,8 +37,8 @@ class NcScanner {
     return this.files.length
   }
 
-  getToolpathCount () {
-    return _.sumBy(this.files, program => {
+  getToolpathCount() {
+    return _.sumBy(this.files, (program) => {
       return program.toolpaths.length
     })
   }
@@ -42,13 +46,13 @@ class NcScanner {
   async process(callback) {
     for await (const filepath of getFiles(this.dir)) {
       if (
-        filepath.toUpperCase().slice(-2) == 'NC' &&
-        _.intersection(this.whitelist, filepath.split('/')).length > 0
+        filepath.toUpperCase().slice(-2) === 'NC'
+        && _.intersection(this.whitelist, filepath.split('/')).length > 0
       ) {
         const program = new Program(filepath)
 
-        console.log('')
-        console.log(chalk.green.bold(`Found: ${filepath}`))
+        this.output('')
+        this.output(chalk.green.bold(`Found: ${filepath}`))
 
         await program.process()
 
@@ -60,7 +64,7 @@ class NcScanner {
       }
     }
 
-    if (callback) return callback(this)
+    if (callback) callback(this)
   }
 }
 

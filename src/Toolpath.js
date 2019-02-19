@@ -1,6 +1,6 @@
 const regex = {
   nLine: new RegExp('^N([0-9]+)'),
-  feedrate: new RegExp('F([0-9]+(?:\.[0-9]*)?)')
+  feedrate: new RegExp('F([0-9]+(?:\\.[0-9]*)?)'),
 }
 
 function uncomment(str) {
@@ -11,7 +11,7 @@ class Toolpath {
   constructor(line) {
     this.tool = {
       desc: '',
-      num: line.match(regex.nLine)[1]
+      num: line.match(regex.nLine)[1],
     }
 
     this.tool.desc = uncomment(line.replace(`N${this.tool.num}`, ''))
@@ -24,11 +24,11 @@ class Toolpath {
   }
 
   getFeedrates() {
-    let feedrates = []
+    const feedrates = []
 
     this.lines.forEach(line => {
       if (regex.feedrate.test(line)) {
-        let feedrate = line.match(regex.feedrate)
+        const feedrate = line.match(regex.feedrate)
 
         feedrates.push(parseFloat(feedrate[1]))
       }
