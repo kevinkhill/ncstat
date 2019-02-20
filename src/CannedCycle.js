@@ -2,8 +2,8 @@
 const _ = require('lodash')
 
 const nc = require('./NcCodes.js')
+const CannedPoint = require('./CannedPoint.js')
 
-const addressRegex = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g
 const blockSkipRegex = /(^\/[0-9]?)/g
 const commentRegex = /\((.+)\)/g
 
@@ -11,12 +11,14 @@ function zeroPadAddress(str) {
   return _.isString(str) ? str[0] + `00${str.slice(1)}`.slice(-2) : ''
 }
 
-class Block {
-  constructor(line) {
-    this._rawLine = line
-    this._addresses = this._rawLine.match(addressRegex) || []
-    this._machineCmds = []
-    this._programCmds = []
+class CannedCycle {
+  constructor(block) {
+    ['X', 'Y', 'Z', 'R', 'Q'].forEach((address) => {
+      this[address] = block.getAddr(address)
+    })
+
+    this._block = block
+    this._points = [new CannedPoint(block)]
     this._comment = null
     this._blockSkip = null
 
@@ -43,35 +45,32 @@ class Block {
           CMD: nc.M[address],
           ARGS: _.intersection([address], this._addresses),
         })
-      })
+    })
   }
 
   __toString() {
     return this._rawLine
   }
 
-  getAddr(prefix, cast = true) {
-    const code = _.find(this._addresses, address => address[0] === prefix)
-    const value = code.slice(1)
+  addPoint(point) {
+    this._points.push(point)
+  }
 
-    if (cast) {
-      return code.indexOf('.') > -1 ? parseFloat(value) : parseInt(value)
-    }
+  modals() {
+    return ''
+  }
 
-    return code
+  hasG(gCode) {
+    return _.some(this._addresses, code => gCode === code)
+  }
+
+  hasM(mCode) {
+    return _.some(this._addresses, code => mCode === code)
   }
 
   getComments() {
     return this._comments
   }
-
-  getMachineCommands() {
-    return this._machineCmds
-  }
-
-  getProgramCommands() {
-    return this._programCmds
-  }
 }
 
-module.exports = Block
+module.exports = CannedCycle

@@ -14,6 +14,7 @@ class Program {
     this._fsm()
     this.lines = []
     this.blocks = []
+    this.toolpaths = []
     this.filepath = filepath
   }
 
