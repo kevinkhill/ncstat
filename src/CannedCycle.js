@@ -17,43 +17,43 @@ class CannedCycle {
       this[address] = block.getAddr(address)
     })
 
-    this._block = block
-    this._points = [new CannedPoint(block)]
-    this._comment = null
-    this._blockSkip = null
+    this.block = block
+    this.points = [new CannedPoint(block)]
+    this.comment = null
+    this.blockSkip = null
 
-    if (blockSkipRegex.test(this._rawLine)) {
-      this._blockSkip = this._rawLine.match(blockSkipRegex)
+    if (blockSkipRegex.test(this.rawLine)) {
+      this.blockSkip = this.rawLine.match(blockSkipRegex)
     }
 
-    if (commentRegex.test(this._rawLine)) {
-      this._comment = this._rawLine.match(commentRegex)
+    if (commentRegex.test(this.rawLine)) {
+      this.comment = this.rawLine.match(commentRegex)
     }
 
-    const paddedAddr = this._addresses.map(zeroPadAddress)
+    const paddedAddr = this.addresses.map(zeroPadAddress)
 
     _(paddedAddr)
       .filter(addr => nc.G.hasOwnProperty(addr))
       .each((address) => {
-        this._programCmds.push(nc.G[address])
+        this.programCmds.push(nc.G[address])
       })
 
     _(paddedAddr)
       .filter(addr => nc.M.hasOwnProperty(addr))
       .each((address) => {
-        this._machineCmds.push({
+        this.machineCmds.push({
           CMD: nc.M[address],
-          ARGS: _.intersection([address], this._addresses),
+          ARGS: _.intersection([address], this.addresses),
         })
     })
   }
 
   __toString() {
-    return this._rawLine
+    return this.rawLine
   }
 
   addPoint(point) {
-    this._points.push(point)
+    this.points.push(point)
   }
 
   modals() {
@@ -61,15 +61,15 @@ class CannedCycle {
   }
 
   hasG(gCode) {
-    return _.some(this._addresses, code => gCode === code)
+    return _.some(this.addresses, code => gCode === code)
   }
 
   hasM(mCode) {
-    return _.some(this._addresses, code => mCode === code)
+    return _.some(this.addresses, code => mCode === code)
   }
 
   getComments() {
-    return this._comments
+    return this.comments
   }
 }
 

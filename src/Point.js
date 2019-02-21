@@ -1,8 +1,8 @@
 class Point {
   constructor(x,y,z) {
-    this._x = x
-    this._y = y
-    this._z = z
+    this.x = x
+    this.y = y
+    this.z = z
   }
 }
 

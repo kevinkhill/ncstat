@@ -13,45 +13,45 @@ function zeroPadAddress(str) {
 
 class Block {
   constructor(line) {
-    this._rawLine = line
-    this._addresses = this._rawLine.match(addressRegex) || []
-    this._machineCmds = []
-    this._programCmds = []
-    this._comment = null
-    this._blockSkip = null
+    this.rawLine = line
+    this.addresses = this.rawLine.match(addressRegex) || []
+    this.machineCmds = []
+    this.programCmds = []
+    this.comment = null
+    this.blockSkip = null
 
-    if (blockSkipRegex.test(this._rawLine)) {
-      this._blockSkip = this._rawLine.match(blockSkipRegex)
+    if (blockSkipRegex.test(this.rawLine)) {
+      this.blockSkip = this.rawLine.match(blockSkipRegex)
     }
 
-    if (commentRegex.test(this._rawLine)) {
-      this._comment = this._rawLine.match(commentRegex)
+    if (commentRegex.test(this.rawLine)) {
+      this.comment = this.rawLine.match(commentRegex)
     }
 
-    const paddedAddr = this._addresses.map(zeroPadAddress)
+    const paddedAddr = this.addresses.map(zeroPadAddress)
 
     _(paddedAddr)
       .filter(addr => nc.G.hasOwnProperty(addr))
       .each((address) => {
-        this._programCmds.push(nc.G[address])
+        this.programCmds.push(nc.G[address])
       })
 
     _(paddedAddr)
       .filter(addr => nc.M.hasOwnProperty(addr))
       .each((address) => {
-        this._machineCmds.push({
+        this.machineCmds.push({
           CMD: nc.M[address],
-          ARGS: _.intersection([address], this._addresses),
+          ARGS: _.intersection([address], this.addresses),
         })
       })
   }
 
   __toString() {
-    return this._rawLine
+    return this.rawLine
   }
 
   getAddr(prefix, cast = true) {
-    const code = _.find(this._addresses, address => address[0] === prefix)
+    const code = _.find(this.addresses, address => address[0] === prefix)
     const value = code.slice(1)
 
     if (cast) {
@@ -62,15 +62,15 @@ class Block {
   }
 
   getComments() {
-    return this._comments
+    return this.comments
   }
 
   getMachineCommands() {
-    return this._machineCmds
+    return this.machineCmds
   }
 
   getProgramCommands() {
-    return this._programCmds
+    return this.programCmds
   }
 }
 

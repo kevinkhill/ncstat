@@ -23,8 +23,8 @@
     "lodash": "^4.17.11"
   },
   "scripts": {
-    "test": "./bin/nc-scanner test --describe-toolpaths -w ''",
-    "start": "./bin/nc-scanner /mnt/c/\"H+405 PROGRAM VAULT\""
+    "test": "./bin/nc-scanner ./test/example.NC",
+    "start": "./bin/nc-scanner /mnt/c/\"H+405 PROGRAM VAULT\" -w \"HB PARTS,JOB SPECIFIC\""
   },
   "devDependencies": {
     "eslint": "5.3.0",

@@ -1,17 +1,17 @@
 const _ = require('lodash')
+const fs = require('fs-extra')
+const path = require('path')
 const chalk = require('chalk')
-const { resolve } = require('path')
-const { readdir, stat } = require('fs-extra')
 
 const Program = require('./Program')
 
 async function* getFiles(dir) {
-  const subdirs = await readdir(dir)
+  const subdirs = await fs.readdir(dir)
 
   for (const subdir of subdirs) {
-    const res = resolve(dir, subdir)
+    const res = path.resolve(dir, subdir)
 
-    if ((await stat(res)).isDirectory()) {
+    if ((await fs.stat(res)).isDirectory()) {
       yield* getFiles(res)
     } else {
       yield res
@@ -24,13 +24,17 @@ function consoleWriter(str) {
 }
 
 class NcScanner {
-  constructor(dir, config) {
-    this.dir = dir
+  constructor(fileOrDir, config) {
+    this.files = []
+
     this.output = config.outputStream || consoleWriter
     this.whitelist = config.whitelist
     this.describeToolpaths = config.describeToolpaths || false
 
-    this.files = []
+    if (fs.existsSync(fileOrDir)) {
+      this.input = fileOrDir
+      console.log(`Scanning ${fileOrDir}`)
+    }
   }
 
   getFileCount() {
@@ -43,28 +47,36 @@ class NcScanner {
     })
   }
 
-  async process(callback) {
-    for await (const filepath of getFiles(this.dir)) {
-      if (
-        filepath.toUpperCase().slice(-2) === 'NC'
-        && _.intersection(this.whitelist, filepath.split('/')).length > 0
-      ) {
-        const program = new Program(filepath)
+  async makeProgram(filepath) {
+    const program = new Program(filepath)
 
-        this.output('')
-        this.output(chalk.green.bold(`Found: ${filepath}`))
+    this.output('')
+    this.output(chalk.green.bold(`Found: ${filepath}`))
 
-        await program.process()
+    await program.process()
 
-        if (this.describeToolpaths) {
-          program.describeToolpaths()
-        }
-
-        this.files.push(program)
-      }
+    if (this.describeToolpaths) {
+      program.describeToolpaths()
     }
 
-    if (callback) callback(this)
+    this.files.push(program)
+  }
+
+  async process(callback) {
+    if ((await fs.stat(this.input)).isDirectory()) {
+      for await (const filepath of getFiles(this.input)) {
+        if (
+          filepath.toUpperCase().slice(-2) === 'NC'
+          && _.intersection(this.whitelist, filepath.split('/')).length > 0
+        ) {
+          await this.makeProgram(filepath)
+        }
+      }
+    } else {
+      await this.makeProgram(this.input)
+    }
+
+    if (callback) callback()
   }
 }
 
