@@ -59,17 +59,17 @@ OTHER:
 
 CANNED:
   G73: High speed drilling cycle (small retract)
-  G74: Left hand tapping cycle
+  G74: LH_TAP_CYCLE
   G76: Fine boring cyle
   G80: CANCEL_CANNED
-  G81: DRILL_NO_PECK
+  G81: PLUNGE_DRILL
   G82: DRILL_WITH_DWELL
   G83: DRILL_WITH_PECK
-  G84: TAPPING
-  G85: REAMING
-  G86: Boring canned cycle, spindle stop, rapid out
+  G84: RH_TAP_CYCLE
+  G85: FEED_IN_FEED_OUT_REAMING
+  G86: FEED_IN_RAPID_OUT_REAMING
   G87: Back boring canned cycle
   G88: Boring canned cycle, spindle stop, manual out
   G89: Boring canned cycle, dwell, feed out
-  G98: Return to initial Z plane after canned cycle
-  G99: Return to initial R plane after canned cycle
+  G98: RETURN_TO_INITIAL_Z_PLANE
+  G99: RETURN_TO_INITIAL_R_PLANE

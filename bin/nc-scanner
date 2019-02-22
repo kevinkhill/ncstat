@@ -19,14 +19,15 @@ try {
   }
 
   const vault = new NcScanner(cli.args[0], {
+    whitelist: cli.whitelist,
     describeToolpaths: cli.describeToolpaths,
-    whitelist: cli.whitelist || [],
   })
 
-  vault.process(() => {
-    console.log(`Analyzed ${vault.getToolpathCount()} toolpaths in ${vault.getFileCount()} NC files`)
+  vault.scan().then((files) => {
+    console.log(`Analyzed ${files[0].toolpaths.length} toolpaths in ${files.length} NC files`)
 
-    console.log(vault.files[0].blocks)
+    files[0].toolpaths.forEach(toolpath => console.log(toolpath.cannedCycle))
+    // console.log(files[0].blocks)
   })
 } catch (err) {
   console.log(err)

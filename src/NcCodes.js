@@ -6,6 +6,11 @@ const { readFileSync } = require('fs')
 const CODES = {
   G: {},
   M: {},
+  Gx: n => CODES.G[`G${n}`],
+  Mx: n => CODES.M[`M${n}`],
+  CANNED_CYCLE_START: [
+    'G73', 'G74', 'G81', 'G82', 'G83', 'G84', 'G85', 'G86', 'G87',
+  ],
 }
 
 function readYaml(filepath) {

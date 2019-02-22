@@ -1,75 +1,28 @@
-/* eslint-disable no-prototype-builtins */
 const _ = require('lodash')
 
-const nc = require('./NcCodes.js')
-const CannedPoint = require('./CannedPoint.js')
-
-const blockSkipRegex = /(^\/[0-9]?)/g
-const commentRegex = /\((.+)\)/g
-
-function zeroPadAddress(str) {
-  return _.isString(str) ? str[0] + `00${str.slice(1)}`.slice(-2) : ''
-}
+const nc = require('./NcCodes')
 
 class CannedCycle {
   constructor(block) {
-    ['X', 'Y', 'Z', 'R', 'Q'].forEach((address) => {
-      this[address] = block.getAddr(address)
-    })
+    this._block = block
 
-    this.block = block
-    this.points = [new CannedPoint(block)]
-    this.comment = null
-    this.blockSkip = null
+    this.peck = this._block.getAddr('Q')
+    this.depth = this._block.getAddr('Z')
+    this.retract = this._block.getAddr('R')
+    this.feedrate = this._block.getAddr('F')
 
-    if (blockSkipRegex.test(this.rawLine)) {
-      this.blockSkip = this.rawLine.match(blockSkipRegex)
-    }
+    this.retractCommand = nc.G[this.getRetractCode()]
 
-    if (commentRegex.test(this.rawLine)) {
-      this.comment = this.rawLine.match(commentRegex)
-    }
+    this.G98 = this._block.addresses.indexOf('G98') > -1
+    this.G99 = this._block.addresses.indexOf('G99') > -1
 
-    const paddedAddr = this.addresses.map(zeroPadAddress)
-
-    _(paddedAddr)
-      .filter(addr => nc.G.hasOwnProperty(addr))
-      .each((address) => {
-        this.programCmds.push(nc.G[address])
-      })
-
-    _(paddedAddr)
-      .filter(addr => nc.M.hasOwnProperty(addr))
-      .each((address) => {
-        this.machineCmds.push({
-          CMD: nc.M[address],
-          ARGS: _.intersection([address], this.addresses),
-        })
+    _(['Z', 'R', 'Q', 'F']).forEach((addr) => {
+      this[addr] = this._block.getAddr(addr, true)
     })
   }
 
-  __toString() {
-    return this.rawLine
-  }
-
-  addPoint(point) {
-    this.points.push(point)
-  }
-
-  modals() {
-    return ''
-  }
-
-  hasG(gCode) {
-    return _.some(this.addresses, code => gCode === code)
-  }
-
-  hasM(mCode) {
-    return _.some(this.addresses, code => mCode === code)
-  }
-
-  getComments() {
-    return this.comments
+  getRetractCode() {
+    return _.intersection(this._block.addresses, ['G98', 'G99'])[0]
   }
 }
 

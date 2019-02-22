@@ -7,19 +7,56 @@ const StateMachine = require('javascript-state-machine')
 const Block = require('./Block')
 const Toolpath = require('./Toolpath')
 
-
 class Program {
   constructor(filepath) {
     // eslint-disable-next-line no-underscore-dangle
     this._fsm()
-    this.lines = []
+    this._rawLines = []
+
     this.blocks = []
     this.toolpaths = []
+    this.fileStream = null
     this.filepath = filepath
   }
 
   __toString() {
-    return this.lines.join('\n')
+    return this._rawLines.join('\n')
+  }
+
+  async process() {
+    this.open()
+
+    let toolpath = null
+
+    for await (const line of this.fileStream) {
+      this._rawLines.push(line)
+
+      const block = new Block(line)
+      this.blocks.push(block)
+
+      if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
+        toolpath.makeCannedCycle(block)
+      }
+
+      if (line[0] === 'N') {
+        if (this.is('toolpathing')) {
+          this.endToolpath(toolpath)
+        }
+
+        if (this.is('idle')) {
+          toolpath = new Toolpath(line)
+
+          this.startToolpath()
+        }
+      }
+
+      if (this.is('toolpathing') && line !== '' && line !== ' ') {
+        toolpath.lines.push(line)
+      }
+    }
+
+    this.endToolpath(toolpath)
+    this.close()
   }
 
   describeToolpaths() {
@@ -48,36 +85,6 @@ class Program {
     })
 
     console.log(`Processed: ${this.toolpaths.length} toolpaths`)
-  }
-
-  async process() {
-    this.open()
-
-    let toolpath = null
-
-    for await (const line of this.fileStream) {
-      this.lines.push(line)
-      this.blocks.push(new Block(line))
-
-      if (line[0] === 'N') {
-        if (this.is('toolpathing')) {
-          this.endToolpath(toolpath)
-        }
-
-        if (this.is('idle')) {
-          toolpath = new Toolpath(line)
-
-          this.startToolpath()
-        }
-      }
-
-      if (this.is('toolpathing') && line !== '' && line !== ' ') {
-        toolpath.lines.push(line)
-      }
-    }
-
-    this.endToolpath(toolpath)
-    this.close()
   }
 }
 

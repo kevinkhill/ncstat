@@ -1,3 +1,6 @@
+const nc = require('./NcCodes')
+const CannedCycle = require('./CannedCycle')
+
 const regex = {
   nLine: new RegExp('^N([0-9]+)'),
   feedrate: new RegExp('F([0-9]+(?:\\.[0-9]*)?)'),
@@ -9,6 +12,9 @@ function uncomment(str) {
 
 class Toolpath {
   constructor(line) {
+    this.cannedCycle = null
+    this.isCannedCycle = false
+
     this.tool = {
       desc: '',
       num: line.match(regex.nLine)[1],
@@ -19,6 +25,16 @@ class Toolpath {
     this.lines = []
   }
 
+  makeCannedCycle(block) {
+    this.cannedCycle = new CannedCycle(block)
+    this.isCannedCycle = true
+  }
+
+  redefine(block) {
+    this.isCannedCycle = true
+    this.cannedCycle = nc.G[block.getCannedCycleStartCode()]
+  }
+
   hasFeedrates() {
     return this.lines.some(line => regex.feedrate.test(line))
   }
@@ -26,7 +42,7 @@ class Toolpath {
   getFeedrates() {
     const feedrates = []
 
-    this.lines.forEach(line => {
+    this.lines.forEach((line) => {
       if (regex.feedrate.test(line)) {
         const feedrate = line.match(regex.feedrate)
 

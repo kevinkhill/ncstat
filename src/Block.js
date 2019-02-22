@@ -1,7 +1,7 @@
 /* eslint-disable no-prototype-builtins */
 const _ = require('lodash')
 
-const nc = require('./NcCodes.js')
+const nc = require('./NcCodes')
 
 const addressRegex = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g
 const blockSkipRegex = /(^\/[0-9]?)/g
@@ -19,6 +19,10 @@ class Block {
     this.programCmds = []
     this.comment = null
     this.blockSkip = null
+
+    // _.forEach(nc.G, (addr, code) => {
+    //   this[code] = addr
+    // })
 
     if (blockSkipRegex.test(this.rawLine)) {
       this.blockSkip = this.rawLine.match(blockSkipRegex)
@@ -50,15 +54,30 @@ class Block {
     return this.rawLine
   }
 
-  getAddr(prefix, cast = true) {
+  getAddr(prefix, cast = false) {
     const code = _.find(this.addresses, address => address[0] === prefix)
-    const value = code.slice(1)
 
-    if (cast) {
-      return code.indexOf('.') > -1 ? parseFloat(value) : parseInt(value)
+    if (code) {
+      const value = code.slice(1)
+
+      if (cast) {
+        return code.indexOf('.') > -1 ? parseFloat(value) : parseInt(value)
+      }
+
+      return code
     }
 
-    return code
+    return null
+  }
+
+  getCannedCycleStartCode() {
+    const cycle = _.intersection(this.addresses, nc.CANNED_CYCLE_START)
+
+    return cycle ? cycle[0] : null
+  }
+
+  isStartOfCannedCycle() {
+    return this.getCannedCycleStartCode() != null
   }
 
   getComments() {
