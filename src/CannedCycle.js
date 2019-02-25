@@ -1,16 +1,19 @@
 const _ = require('lodash')
 
 const nc = require('./NcCodes')
+const CannedPoint = require('./CannedPoint')
 
 class CannedCycle {
-  constructor(block) {
+  constructor (block) {
     this._block = block
+    this._points = []
 
     this.peck = this._block.getAddr('Q')
     this.depth = this._block.getAddr('Z')
     this.retract = this._block.getAddr('R')
     this.feedrate = this._block.getAddr('F')
 
+    this.cycleCommand = nc.G[this.getRetractCode()]
     this.retractCommand = nc.G[this.getRetractCode()]
 
     this.G98 = this._block.addresses.indexOf('G98') > -1
@@ -21,8 +24,24 @@ class CannedCycle {
     })
   }
 
-  getRetractCode() {
-    return _.intersection(this._block.addresses, ['G98', 'G99'])[0]
+  addPoint (block) {
+    this._points.push(new CannedPoint(block))
+  }
+
+  getPoints () {
+    return this._points
+  }
+
+  getPointCount () {
+    return this._points.length
+  }
+
+  // getRetractCode() {
+  //   return _(this._block.addresses).intersection(['G98', 'G99']).flatten()
+  // }
+
+  getRetractCode () {
+    return _(this._block.addresses).intersection(['G98', 'G99']).flatten()
   }
 }
 

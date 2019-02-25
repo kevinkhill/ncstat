@@ -11,8 +11,8 @@ test('foo', async (t) => {
   files[0].toolpaths.forEach(toolpath => console.log(toolpath.type))
 })
 
-test('bar', async (t) => {
-  const bar = Promise.resolve('bar')
-
-  t.is(await bar, 'bar')
-})
+// test('bar', async (t) => {
+//   const bar = Promise.resolve('bar')
+//
+//   t.is(await bar, 'bar')
+// })

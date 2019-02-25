@@ -8,22 +8,33 @@ const Block = require('./Block')
 const Toolpath = require('./Toolpath')
 
 class Program {
-  constructor(filepath) {
+  constructor (filepath) {
     // eslint-disable-next-line no-underscore-dangle
     this._fsm()
     this._rawLines = []
-
+    this._position = {
+      prev: {
+        B: null, X: null, Y: null, Z: null
+      },
+      curr: {
+        B: null, X: null, Y: null, Z: null
+      }
+    }
     this.blocks = []
     this.toolpaths = []
     this.fileStream = null
     this.filepath = filepath
   }
 
-  __toString() {
+  __toString () {
     return this._rawLines.join('\n')
   }
 
-  async process() {
+  getToolpathCount () {
+    return this.toolpaths.length
+  }
+
+  async process () {
     this.open()
 
     let toolpath = null
@@ -36,6 +47,12 @@ class Program {
 
       if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
         toolpath.makeCannedCycle(block)
+
+        this.startCannedCycle()
+      }
+
+      if (this.is('in-canned-cycle')) {
+        toolpath.cannedCycle.addPoint(block)
       }
 
       if (line[0] === 'N') {
@@ -50,6 +67,7 @@ class Program {
         }
       }
 
+      // If we're toolpathing and `line` is not empty, save it to the toolpath
       if (this.is('toolpathing') && line !== '' && line !== ' ') {
         toolpath.lines.push(line)
       }
@@ -59,7 +77,7 @@ class Program {
     this.close()
   }
 
-  describeToolpaths() {
+  describeToolpaths () {
     console.log('Toolpaths:')
 
     // console.log(this.toolpaths)
@@ -91,32 +109,30 @@ class Program {
 module.exports = StateMachine.factory(Program, {
   init: 'closed',
   transitions: [
-    { name: 'open',           from: 'closed',      to: 'idle' },
-    { name: 'start-toolpath', from: 'idle',        to: 'toolpathing' },
-    { name: 'end-toolpath',   from: 'toolpathing', to: 'idle' },
-    { name: 'close',          from: '*',           to: 'closed' },
+    { name: 'open', from: 'closed', to: 'idle' },
+    { name: 'close', from: '*', to: 'closed' },
+
+    { name: 'start-toolpath', from: 'idle', to: 'toolpathing' },
+    { name: 'end-toolpath', from: 'toolpathing', to: 'idle' },
+
+    { name: 'start-canned-cycle', from: 'toolpathing', to: 'in-canned-cycle' },
+    { name: 'end-canned-cycle', from: 'in-canned-cycle', to: 'toolpathing' }
   ],
-  data(filepath) {
-    return {
-      filepath,
-      toolpaths: [],
-    }
-  },
   methods: {
-    onBeforeOpen() {
+    onBeforeOpen () {
       this.fileStream = readline.createInterface({
         input: fs.createReadStream(this.filepath),
-        crlfDelay: Infinity,
+        crlfDelay: Infinity
       })
     },
-    onOpen() {
+    onOpen () {
       //
     },
-    onClose() {
+    onClose () {
       //
     },
-    onEndToolpath(lc, toolpath) {
+    onEndToolpath (lc, toolpath) {
       this.toolpaths.push(toolpath)
-    },
-  },
+    }
+  }
 })

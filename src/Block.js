@@ -7,12 +7,12 @@ const addressRegex = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g
 const blockSkipRegex = /(^\/[0-9]?)/g
 const commentRegex = /\((.+)\)/g
 
-function zeroPadAddress(str) {
+function zeroPadAddress (str) {
   return _.isString(str) ? str[0] + `00${str.slice(1)}`.slice(-2) : ''
 }
 
 class Block {
-  constructor(line) {
+  constructor (line) {
     this.rawLine = line
     this.addresses = this.rawLine.match(addressRegex) || []
     this.machineCmds = []
@@ -45,16 +45,16 @@ class Block {
       .each((address) => {
         this.machineCmds.push({
           CMD: nc.M[address],
-          ARGS: _.intersection([address], this.addresses),
+          ARGS: _.intersection([address], this.addresses)
         })
       })
   }
 
-  __toString() {
+  __toString () {
     return this.rawLine
   }
 
-  getAddr(prefix, cast = false) {
+  getAddr (prefix, cast = false) {
     const code = _.find(this.addresses, address => address[0] === prefix)
 
     if (code) {
@@ -70,25 +70,25 @@ class Block {
     return null
   }
 
-  getCannedCycleStartCode() {
+  getCannedCycleStartCode () {
     const cycle = _.intersection(this.addresses, nc.CANNED_CYCLE_START)
 
     return cycle ? cycle[0] : null
   }
 
-  isStartOfCannedCycle() {
+  isStartOfCannedCycle () {
     return this.getCannedCycleStartCode() != null
   }
 
-  getComments() {
+  getComments () {
     return this.comments
   }
 
-  getMachineCommands() {
+  getMachineCommands () {
     return this.machineCmds
   }
 
-  getProgramCommands() {
+  getProgramCommands () {
     return this.programCmds
   }
 }

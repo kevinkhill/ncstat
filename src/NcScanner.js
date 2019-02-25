@@ -5,21 +5,21 @@ const chalk = require('chalk')
 
 const Program = require('./Program')
 
-async function* getFiles(dir) {
+async function * getFiles (dir) {
   const subdirs = await fs.readdir(dir)
 
   for (const subdir of subdirs) {
     const res = path.resolve(dir, subdir)
 
     if ((await fs.stat(res)).isDirectory()) {
-      yield* getFiles(res)
+      yield * getFiles(res)
     } else {
       yield res
     }
   }
 }
 
-function consoleWriter(str) {
+function consoleWriter (str) {
   return process.stdout.write(`${str}\n`)
 }
 
@@ -27,14 +27,13 @@ function consoleWriter(str) {
  * NcScanner Class
  */
 class NcScanner {
-  constructor(fileOrDir, { config } = {}) {
+  constructor (fileOrDir, { config } = {}) {
     this.files = []
     this.config = _.defaults(config, {
       output: consoleWriter,
       whitelist: [''],
-      describeToolpaths: false,
+      describeToolpaths: false
     })
-
 
     if (fs.existsSync(fileOrDir)) {
       this.input = fileOrDir
@@ -42,15 +41,15 @@ class NcScanner {
     }
   }
 
-  getFileCount() {
+  getFileCount () {
     return this.files.length
   }
 
-  getToolpathCount() {
-    return _.sumBy(this.files, program => program.toolpaths.length)
+  getToolpathCount () {
+    return _.sumBy(this.files, program => program.getToolpathCount())
   }
 
-  async makeProgram(filepath) {
+  async makeProgram (filepath) {
     const program = new Program(filepath)
 
     this.config.output('')
@@ -65,12 +64,12 @@ class NcScanner {
     this.files.push(program)
   }
 
-  async scan() {
+  async scan () {
     if ((await fs.stat(this.input)).isDirectory()) {
       for await (const filepath of getFiles(this.input)) {
         if (
-          filepath.toUpperCase().slice(-2) === 'NC'
-          && _.intersection(this.config.whitelist, filepath.split('/')).length > 0
+          filepath.toUpperCase().slice(-2) === 'NC' &&
+          _.intersection(this.config.whitelist, filepath.split('/')).length > 0
         ) {
           await this.makeProgram(filepath)
         }

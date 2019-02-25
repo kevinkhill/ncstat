@@ -1,8 +1,0 @@
-{
-  "extends":"airbnb-base",
-  "rules": {
-    "semi": ["error","never"],
-    "no-unexpected-multiline": "error",
-    "no-underscore-dangle": "off"
-  }
-}

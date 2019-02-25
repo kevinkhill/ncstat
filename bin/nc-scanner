@@ -24,12 +24,15 @@ try {
   })
 
   vault.scan().then((files) => {
-    console.log(`Analyzed ${files[0].toolpaths.length} toolpaths in ${files.length} NC files`)
+    files[0].toolpaths.forEach((toolpath) => {
+      // console.log(toolpath.cannedCycle)
+      console.log(toolpath.cannedCycle.getPointCount())
+    })
 
-    files[0].toolpaths.forEach(toolpath => console.log(toolpath.cannedCycle))
     // console.log(files[0].blocks)
+    console.log(`Analyzed ${files[0].toolpaths.length} toolpaths in ${files.length} NC files`)
   })
 } catch (err) {
-  console.log(err)
+  console.log(JSON.stringify(err))
   cli.help()
 }
