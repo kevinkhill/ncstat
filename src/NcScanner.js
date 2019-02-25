@@ -55,7 +55,11 @@ class NcScanner {
     this.config.output('')
     this.config.output(chalk.green.bold(`Found: ${filepath}`))
 
-    await program.process()
+    try {
+      await program.process()
+    } catch (err) {
+      console.log(err)
+    }
 
     if (this.config.describeToolpaths) {
       program.describeToolpaths()

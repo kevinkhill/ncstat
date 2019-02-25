@@ -3,12 +3,12 @@ const Point = require('./Point')
 class CannedPoint extends Point {
   constructor (block) {
     super(
-      block.getAddr('X'),
-      block.getAddr('Y'),
-      block.getAddr('Z')
+      block.getAddress('X'),
+      block.getAddress('Y'),
+      block.getAddress('Z')
     )
 
-    this.R = block.getAddr('R')
+    this.R = block.getAddress('R')
   }
 
   setRetract (r) {

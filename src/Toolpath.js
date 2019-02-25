@@ -13,7 +13,6 @@ function uncomment (str) {
 class Toolpath {
   constructor (line) {
     this.cannedCycle = null
-    this.isCannedCycle = false
 
     this.tool = {
       desc: '',
@@ -25,14 +24,12 @@ class Toolpath {
     this.lines = []
   }
 
-  makeCannedCycle (block) {
-    this.cannedCycle = new CannedCycle(block)
-    this.isCannedCycle = true
+  isCannedCycle () {
+    return this.cannedCycle instanceof CannedCycle
   }
 
-  redefine (block) {
-    this.isCannedCycle = true
-    this.cannedCycle = nc.G[block.getCannedCycleStartCode()]
+  makeCannedCycle (block) {
+    this.cannedCycle = new CannedCycle(block)
   }
 
   hasFeedrates () {

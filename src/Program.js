@@ -7,26 +7,25 @@ const StateMachine = require('javascript-state-machine')
 const Block = require('./Block')
 const Toolpath = require('./Toolpath')
 
+const l=console.log
+
 class Program {
   constructor (filepath) {
     // eslint-disable-next-line no-underscore-dangle
     this._fsm()
     this._rawLines = []
+    this._blocks = []
+    this._fileStream = null
     this._position = {
-      prev: {
-        B: null, X: null, Y: null, Z: null
-      },
-      curr: {
-        B: null, X: null, Y: null, Z: null
-      }
+      prev: { B: null, X: null, Y: null, Z: null },
+      curr: { B: null, X: null, Y: null, Z: null }
     }
-    this.blocks = []
+
     this.toolpaths = []
-    this.fileStream = null
     this.filepath = filepath
   }
 
-  __toString () {
+  toString () {
     return this._rawLines.join('\n')
   }
 
@@ -39,11 +38,19 @@ class Program {
 
     let toolpath = null
 
-    for await (const line of this.fileStream) {
+    for await (const line of this._fileStream) {
       this._rawLines.push(line)
 
       const block = new Block(line)
-      this.blocks.push(block)
+      this._blocks.push(block)
+
+      // l(block.hasMovement(), [block.B, block.X, block.Y, block.Z])
+
+      if (block.hasMovement()) {
+        // TODO this logic needs to be incremental instead of overwriting
+        this._position.prev = this._position.curr
+        this._position.curr = block
+      }
 
       if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
         toolpath.makeCannedCycle(block)
@@ -51,8 +58,12 @@ class Program {
         this.startCannedCycle()
       }
 
-      if (this.is('in-canned-cycle')) {
-        toolpath.cannedCycle.addPoint(block)
+      if (this.is('in-canned-cycle') && block.hasMovement()) {
+        toolpath.cannedCycle.addPoint(this._position.curr)
+      }
+
+      if (block.G80 === true) {
+        this.endCannedCycle()
       }
 
       if (line[0] === 'N') {
@@ -68,7 +79,10 @@ class Program {
       }
 
       // If we're toolpathing and `line` is not empty, save it to the toolpath
-      if (this.is('toolpathing') && line !== '' && line !== ' ') {
+      if (
+        (this.is('toolpathing') || this.is('in-canned-cycle')) &&
+        line !== '' && line !== ' '
+      ) {
         toolpath.lines.push(line)
       }
     }
@@ -120,7 +134,7 @@ module.exports = StateMachine.factory(Program, {
   ],
   methods: {
     onBeforeOpen () {
-      this.fileStream = readline.createInterface({
+      this._fileStream = readline.createInterface({
         input: fs.createReadStream(this.filepath),
         crlfDelay: Infinity
       })
@@ -129,6 +143,9 @@ module.exports = StateMachine.factory(Program, {
       //
     },
     onClose () {
+      //
+    },
+    onStartCannedCycle (lc, toolpath) {
       //
     },
     onEndToolpath (lc, toolpath) {

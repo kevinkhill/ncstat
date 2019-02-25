@@ -12,27 +12,27 @@ cli.version(pkg.version)
   .option('-w, --whitelist <dirs>', 'Whitelist of dirs to scan', val => val.split(','))
   .parse(process.argv)
 
-try {
-  if (cli.args.length === 0) {
-    process.stderr.write('ERR: You must provide a path to scan')
-    process.abort()
-  }
-
-  const vault = new NcScanner(cli.args[0], {
-    whitelist: cli.whitelist,
-    describeToolpaths: cli.describeToolpaths,
-  })
-
-  vault.scan().then((files) => {
-    files[0].toolpaths.forEach((toolpath) => {
-      // console.log(toolpath.cannedCycle)
-      console.log(toolpath.cannedCycle.getPointCount())
-    })
-
-    // console.log(files[0].blocks)
-    console.log(`Analyzed ${files[0].toolpaths.length} toolpaths in ${files.length} NC files`)
-  })
-} catch (err) {
-  console.log(JSON.stringify(err))
+if (cli.args.length === 0) {
+  process.stderr.write('ERR: You must provide a path to scan')
   cli.help()
+  process.abort()
 }
+
+const vault = new NcScanner(cli.args[0], {
+  whitelist: cli.whitelist,
+  describeToolpaths: cli.describeToolpaths,
+})
+
+vault.scan().then(files => {
+  files[0].toolpaths.forEach((toolpath) => {
+    if (toolpath.isCannedCycle()) {
+      console.log(toolpath.cannedCycle)
+      // console.log(toolpath.cannedCycle.getPointCount())
+    }
+  })
+
+  // console.log(files[0].blocks)
+  console.log(`Analyzed ${files[0].toolpaths.length} toolpaths in ${files.length} NC files`)
+}).catch(err => {
+  process.stderr.write(err)
+})

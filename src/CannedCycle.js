@@ -1,31 +1,35 @@
 const _ = require('lodash')
 
-const nc = require('./NcCodes')
+const { CODES } = require('./NcCodes')
 const CannedPoint = require('./CannedPoint')
+
+const REQUIRED_ADDRESSES = ['Z', 'R', 'Q', 'F']
 
 class CannedCycle {
   constructor (block) {
     this._block = block
     this._points = []
 
-    this.peck = this._block.getAddr('Q')
-    this.depth = this._block.getAddr('Z')
-    this.retract = this._block.getAddr('R')
-    this.feedrate = this._block.getAddr('F')
+    this.peck = this._block.getAddress('Q')
+    this.depth = this._block.getAddress('Z')
+    this.retract = this._block.getAddress('R')
+    this.feedrate = this._block.getAddress('F')
 
-    this.cycleCommand = nc.G[this.getRetractCode()]
-    this.retractCommand = nc.G[this.getRetractCode()]
+    this.cycleCommand = CODES.G[this.getRetractCode()]
+    this.retractCommand = CODES.G[this.getRetractCode()]
 
     this.G98 = this._block.addresses.indexOf('G98') > -1
     this.G99 = this._block.addresses.indexOf('G99') > -1
 
-    _(['Z', 'R', 'Q', 'F']).forEach((addr) => {
-      this[addr] = this._block.getAddr(addr, true)
+    REQUIRED_ADDRESSES.forEach((ltr) => {
+      this[ltr] = this._block.getAddress(ltr, true)
     })
   }
 
   addPoint (block) {
-    this._points.push(new CannedPoint(block))
+    const point = new CannedPoint(block)
+
+    this._points.push(point)
   }
 
   getPoints () {
@@ -36,13 +40,10 @@ class CannedCycle {
     return this._points.length
   }
 
-  // getRetractCode() {
-  //   return _(this._block.addresses).intersection(['G98', 'G99']).flatten()
-  // }
-
   getRetractCode () {
     return _(this._block.addresses).intersection(['G98', 'G99']).flatten()
   }
 }
 
 module.exports = CannedCycle
+module.exports.REQUIRED_ADDRESSES = REQUIRED_ADDRESSES

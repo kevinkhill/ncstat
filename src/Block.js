@@ -1,7 +1,7 @@
 /* eslint-disable no-prototype-builtins */
 const _ = require('lodash')
 
-const nc = require('./NcCodes')
+const { CODES } = require('./NcCodes')
 
 const addressRegex = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g
 const blockSkipRegex = /(^\/[0-9]?)/g
@@ -20,9 +20,20 @@ class Block {
     this.comment = null
     this.blockSkip = null
 
-    // _.forEach(nc.G, (addr, code) => {
-    //   this[code] = addr
-    // })
+    // Map found G & M addresses to true on the block
+    Object.keys(CODES.G).concat(Object.keys(CODES.M)).forEach(addr => {
+      if (this.addresses.includes(addr)) {
+        this[addr] = true
+      }
+    })
+
+    // Map all found Letter addresses to their cast values on the block
+    'ABCDEFHIJKLNOPQRSTUVWXYZ'.split('').forEach((ltr) => {
+      // console.log(addr)
+      if (this.hasAddress(ltr)) {
+        this[ltr] = this.getAddress(ltr, true)
+      }
+    })
 
     if (blockSkipRegex.test(this.rawLine)) {
       this.blockSkip = this.rawLine.match(blockSkipRegex)
@@ -35,49 +46,62 @@ class Block {
     const paddedAddr = this.addresses.map(zeroPadAddress)
 
     _(paddedAddr)
-      .filter(addr => nc.G.hasOwnProperty(addr))
+      .filter(addr => CODES.G.hasOwnProperty(addr))
       .each((address) => {
-        this.programCmds.push(nc.G[address])
+        this.programCmds.push(CODES.G[address])
       })
 
     _(paddedAddr)
-      .filter(addr => nc.M.hasOwnProperty(addr))
+      .filter(addr => CODES.M.hasOwnProperty(addr))
       .each((address) => {
         this.machineCmds.push({
-          CMD: nc.M[address],
+          CMD: CODES.M[address],
           ARGS: _.intersection([address], this.addresses)
         })
       })
   }
 
-  __toString () {
+  toString () {
     return this.rawLine
   }
 
-  getAddr (prefix, cast = false) {
-    const code = _.find(this.addresses, address => address[0] === prefix)
+  isStartOfCannedCycle () {
+    return this.getCannedCycleStartCode() != null
+  }
 
-    if (code) {
-      const value = code.slice(1)
+  hasMovement () {
+    return _.isNumber(this.B) ||
+      _.isNumber(this.X) ||
+      _.isNumber(this.Y) ||
+      _.isNumber(this.Z)
+  }
 
-      if (cast) {
-        return code.indexOf('.') > -1 ? parseFloat(value) : parseInt(value)
+  hasAddress (ltr) {
+    return _.find(this.addresses, address => address[0] === ltr) !== undefined
+  }
+
+  getAddress (ltr, cast = false) {
+    if (this.hasAddress(ltr)) {
+      const code = _.find(this.addresses, address => address[0] === ltr)
+
+      if (code) {
+        const value = code.slice(1)
+
+        if (cast) {
+          return code.indexOf('.') > -1 ? parseFloat(value) : parseInt(value)
+        }
+
+        return code
       }
-
-      return code
     }
 
     return null
   }
 
   getCannedCycleStartCode () {
-    const cycle = _.intersection(this.addresses, nc.CANNED_CYCLE_START)
+    const cycle = _.intersection(this.addresses, CODES.CANNED_CYCLE_START)
 
     return cycle ? cycle[0] : null
-  }
-
-  isStartOfCannedCycle () {
-    return this.getCannedCycleStartCode() != null
   }
 
   getComments () {
