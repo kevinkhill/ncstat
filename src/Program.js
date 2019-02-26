@@ -148,10 +148,10 @@ class Program {
         // const maxFeedrate = chalk.red.bold(_.max(feedrates).toFixed(3))
 
         // console.log(`${toolNum} | ${toolDesc} | MIN: ${minFeedrate} MAX: ${maxFeedrate} MEAN: ${meanFeedrate}`)
-
-        console.log(output)
       }
     })
+
+    console.log(output)
   }
 }
 
