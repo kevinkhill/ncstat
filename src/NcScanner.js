@@ -37,7 +37,7 @@ class NcScanner {
 
     if (fs.existsSync(fileOrDir)) {
       this.input = fileOrDir
-      console.log(`Scanning ${fileOrDir}`)
+      // console.log(`Scanning ${fileOrDir}`)
     }
   }
 

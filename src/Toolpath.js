@@ -1,8 +1,8 @@
 const CannedCycle = require('./CannedCycle')
 
 const regex = {
-  nLine: new RegExp('^N([0-9]+)'),
-  feedrate: new RegExp('F([0-9]+(?:\\.[0-9]*)?)')
+  nLine: /^N([0-9]+)/,
+  feedrate: /F([0-9]+(?:\\.[0-9]*)?)/g
 }
 
 function uncomment (str) {
@@ -24,14 +24,6 @@ class Toolpath {
   }
 
   describe () {
-    return this.describeTool() + '\n' + this.describeCycle() + '\n'
-  }
-
-  describeTool () {
-    return `T${this.tool.num} (${this.tool.desc})`
-  }
-
-  describeCycle () {
     if (this.isCannedCycle()) {
       return this.cannedCycle.describe()
     }

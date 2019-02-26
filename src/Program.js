@@ -7,7 +7,6 @@ const StateMachine = require('javascript-state-machine')
 const Block = require('./Block')
 const Toolpath = require('./Toolpath')
 const Position = require('./Position')
-const CannedPoint = require('./CannedPoint')
 
 class Program {
   constructor (filepath) {
@@ -20,8 +19,8 @@ class Program {
       curr: new Position(),
       prev: new Position()
     }
-    this.absinc = Position.ABSOLUTE
 
+    this.absinc = Position.ABSOLUTE
     this.toolpaths = []
     this.filepath = filepath
   }
@@ -32,6 +31,14 @@ class Program {
 
   getToolpathCount () {
     return this.toolpaths.length
+  }
+
+  getPosition () {
+    return this._position.curr
+  }
+
+  getPrevPosition () {
+    return this._position.prev
   }
 
   updatePosition (block) {
@@ -47,6 +54,8 @@ class Program {
     let pointAdded = false
 
     for await (const line of this._fileStream) {
+      // if (line === '%' || line === '' || line === ' ') break
+
       const block = new Block(line)
       this._blocks.push(block)
       this._rawLines.push(line)
@@ -56,6 +65,11 @@ class Program {
 
       if (block.G90) this.absinc = Position.ABSOLUTE
       if (block.G91) this.absinc = Position.INCREMENTAL
+
+      if (block.O) {
+        this.number = block.O
+        this.title = block.comment
+      }
 
       if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
         this.startCannedCycle()
@@ -71,8 +85,6 @@ class Program {
 
       if (this.is('in-canned-cycle') && block.hasMovement() && pointAdded === false) {
         // const point = new CannedPoint(block)
-
-        // toolpath.cannedCycle.addPoint(point)
         toolpath.cannedCycle.addPoint(block)
       }
 
@@ -100,7 +112,6 @@ class Program {
         toolpath.lines.push(line)
       }
 
-      // console.log(this._position.curr)
       pointAdded = false
     }
 
@@ -108,32 +119,39 @@ class Program {
     this.close()
   }
 
-  describeToolpaths () {
-    console.log('Toolpaths:')
-
-    // console.log(this.toolpaths)
+  describe () {
+    let output = `Program #${this.number} ${this.title}\n`
+    output += '---------------------------------------------------------------------------------------\n'
 
     this.toolpaths.forEach((toolpath) => {
       if (toolpath.hasFeedrates()) {
-        const feedrates = toolpath.getFeedrates()
+        // const feedrates = toolpath.getFeedrates()
 
-        const toolNum = chalk.magenta((`  T${toolpath.tool.num}`).slice(-3))
-        const toolDesc = chalk.blue((`${toolpath.tool.desc}                                        `).slice(0, 40))
+        const toolNum = `  T${toolpath.tool.num}`.slice(-3)
 
-        const minFeedrate = chalk.red.bold(_.min(feedrates).toFixed(3))
+        output += chalk`{magenta ${toolNum}} | {blue ${toolpath.tool.desc}} |`
+        output += chalk` {greenBright ${toolpath.cannedCycle.cycleCommand}}`
+        output += chalk` using {greenBright ${toolpath.cannedCycle.retractCommand}}`
+        output += chalk` with {yellow ${toolpath.cannedCycle.getPointCount()}} points:\n`
+
+        toolpath.cannedCycle.getPoints().forEach(position => {
+          output += `X${position.X}, Y${position.Y}\n`
+        })
+
+        // const minFeedrate = chalk.red.bold(_.min(feedrates).toFixed(3))
 
         // const average = _.sum(feedrates) / feedrates.length
         // const averageFeedrate = chalk.red.bold(average.toFixed(3))
 
-        const meanFeedrate = chalk.red.bold(_.mean(feedrates).toFixed(3))
+        // const meanFeedrate = chalk.red.bold(_.mean(feedrates).toFixed(3))
 
-        const maxFeedrate = chalk.red.bold(_.max(feedrates).toFixed(3))
+        // const maxFeedrate = chalk.red.bold(_.max(feedrates).toFixed(3))
 
-        console.log(`${toolNum} | ${toolDesc} | MIN: ${minFeedrate} MAX: ${maxFeedrate} MEAN: ${meanFeedrate}`)
+        // console.log(`${toolNum} | ${toolDesc} | MIN: ${minFeedrate} MAX: ${maxFeedrate} MEAN: ${meanFeedrate}`)
+
+        console.log(output)
       }
     })
-
-    console.log(`Processed: ${this.toolpaths.length} toolpaths`)
   }
 }
 

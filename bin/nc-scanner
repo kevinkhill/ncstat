@@ -24,12 +24,11 @@ const vault = new NcScanner(cli.args[0], {
 })
 
 vault.scan().then(files => {
-  files[0].toolpaths.forEach((toolpath) => {
-    console.log(toolpath.describe())
-  })
+  const program = files[0]
 
-  // console.log(files[0].blocks)
-  console.log(`Analyzed ${files[0].toolpaths.length} toolpaths in ${files.length} NC files`)
+  program.describe()
+
+  console.log(`Analyzed ${program.toolpaths.length} toolpaths in ${files.length} NC files`)
 }).catch(err => {
-  process.stderr.write(err)
+  console.log(err)
 })

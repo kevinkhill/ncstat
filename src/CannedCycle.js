@@ -1,4 +1,5 @@
 const _ = require('lodash')
+const chalk = require('chalk')
 
 const Block = require('./Block')
 const { CODES } = require('./NcCodes')
@@ -15,8 +16,10 @@ class CannedCycle {
     this.retract = this._block.getAddress('R')
     this.feedrate = this._block.getAddress('F')
 
-    this.cycleCommand = CODES.G[this.getCannedCycleCode()]
-    this.retractCommand = CODES.G[this.getRetractCode()]
+    // this.cycleCommand = CODES.G[this.getCannedCycleCode()]
+    // this.retractCommand = CODES.G[this.getRetractCode()]
+    this.cycleCommand = this.getCannedCycleCode()
+    this.retractCommand = this.getRetractCode()
 
     this.G98 = this._block.addresses.indexOf('G98') > -1
     this.G99 = this._block.addresses.indexOf('G99') > -1
@@ -26,24 +29,10 @@ class CannedCycle {
     })
   }
 
-  describe () {
-    let msg
+  addPoint (point) {
+    const position = point instanceof Block ? point.getPosition() : point
 
-    msg = `${this.cycleCommand.CMD} with ${this.getPointCount()} points at:\n`
-
-    this._points.forEach(point => {
-      const position = point instanceof Block ? point.getPosition() : point
-      // console.log(position)
-      msg += `X${position.X}, Y${position.Y}\n`
-    })
-
-    // msg = msg + this._points.map(block => block.getPosition().toString()).join('\n')
-
-    return msg
-  }
-
-  addPoint (cannedPoint) {
-    this._points.push(cannedPoint)
+    this._points.push(position)
   }
 
   getPoints () {

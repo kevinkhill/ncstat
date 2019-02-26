@@ -5,8 +5,8 @@ const { CODES } = require('./NcCodes')
 const Position = require('./Position')
 
 const addressRegex = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g
-const blockSkipRegex = /(^\/[0-9]?)/g
-const commentRegex = /\((.+)\)/g
+const blockSkipRegex = /(^\/[0-9]?)/
+const commentRegex = /\(\s?(.+)\s?\)/
 
 function zeroPadAddress (str) {
   return _.isString(str) ? str[0] + `00${str.slice(1)}`.slice(-2) : ''
@@ -21,27 +21,18 @@ class Block {
     this.comment = null
     this.blockSkip = null
 
-    // Map found G & M addresses to true on the block
-    Object.keys(CODES.G).concat(Object.keys(CODES.M)).forEach(addr => {
-      if (this.addresses.includes(addr)) {
-        this[addr] = true
-      }
-    })
-
-    // Map all found Letter addresses to their cast values on the block
-    'ABCDEFHIJKLNOPQRSTUVWXYZ'.split('').forEach((ltr) => {
-      // console.log(addr)
-      if (this.hasAddress(ltr)) {
-        this[ltr] = this.getAddress(ltr, true)
-      }
-    })
+    this._mapAddressValuesToObj()
 
     if (blockSkipRegex.test(this.rawLine)) {
-      this.blockSkip = this.rawLine.match(blockSkipRegex)
+      let match = this.rawLine.match(blockSkipRegex)
+
+      if (match) this.blockSkip = match[1]
     }
 
     if (commentRegex.test(this.rawLine)) {
-      this.comment = this.rawLine.match(commentRegex)
+      let match = this.rawLine.match(commentRegex)
+
+      if (match) this.comment = match[1]
     }
 
     const paddedAddr = this.addresses.map(zeroPadAddress)
@@ -71,7 +62,9 @@ class Block {
   }
 
   hasMovement () {
-    return _.isNumber(this.B) || _.isNumber(this.X) || _.isNumber(this.Y) || _.isNumber(this.Z)
+    const hasBXYZ = _.isNumber(this.B) || _.isNumber(this.X) || _.isNumber(this.Y) || _.isNumber(this.Z)
+
+    return hasBXYZ && (this.G10 !== true && this.G04 !== true)
   }
 
   hasAddress (ltr) {
@@ -102,16 +95,30 @@ class Block {
     return cycle ? cycle[0] : null
   }
 
-  getComments () {
-    return this.comments
-  }
-
   getMachineCommands () {
     return this.machineCmds
   }
 
   getProgramCommands () {
     return this.programCmds
+  }
+
+  _mapAddressValuesToObj () {
+    const keys = Object.keys({ ...CODES.G, ...CODES.M })
+
+    // Map found G & M addresses to true on the block
+    keys.forEach(addr => {
+      if (this.addresses.includes(addr)) {
+        this[addr] = true
+      }
+    })
+
+    // Map all found Letter addresses to their cast values on the block
+    'ABCDEFHIJKLNOPQRSTUVWXYZ'.split('').forEach((ltr) => {
+      if (this.hasAddress(ltr)) {
+        this[ltr] = this.getAddress(ltr, true)
+      }
+    })
   }
 }
 
