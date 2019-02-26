@@ -2,6 +2,7 @@
 const _ = require('lodash')
 
 const { CODES } = require('./NcCodes')
+const Position = require('./Position')
 
 const addressRegex = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g
 const blockSkipRegex = /(^\/[0-9]?)/g
@@ -61,8 +62,8 @@ class Block {
       })
   }
 
-  toString () {
-    return this.rawLine
+  getPosition () {
+    return new Position(this)
   }
 
   isStartOfCannedCycle () {
@@ -70,10 +71,7 @@ class Block {
   }
 
   hasMovement () {
-    return _.isNumber(this.B) ||
-      _.isNumber(this.X) ||
-      _.isNumber(this.Y) ||
-      _.isNumber(this.Z)
+    return _.isNumber(this.B) || _.isNumber(this.X) || _.isNumber(this.Y) || _.isNumber(this.Z)
   }
 
   hasAddress (ltr) {

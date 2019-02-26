@@ -1,7 +1,7 @@
 const _ = require('lodash')
 
+const Block = require('./Block')
 const { CODES } = require('./NcCodes')
-const CannedPoint = require('./CannedPoint')
 
 const REQUIRED_ADDRESSES = ['Z', 'R', 'Q', 'F']
 
@@ -15,7 +15,7 @@ class CannedCycle {
     this.retract = this._block.getAddress('R')
     this.feedrate = this._block.getAddress('F')
 
-    this.cycleCommand = CODES.G[this.getRetractCode()]
+    this.cycleCommand = CODES.G[this.getCannedCycleCode()]
     this.retractCommand = CODES.G[this.getRetractCode()]
 
     this.G98 = this._block.addresses.indexOf('G98') > -1
@@ -26,10 +26,24 @@ class CannedCycle {
     })
   }
 
-  addPoint (block) {
-    const point = new CannedPoint(block)
+  describe () {
+    let msg
 
-    this._points.push(point)
+    msg = `${this.cycleCommand.CMD} with ${this.getPointCount()} points at:\n`
+
+    this._points.forEach(point => {
+      const position = point instanceof Block ? point.getPosition() : point
+      // console.log(position)
+      msg += `X${position.X}, Y${position.Y}\n`
+    })
+
+    // msg = msg + this._points.map(block => block.getPosition().toString()).join('\n')
+
+    return msg
+  }
+
+  addPoint (cannedPoint) {
+    this._points.push(cannedPoint)
   }
 
   getPoints () {
@@ -38,6 +52,10 @@ class CannedCycle {
 
   getPointCount () {
     return this._points.length
+  }
+
+  getCannedCycleCode () {
+    return _(this._block.addresses).intersection(CODES.CANNED_CYCLE_START).flatten()
   }
 
   getRetractCode () {

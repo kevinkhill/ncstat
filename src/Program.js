@@ -6,8 +6,8 @@ const StateMachine = require('javascript-state-machine')
 
 const Block = require('./Block')
 const Toolpath = require('./Toolpath')
-
-const l=console.log
+const Position = require('./Position')
+const CannedPoint = require('./CannedPoint')
 
 class Program {
   constructor (filepath) {
@@ -17,9 +17,10 @@ class Program {
     this._blocks = []
     this._fileStream = null
     this._position = {
-      prev: { B: null, X: null, Y: null, Z: null },
-      curr: { B: null, X: null, Y: null, Z: null }
+      curr: new Position(),
+      prev: new Position()
     }
+    this.absinc = Position.ABSOLUTE
 
     this.toolpaths = []
     this.filepath = filepath
@@ -33,37 +34,50 @@ class Program {
     return this.toolpaths.length
   }
 
+  updatePosition (block) {
+    this._position.prev = this._position.curr
+
+    this._position.curr[this.absinc](block)
+  }
+
   async process () {
     this.open()
 
     let toolpath = null
+    let pointAdded = false
 
     for await (const line of this._fileStream) {
-      this._rawLines.push(line)
-
       const block = new Block(line)
       this._blocks.push(block)
+      this._rawLines.push(line)
 
-      // l(block.hasMovement(), [block.B, block.X, block.Y, block.Z])
+      if (block.G00) this.movement = Position.RAPID
+      if (block.G01) this.movement = Position.FEED
 
-      if (block.hasMovement()) {
-        // TODO this logic needs to be incremental instead of overwriting
-        this._position.prev = this._position.curr
-        this._position.curr = block
-      }
+      if (block.G90) this.absinc = Position.ABSOLUTE
+      if (block.G91) this.absinc = Position.INCREMENTAL
 
       if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
-        toolpath.makeCannedCycle(block)
-
         this.startCannedCycle()
-      }
 
-      if (this.is('in-canned-cycle') && block.hasMovement()) {
+        toolpath.makeCannedCycle(block)
         toolpath.cannedCycle.addPoint(this._position.curr)
+        pointAdded = true
       }
 
       if (block.G80 === true) {
         this.endCannedCycle()
+      }
+
+      if (this.is('in-canned-cycle') && block.hasMovement() && pointAdded === false) {
+        // const point = new CannedPoint(block)
+
+        // toolpath.cannedCycle.addPoint(point)
+        toolpath.cannedCycle.addPoint(block)
+      }
+
+      if (block.hasMovement()) {
+        this.updatePosition(block)
       }
 
       if (line[0] === 'N') {
@@ -85,6 +99,9 @@ class Program {
       ) {
         toolpath.lines.push(line)
       }
+
+      // console.log(this._position.curr)
+      pointAdded = false
     }
 
     this.endToolpath(toolpath)
@@ -138,15 +155,6 @@ module.exports = StateMachine.factory(Program, {
         input: fs.createReadStream(this.filepath),
         crlfDelay: Infinity
       })
-    },
-    onOpen () {
-      //
-    },
-    onClose () {
-      //
-    },
-    onStartCannedCycle (lc, toolpath) {
-      //
     },
     onEndToolpath (lc, toolpath) {
       this.toolpaths.push(toolpath)

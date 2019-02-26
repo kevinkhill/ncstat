@@ -1,4 +1,3 @@
-const nc = require('./NcCodes')
 const CannedCycle = require('./CannedCycle')
 
 const regex = {
@@ -22,6 +21,22 @@ class Toolpath {
     this.tool.desc = uncomment(line.replace(`N${this.tool.num}`, ''))
 
     this.lines = []
+  }
+
+  describe () {
+    return this.describeTool() + '\n' + this.describeCycle() + '\n'
+  }
+
+  describeTool () {
+    return `T${this.tool.num} (${this.tool.desc})`
+  }
+
+  describeCycle () {
+    if (this.isCannedCycle()) {
+      return this.cannedCycle.describe()
+    }
+
+    return 'NOT A CANNED CYCLE'
   }
 
   isCannedCycle () {

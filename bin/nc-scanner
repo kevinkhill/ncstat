@@ -20,15 +20,12 @@ if (cli.args.length === 0) {
 
 const vault = new NcScanner(cli.args[0], {
   whitelist: cli.whitelist,
-  describeToolpaths: cli.describeToolpaths,
+  describeToolpaths: cli.describeToolpaths
 })
 
 vault.scan().then(files => {
   files[0].toolpaths.forEach((toolpath) => {
-    if (toolpath.isCannedCycle()) {
-      console.log(toolpath.cannedCycle)
-      // console.log(toolpath.cannedCycle.getPointCount())
-    }
+    console.log(toolpath.describe())
   })
 
   // console.log(files[0].blocks)
