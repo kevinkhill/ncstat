@@ -71,25 +71,22 @@ class Program {
         this.title = block.comment
       }
 
+      if (block.hasMovement()) {
+        this.updatePosition(block)
+      }
+
       if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
         this.startCannedCycle()
 
         toolpath.makeCannedCycle(block)
-        toolpath.cannedCycle.addPoint(this._position.curr)
-        pointAdded = true
       }
 
       if (block.G80 === true) {
         this.endCannedCycle()
       }
 
-      if (this.is('in-canned-cycle') && block.hasMovement() && pointAdded === false) {
-        // const point = new CannedPoint(block)
-        toolpath.cannedCycle.addPoint(block)
-      }
-
-      if (block.hasMovement()) {
-        this.updatePosition(block)
+      if (this.is('in-canned-cycle') && block.hasMovement()) {
+        toolpath.cannedCycle.addPoint(this._position.curr)
       }
 
       if (line[0] === 'N') {
