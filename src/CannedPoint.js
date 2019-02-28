@@ -1,7 +1,15 @@
 const Point = require('./Point')
 
 class CannedPoint extends Point {
-  constructor (block) {
+  static getfactory (cannedCycle) {
+    function pointFactory () {
+
+    }
+
+    return pointFactory
+  }
+
+  constructor (block, cannedCycle) {
     super(block)
   }
 

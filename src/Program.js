@@ -21,8 +21,9 @@ class Program {
     }
 
     this.absinc = Position.ABSOLUTE
-    this.toolpaths = []
+    this.rapfeed = Position.RAPID
     this.filepath = filepath
+    this.toolpaths = []
   }
 
   toString () {
@@ -51,65 +52,58 @@ class Program {
     this.open()
 
     let toolpath = null
-    let pointAdded = false
 
     for await (const line of this._fileStream) {
-      // if (line === '%' || line === '' || line === ' ') break
+      if (line !== '') {
+        const block = new Block(line)
+        this._blocks.push(block)
+        this._rawLines.push(line)
 
-      const block = new Block(line)
-      this._blocks.push(block)
-      this._rawLines.push(line)
+        this._setModals(block)
 
-      if (block.G00) this.movement = Position.RAPID
-      if (block.G01) this.movement = Position.FEED
-
-      if (block.G90) this.absinc = Position.ABSOLUTE
-      if (block.G91) this.absinc = Position.INCREMENTAL
-
-      if (block.O) {
-        this.number = block.O
-        this.title = block.comment
-      }
-
-      if (block.hasMovement()) {
-        this.updatePosition(block)
-      }
-
-      if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
-        this.startCannedCycle()
-
-        toolpath.makeCannedCycle(block)
-      }
-
-      if (block.G80 === true) {
-        this.endCannedCycle()
-      }
-
-      if (this.is('in-canned-cycle') && block.hasMovement()) {
-        toolpath.cannedCycle.addPoint(this._position.curr)
-      }
-
-      if (line[0] === 'N') {
-        if (this.is('toolpathing')) {
-          this.endToolpath(toolpath)
+        if (block.O) {
+          this.number = block.O
+          this.title = block.comment
         }
 
-        if (this.is('idle')) {
-          toolpath = new Toolpath(line)
+        if (block.hasMovement()) {
+          this.updatePosition(block)
+        }
 
-          this.startToolpath()
+        if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
+          this.startCannedCycle()
+
+          toolpath.makeCannedCycle(block)
+        }
+
+        if (block.G80 === true) {
+          this.endCannedCycle()
+        }
+
+        if (this.is('in-canned-cycle') && block.hasMovement()) {
+          toolpath.cannedCycle.addPoint(_.clone(this._position.curr))
+        }
+
+        if (line[0] === 'N') {
+          if (this.is('toolpathing')) {
+            this.endToolpath(toolpath)
+          }
+
+          if (this.is('idle')) {
+            toolpath = new Toolpath(line)
+
+            this.startToolpath()
+          }
+        }
+
+        // If we're toolpathing and `line` is not empty, save it to the toolpath
+        if (
+          (this.is('toolpathing') || this.is('in-canned-cycle')) &&
+          line !== '' && line !== ' '
+        ) {
+          toolpath.lines.push(line)
         }
       }
-
-      // If we're toolpathing and `line` is not empty, save it to the toolpath
-      if (
-        (this.is('toolpathing') || this.is('in-canned-cycle')) &&
-        line !== '' && line !== ' '
-      ) {
-        toolpath.lines.push(line)
-      }
-
-      pointAdded = false
     }
 
     this.endToolpath(toolpath)
@@ -127,8 +121,8 @@ class Program {
         const toolNum = `  T${toolpath.tool.num}`.slice(-3)
 
         output += chalk`{magenta ${toolNum}} | {blue ${toolpath.tool.desc}} |`
-        output += chalk` {greenBright ${toolpath.cannedCycle.cycleCommand}}`
-        output += chalk` using {greenBright ${toolpath.cannedCycle.retractCommand}}`
+        output += chalk` {greenBright ${toolpath.cannedCycle.retractCommand}}`
+        output += chalk`, {greenBright ${toolpath.cannedCycle.cycleCommand}}`
         output += chalk` with {yellow ${toolpath.cannedCycle.getPointCount()}} points:\n`
 
         toolpath.cannedCycle.getPoints().forEach(position => {
@@ -149,6 +143,14 @@ class Program {
     })
 
     console.log(output)
+  }
+
+  _setModals (block) {
+    if (block.G00) this.rapfeed = Position.RAPID
+    if (block.G01) this.rapfeed = Position.FEED
+
+    if (block.G90) this.absinc = Position.ABSOLUTE
+    if (block.G91) this.absinc = Position.INCREMENTAL
   }
 }
 

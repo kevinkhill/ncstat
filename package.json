@@ -2,7 +2,7 @@
   "name": "nc-scanner",
   "version": "1.0.0",
   "description": "Scans NC program for static analysis",
-  "main": "index.js",
+  "bin": "./bin/nc-scanner",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/harris-bruno/nc-scanner.git"

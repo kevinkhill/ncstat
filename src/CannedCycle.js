@@ -1,10 +1,9 @@
 const _ = require('lodash')
-const chalk = require('chalk')
 
 const Block = require('./Block')
-const { CODES } = require('./NcCodes')
+const { CANNED_CYCLE_START_CODES } = require('./NcCodes')
 
-const REQUIRED_ADDRESSES = ['Z', 'R', 'Q', 'F']
+const CANNED_CYCLE_ARGS = ['Z', 'R', 'Q', 'F']
 
 class CannedCycle {
   constructor (block) {
@@ -24,7 +23,7 @@ class CannedCycle {
     this.G98 = this._block.addresses.indexOf('G98') > -1
     this.G99 = this._block.addresses.indexOf('G99') > -1
 
-    REQUIRED_ADDRESSES.forEach((ltr) => {
+    CANNED_CYCLE_ARGS.forEach((ltr) => {
       this[ltr] = this._block.getAddress(ltr, true)
     })
   }
@@ -44,7 +43,7 @@ class CannedCycle {
   }
 
   getCannedCycleCode () {
-    return _(this._block.addresses).intersection(CODES.CANNED_CYCLE_START).flatten()
+    return _(this._block.addresses).intersection(CANNED_CYCLE_START_CODES).flatten()
   }
 
   getRetractCode () {
@@ -53,4 +52,4 @@ class CannedCycle {
 }
 
 module.exports = CannedCycle
-module.exports.REQUIRED_ADDRESSES = REQUIRED_ADDRESSES
+module.exports.CANNED_CYCLE_ARGS = CANNED_CYCLE_ARGS

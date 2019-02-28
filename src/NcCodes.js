@@ -3,39 +3,41 @@ const { forEach } = require('lodash')
 const { safeLoad } = require('js-yaml')
 const { readFileSync } = require('fs')
 
-const CODES = {
-  G: {},
-  M: {},
-  CANNED_CYCLE_START: [
-    'G73', 'G74', 'G81', 'G82', 'G83', 'G84', 'G85', 'G86', 'G87'
-  ]
-}
+const G_CODES = {}
+const M_CODES = {}
+
+const CANNED_CYCLE_START_CODES = [
+  'G73', 'G74', 'G81', 'G82', 'G83', 'G84', 'G85', 'G86', 'G87'
+]
 
 const COMMANDS = {
-  G: n => CODES.G[`G${n}`],
-  M: n => CODES.M[`M${n}`]
+  G: n => G_CODES[`G${n}`],
+  M: n => M_CODES[`M${n}`]
 }
 
 function readYaml (filepath) {
   return safeLoad(readFileSync(resolve(filepath)))
 }
 
-forEach(readYaml('./definitions/gcodes.yml'), (codeGroup, category) => {
-  forEach(codeGroup, (command, code) => {
-    CODES.G[code] = {
-      CMD: command,
-      CAT: category
+forEach(readYaml('./definitions/gcodes.yml'), (groupName, group) => {
+  forEach(groupName, (command, gcode) => {
+    G_CODES[gcode] = {
+      COMMAND: command,
+      GROUP: group
     }
   })
 })
 
-forEach(readYaml('./definitions/mcodes.yml'), (command, code) => {
-  CODES.M[code] = {
-    CMD: command,
-    CAT: 'MACHINE'
+forEach(readYaml('./definitions/mcodes.yml'), (command, mcode) => {
+  M_CODES[mcode] = {
+    COMMAND: command,
+    GROUP: 'MACHINE'
   }
 })
 
 module.exports = {
-  CODES, COMMANDS
+  G_CODES,
+  M_CODES,
+  COMMANDS,
+  CANNED_CYCLE_START_CODES
 }

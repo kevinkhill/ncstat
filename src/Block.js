@@ -1,8 +1,8 @@
 /* eslint-disable no-prototype-builtins */
 const _ = require('lodash')
 
-const { CODES } = require('./NcCodes')
 const Position = require('./Position')
+const { G_CODES, M_CODES, CANNED_CYCLE_START_CODES } = require('./NcCodes')
 
 const addressRegex = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g
 const blockSkipRegex = /(^\/[0-9]?)/
@@ -16,8 +16,6 @@ class Block {
   constructor (line) {
     this.rawLine = line
     this.addresses = this.rawLine.match(addressRegex) || []
-    this.machineCmds = []
-    this.programCmds = []
     this.comment = null
     this.blockSkip = null
 
@@ -35,22 +33,21 @@ class Block {
       if (match) this.comment = match[1]
     }
 
-    const paddedAddr = this.addresses.map(zeroPadAddress)
 
-    _(paddedAddr)
-      .filter(addr => CODES.G.hasOwnProperty(addr))
-      .each((address) => {
-        this.programCmds.push(CODES.G[address])
-      })
-
-    _(paddedAddr)
-      .filter(addr => CODES.M.hasOwnProperty(addr))
-      .each((address) => {
-        this.machineCmds.push({
-          CMD: CODES.M[address],
-          ARGS: _.intersection([address], this.addresses)
-        })
-      })
+    // _(paddedAddr)
+    //   .filter(addr => G_CODES.hasOwnProperty(addr))
+    //   .each((address) => {
+    //     this.programCmds.push(G_CODES[address])
+    //   })
+    //
+    // _(paddedAddr)
+    //   .filter(addr => M_CODES.hasOwnProperty(addr))
+    //   .each((address) => {
+    //     this.machineCmds.push({
+    //       CMD: M_CODES[address],
+    //       ARGS: _.intersection([address], this.addresses)
+    //     })
+    //   })
   }
 
   getPosition () {
@@ -62,9 +59,9 @@ class Block {
   }
 
   hasMovement () {
-    const hasBXYZ = _.isNumber(this.B) || _.isNumber(this.X) || _.isNumber(this.Y) || _.isNumber(this.Z)
+    if (this.G10 === true || this.G04 === true || this.G65 === true) return false
 
-    return hasBXYZ && (this.G10 !== true && this.G04 !== true)
+    return _.isNumber(this.B) || _.isNumber(this.X) || _.isNumber(this.Y) || _.isNumber(this.Z)
   }
 
   hasAddress (ltr) {
@@ -90,27 +87,15 @@ class Block {
   }
 
   getCannedCycleStartCode () {
-    const cycle = _.intersection(this.addresses, CODES.CANNED_CYCLE_START)
+    const cycle = _.intersection(this.addresses, CANNED_CYCLE_START_CODES)
 
-    return cycle ? cycle[0] : null
-  }
-
-  getMachineCommands () {
-    return this.machineCmds
-  }
-
-  getProgramCommands () {
-    return this.programCmds
+    return cycle.length > 0 ? cycle[0] : null
   }
 
   _mapAddressValuesToObj () {
-    const keys = Object.keys({ ...CODES.G, ...CODES.M })
-
     // Map found G & M addresses to true on the block
-    keys.forEach(addr => {
-      if (this.addresses.includes(addr)) {
-        this[addr] = true
-      }
+    this.addresses.forEach(addr => {
+      if (addr[0] === 'G' || addr[0] === 'M') this[addr] = true
     })
 
     // Map all found Letter addresses to their cast values on the block
