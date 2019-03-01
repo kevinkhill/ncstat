@@ -17,8 +17,8 @@ class CannedCycle {
 
     // this.cycleCommand = CODES.G[this.getCannedCycleCode()]
     // this.retractCommand = CODES.G[this.getRetractCode()]
-    this.cycleCommand = this.getCannedCycleCode()
-    this.retractCommand = this.getRetractCode()
+    this.cycleCommand = _(this._block.addresses).intersection(CANNED_CYCLE_START_CODES).flatten()
+    this.retractCommand = _(this._block.addresses).intersection(['G98', 'G99']).flatten()
 
     this.G98 = this._block.addresses.indexOf('G98') > -1
     this.G99 = this._block.addresses.indexOf('G99') > -1
@@ -40,14 +40,6 @@ class CannedCycle {
 
   getPointCount () {
     return this._points.length
-  }
-
-  getCannedCycleCode () {
-    return _(this._block.addresses).intersection(CANNED_CYCLE_START_CODES).flatten()
-  }
-
-  getRetractCode () {
-    return _(this._block.addresses).intersection(['G98', 'G99']).flatten()
   }
 }
 

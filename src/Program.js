@@ -10,7 +10,7 @@ const Position = require('./Position')
 
 class Program {
   constructor (filepath) {
-    // eslint-disable-next-line no-underscore-dangle
+    // noinspection JSUnresolvedFunction
     this._fsm()
     this._rawLines = []
     this._blocks = []
@@ -45,7 +45,7 @@ class Program {
   updatePosition (block) {
     this._position.prev = this._position.curr
 
-    this._position.curr[this.absinc](block)
+    this._position.curr = this._position.curr[this.absinc](block)
   }
 
   async process () {

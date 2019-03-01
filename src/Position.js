@@ -1,5 +1,3 @@
-const isNumber = require('lodash').isNumber
-
 const AXES = ['B', 'X', 'Y', 'Z']
 
 class Position {
@@ -9,25 +7,29 @@ class Position {
     this.Y = 0
     this.Z = 0
 
-    AXES.forEach(ltr => {
-      this[ltr] = block[ltr]
-    })
+    for (const axis in this) {
+      if (this.hasOwnProperty(axis)) this[axis] = block[axis]
+    }
   }
 
   G90 (block) {
-    Position.AXES.forEach(ltr => {
-      if (isNumber(block[ltr])) {
-        this[ltr] = block[ltr]
-      }
-    })
+    const newPosition = new Position(block)
+
+    for (const axis in this) {
+      if (this.hasOwnProperty(axis)) newPosition[axis] = this[axis]
+    }
+
+    return newPosition
   }
 
   G91 (block) {
-    Position.AXES.forEach(ltr => {
-      if (isNumber(block[ltr])) {
-        this[ltr] += block[ltr]
-      }
-    })
+    const newPosition = new Position(block)
+
+    for (const axis in this) {
+      if (this.hasOwnProperty(axis)) newPosition[axis] += this[axis]
+    }
+
+    return newPosition
   }
 }
 
