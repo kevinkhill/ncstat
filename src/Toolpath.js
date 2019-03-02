@@ -1,5 +1,3 @@
-const CannedCycle = require('./CannedCycle')
-
 const regex = {
   nLine: /^N([0-9]+)/,
   feedrate: /F([0-9]+(?:\\.[0-9]*)?)/g
@@ -11,7 +9,8 @@ function uncomment (str) {
 
 class Toolpath {
   constructor (line) {
-    this.cannedCycle = null
+    this.lines = []
+    this.cannedCycles = []
 
     this.tool = {
       desc: '',
@@ -19,24 +18,6 @@ class Toolpath {
     }
 
     this.tool.desc = uncomment(line.replace(`N${this.tool.num}`, ''))
-
-    this.lines = []
-  }
-
-  describe () {
-    if (this.isCannedCycle()) {
-      return this.cannedCycle.describe()
-    }
-
-    return 'NOT A CANNED CYCLE'
-  }
-
-  isCannedCycle () {
-    return this.cannedCycle instanceof CannedCycle
-  }
-
-  makeCannedCycle (block) {
-    this.cannedCycle = new CannedCycle(block)
   }
 
   hasFeedrates () {

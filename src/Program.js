@@ -7,6 +7,7 @@ const StateMachine = require('javascript-state-machine')
 const Block = require('./Block')
 const Toolpath = require('./Toolpath')
 const Position = require('./Position')
+const CannedCycle = require('./CannedCycle')
 
 class Program {
   constructor (filepath) {
@@ -16,8 +17,8 @@ class Program {
     this._blocks = []
     this._fileStream = null
     this._position = {
-      curr: new Position(),
-      prev: new Position()
+      curr: new Position({ B: 0, X: 0, Y: 0, Z: 0 }),
+      prev: new Position({ B: 0, X: 0, Y: 0, Z: 0 })
     }
 
     this.absinc = Position.ABSOLUTE
@@ -43,9 +44,25 @@ class Program {
   }
 
   updatePosition (block) {
+    const position = block.getPosition()
+
     this._position.prev = this._position.curr
 
-    this._position.curr = this._position.curr[this.absinc](block)
+    if (this.absinc === Position.ABSOLUTE) {
+      Position.AXES.forEach(axis => {
+        if (position[axis]) {
+          this._position.curr[axis] = position[axis]
+        }
+      })
+    }
+
+    if (this.absinc === Position.INCREMENTAL) {
+      Position.AXES.forEach(axis => {
+        if (position[axis]) {
+          this._position.curr[axis] += position[axis]
+        }
+      })
+    }
   }
 
   async process () {
@@ -73,7 +90,9 @@ class Program {
         if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
           this.startCannedCycle()
 
-          toolpath.makeCannedCycle(block)
+          const cannedCycle = new CannedCycle(block)
+
+          toolpath.cannedCycles.push(cannedCycle)
         }
 
         if (block.G80 === true) {
@@ -81,7 +100,9 @@ class Program {
         }
 
         if (this.is('in-canned-cycle') && block.hasMovement()) {
-          toolpath.cannedCycle.addPoint(_.clone(this._position.curr))
+          const point = _.clone(this._position.curr)
+
+          _.last(toolpath.cannedCycles).addPoint(point)
         }
 
         if (line[0] === 'N') {
@@ -120,14 +141,19 @@ class Program {
 
         const toolNum = `  T${toolpath.tool.num}`.slice(-3)
 
-        output += chalk`{magenta ${toolNum}} | {blue ${toolpath.tool.desc}} |`
-        output += chalk` {greenBright ${toolpath.cannedCycle.retractCommand}}`
-        output += chalk`, {greenBright ${toolpath.cannedCycle.cycleCommand}}`
-        output += chalk` with {yellow ${toolpath.cannedCycle.getPointCount()}} points:\n`
+        output += chalk`{magenta ${toolNum}} | {blue ${toolpath.tool.desc}}`
 
-        toolpath.cannedCycle.getPoints().forEach(position => {
-          output += `X${position.X}, Y${position.Y}\n`
-        })
+        if (toolpath.cannedCycles.length > 0) {
+          toolpath.cannedCycles.forEach(cannedCycle => {
+            output += chalk`{greenBright ${cannedCycle.retractCommand}}`
+            output += chalk`, {greenBright ${cannedCycle.cycleCommand}}`
+            output += chalk` with {yellow ${cannedCycle.getPointCount()}} points:\n`
+
+            cannedCycle.getPoints().forEach(position => {
+              output += `X${position.X}, Y${position.Y}\n`
+            })
+          })
+        }
 
         // const minFeedrate = chalk.red.bold(_.min(feedrates).toFixed(3))
 

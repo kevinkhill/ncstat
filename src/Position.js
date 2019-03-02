@@ -1,35 +1,15 @@
 const AXES = ['B', 'X', 'Y', 'Z']
 
 class Position {
-  constructor (block = { B: 0, X: 0, Y: 0, Z: 0 }) {
+  constructor (block) {
     this.B = 0
     this.X = 0
     this.Y = 0
     this.Z = 0
 
-    for (const axis in this) {
-      if (this.hasOwnProperty(axis)) this[axis] = block[axis]
-    }
-  }
-
-  G90 (block) {
-    const newPosition = new Position(block)
-
-    for (const axis in this) {
-      if (this.hasOwnProperty(axis)) newPosition[axis] = this[axis]
-    }
-
-    return newPosition
-  }
-
-  G91 (block) {
-    const newPosition = new Position(block)
-
-    for (const axis in this) {
-      if (this.hasOwnProperty(axis)) newPosition[axis] += this[axis]
-    }
-
-    return newPosition
+    AXES.forEach(axis => {
+      if (block[axis]) this[axis] = block[axis]
+    })
   }
 }
 

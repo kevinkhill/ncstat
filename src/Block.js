@@ -2,7 +2,7 @@
 const _ = require('lodash')
 
 const Position = require('./Position')
-const { G_CODES, M_CODES, CANNED_CYCLE_START_CODES } = require('./NcCodes')
+const { CANNED_CYCLE_START_CODES } = require('./NcCodes')
 
 const addressRegex = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g
 const blockSkipRegex = /(^\/[0-9]?)/
@@ -32,22 +32,6 @@ class Block {
 
       if (match) this.comment = match[1]
     }
-
-
-    // _(paddedAddr)
-    //   .filter(addr => G_CODES.hasOwnProperty(addr))
-    //   .each((address) => {
-    //     this.programCmds.push(G_CODES[address])
-    //   })
-    //
-    // _(paddedAddr)
-    //   .filter(addr => M_CODES.hasOwnProperty(addr))
-    //   .each((address) => {
-    //     this.machineCmds.push({
-    //       CMD: M_CODES[address],
-    //       ARGS: _.intersection([address], this.addresses)
-    //     })
-    //   })
   }
 
   getPosition () {
@@ -95,7 +79,13 @@ class Block {
   _mapAddressValuesToObj () {
     // Map found G & M addresses to true on the block
     this.addresses.forEach(addr => {
-      if (addr[0] === 'G' || addr[0] === 'M') this[addr] = true
+      if (addr[0] === 'G' || addr[0] === 'M') {
+        if (parseInt(addr.slice(1)) < 10) {
+          this[zeroPadAddress(addr)] = true
+        } else {
+          this[addr] = true
+        }
+      }
     })
 
     // Map all found Letter addresses to their cast values on the block
