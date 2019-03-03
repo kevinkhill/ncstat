@@ -1,7 +1,5 @@
-const regex = {
-  nLine: /^N([0-9]+)/,
-  feedrate: /F([0-9]+(?:\\.[0-9]*)?)/g
-}
+const nLineRegex = /^N([0-9]+)/
+const feedrateRegex = /F([0-9]+(?:\\.[0-9]*)?)/g
 
 function uncomment (str) {
   return str.replace('(', '').replace(')', '').trim()
@@ -14,28 +12,32 @@ class Toolpath {
 
     this.tool = {
       desc: '',
-      num: line.match(regex.nLine)[1]
+      num: line.match(nLineRegex)[1]
     }
 
     this.tool.desc = uncomment(line.replace(`N${this.tool.num}`, ''))
   }
 
   hasFeedrates () {
-    return this.lines.some(line => regex.feedrate.test(line))
+    return this.lines.some(line => feedrateRegex.test(line))
   }
 
   getFeedrates () {
     const feedrates = []
 
     this.lines.forEach((line) => {
-      if (regex.feedrate.test(line)) {
-        const feedrate = line.match(regex.feedrate)
+      if (feedrateRegex.test(line)) {
+        const feedrate = line.match(feedrateRegex)
 
         feedrates.push(parseFloat(feedrate[1]))
       }
     })
 
     return feedrates
+  }
+
+  getCannedCycleCount () {
+    return this.cannedCycles.length
   }
 }
 

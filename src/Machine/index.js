@@ -1,11 +1,6 @@
 const StateMachine = require('javascript-state-machine')
 
-const Program = require('./Program')
-const Position = require('./Position')
-
-function zeroPos () {
-  return { X: 0, Y: 0, Z: 0, B: 0 }
-}
+const zeroPos = () => { return { X: 0, Y: 0, Z: 0, B: 0 } }
 
 const transitions = [
   /* eslint-disable */
@@ -16,13 +11,21 @@ const transitions = [
 ]
 
 const data = {
+  offsets: {
+    G54: zeroPos(),
+    G55: zeroPos(),
+    G56: zeroPos(),
+    G57: zeroPos(),
+    G58: zeroPos(),
+    G59: zeroPos()
+  },
   position: {
-  ...zeroPos(),
-      prev: zeroPos()
+    ...zeroPos(),
+    prev: zeroPos()
   },
   spindle: {
     state: '',
-      rpms: 0
+    rpms: 0
   },
   feedrate: 0
 }

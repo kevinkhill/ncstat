@@ -1,5 +1,5 @@
 const _ = require('lodash')
-const fs = require('fs-extra')
+const fs = require('fs')
 const chalk = require('chalk')
 const readline = require('readline')
 const StateMachine = require('javascript-state-machine')
@@ -9,21 +9,30 @@ const Toolpath = require('./Toolpath')
 const Position = require('./Position')
 const CannedCycle = require('./CannedCycle')
 
+const transitions = [
+  { name: 'start-toolpath', from: 'idle', to: 'toolpathing' },
+  { name: 'end-toolpath', from: 'toolpathing', to: 'idle' },
+
+  { name: 'start-canned-cycle', from: 'toolpathing', to: 'in-canned-cycle' },
+  { name: 'end-canned-cycle', from: 'in-canned-cycle', to: 'toolpathing' }
+]
+
 class Program {
   constructor (filepath) {
     // noinspection JSUnresolvedFunction
     this._fsm()
     this._rawLines = []
     this._blocks = []
-    this._fileStream = null
+    this._fileStream = readline.createInterface({
+      input: fs.createReadStream(filepath),
+      crlfDelay: Infinity
+    })
     this._position = {
       curr: new Position({ B: 0, X: 0, Y: 0, Z: 0 }),
       prev: new Position({ B: 0, X: 0, Y: 0, Z: 0 })
     }
 
     this.absinc = Position.ABSOLUTE
-    this.rapfeed = Position.RAPID
-    this.filepath = filepath
     this.toolpaths = []
   }
 
@@ -66,8 +75,6 @@ class Program {
   }
 
   async process () {
-    this.open()
-
     let toolpath = null
 
     for await (const line of this._fileStream) {
@@ -95,7 +102,7 @@ class Program {
           toolpath.cannedCycles.push(cannedCycle)
         }
 
-        if (block.G80 === true) {
+        if (this.is('in-canned-cycle') && block.G80 === true) {
           this.endCannedCycle()
         }
 
@@ -107,7 +114,8 @@ class Program {
 
         if (line[0] === 'N') {
           if (this.is('toolpathing')) {
-            this.endToolpath(toolpath)
+            this.endToolpath()
+            this.toolpaths.push(toolpath)
           }
 
           if (this.is('idle')) {
@@ -127,11 +135,11 @@ class Program {
       }
     }
 
-    this.endToolpath(toolpath)
-    this.close()
+    this.endToolpath()
+    this.toolpaths.push(toolpath)
   }
 
-  describe () {
+  describe (opts = { cannedCycle: true, cannedPoints: false }) {
     let output = `Program #${this.number} ${this.title}\n`
     output += '---------------------------------------------------------------------------------------\n'
 
@@ -139,19 +147,21 @@ class Program {
       if (toolpath.hasFeedrates()) {
         // const feedrates = toolpath.getFeedrates()
 
-        const toolNum = `  T${toolpath.tool.num}`.slice(-3)
+        output += chalk`{magenta T${_.padEnd(toolpath.tool.num, 3)}} | {blue ${toolpath.tool.desc}}\n`
 
-        output += chalk`{magenta ${toolNum}} | {blue ${toolpath.tool.desc}}`
-
-        if (toolpath.cannedCycles.length > 0) {
+        if (opts.cannedCycle && toolpath.cannedCycles.length > 0) {
           toolpath.cannedCycles.forEach(cannedCycle => {
             output += chalk`{greenBright ${cannedCycle.retractCommand}}`
             output += chalk`, {greenBright ${cannedCycle.cycleCommand}}`
-            output += chalk` with {yellow ${cannedCycle.getPointCount()}} points:\n`
+            output += chalk` with {yellow ${cannedCycle.getPointCount()}} points\n`
 
-            cannedCycle.getPoints().forEach(position => {
-              output += `X${position.X}, Y${position.Y}\n`
-            })
+            if (opts.cannedPoints) {
+              cannedCycle
+                .getPoints()
+                .forEach(position => {
+                  output += `X${position.X}, Y${position.Y}\n`
+                })
+            }
           })
         }
 
@@ -181,26 +191,5 @@ class Program {
 }
 
 module.exports = StateMachine.factory(Program, {
-  init: 'closed',
-  transitions: [
-    { name: 'open', from: 'closed', to: 'idle' },
-    { name: 'close', from: '*', to: 'closed' },
-
-    { name: 'start-toolpath', from: 'idle', to: 'toolpathing' },
-    { name: 'end-toolpath', from: 'toolpathing', to: 'idle' },
-
-    { name: 'start-canned-cycle', from: 'toolpathing', to: 'in-canned-cycle' },
-    { name: 'end-canned-cycle', from: 'in-canned-cycle', to: 'toolpathing' }
-  ],
-  methods: {
-    onBeforeOpen () {
-      this._fileStream = readline.createInterface({
-        input: fs.createReadStream(this.filepath),
-        crlfDelay: Infinity
-      })
-    },
-    onEndToolpath (lc, toolpath) {
-      this.toolpaths.push(toolpath)
-    }
-  }
+  init: 'idle', transitions
 })

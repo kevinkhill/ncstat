@@ -1,14 +1,13 @@
 import test from 'ava'
 import NcScanner from './index'
+import Machine from './src/Machine'
 
 test('foo', async (t) => {
   const vault = new NcScanner('./nc/example.NC')
 
   const files = await vault.scan()
 
-  console.log(`Analyzed ${files[0].toolpaths.length} toolpaths in ${files.length} NC files`)
-
-  files[0].toolpaths.forEach(toolpath => console.log(toolpath.type))
+  t.is(files[0].toolpaths.length, 6)
 })
 
 // test('bar', async (t) => {

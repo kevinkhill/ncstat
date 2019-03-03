@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+const cli = require('commander')
+const pkg = require('../package.json')
+const Program = require('../src/Program')
+
+// noinspection HtmlDeprecatedTag
+cli.version(pkg.version)
+  .description('An app for analyzing NC files')
+  .option('--canned-cycles', 'Show found canned cycles in toolpaths')
+  .option('--canned-points', 'Show the location of points in canned cycles')
+  .parse(process.argv)
+
+if (cli.args.length === 0) {
+  process.stderr.write('ERR: You must provide the path to a NC file')
+  cli.help()
+  process.abort()
+}
+
+(async (args) => {
+  const program = new Program(cli.args[0])
+console.log(args)
+  try {
+    await program.process()
+
+    program.describe({
+      cannedCycles: cli.cannedCycles,
+      cannedPoints: cli.cannedPoints
+    })
+
+    console.log(`Analyzed ${program.toolpaths.length} toolpaths.`)
+  } catch (err) {
+    console.log(err)
+  }
+})(cli)
