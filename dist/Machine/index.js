@@ -40,15 +40,9 @@ var data = {
     feedrate: 0
 };
 var methods = {
-    /**
-     * @return {number}
-     */
     S: function () {
         return this.spindle.rpms;
     },
-    /**
-     * @return {number}
-     */
     F: function () {
         return this.feedrate;
     },
@@ -68,4 +62,3 @@ var methods = {
 module.exports = new StateMachine({
     init: 'idle', transitions: transitions, data: data, methods: methods
 });
-//# sourceMappingURL=index.js.map

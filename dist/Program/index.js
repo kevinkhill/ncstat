@@ -55,7 +55,6 @@ var Block_1 = require("./Block");
 var Toolpath_1 = require("./Toolpath");
 var CannedCycle_1 = require("./CannedCycle");
 var Position_1 = require("./Position");
-var Machine_1 = require("../Machine");
 var transitions = [
     { name: 'start-toolpath', from: 'idle', to: 'toolpathing' },
     { name: 'end-toolpath', from: 'toolpathing', to: 'idle' },
@@ -93,22 +92,19 @@ var Program = /** @class */ (function () {
     };
     Program.prototype.updatePosition = function (block) {
         var _this = this;
+        var axes = ['B', 'X', 'Y', 'Z'];
         var position = block.getPosition();
         this._position.prev = this._position.curr;
-        if (this._absinc === Position_1.MODALS.ABSOLUTE) {
-            Machine_1.AXES.forEach(function (axis) {
-                if (position[axis]) {
-                    _this._position.curr[axis] = position[axis];
-                }
-            });
-        }
-        if (this._absinc === Position_1.MODALS.INCREMENTAL) {
-            Machine_1.AXES.forEach(function (axis) {
-                if (position[axis]) {
+        axes.forEach(function (axis) {
+            if (position[axis]) {
+                if (_this._absinc === Position_1.MODALS.INCREMENTAL) {
                     _this._position.curr[axis] += position[axis];
                 }
-            });
-        }
+                if (_this._absinc === Position_1.MODALS.ABSOLUTE) {
+                    _this._position.curr[axis] = position[axis];
+                }
+            }
+        });
     };
     Program.prototype.process = function () {
         var e_1, _a;
@@ -241,4 +237,3 @@ exports.default = StateMachine.factory(Program, {
     init: 'idle', transitions: transitions
 });
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
-//# sourceMappingURL=index.js.map

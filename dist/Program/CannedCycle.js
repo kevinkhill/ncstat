@@ -35,4 +35,3 @@ var CannedCycle = /** @class */ (function () {
     return CannedCycle;
 }());
 exports.default = CannedCycle;
-//# sourceMappingURL=CannedCycle.js.map

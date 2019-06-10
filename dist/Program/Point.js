@@ -13,4 +13,3 @@ var Point = /** @class */ (function () {
 }());
 exports.default = Point;
 module.exports = Point;
-//# sourceMappingURL=Point.js.map

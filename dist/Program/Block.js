@@ -1,4 +1,5 @@
 "use strict";
+/// <reference path="../../typings/Block.d.ts" />
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
 var Position_1 = require("./Position");
@@ -42,7 +43,7 @@ var Block = /** @class */ (function () {
         return lodash_1.find(this.addresses, function (address) { return address[0] === ltr; }) !== undefined;
     };
     Block.prototype.getAddress = function (ltr, cast) {
-        if (cast === void 0) { cast = false; }
+        if (cast === void 0) { cast = true; }
         if (this.hasAddress(ltr)) {
             var code = lodash_1.find(this.addresses, function (address) { return address[0] === ltr; });
             if (code) {
@@ -82,4 +83,3 @@ var Block = /** @class */ (function () {
     return Block;
 }());
 exports.default = Block;
-//# sourceMappingURL=Block.js.map

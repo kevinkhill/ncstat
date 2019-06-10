@@ -2,7 +2,7 @@
   "name": "nc-scanner",
   "version": "1.0.0",
   "description": "Scans NC program for static analysis",
-  "bin": "./bin/nc-scanner",
+  "bin": "./bin/analyze",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/harris-bruno/nc-scanner.git"
@@ -14,18 +14,22 @@
   },
   "homepage": "https://gitlab.com/harris-bruno/nc-scanner#readme",
   "scripts": {
-    "test": "ava",
+    "test": "npx ava",
+    "build": "npx tsc",
+    "watch": "npx tsc --watch",
     "example1": "node --no-warnings ./bin/analyze --canned-cycles ./nc/example1.NC",
     "example2": "node --no-warnings ./bin/analyze --canned-cycles ./nc/example2.NC",
     "start": "./bin/nc-scanner /mnt/c/\"H+405 PROGRAM VAULT\" -w \"HB PARTS,JOB SPECIFIC\""
   },
   "dependencies": {
+    "@types/node": "*",
+    "@types/lodash": "*",
     "chalk": "^2.4.2",
     "commander": "^2.19.0",
     "debug": "^4.1.1",
     "fs-extra": "^7.0.1",
     "javascript-state-machine": "^3.1.0",
-    "js-yaml": "^3.12.1",
+    "js-yaml": "^3.13.1",
     "lodash": "^4.17.11"
   },
   "devDependencies": {

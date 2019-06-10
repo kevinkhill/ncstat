@@ -1,4 +1,6 @@
 import { forEach } from 'lodash'
+import { G_CODES as RAW_G_CODES } from './gcodes'
+import { M_CODES as RAW_M_CODES} from './mcodes'
 
 export const G_CODES = {}
 export const M_CODES = {}
@@ -12,9 +14,7 @@ export const COMMANDS = {
   M: n => M_CODES[`M${n}`]
 }
 
-const gcodes = require('./gcodes.json')
-
-forEach(gcodes, (groupName, group) => {
+forEach(RAW_G_CODES, (groupName, group) => {
   forEach(groupName, (command, gcode) => {
     G_CODES[gcode] = {
       COMMAND: command,
@@ -23,9 +23,7 @@ forEach(gcodes, (groupName, group) => {
   })
 })
 
-const mcodes = require('./mcodes.json')
-
-forEach(mcodes, (command, mcode) => {
+forEach(RAW_M_CODES, (command, mcode) => {
   M_CODES[mcode] = {
     COMMAND: command,
     GROUP: 'MACHINE'

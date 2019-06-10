@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = require("lodash");
+var gcodes_1 = require("./gcodes");
+var mcodes_1 = require("./mcodes");
 exports.G_CODES = {};
 exports.M_CODES = {};
 exports.CANNED_CYCLE_START_CODES = [
@@ -10,9 +12,7 @@ exports.COMMANDS = {
     G: function (n) { return exports.G_CODES["G" + n]; },
     M: function (n) { return exports.M_CODES["M" + n]; }
 };
-var gcodes = require('./gcodes.json');
-console.log(gcodes);
-lodash_1.forEach(gcodes, function (groupName, group) {
+lodash_1.forEach(gcodes_1.G_CODES, function (groupName, group) {
     lodash_1.forEach(groupName, function (command, gcode) {
         exports.G_CODES[gcode] = {
             COMMAND: command,
@@ -20,11 +20,9 @@ lodash_1.forEach(gcodes, function (groupName, group) {
         };
     });
 });
-var mcodes = require('./mcodes.json');
-lodash_1.forEach(mcodes, function (command, mcode) {
+lodash_1.forEach(mcodes_1.M_CODES, function (command, mcode) {
     exports.M_CODES[mcode] = {
         COMMAND: command,
         GROUP: 'MACHINE'
     };
 });
-//# sourceMappingURL=index.js.map

@@ -9,8 +9,6 @@ import Toolpath from './Toolpath'
 import CannedCycle from './CannedCycle'
 import Position, { MODALS } from './Position'
 
-import { AXES } from '../Machine'
-
 const transitions = [
   { name: 'start-toolpath', from: 'idle', to: 'toolpathing' },
   { name: 'end-toolpath', from: 'toolpathing', to: 'idle' },
@@ -36,7 +34,7 @@ class Program {
   _absinc: any;
   _position: { curr: any, prev: any }
 
-  title: string; 
+  title: string;
   number: number;
 
   toolpaths: Array<any>;
@@ -76,25 +74,22 @@ class Program {
   }
 
   updatePosition (block) {
+    const axes = ['B', 'X', 'Y', 'Z']
     const position = block.getPosition()
 
     this._position.prev = this._position.curr
 
-    if (this._absinc === MODALS.ABSOLUTE) {
-      AXES.forEach(axis => {
-        if (position[axis]) {
-          this._position.curr[axis] = position[axis]
-        }
-      })
-    }
-
-    if (this._absinc === MODALS.INCREMENTAL) {
-      AXES.forEach(axis => {
-        if (position[axis]) {
+    axes.forEach(axis => {
+      if (position[axis]) {
+        if (this._absinc === MODALS.INCREMENTAL) {
           this._position.curr[axis] += position[axis]
         }
-      })
-    }
+
+        if (this._absinc === MODALS.ABSOLUTE) {
+          this._position.curr[axis] = position[axis]
+        }
+      }
+    })
   }
 
   async process () {

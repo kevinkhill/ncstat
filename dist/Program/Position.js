@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Machine_1 = require("../Machine");
 exports.MODALS = {
     RAPID: 'G00',
     FEED: 'G01',
@@ -14,12 +13,13 @@ var Position = /** @class */ (function () {
         this.X = 0;
         this.Y = 0;
         this.Z = 0;
-        Machine_1.AXES.forEach(function (axis) {
-            if (block[axis])
-                _this[axis] = block[axis];
-        });
+        if (block) {
+            ['B', 'X', 'Y', 'Z'].forEach(function (axis) {
+                if (block.hasAddress(axis))
+                    _this[axis] = block.getAddress(axis);
+            });
+        }
     }
     return Position;
 }());
 exports.default = Position;
-//# sourceMappingURL=Position.js.map

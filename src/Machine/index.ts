@@ -35,16 +35,10 @@ const data = {
 }
 
 const methods = {
-  /**
-   * @return {number}
-   */
-  S () {
+  S (): number {
     return this.spindle.rpms
   },
-  /**
-   * @return {number}
-   */
-  F () {
+  F (): number {
     return this.feedrate
   },
   onInit () {

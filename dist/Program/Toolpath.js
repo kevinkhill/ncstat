@@ -34,4 +34,3 @@ var Toolpath = /** @class */ (function () {
     return Toolpath;
 }());
 exports.default = Toolpath;
-//# sourceMappingURL=Toolpath.js.map

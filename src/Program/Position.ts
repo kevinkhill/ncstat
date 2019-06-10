@@ -1,7 +1,5 @@
 import Block from './Block'
 
-import { AXES } from '../Machine'
-
 export const MODALS = {
   RAPID: 'G00',
   FEED: 'G01',
@@ -10,20 +8,17 @@ export const MODALS = {
 }
 
 class Position {
-  B: number
-  X: number
-  Y: number
-  Z: number
+  B: number = 0
+  X: number = 0
+  Y: number = 0
+  Z: number = 0
 
   constructor (block?: Block) {
-    this.B = 0
-    this.X = 0
-    this.Y = 0
-    this.Z = 0
-
-    AXES.forEach(axis => {
-      if (block[axis]) this[axis] = block[axis]
-    })
+    if (block) {
+      ['B', 'X', 'Y', 'Z'].forEach(axis => {
+        if (block.hasAddress(axis)) this[axis] = block.getAddress(axis)
+      })
+    }
   }
 }
 

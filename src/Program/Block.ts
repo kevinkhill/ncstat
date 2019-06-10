@@ -1,3 +1,5 @@
+/// <reference path="../../typings/Block.d.ts" />
+
 import { find, isNumber, intersection } from 'lodash'
 
 import Position from './Position'
@@ -71,7 +73,7 @@ class Block {
     return find(this.addresses, address => address[0] === ltr) !== undefined
   }
 
-  getAddress (ltr: string, cast: boolean = false) {
+  getAddress (ltr: string, cast: boolean = true) {
     if (this.hasAddress(ltr)) {
       const code = find(this.addresses, address => address[0] === ltr)
 

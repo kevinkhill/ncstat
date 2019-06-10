@@ -30,4 +30,3 @@ var CannedPoint = /** @class */ (function (_super) {
     return CannedPoint;
 }(Point_1.default));
 exports.default = CannedPoint;
-//# sourceMappingURL=CannedPoint.js.map

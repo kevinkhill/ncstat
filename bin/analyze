@@ -1,14 +1,15 @@
 #!/usr/bin/env node
 
 const cli = require('commander')
-const pkg = require('../package.json')
+const log = require('debug')('nc-scanner:analzer')
 
+const { version } = require('../package.json')
 const Program = require('../dist')
 
-cli.version(pkg.version)
+cli.version(version)
   .description('An app for analyzing NC files')
-  .option('--canned-cycles', 'Show found canned cycles in toolpaths')
-  .option('--canned-points', 'Show the location of points in canned cycles')
+  .option('-c --canned-cycles', 'Show found canned cycles in toolpaths')
+  .option('-p --canned-points', 'Show the location of points in canned cycles')
   .parse(process.argv)
 
 if (cli.args.length === 0) {
@@ -19,7 +20,7 @@ if (cli.args.length === 0) {
 
 (async (args) => {
   const program = new Program(cli.args[0])
-console.log(args)
+
   try {
     await program.process()
 
@@ -28,7 +29,7 @@ console.log(args)
       cannedPoints: cli.cannedPoints
     })
 
-    console.log(`Analyzed ${program.toolpaths.length} toolpaths.`)
+    log(`Analyzed ${program.toolpaths.length} toolpaths.`)
   } catch (err) {
     console.log(err)
   }

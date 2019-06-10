@@ -1,0 +1,78 @@
+export declare const G_CODES: {
+    MOTION: {
+        G00: string;
+        G01: string;
+        G02: string;
+        G03: string;
+        G04: string;
+        G05: string;
+        G09: string;
+        G27: string;
+        G28: string;
+        G29: string;
+        G90: string;
+        G91: string;
+        G92: string;
+        G94: string;
+        G95: string;
+        G96: string;
+        G97: string;
+    };
+    COMPENSATION: {
+        G10: string;
+        G40: string;
+        G41: string;
+        G42: string;
+        G43: string;
+        G44: string;
+        G49: string;
+        G50: string;
+        G51: string;
+    };
+    COORDINATE: {
+        G15: string;
+        G16: string;
+        G17: string;
+        G18: string;
+        G19: string;
+        G20: string;
+        G21: string;
+        G52: string;
+        G53: string;
+        G54: string;
+        G55: string;
+        G56: string;
+        G57: string;
+        G58: string;
+        G59: string;
+        G68: string;
+        G69: string;
+        G92: string;
+    };
+    OTHER: {
+        G61: string;
+        G62: string;
+        G63: string;
+        G64: string;
+        G65: string;
+        G101: string;
+        G187: string;
+    };
+    CANNED: {
+        G73: string;
+        G74: string;
+        G76: string;
+        G80: string;
+        G81: string;
+        G82: string;
+        G83: string;
+        G84: string;
+        G85: string;
+        G86: string;
+        G87: string;
+        G88: string;
+        G89: string;
+        G98: string;
+        G99: string;
+    };
+};
