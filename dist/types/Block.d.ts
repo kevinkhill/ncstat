@@ -1,5 +1,8 @@
-import Position from "./Position";
 declare class Block {
+    rawLine: string;
+    comment: string;
+    blockSkip: string;
+    addresses: string[];
     G04?: boolean;
     G10?: boolean;
     G65?: boolean;
@@ -11,17 +14,13 @@ declare class Block {
     X?: number;
     Y?: number;
     Z?: number;
-    rawLine: string;
-    comment: string;
-    blockSkip: string;
-    addresses: string[];
     constructor(line: any);
     getPosition(): Position;
     isStartOfCannedCycle(): boolean;
     hasMovement(): boolean;
     hasAddress(ltr: string): boolean;
-    getAddress(ltr: string, cast?: boolean): string | number;
-    getCannedCycleStartCode(): string;
-    _mapAddressValuesToObj(): void;
+    getAddress(ltr: string, cast?: boolean): any;
+    getCannedCycleStartCode(): any;
+    _mapAddressValuesToObj(): any;
 }
 export default Block;

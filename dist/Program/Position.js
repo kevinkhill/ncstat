@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MODALS = {
-    RAPID: 'G00',
-    FEED: 'G01',
-    ABSOLUTE: 'G90',
-    INCREMENTAL: 'G91'
+    RAPID: "G00",
+    FEED: "G01",
+    ABSOLUTE: "G90",
+    INCREMENTAL: "G91",
 };
 var Position = /** @class */ (function () {
     function Position(block) {
@@ -14,9 +14,10 @@ var Position = /** @class */ (function () {
         this.Y = 0;
         this.Z = 0;
         if (block) {
-            ['B', 'X', 'Y', 'Z'].forEach(function (axis) {
-                if (block.hasAddress(axis))
+            ["B", "X", "Y", "Z"].forEach(function (axis) {
+                if (block.hasAddress(axis)) {
                     _this[axis] = block.getAddress(axis);
+                }
             });
         }
     }

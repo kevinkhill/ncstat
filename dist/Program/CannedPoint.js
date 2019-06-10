@@ -21,6 +21,7 @@ var CannedPoint = /** @class */ (function (_super) {
     }
     CannedPoint.getfactory = function (cannedCycle) {
         function pointFactory() {
+            //
         }
         return pointFactory;
     };

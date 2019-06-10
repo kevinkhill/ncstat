@@ -1,13 +1,13 @@
 export default class Point {
-  X: number
-  Y: number
-  Z: number
+  public X: number;
+  public Y: number;
+  public Z: number;
 
-  constructor (x: number = 0, y: number = 0, z: number = 0) {
-    this.X = x
-    this.Y = y
-    this.Z = z
+  constructor(x: number = 0, y: number = 0, z: number = 0) {
+    this.X = x;
+    this.Y = y;
+    this.Z = z;
   }
 }
 
-module.exports = Point
+module.exports = Point;

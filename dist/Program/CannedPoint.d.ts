@@ -1,8 +1,8 @@
-import Point from './Point';
-import Block from './Block';
+import Block from "./Block";
+import Point from "./Point";
 export default class CannedPoint extends Point {
-    R: number;
     static getfactory(cannedCycle: any): () => void;
+    R: number;
     constructor(block: Block, cannedCycle: any);
     setRetract(r: number): void;
 }

@@ -1,47 +1,48 @@
-const nLineRegex: RegExp = /^N([0-9]+)/
-const feedrateRegex: RegExp = /F([0-9]+(?:\\.[0-9]*)?)/g
+import { ITool } from "../typings";
 
-function uncomment (str: string) : string {
-  return str.replace('(', '').replace(')', '').trim()
+const nLineRegex: RegExp = /^N([0-9]+)/;
+const feedrateRegex: RegExp = /F([0-9]+(?:\\.[0-9]*)?)/g;
+
+function uncomment(str: string): string {
+  return str.replace("(", "").replace(")", "").trim();
 }
 
 export default class Toolpath {
-  lines: Array<string>
-  cannedCycles: Array<string>
-  tool: { desc: string, num: number }
+  public tool: ITool;
+  public lines: string[];
+  public cannedCycles: string[];
 
-  constructor (line: string) {
-    this.lines = []
-    this.cannedCycles = []
+  constructor(line: string) {
+    this.lines = [];
+    this.cannedCycles = [];
 
     this.tool = {
-      desc: '',
-      num: parseInt(line.match(nLineRegex)[1])
-    }
+      desc: "",
+      num: parseInt(line.match(nLineRegex)[1]),
+    };
 
-    this.tool.desc = uncomment(line.replace(`N${this.tool.num}`, ''))
+    this.tool.desc = uncomment(line.replace(`N${this.tool.num}`, ""));
   }
 
-  hasFeedrates () : boolean {
-    return this.lines.some(line => feedrateRegex.test(line))
+  public hasFeedrates(): boolean {
+    return this.lines.some((line) => feedrateRegex.test(line));
   }
 
-  getFeedrates () {
-    const feedrates = []
+  public getFeedrates() {
+    const feedrates = [];
 
     this.lines.forEach((line) => {
       if (feedrateRegex.test(line)) {
-        const feedrate = line.match(feedrateRegex)
+        const feedrate = line.match(feedrateRegex);
 
-        feedrates.push(parseFloat(feedrate[1]))
+        feedrates.push(parseFloat(feedrate[1]));
       }
-    })
+    });
 
-    return feedrates
+    return feedrates;
   }
 
-  getCannedCycleCount () : number {
-    return this.cannedCycles.length
+  public getCannedCycleCount(): number {
+    return this.cannedCycles.length;
   }
 }
-

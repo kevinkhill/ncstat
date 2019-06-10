@@ -46,62 +46,62 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var _ = require('lodash');
-var fs = require('fs');
-var chalk = require('chalk');
-var readline = require('readline');
-var StateMachine = require('javascript-state-machine');
-var Block_1 = require("./Block");
-var Toolpath_1 = require("./Toolpath");
+var chalk = require("chalk");
+var fs = require("fs");
+var StateMachine = require("javascript-state-machine");
+var _ = require("lodash");
+var readline = require("readline");
+// import Block from "./Block";
 var CannedCycle_1 = require("./CannedCycle");
 var Position_1 = require("./Position");
+var Toolpath_1 = require("./Toolpath");
+var typings_1 = require("../typings");
 var transitions = [
-    { name: 'start-toolpath', from: 'idle', to: 'toolpathing' },
-    { name: 'end-toolpath', from: 'toolpathing', to: 'idle' },
-    { name: 'start-canned-cycle', from: 'toolpathing', to: 'in-canned-cycle' },
-    { name: 'end-canned-cycle', from: 'in-canned-cycle', to: 'toolpathing' }
+    { name: "start-toolpath", from: "idle", to: "toolpathing" },
+    { name: "end-toolpath", from: "toolpathing", to: "idle" },
+    { name: "start-canned-cycle", from: "toolpathing", to: "in-canned-cycle" },
+    { name: "end-canned-cycle", from: "in-canned-cycle", to: "toolpathing" },
 ];
 var Program = /** @class */ (function () {
     function Program(filepath) {
-        // noinspection JSUnresolvedFunction
-        this._fsm();
-        this._rawLines = [];
-        this._blocks = [];
-        this._fileStream = readline.createInterface({
+        this.fsm();
+        this.rawLines = [];
+        this.blocks = [];
+        this.fileStream = readline.createInterface({
+            crlfDelay: Infinity,
             input: fs.createReadStream(filepath),
-            crlfDelay: Infinity
         });
-        this._position = {
+        this.position = {
             curr: new Position_1.default(),
-            prev: new Position_1.default()
+            prev: new Position_1.default(),
         };
-        this._absinc = Position_1.MODALS.ABSOLUTE;
+        this.absinc = Position_1.MODALS.ABSOLUTE;
         this.toolpaths = [];
     }
     Program.prototype.toString = function () {
-        return this._rawLines.join('\n');
+        return this.rawLines.join("\n");
     };
     Program.prototype.getToolpathCount = function () {
         return this.toolpaths.length;
     };
     Program.prototype.getPosition = function () {
-        return this._position.curr;
+        return this.position.curr;
     };
     Program.prototype.getPrevPosition = function () {
-        return this._position.prev;
+        return this.position.prev;
     };
     Program.prototype.updatePosition = function (block) {
         var _this = this;
-        var axes = ['B', 'X', 'Y', 'Z'];
+        var axes = ["B", "X", "Y", "Z"];
         var position = block.getPosition();
-        this._position.prev = this._position.curr;
+        this.position.prev = this.position.curr;
         axes.forEach(function (axis) {
             if (position[axis]) {
-                if (_this._absinc === Position_1.MODALS.INCREMENTAL) {
-                    _this._position.curr[axis] += position[axis];
+                if (_this.absinc === Position_1.MODALS.INCREMENTAL) {
+                    _this.position.curr[axis] += position[axis];
                 }
-                if (_this._absinc === Position_1.MODALS.ABSOLUTE) {
-                    _this._position.curr[axis] = position[axis];
+                if (_this.absinc === Position_1.MODALS.ABSOLUTE) {
+                    _this.position.curr[axis] = position[axis];
                 }
             }
         });
@@ -117,17 +117,17 @@ var Program = /** @class */ (function () {
                         _d.label = 1;
                     case 1:
                         _d.trys.push([1, 6, 7, 12]);
-                        _b = __asyncValues(this._fileStream);
+                        _b = __asyncValues(this.fileStream);
                         _d.label = 2;
                     case 2: return [4 /*yield*/, _b.next()];
                     case 3:
                         if (!(_c = _d.sent(), !_c.done)) return [3 /*break*/, 5];
                         line = _c.value;
-                        if (line !== '') {
-                            block = new Block_1.default(line);
-                            this._blocks.push(block);
-                            this._rawLines.push(line);
-                            this._setModals(block);
+                        if (line !== "") {
+                            block = new typings_1.Block(line);
+                            this.blocks.push(block);
+                            this.rawLines.push(line);
+                            this.setModals(block);
                             if (block.O) {
                                 this.number = block.O;
                                 this.title = block.comment;
@@ -135,31 +135,31 @@ var Program = /** @class */ (function () {
                             if (block.hasMovement()) {
                                 this.updatePosition(block);
                             }
-                            if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
+                            if (block.isStartOfCannedCycle() && this.is("toolpathing")) {
                                 this.startCannedCycle();
                                 cannedCycle = new CannedCycle_1.default(block);
                                 toolpath.cannedCycles.push(cannedCycle);
                             }
-                            if (this.is('in-canned-cycle') && block.G80 === true) {
+                            if (this.is("in-canned-cycle") && block.G80 === true) {
                                 this.endCannedCycle();
                             }
-                            if (this.is('in-canned-cycle') && block.hasMovement()) {
-                                point = _.clone(this._position.curr);
+                            if (this.is("in-canned-cycle") && block.hasMovement()) {
+                                point = _.clone(this.position.curr);
                                 _.last(toolpath.cannedCycles).addPoint(point);
                             }
-                            if (line[0] === 'N') {
-                                if (this.is('toolpathing')) {
+                            if (line[0] === "N") {
+                                if (this.is("toolpathing")) {
                                     this.endToolpath();
                                     this.toolpaths.push(toolpath);
                                 }
-                                if (this.is('idle')) {
+                                if (this.is("idle")) {
                                     toolpath = new Toolpath_1.default(line);
                                     this.startToolpath();
                                 }
                             }
                             // If we're toolpathing and `line` is not empty, save it to the toolpath
-                            if ((this.is('toolpathing') || this.is('in-canned-cycle')) &&
-                                line !== '' && line !== ' ') {
+                            if ((this.is("toolpathing") || this.is("in-canned-cycle")) &&
+                                line !== "" && line !== " ") {
                                 toolpath.lines.push(line);
                             }
                         }
@@ -192,7 +192,7 @@ var Program = /** @class */ (function () {
     };
     Program.prototype.describe = function (options) {
         var output = "Program #" + this.number + " " + this.title + "\n";
-        output += '---------------------------------------------------------------------------------------\n';
+        output += "---------------------------------------------------------------------------------------\n";
         this.toolpaths.forEach(function (toolpath) {
             if (toolpath.hasFeedrates()) {
                 // const feedrates = toolpath.getFeedrates()
@@ -219,21 +219,25 @@ var Program = /** @class */ (function () {
                 // console.log(`${toolNum} | ${toolDesc} | MIN: ${minFeedrate} MAX: ${maxFeedrate} MEAN: ${meanFeedrate}`)
             }
         });
-        console.log(output);
+        return output;
     };
-    Program.prototype._setModals = function (block) {
-        if (block.G00)
-            this._rapfeed = Position_1.MODALS.RAPID;
-        if (block.G01)
-            this._rapfeed = Position_1.MODALS.FEED;
-        if (block.G90)
-            this._absinc = Position_1.MODALS.ABSOLUTE;
-        if (block.G91)
-            this._absinc = Position_1.MODALS.INCREMENTAL;
+    Program.prototype.setModals = function (block) {
+        if (block.G00) {
+            this.rapfeed = Position_1.MODALS.RAPID;
+        }
+        if (block.G01) {
+            this.rapfeed = Position_1.MODALS.FEED;
+        }
+        if (block.G90) {
+            this.absinc = Position_1.MODALS.ABSOLUTE;
+        }
+        if (block.G91) {
+            this.absinc = Position_1.MODALS.INCREMENTAL;
+        }
     };
     return Program;
 }());
 exports.default = StateMachine.factory(Program, {
-    init: 'idle', transitions: transitions
+    init: "idle", transitions: transitions,
 });
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;

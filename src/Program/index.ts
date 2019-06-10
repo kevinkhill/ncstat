@@ -1,187 +1,179 @@
-const _ = require('lodash')
-const fs = require('fs')
-const chalk = require('chalk')
-const readline = require('readline')
-const StateMachine = require('javascript-state-machine')
+import chalk = require("chalk");
+import fs = require("fs");
+import StateMachine = require("javascript-state-machine");
+import _ = require("lodash");
+import readline = require("readline");
 
-import Block from './Block'
-import Toolpath from './Toolpath'
-import CannedCycle from './CannedCycle'
-import Position, { MODALS } from './Position'
+// import Block from "./Block";
+import CannedCycle from "./CannedCycle";
+import Position, { MODALS } from "./Position";
+import Toolpath from "./Toolpath";
+
+import { Block } from "../typings";
 
 const transitions = [
-  { name: 'start-toolpath', from: 'idle', to: 'toolpathing' },
-  { name: 'end-toolpath', from: 'toolpathing', to: 'idle' },
+  { name: "start-toolpath", from: "idle", to: "toolpathing" },
+  { name: "end-toolpath", from: "toolpathing", to: "idle" },
 
-  { name: 'start-canned-cycle', from: 'toolpathing', to: 'in-canned-cycle' },
-  { name: 'end-canned-cycle', from: 'in-canned-cycle', to: 'toolpathing' }
-]
-
-interface Program {
-  is(state: string): any
-  startToolpath(): any
-  endToolpath(): any
-  endCannedCycle(): any
-  startCannedCycle(): any
-}
+  { name: "start-canned-cycle", from: "toolpathing", to: "in-canned-cycle" },
+  { name: "end-canned-cycle", from: "in-canned-cycle", to: "toolpathing" },
+];
 
 class Program {
-  _fsm: any;
-  _rawLines: Array<string>;
-  _blocks: Array<any>;
-  _fileStream: any;
-  _rapfeed: any;
-  _absinc: any;
-  _position: { curr: any, prev: any }
+  public number: number;
+  public title: string;
+  public toolpaths: any[];
 
-  title: string;
-  number: number;
+  private absinc: any;
+  private blocks: any[];
+  private position: { curr: any, prev: any };
+  private fileStream: any;
+  private fsm: any;
+  private rapfeed: any;
+  private rawLines: string[];
 
-  toolpaths: Array<any>;
-
-  constructor (filepath: string) {
-    // noinspection JSUnresolvedFunction
-    this._fsm()
-    this._rawLines = []
-    this._blocks = []
-    this._fileStream = readline.createInterface({
+  constructor(filepath: string) {
+    this.fsm();
+    this.rawLines = [];
+    this.blocks = [];
+    this.fileStream = readline.createInterface({
+      crlfDelay: Infinity,
       input: fs.createReadStream(filepath),
-      crlfDelay: Infinity
-    })
-    this._position = {
+    });
+    this.position = {
       curr: new Position(),
-      prev: new Position()
-    }
-    this._absinc = MODALS.ABSOLUTE
+      prev: new Position(),
+    };
+    this.absinc = MODALS.ABSOLUTE;
 
-    this.toolpaths = []
+    this.toolpaths = [];
   }
 
-  toString () {
-    return this._rawLines.join('\n')
+  public toString() {
+    return this.rawLines.join("\n");
   }
 
-  getToolpathCount () {
-    return this.toolpaths.length
+  public getToolpathCount() {
+    return this.toolpaths.length;
   }
 
-  getPosition () {
-    return this._position.curr
+  public getPosition() {
+    return this.position.curr;
   }
 
-  getPrevPosition () {
-    return this._position.prev
+  public getPrevPosition() {
+    return this.position.prev;
   }
 
-  updatePosition (block) {
-    const axes = ['B', 'X', 'Y', 'Z']
-    const position = block.getPosition()
+  public updatePosition(block) {
+    const axes = ["B", "X", "Y", "Z"];
+    const position = block.getPosition();
 
-    this._position.prev = this._position.curr
+    this.position.prev = this.position.curr;
 
-    axes.forEach(axis => {
+    axes.forEach((axis) => {
       if (position[axis]) {
-        if (this._absinc === MODALS.INCREMENTAL) {
-          this._position.curr[axis] += position[axis]
+        if (this.absinc === MODALS.INCREMENTAL) {
+          this.position.curr[axis] += position[axis];
         }
 
-        if (this._absinc === MODALS.ABSOLUTE) {
-          this._position.curr[axis] = position[axis]
+        if (this.absinc === MODALS.ABSOLUTE) {
+          this.position.curr[axis] = position[axis];
         }
       }
-    })
+    });
   }
 
-  async process () {
-    let toolpath = null
+  public async process() {
+    let toolpath = null;
 
-    for await (const line of this._fileStream) {
-      if (line !== '') {
-        const block = new Block(line)
+    for await (const line of this.fileStream) {
+      if (line !== "") {
+        const block = new Block(line);
 
-        this._blocks.push(block)
-        this._rawLines.push(line)
+        this.blocks.push(block);
+        this.rawLines.push(line);
 
-        this._setModals(block)
+        this.setModals(block);
 
         if (block.O) {
-          this.number = block.O
-          this.title = block.comment
+          this.number = block.O;
+          this.title = block.comment;
         }
 
         if (block.hasMovement()) {
-          this.updatePosition(block)
+          this.updatePosition(block);
         }
 
-        if (block.isStartOfCannedCycle() && this.is('toolpathing')) {
-          this.startCannedCycle()
+        if (block.isStartOfCannedCycle() && this.is("toolpathing")) {
+          this.startCannedCycle();
 
-          const cannedCycle = new CannedCycle(block)
+          const cannedCycle = new CannedCycle(block);
 
-          toolpath.cannedCycles.push(cannedCycle)
+          toolpath.cannedCycles.push(cannedCycle);
         }
 
-        if (this.is('in-canned-cycle') && block.G80 === true) {
-          this.endCannedCycle()
+        if (this.is("in-canned-cycle") && block.G80 === true) {
+          this.endCannedCycle();
         }
 
-        if (this.is('in-canned-cycle') && block.hasMovement()) {
-          const point = _.clone(this._position.curr)
+        if (this.is("in-canned-cycle") && block.hasMovement()) {
+          const point = _.clone(this.position.curr);
 
-          _.last(toolpath.cannedCycles).addPoint(point)
+          _.last(toolpath.cannedCycles).addPoint(point);
         }
 
-        if (line[0] === 'N') {
-          if (this.is('toolpathing')) {
-            this.endToolpath()
-            this.toolpaths.push(toolpath)
+        if (line[0] === "N") {
+          if (this.is("toolpathing")) {
+            this.endToolpath();
+            this.toolpaths.push(toolpath);
           }
 
-          if (this.is('idle')) {
-            toolpath = new Toolpath(line)
+          if (this.is("idle")) {
+            toolpath = new Toolpath(line);
 
-            this.startToolpath()
+            this.startToolpath();
           }
         }
 
         // If we're toolpathing and `line` is not empty, save it to the toolpath
         if (
-          (this.is('toolpathing') || this.is('in-canned-cycle')) &&
-          line !== '' && line !== ' '
+          (this.is("toolpathing") || this.is("in-canned-cycle")) &&
+          line !== "" && line !== " "
         ) {
-          toolpath.lines.push(line)
+          toolpath.lines.push(line);
         }
       }
     }
 
-    this.endToolpath()
-    this.toolpaths.push(toolpath)
+    this.endToolpath();
+    this.toolpaths.push(toolpath);
   }
 
-  describe (options) {
-    let output = `Program #${this.number} ${this.title}\n`
-    output += '---------------------------------------------------------------------------------------\n'
+  public describe(options) {
+    let output = `Program #${this.number} ${this.title}\n`;
+    output += "---------------------------------------------------------------------------------------\n";
 
     this.toolpaths.forEach((toolpath) => {
       if (toolpath.hasFeedrates()) {
         // const feedrates = toolpath.getFeedrates()
 
-        output += chalk`{magenta T${_.padEnd(toolpath.tool.num, 3)}} | {blue ${toolpath.tool.desc}}\n`
+        output += chalk`{magenta T${_.padEnd(toolpath.tool.num, 3)}} | {blue ${toolpath.tool.desc}}\n`;
 
         if (options.cannedCycles && toolpath.cannedCycles.length > 0) {
-          toolpath.cannedCycles.forEach(cannedCycle => {
-            output += chalk`{greenBright ${cannedCycle.retractCommand}}`
-            output += chalk`, {greenBright ${cannedCycle.cycleCommand}}`
-            output += chalk` with {yellow ${cannedCycle.getPointCount()}} points\n`
+          toolpath.cannedCycles.forEach((cannedCycle) => {
+            output += chalk`{greenBright ${cannedCycle.retractCommand}}`;
+            output += chalk`, {greenBright ${cannedCycle.cycleCommand}}`;
+            output += chalk` with {yellow ${cannedCycle.getPointCount()}} points\n`;
 
             if (options.cannedPoints) {
               cannedCycle
                 .getPoints()
-                .forEach(position => {
-                  output += `X${position.X}, Y${position.Y}\n`
-                })
+                .forEach((position) => {
+                  output += `X${position.X}, Y${position.Y}\n`;
+                });
             }
-          })
+          });
         }
 
         // const minFeedrate = chalk.red.bold(_.min(feedrates).toFixed(3))
@@ -195,20 +187,20 @@ class Program {
 
         // console.log(`${toolNum} | ${toolDesc} | MIN: ${minFeedrate} MAX: ${maxFeedrate} MEAN: ${meanFeedrate}`)
       }
-    })
+    });
 
-    console.log(output)
+    return output;
   }
 
-  _setModals (block) {
-    if (block.G00) this._rapfeed = MODALS.RAPID
-    if (block.G01) this._rapfeed = MODALS.FEED
+  private setModals(block: Block) {
+    if (block.G00) { this.rapfeed = MODALS.RAPID; }
+    if (block.G01) { this.rapfeed = MODALS.FEED; }
 
-    if (block.G90) this._absinc = MODALS.ABSOLUTE
-    if (block.G91) this._absinc = MODALS.INCREMENTAL
+    if (block.G90) { this.absinc = MODALS.ABSOLUTE; }
+    if (block.G91) { this.absinc = MODALS.INCREMENTAL; }
   }
 }
 
 export default StateMachine.factory(Program, {
-  init: 'idle', transitions
-})
+  init: "idle", transitions,
+});

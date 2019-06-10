@@ -11,33 +11,32 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var StateMachine = require('javascript-state-machine');
-exports.AXES = ['B', 'X', 'Y', 'Z'];
+var StateMachine = require("javascript-state-machine");
+exports.AXES = ["B", "X", "Y", "Z"];
 function zeroPos() {
     return { X: 0, Y: 0, Z: 0, B: 0 };
 }
 var transitions = [
     /* eslint-disable */
-    { name: 'cycle-start', from: ['idle', 'paused'], to: 'running' },
-    { name: 'feed-hold', from: 'running', to: 'paused' },
-    { name: 'cycle-complete', from: 'running', to: 'idle' }
-    /* eslint-enable */
+    { name: "cycle-start", from: ["idle", "paused"], to: "running" },
+    { name: "feed-hold", from: "running", to: "paused" },
+    { name: "cycle-complete", from: "running", to: "idle" },
 ];
 var data = {
+    feedrate: 0,
     offsets: {
         G54: zeroPos(),
         G55: zeroPos(),
         G56: zeroPos(),
         G57: zeroPos(),
         G58: zeroPos(),
-        G59: zeroPos()
+        G59: zeroPos(),
     },
     position: __assign({}, zeroPos(), { prev: zeroPos() }),
     spindle: {
-        state: '',
-        rpms: 0
+        rpms: 0,
+        state: "",
     },
-    feedrate: 0
 };
 var methods = {
     S: function () {
@@ -57,8 +56,11 @@ var methods = {
     },
     onCycleComplete: function () {
         //
-    }
+    },
 };
 module.exports = new StateMachine({
-    init: 'idle', transitions: transitions, data: data, methods: methods
+    data: data,
+    init: "idle",
+    methods: methods,
+    transitions: transitions,
 });

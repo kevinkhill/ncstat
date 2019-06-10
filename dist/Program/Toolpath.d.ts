@@ -1,10 +1,8 @@
+import { ITool } from "../typings";
 export default class Toolpath {
-    lines: Array<string>;
-    cannedCycles: Array<string>;
-    tool: {
-        desc: string;
-        num: number;
-    };
+    tool: ITool;
+    lines: string[];
+    cannedCycles: string[];
     constructor(line: string);
     hasFeedrates(): boolean;
     getFeedrates(): any[];

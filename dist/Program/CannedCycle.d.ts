@@ -1,7 +1,7 @@
+import Block from "./Block";
+import Point from "./Point";
 export declare const CANNED_CYCLE_ARGS: string[];
 export default class CannedCycle {
-    private block;
-    _points: any[];
     peck: any;
     depth: any;
     retract: any;
@@ -10,8 +10,10 @@ export default class CannedCycle {
     retractCommand: any;
     G98?: any;
     G99?: any;
-    constructor(block: any);
-    addPoint(point: any): void;
+    private points;
+    private block;
+    constructor(block: Block);
+    addPoint(point: Point): void;
     getPoints(): any[];
     getPointCount(): number;
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+/* tslint:disable */
 const cli = require('commander')
 const log = require('debug')('nc-scanner:analzer')
 
@@ -24,11 +24,12 @@ if (cli.args.length === 0) {
   try {
     await program.process()
 
-    program.describe({
+    const output = program.describe({
       cannedCycles: cli.cannedCycles,
       cannedPoints: cli.cannedPoints
     })
 
+    log(output)
     log(`Analyzed ${program.toolpaths.length} toolpaths.`)
   } catch (err) {
     console.log(err)

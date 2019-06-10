@@ -1,56 +1,57 @@
-import { intersection, flatten } from 'lodash'
+import { flatten, intersection } from "lodash";
 
-import Block from './Block'
-import { CANNED_CYCLE_START_CODES } from '../NcCodes'
+import { CANNED_CYCLE_START_CODES } from "../NcCodes";
+import Block from "./Block";
+import Point from "./Point";
 
-export const CANNED_CYCLE_ARGS = ['Z', 'R', 'Q', 'F']
+export const CANNED_CYCLE_ARGS = ["Z", "R", "Q", "F"];
 
 export default class CannedCycle {
-  private block: Block
-  _points = []
+  public peck: any;
+  public depth: any;
+  public retract: any;
+  public feedrate: any;
 
-  peck: any
-  depth: any
-  retract: any
-  feedrate: any
+  public cycleCommand: any;
+  public retractCommand: any;
 
-  cycleCommand: any
-  retractCommand: any
+  public G98?: any;
+  public G99?: any;
 
-  G98?: any
-  G99?: any
+  private points = [];
+  private block: Block;
 
-  constructor (block) {
-    this.block = block
-    this._points = []
+  constructor(block: Block) {
+    this.block = block;
+    this.points = [];
 
-    this.peck = this.block.getAddress('Q')
-    this.depth = this.block.getAddress('Z')
-    this.retract = this.block.getAddress('R')
-    this.feedrate = this.block.getAddress('F')
+    this.peck = this.block.getAddress("Q");
+    this.depth = this.block.getAddress("Z");
+    this.retract = this.block.getAddress("R");
+    this.feedrate = this.block.getAddress("F");
 
-    this.cycleCommand = flatten(intersection(this.block.addresses, CANNED_CYCLE_START_CODES))
-    this.retractCommand = flatten(intersection(this.block.addresses, ['G98', 'G99']))
+    this.cycleCommand = flatten(intersection(this.block.addresses, CANNED_CYCLE_START_CODES));
+    this.retractCommand = flatten(intersection(this.block.addresses, ["G98", "G99"]));
 
-    this.G98 = this.block.addresses.indexOf('G98') > -1
-    this.G99 = this.block.addresses.indexOf('G99') > -1
+    this.G98 = this.block.addresses.indexOf("G98") > -1;
+    this.G99 = this.block.addresses.indexOf("G99") > -1;
 
     CANNED_CYCLE_ARGS.forEach((ltr) => {
-      this[ltr] = this.block.getAddress(ltr, true)
-    })
+      this[ltr] = this.block.getAddress(ltr, true);
+    });
   }
 
-  addPoint (point) {
-    const position = point instanceof Block ? point.getPosition() : point
+  public addPoint(point: Point) {
+    const position = point instanceof Block ? point.getPosition() : point;
 
-    this._points.push(position)
+    this.points.push(position);
   }
 
-  getPoints () {
-    return this._points
+  public getPoints() {
+    return this.points;
   }
 
-  getPointCount () {
-    return this._points.length
+  public getPointCount() {
+    return this.points.length;
   }
 }
