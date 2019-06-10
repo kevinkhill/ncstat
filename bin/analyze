@@ -2,9 +2,9 @@
 
 const cli = require('commander')
 const pkg = require('../package.json')
-const Program = require('../src/Program')
 
-// noinspection HtmlDeprecatedTag
+const Program = require('../dist')
+
 cli.version(pkg.version)
   .description('An app for analyzing NC files')
   .option('--canned-cycles', 'Show found canned cycles in toolpaths')

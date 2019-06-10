@@ -4,10 +4,12 @@ const chalk = require('chalk')
 const readline = require('readline')
 const StateMachine = require('javascript-state-machine')
 
-const Block = require('./Block')
-const Toolpath = require('./Toolpath')
-const Position = require('./Position')
-const CannedCycle = require('./CannedCycle')
+import Block from './Block'
+import Toolpath from './Toolpath'
+import CannedCycle from './CannedCycle'
+import Position, { MODALS } from './Position'
+
+import { AXES } from '../Machine'
 
 const transitions = [
   { name: 'start-toolpath', from: 'idle', to: 'toolpathing' },
@@ -17,8 +19,29 @@ const transitions = [
   { name: 'end-canned-cycle', from: 'in-canned-cycle', to: 'toolpathing' }
 ]
 
+interface Program {
+  is(state: string): any
+  startToolpath(): any
+  endToolpath(): any
+  endCannedCycle(): any
+  startCannedCycle(): any
+}
+
 class Program {
-  constructor (filepath) {
+  _fsm: any;
+  _rawLines: Array<string>;
+  _blocks: Array<any>;
+  _fileStream: any;
+  _rapfeed: any;
+  _absinc: any;
+  _position: { curr: any, prev: any }
+
+  title: string; 
+  number: number;
+
+  toolpaths: Array<any>;
+
+  constructor (filepath: string) {
     // noinspection JSUnresolvedFunction
     this._fsm()
     this._rawLines = []
@@ -28,11 +51,11 @@ class Program {
       crlfDelay: Infinity
     })
     this._position = {
-      curr: new Position({ B: 0, X: 0, Y: 0, Z: 0 }),
-      prev: new Position({ B: 0, X: 0, Y: 0, Z: 0 })
+      curr: new Position(),
+      prev: new Position()
     }
+    this._absinc = MODALS.ABSOLUTE
 
-    this.absinc = Position.ABSOLUTE
     this.toolpaths = []
   }
 
@@ -57,16 +80,16 @@ class Program {
 
     this._position.prev = this._position.curr
 
-    if (this.absinc === Position.ABSOLUTE) {
-      Position.AXES.forEach(axis => {
+    if (this._absinc === MODALS.ABSOLUTE) {
+      AXES.forEach(axis => {
         if (position[axis]) {
           this._position.curr[axis] = position[axis]
         }
       })
     }
 
-    if (this.absinc === Position.INCREMENTAL) {
-      Position.AXES.forEach(axis => {
+    if (this._absinc === MODALS.INCREMENTAL) {
+      AXES.forEach(axis => {
         if (position[axis]) {
           this._position.curr[axis] += position[axis]
         }
@@ -80,6 +103,7 @@ class Program {
     for await (const line of this._fileStream) {
       if (line !== '') {
         const block = new Block(line)
+
         this._blocks.push(block)
         this._rawLines.push(line)
 
@@ -139,7 +163,7 @@ class Program {
     this.toolpaths.push(toolpath)
   }
 
-  describe (opts = { cannedCycle: true, cannedPoints: false }) {
+  describe (options) {
     let output = `Program #${this.number} ${this.title}\n`
     output += '---------------------------------------------------------------------------------------\n'
 
@@ -149,13 +173,13 @@ class Program {
 
         output += chalk`{magenta T${_.padEnd(toolpath.tool.num, 3)}} | {blue ${toolpath.tool.desc}}\n`
 
-        if (opts.cannedCycle && toolpath.cannedCycles.length > 0) {
+        if (options.cannedCycles && toolpath.cannedCycles.length > 0) {
           toolpath.cannedCycles.forEach(cannedCycle => {
             output += chalk`{greenBright ${cannedCycle.retractCommand}}`
             output += chalk`, {greenBright ${cannedCycle.cycleCommand}}`
             output += chalk` with {yellow ${cannedCycle.getPointCount()}} points\n`
 
-            if (opts.cannedPoints) {
+            if (options.cannedPoints) {
               cannedCycle
                 .getPoints()
                 .forEach(position => {
@@ -182,14 +206,14 @@ class Program {
   }
 
   _setModals (block) {
-    if (block.G00) this.rapfeed = Position.RAPID
-    if (block.G01) this.rapfeed = Position.FEED
+    if (block.G00) this._rapfeed = MODALS.RAPID
+    if (block.G01) this._rapfeed = MODALS.FEED
 
-    if (block.G90) this.absinc = Position.ABSOLUTE
-    if (block.G91) this.absinc = Position.INCREMENTAL
+    if (block.G90) this._absinc = MODALS.ABSOLUTE
+    if (block.G91) this._absinc = MODALS.INCREMENTAL
   }
 }
 
-module.exports = StateMachine.factory(Program, {
+export default StateMachine.factory(Program, {
   init: 'idle', transitions
 })

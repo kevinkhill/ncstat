@@ -1,6 +1,6 @@
 import test from 'ava'
 import NcScanner from './index'
-import Machine from './src/Machine'
+import Machine from './built/Machine'
 
 test('foo', async (t) => {
   const vault = new NcScanner('./nc/example.NC')

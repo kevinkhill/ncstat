@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git+ssh://git@gitlab.com/harris-bruno/nc-scanner.git"
   },
-  "author": "Shaggy",
+  "author": "Kevin Hill",
   "license": "UNLICENSED",
   "bugs": {
     "url": "https://gitlab.com/harris-bruno/nc-scanner/issues"
@@ -15,8 +15,8 @@
   "homepage": "https://gitlab.com/harris-bruno/nc-scanner#readme",
   "scripts": {
     "test": "ava",
-    "example1": "./bin/nc-scanner ./nc/example1.NC",
-    "example2": "./bin/nc-scanner ./nc/example2.NC",
+    "example1": "node --no-warnings ./bin/analyze --canned-cycles ./nc/example1.NC",
+    "example2": "node --no-warnings ./bin/analyze --canned-cycles ./nc/example2.NC",
     "start": "./bin/nc-scanner /mnt/c/\"H+405 PROGRAM VAULT\" -w \"HB PARTS,JOB SPECIFIC\""
   },
   "dependencies": {
@@ -29,16 +29,8 @@
     "lodash": "^4.17.11"
   },
   "devDependencies": {
-    "ava": "^1.2.1",
-    "eslint-config-standard": "^12.0.0",
-    "standard": "^12.0.1",
-    "eslint": "^5.14.1",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
-  },
-  "eslintConfig": {
-    "extends": "standard"
+    "ava": "^2.0.0",
+    "tslint": "^5.17.0",
+    "typescript": "^3.5.1"
   }
 }

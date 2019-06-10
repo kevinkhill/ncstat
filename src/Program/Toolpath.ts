@@ -1,24 +1,28 @@
-const nLineRegex = /^N([0-9]+)/
-const feedrateRegex = /F([0-9]+(?:\\.[0-9]*)?)/g
+const nLineRegex: RegExp = /^N([0-9]+)/
+const feedrateRegex: RegExp = /F([0-9]+(?:\\.[0-9]*)?)/g
 
-function uncomment (str) {
+function uncomment (str: string) : string {
   return str.replace('(', '').replace(')', '').trim()
 }
 
-class Toolpath {
-  constructor (line) {
+export default class Toolpath {
+  lines: Array<string>
+  cannedCycles: Array<string>
+  tool: { desc: string, num: number }
+
+  constructor (line: string) {
     this.lines = []
     this.cannedCycles = []
 
     this.tool = {
       desc: '',
-      num: line.match(nLineRegex)[1]
+      num: parseInt(line.match(nLineRegex)[1])
     }
 
     this.tool.desc = uncomment(line.replace(`N${this.tool.num}`, ''))
   }
 
-  hasFeedrates () {
+  hasFeedrates () : boolean {
     return this.lines.some(line => feedrateRegex.test(line))
   }
 
@@ -36,9 +40,8 @@ class Toolpath {
     return feedrates
   }
 
-  getCannedCycleCount () {
+  getCannedCycleCount () : number {
     return this.cannedCycles.length
   }
 }
 
-module.exports = Toolpath

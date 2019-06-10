@@ -1,6 +1,10 @@
 const StateMachine = require('javascript-state-machine')
 
-const zeroPos = () => { return { X: 0, Y: 0, Z: 0, B: 0 } }
+export const AXES = ['B', 'X', 'Y', 'Z']
+
+function zeroPos () {
+  return { X: 0, Y: 0, Z: 0, B: 0 }
+}
 
 const transitions = [
   /* eslint-disable */
