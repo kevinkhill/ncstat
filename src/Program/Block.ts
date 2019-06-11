@@ -1,17 +1,17 @@
-import { find, intersection, isNumber } from "lodash";
+import * as _ from "lodash";
 
-import { CANNED_CYCLE_START_CODES } from "../NcCodes";
-import Position from "./Position";
+import { CANNED_CYCLE_START_CODES, MODALS } from "../NcCodes";
+import { IPosition } from "../typings";
 
 const blockSkipRegex: RegExp = /(^\/[0-9]?)/;
 const commentRegex: RegExp = /\(\s?(.+)\s?\)/;
 const addressRegex: RegExp = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
 
 function zeroPadAddress(str: string): string {
-  return (str ? str[0] + `00${str.slice(1)}`.slice(-2) : "");
+  return str ? str[0] + `00${str.slice(1)}`.slice(-2) : "";
 }
 
-class Block {
+export class Block {
   public G04?: boolean;
   public G10?: boolean;
   public G65?: boolean;
@@ -41,18 +41,27 @@ class Block {
     if (blockSkipRegex.test(this.rawLine)) {
       const match = this.rawLine.match(blockSkipRegex);
 
-      if (match) { this.blockSkip = match[1]; }
+      if (match) {
+        this.blockSkip = match[1];
+      }
     }
 
     if (commentRegex.test(this.rawLine)) {
       const match = this.rawLine.match(commentRegex);
 
-      if (match) { this.comment = match[1]; }
+      if (match) {
+        this.comment = match[1];
+      }
     }
   }
 
-  public getPosition(): Position {
-    return new Position(this);
+  public getPosition(): IPosition {
+    return {
+      B: this.getAddress("B"),
+      X: this.getAddress("X"),
+      Y: this.getAddress("Y"),
+      Z: this.getAddress("Z")
+    };
   }
 
   public isStartOfCannedCycle(): boolean {
@@ -60,42 +69,43 @@ class Block {
   }
 
   public hasMovement(): boolean {
-    if (this.G10 === true || this.G04 === true || this.G65 === true) { return false; }
+    if (this.G10 === true || this.G04 === true || this.G65 === true) {
+      return false;
+    }
 
-    return isNumber(this.B) || isNumber(this.X) || isNumber(this.Y) || isNumber(this.Z);
+    return (
+      _.isNumber(this.B) ||
+      _.isNumber(this.X) ||
+      _.isNumber(this.Y) ||
+      _.isNumber(this.Z)
+    );
   }
 
   public hasAddress(ltr: string): boolean {
-    return find(this.addresses, (address) => address[0] === ltr) !== undefined;
+    return _.find(this.addresses, address => address[0] === ltr) !== undefined;
   }
 
-  public getAddress(ltr: string, cast: boolean = true) {
+  public getAddress(ltr: string): number {
     if (this.hasAddress(ltr)) {
-      const code = find(this.addresses, (address) => address[0] === ltr);
+      const code = _.find(this.addresses, address => address[0] === ltr);
 
-      if (code) {
-        const value = code.slice(1);
+      const value = code.slice(1);
 
-        if (cast) {
-          return code.indexOf(".") > -1 ? parseFloat(value) : parseInt(value);
-        }
-
-        return code;
-      }
+      return code.indexOf(".") > -1 ? parseFloat(value) : parseInt(value);
     }
 
     return null;
   }
 
   public getCannedCycleStartCode() {
-    const cycle = intersection(this.addresses, CANNED_CYCLE_START_CODES);
+    const cycle = _.intersection(this.addresses, CANNED_CYCLE_START_CODES);
 
     return cycle.length > 0 ? cycle[0] : null;
   }
 
   public _mapAddressValuesToObj() {
     // Map found G & M addresses to true on the block
-    this.addresses.forEach((addr) => {
+    this.addresses.forEach(addr => {
       if (addr[0] === "G" || addr[0] === "M") {
         if (parseInt(addr.slice(1)) < 10) {
           this[zeroPadAddress(addr)] = true;
@@ -106,12 +116,10 @@ class Block {
     });
 
     // Map all found Letter addresses to their cast values on the block
-    "ABCDEFHIJKLNOPQRSTUVWXYZ".split("").forEach((ltr) => {
+    "ABCDEFHIJKLNOPQRSTUVWXYZ".split("").forEach(ltr => {
       if (this.hasAddress(ltr)) {
-        this[ltr] = this.getAddress(ltr, true);
+        this[ltr] = this.getAddress(ltr);
       }
     });
   }
 }
-
-export default Block;

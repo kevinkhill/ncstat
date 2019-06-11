@@ -19,11 +19,11 @@ var CannedCycle = /** @class */ (function () {
         this.G98 = this.block.addresses.indexOf("G98") > -1;
         this.G99 = this.block.addresses.indexOf("G99") > -1;
         exports.CANNED_CYCLE_ARGS.forEach(function (ltr) {
-            _this[ltr] = _this.block.getAddress(ltr, true);
+            _this[ltr] = _this.block.getAddress(ltr);
         });
     }
     CannedCycle.prototype.addPoint = function (point) {
-        var position = point instanceof Block_1.default ? point.getPosition() : point;
+        var position = point instanceof Block_1.Block ? point.getPosition() : point;
         this.points.push(position);
     };
     CannedCycle.prototype.getPoints = function () {
@@ -34,4 +34,4 @@ var CannedCycle = /** @class */ (function () {
     };
     return CannedCycle;
 }());
-exports.default = CannedCycle;
+exports.CannedCycle = CannedCycle;

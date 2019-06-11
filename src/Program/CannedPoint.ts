@@ -1,8 +1,7 @@
-import Block from "./Block";
-import Point from "./Point";
+import { Block } from "./Block";
+import { Point } from "./Point";
 
-export default class CannedPoint extends Point {
-
+export class CannedPoint extends Point {
   public static getfactory(cannedCycle) {
     function pointFactory() {
       //

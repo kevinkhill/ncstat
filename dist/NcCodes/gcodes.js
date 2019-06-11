@@ -18,7 +18,7 @@ exports.G_CODES = {
         G94: "FEED_PER_MINUTE",
         G95: "FEED_PER_REV",
         G96: "Constant surface speed",
-        G97: "Cancel constant surface speed",
+        G97: "Cancel constant surface speed"
     },
     COMPENSATION: {
         G10: "PROGRAMMABLE_OFFSET_INPUT",
@@ -29,7 +29,7 @@ exports.G_CODES = {
         G44: "Apply tool length compensation (minus)",
         G49: "Tool length compensation cancel",
         G50: "Reset all scale factors to 1.0",
-        G51: "Turn on scale factors",
+        G51: "Turn on scale factors"
     },
     COORDINATE: {
         G15: "Turn Polar Coordinates OFF, return to Cartesian Coordinates",
@@ -49,7 +49,7 @@ exports.G_CODES = {
         G59: "Work coordinate system (6th Workpiece)",
         G68: "Coordinate System Rotation",
         G69: "Cancel Coordinate System Rotation",
-        G92: "Offset coordinate system and save parameters",
+        G92: "Offset coordinate system and save parameters"
     },
     OTHER: {
         G61: "Exact stop check mode",
@@ -58,7 +58,7 @@ exports.G_CODES = {
         G64: "Best speed path",
         G65: "Custom macro simple call",
         G101: "TOOL_SET_OR_CHECK",
-        G187: "SET_SMOOTHNESS_LEVEL",
+        G187: "SET_SMOOTHNESS_LEVEL"
     },
     CANNED: {
         G73: "High speed drilling cycle (small retract)",
@@ -75,6 +75,6 @@ exports.G_CODES = {
         G88: "Boring canned cycle, spindle stop, manual out",
         G89: "Boring canned cycle, dwell, feed out",
         G98: "RETURN_TO_INITIAL_Z_PLANE",
-        G99: "RETURN_TO_INITIAL_R_PLANE",
-    },
+        G99: "RETURN_TO_INITIAL_R_PLANE"
+    }
 };

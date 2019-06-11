@@ -1,4 +1,4 @@
-import Block from "./Block.d";
+import Block from "./Block";
+import { IPoint, IPosition, ITool } from "./Interfaces";
 import Program from "./Program";
-import ITool from "./Tool";
-export { Block, ITool, Program, };
+export { ITool, IPoint, IPosition, Block, Program };

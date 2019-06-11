@@ -29,5 +29,5 @@ var CannedPoint = /** @class */ (function (_super) {
         this.R = r;
     };
     return CannedPoint;
-}(Point_1.default));
-exports.default = CannedPoint;
+}(Point_1.Point));
+exports.CannedPoint = CannedPoint;

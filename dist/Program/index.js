@@ -51,16 +51,15 @@ var fs = require("fs");
 var StateMachine = require("javascript-state-machine");
 var _ = require("lodash");
 var readline = require("readline");
-// import Block from "./Block";
+var NcCodes_1 = require("../NcCodes");
 var CannedCycle_1 = require("./CannedCycle");
-var Position_1 = require("./Position");
 var Toolpath_1 = require("./Toolpath");
 var typings_1 = require("../typings");
 var transitions = [
     { name: "start-toolpath", from: "idle", to: "toolpathing" },
     { name: "end-toolpath", from: "toolpathing", to: "idle" },
     { name: "start-canned-cycle", from: "toolpathing", to: "in-canned-cycle" },
-    { name: "end-canned-cycle", from: "in-canned-cycle", to: "toolpathing" },
+    { name: "end-canned-cycle", from: "in-canned-cycle", to: "toolpathing" }
 ];
 var Program = /** @class */ (function () {
     function Program(filepath) {
@@ -69,13 +68,13 @@ var Program = /** @class */ (function () {
         this.blocks = [];
         this.fileStream = readline.createInterface({
             crlfDelay: Infinity,
-            input: fs.createReadStream(filepath),
+            input: fs.createReadStream(filepath)
         });
         this.position = {
-            curr: new Position_1.default(),
-            prev: new Position_1.default(),
+            curr: { X: 0, Y: 0, Z: 0, B: 0 },
+            prev: { X: 0, Y: 0, Z: 0, B: 0 }
         };
-        this.absinc = Position_1.MODALS.ABSOLUTE;
+        this.absinc = NcCodes_1.MODALS.ABSOLUTE;
         this.toolpaths = [];
     }
     Program.prototype.toString = function () {
@@ -97,10 +96,10 @@ var Program = /** @class */ (function () {
         this.position.prev = this.position.curr;
         axes.forEach(function (axis) {
             if (position[axis]) {
-                if (_this.absinc === Position_1.MODALS.INCREMENTAL) {
+                if (_this.absinc === NcCodes_1.MODALS.INCREMENTAL) {
                     _this.position.curr[axis] += position[axis];
                 }
-                if (_this.absinc === Position_1.MODALS.ABSOLUTE) {
+                if (_this.absinc === NcCodes_1.MODALS.ABSOLUTE) {
                     _this.position.curr[axis] = position[axis];
                 }
             }
@@ -137,7 +136,7 @@ var Program = /** @class */ (function () {
                             }
                             if (block.isStartOfCannedCycle() && this.is("toolpathing")) {
                                 this.startCannedCycle();
-                                cannedCycle = new CannedCycle_1.default(block);
+                                cannedCycle = new CannedCycle_1.CannedCycle(block);
                                 toolpath.cannedCycles.push(cannedCycle);
                             }
                             if (this.is("in-canned-cycle") && block.G80 === true) {
@@ -153,13 +152,14 @@ var Program = /** @class */ (function () {
                                     this.toolpaths.push(toolpath);
                                 }
                                 if (this.is("idle")) {
-                                    toolpath = new Toolpath_1.default(line);
+                                    toolpath = new Toolpath_1.Toolpath(line);
                                     this.startToolpath();
                                 }
                             }
                             // If we're toolpathing and `line` is not empty, save it to the toolpath
                             if ((this.is("toolpathing") || this.is("in-canned-cycle")) &&
-                                line !== "" && line !== " ") {
+                                line !== "" &&
+                                line !== " ") {
                                 toolpath.lines.push(line);
                             }
                         }
@@ -192,20 +192,21 @@ var Program = /** @class */ (function () {
     };
     Program.prototype.describe = function (options) {
         var output = "Program #" + this.number + " " + this.title + "\n";
-        output += "---------------------------------------------------------------------------------------\n";
+        output +=
+            "---------------------------------------------------------------------------------------\n";
         this.toolpaths.forEach(function (toolpath) {
             if (toolpath.hasFeedrates()) {
                 // const feedrates = toolpath.getFeedrates()
-                output += chalk(templateObject_1 || (templateObject_1 = __makeTemplateObject(["{magenta T", "} | {blue ", "}\n"], ["{magenta T", "} | {blue ", "}\\n"])), _.padEnd(toolpath.tool.num, 3), toolpath.tool.desc);
+                output += chalk.magenta("T" + _.padEnd(toolpath.tool.num, 3));
+                output += " | ";
+                output += chalk.blue(toolpath.tool.desc + "\n");
                 if (options.cannedCycles && toolpath.cannedCycles.length > 0) {
                     toolpath.cannedCycles.forEach(function (cannedCycle) {
-                        output += chalk(templateObject_2 || (templateObject_2 = __makeTemplateObject(["{greenBright ", "}"], ["{greenBright ", "}"])), cannedCycle.retractCommand);
-                        output += chalk(templateObject_3 || (templateObject_3 = __makeTemplateObject([", {greenBright ", "}"], [", {greenBright ", "}"])), cannedCycle.cycleCommand);
-                        output += chalk(templateObject_4 || (templateObject_4 = __makeTemplateObject([" with {yellow ", "} points\n"], [" with {yellow ", "} points\\n"])), cannedCycle.getPointCount());
+                        output += chalk(templateObject_1 || (templateObject_1 = __makeTemplateObject(["{greenBright ", "}"], ["{greenBright ", "}"])), cannedCycle.retractCommand);
+                        output += chalk(templateObject_2 || (templateObject_2 = __makeTemplateObject([", {greenBright ", "}"], [", {greenBright ", "}"])), cannedCycle.cycleCommand);
+                        output += chalk(templateObject_3 || (templateObject_3 = __makeTemplateObject([" with {yellow ", "} points\n"], [" with {yellow ", "} points\\n"])), cannedCycle.getPointCount());
                         if (options.cannedPoints) {
-                            cannedCycle
-                                .getPoints()
-                                .forEach(function (position) {
+                            cannedCycle.getPoints().forEach(function (position) {
                                 output += "X" + position.X + ", Y" + position.Y + "\n";
                             });
                         }
@@ -223,21 +224,22 @@ var Program = /** @class */ (function () {
     };
     Program.prototype.setModals = function (block) {
         if (block.G00) {
-            this.rapfeed = Position_1.MODALS.RAPID;
+            this.rapfeed = NcCodes_1.MODALS.RAPID;
         }
         if (block.G01) {
-            this.rapfeed = Position_1.MODALS.FEED;
+            this.rapfeed = NcCodes_1.MODALS.FEED;
         }
         if (block.G90) {
-            this.absinc = Position_1.MODALS.ABSOLUTE;
+            this.absinc = NcCodes_1.MODALS.ABSOLUTE;
         }
         if (block.G91) {
-            this.absinc = Position_1.MODALS.INCREMENTAL;
+            this.absinc = NcCodes_1.MODALS.INCREMENTAL;
         }
     };
     return Program;
 }());
 exports.default = StateMachine.factory(Program, {
-    init: "idle", transitions: transitions,
+    init: "idle",
+    transitions: transitions
 });
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
+var templateObject_1, templateObject_2, templateObject_3;

@@ -11,5 +11,4 @@ var Point = /** @class */ (function () {
     }
     return Point;
 }());
-exports.default = Point;
-module.exports = Point;
+exports.Point = Point;

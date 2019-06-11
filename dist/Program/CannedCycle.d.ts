@@ -1,7 +1,7 @@
-import Block from "./Block";
-import Point from "./Point";
+import { Block } from "./Block";
+import { Point } from "./Point";
 export declare const CANNED_CYCLE_ARGS: string[];
-export default class CannedCycle {
+export declare class CannedCycle {
     peck: any;
     depth: any;
     retract: any;

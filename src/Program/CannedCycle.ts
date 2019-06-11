@@ -1,12 +1,12 @@
 import { flatten, intersection } from "lodash";
 
 import { CANNED_CYCLE_START_CODES } from "../NcCodes";
-import Block from "./Block";
-import Point from "./Point";
+import { Block } from "./Block";
+import { Point } from "./Point";
 
 export const CANNED_CYCLE_ARGS = ["Z", "R", "Q", "F"];
 
-export default class CannedCycle {
+export class CannedCycle {
   public peck: any;
   public depth: any;
   public retract: any;
@@ -30,14 +30,18 @@ export default class CannedCycle {
     this.retract = this.block.getAddress("R");
     this.feedrate = this.block.getAddress("F");
 
-    this.cycleCommand = flatten(intersection(this.block.addresses, CANNED_CYCLE_START_CODES));
-    this.retractCommand = flatten(intersection(this.block.addresses, ["G98", "G99"]));
+    this.cycleCommand = flatten(
+      intersection(this.block.addresses, CANNED_CYCLE_START_CODES)
+    );
+    this.retractCommand = flatten(
+      intersection(this.block.addresses, ["G98", "G99"])
+    );
 
     this.G98 = this.block.addresses.indexOf("G98") > -1;
     this.G99 = this.block.addresses.indexOf("G99") > -1;
 
-    CANNED_CYCLE_ARGS.forEach((ltr) => {
-      this[ltr] = this.block.getAddress(ltr, true);
+    CANNED_CYCLE_ARGS.forEach(ltr => {
+      this[ltr] = this.block.getAddress(ltr);
     });
   }
 

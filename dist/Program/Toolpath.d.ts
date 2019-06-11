@@ -1,5 +1,5 @@
 import { ITool } from "../typings";
-export default class Toolpath {
+export declare class Toolpath {
     tool: ITool;
     lines: string[];
     cannedCycles: string[];

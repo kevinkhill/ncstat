@@ -3,7 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var nLineRegex = /^N([0-9]+)/;
 var feedrateRegex = /F([0-9]+(?:\\.[0-9]*)?)/g;
 function uncomment(str) {
-    return str.replace("(", "").replace(")", "").trim();
+    return str
+        .replace("(", "")
+        .replace(")", "")
+        .trim();
 }
 var Toolpath = /** @class */ (function () {
     function Toolpath(line) {
@@ -11,7 +14,7 @@ var Toolpath = /** @class */ (function () {
         this.cannedCycles = [];
         this.tool = {
             desc: "",
-            num: parseInt(line.match(nLineRegex)[1]),
+            num: parseInt(line.match(nLineRegex)[1])
         };
         this.tool.desc = uncomment(line.replace("N" + this.tool.num, ""));
     }
@@ -33,4 +36,4 @@ var Toolpath = /** @class */ (function () {
     };
     return Toolpath;
 }());
-exports.default = Toolpath;
+exports.Toolpath = Toolpath;

@@ -1,5 +1,5 @@
-import Position from "./Position";
-declare class Block {
+import { IPosition } from "../typings";
+export declare class Block {
     G04?: boolean;
     G10?: boolean;
     G65?: boolean;
@@ -16,12 +16,11 @@ declare class Block {
     blockSkip: string;
     addresses: string[];
     constructor(line: any);
-    getPosition(): Position;
+    getPosition(): IPosition;
     isStartOfCannedCycle(): boolean;
     hasMovement(): boolean;
     hasAddress(ltr: string): boolean;
-    getAddress(ltr: string, cast?: boolean): string | number;
-    getCannedCycleStartCode(): string;
+    getAddress(ltr: string): number;
+    getCannedCycleStartCode(): any;
     _mapAddressValuesToObj(): void;
 }
-export default Block;

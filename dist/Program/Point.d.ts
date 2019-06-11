@@ -1,4 +1,4 @@
-export default class Point {
+export declare class Point {
     X: number;
     Y: number;
     Z: number;
