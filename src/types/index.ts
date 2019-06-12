@@ -1,5 +1,5 @@
 export interface IAddress {
-  id: string;
+  ltr: string;
   val: number;
 }
 

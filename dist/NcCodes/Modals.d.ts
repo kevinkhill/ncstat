@@ -1,4 +1,4 @@
-export declare enum MODALS {
+export declare enum Modals {
     RAPID = "G00",
     FEED = "G01",
     ABSOLUTE = "G90",

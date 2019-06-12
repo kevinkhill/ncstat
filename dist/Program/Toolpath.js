@@ -1,31 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var nLineRegex = /^N([0-9]+)/;
-var feedrateRegex = /F([0-9]+(?:\\.[0-9]*)?)/g;
-function uncomment(str) {
-    return str
-        .replace("(", "")
-        .replace(")", "")
-        .trim();
-}
 var Toolpath = /** @class */ (function () {
     function Toolpath(line) {
+        this.feedrateRegex = /F([0-9]+(?:\\.[0-9]*)?)/g;
         this.lines = [];
         this.cannedCycles = [];
         this.tool = {
             desc: "",
-            num: parseInt(line.match(nLineRegex)[1])
+            num: parseInt(line.match(/^N([0-9]+)/)[1])
         };
-        this.tool.desc = uncomment(line.replace("N" + this.tool.num, ""));
+        this.tool.desc = this.uncomment(line.replace("N" + this.tool.num, ""));
     }
     Toolpath.prototype.hasFeedrates = function () {
-        return this.lines.some(function (line) { return feedrateRegex.test(line); });
+        var _this = this;
+        return this.lines.some(function (line) { return _this.feedrateRegex.test(line); });
     };
     Toolpath.prototype.getFeedrates = function () {
+        var _this = this;
         var feedrates = [];
         this.lines.forEach(function (line) {
-            if (feedrateRegex.test(line)) {
-                var feedrate = line.match(feedrateRegex);
+            if (_this.feedrateRegex.test(line)) {
+                var feedrate = line.match(_this.feedrateRegex);
                 feedrates.push(parseFloat(feedrate[1]));
             }
         });
@@ -33,6 +28,12 @@ var Toolpath = /** @class */ (function () {
     };
     Toolpath.prototype.getCannedCycleCount = function () {
         return this.cannedCycles.length;
+    };
+    Toolpath.prototype.uncomment = function (str) {
+        return str
+            .replace("(", "")
+            .replace(")", "")
+            .trim();
     };
     return Toolpath;
 }());

@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var _ = require("lodash");
-var NcCodes_1 = require("../NcCodes");
+var CannedCycle_1 = require("./CannedCycle");
+var debug = require("debug")("nc-scanner Block");
 var blockSkipRegex = /(^\/[0-9]?)/;
 var commentRegex = /\(\s?(.+)\s?\)/;
 var addressRegex = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
@@ -10,11 +11,18 @@ function zeroPadAddress(str) {
 }
 var Block = /** @class */ (function () {
     function Block(line) {
-        this.rawLine = line;
         this.comment = null;
         this.blockSkip = null;
-        this.addresses = this.rawLine.match(addressRegex) || [];
-        this._mapAddressValuesToObj();
+        // public addresses: IAddress[] = [];
+        this.addresses = [];
+        this.gCodes = [];
+        this.rawLine = "";
+        this.rawLine = line;
+        this.addresses = this.rawLine.match(addressRegex);
+        this.gCodes = _.filter(this.addresses, function (a) { return a.startsWith("G"); });
+        this.gCodes = _.map(this.gCodes, function (addr) { return parseInt(addr.slice(1)); });
+        // debug(this.gCodes);
+        this.mapAddressValuesToObj();
         if (blockSkipRegex.test(this.rawLine)) {
             var match = this.rawLine.match(blockSkipRegex);
             if (match) {
@@ -28,6 +36,9 @@ var Block = /** @class */ (function () {
             }
         }
     }
+    Block.prototype.G = function (code) {
+        return this.gCodes.includes(code);
+    };
     Block.prototype.getPosition = function () {
         return {
             B: this.getAddress("B"),
@@ -60,13 +71,13 @@ var Block = /** @class */ (function () {
         return null;
     };
     Block.prototype.getCannedCycleStartCode = function () {
-        var cycle = _.intersection(this.addresses, NcCodes_1.CANNED_CYCLE_START_CODES);
+        var cycle = _.intersection(this.addresses, CannedCycle_1.CANNED_CYCLE_START_CODES);
         return cycle.length > 0 ? cycle[0] : null;
     };
-    Block.prototype._mapAddressValuesToObj = function () {
+    Block.prototype.mapAddressValuesToObj = function () {
         var _this = this;
         // Map found G & M addresses to true on the block
-        this.addresses.forEach(function (addr) {
+        _.forEach(this.addresses, function (addr) {
             if (addr[0] === "G" || addr[0] === "M") {
                 if (parseInt(addr.slice(1)) < 10) {
                     _this[zeroPadAddress(addr)] = true;
@@ -77,7 +88,7 @@ var Block = /** @class */ (function () {
             }
         });
         // Map all found Letter addresses to their cast values on the block
-        "ABCDEFHIJKLNOPQRSTUVWXYZ".split("").forEach(function (ltr) {
+        _.forEach("ABCDEFHIJKLNOPQRSTUVWXYZ".split(""), function (ltr) {
             if (_this.hasAddress(ltr)) {
                 _this[ltr] = _this.getAddress(ltr);
             }

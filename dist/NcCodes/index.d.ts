@@ -1,5 +1,5 @@
-import { MODALS } from "./Modals";
-export { MODALS };
+import { Modals } from "./Modals";
+export { Modals };
 export declare const G_CODES: {};
 export declare const M_CODES: {};
 export declare const CANNED_CYCLE_START_CODES: string[];

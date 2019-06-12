@@ -2,9 +2,9 @@ import { forEach } from "lodash";
 import { G_CODES as RAW_G_CODES } from "./gcodes";
 import { M_CODES as RAW_M_CODES } from "./mcodes";
 
-import { MODALS } from "./Modals";
+import { Modals } from "./Modals";
 
-export { MODALS };
+export { Modals };
 
 export const G_CODES = {};
 export const M_CODES = {};

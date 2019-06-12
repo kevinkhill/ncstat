@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var MODALS;
-(function (MODALS) {
-    MODALS["RAPID"] = "G00";
-    MODALS["FEED"] = "G01";
-    MODALS["ABSOLUTE"] = "G90";
-    MODALS["INCREMENTAL"] = "G91";
-})(MODALS = exports.MODALS || (exports.MODALS = {}));
+var Modals;
+(function (Modals) {
+    Modals["RAPID"] = "G00";
+    Modals["FEED"] = "G01";
+    Modals["ABSOLUTE"] = "G90";
+    Modals["INCREMENTAL"] = "G91";
+})(Modals = exports.Modals || (exports.Modals = {}));

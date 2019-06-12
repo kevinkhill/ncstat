@@ -1,4 +1,4 @@
-export enum MODALS {
+export enum Modals {
   RAPID = "G00",
   FEED = "G01",
   ABSOLUTE = "G90",

@@ -1,9 +1,13 @@
-import { IPosition } from "../typings";
+import { IPosition } from "../types";
 export declare class Block {
+    G00?: boolean;
+    G01?: boolean;
     G04?: boolean;
     G10?: boolean;
     G65?: boolean;
     G80?: boolean;
+    G90?: boolean;
+    G91?: boolean;
     G98?: boolean;
     G99?: boolean;
     B?: number;
@@ -11,16 +15,18 @@ export declare class Block {
     X?: number;
     Y?: number;
     Z?: number;
-    rawLine: string;
-    comment: string;
-    blockSkip: string;
+    comment: string | null;
+    blockSkip: string | null;
     addresses: string[];
+    private gCodes;
+    private readonly rawLine;
     constructor(line: any);
+    G(code: any): boolean;
     getPosition(): IPosition;
     isStartOfCannedCycle(): boolean;
     hasMovement(): boolean;
     hasAddress(ltr: string): boolean;
     getAddress(ltr: string): number;
-    getCannedCycleStartCode(): any;
-    _mapAddressValuesToObj(): void;
+    getCannedCycleStartCode(): string;
+    mapAddressValuesToObj(): void;
 }

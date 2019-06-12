@@ -1,8 +1,8 @@
 import * as _ from "lodash";
+import { IPosition } from "../types";
+import { CANNED_CYCLE_START_CODES } from "./CannedCycle";
 
-import { CANNED_CYCLE_START_CODES, MODALS } from "../NcCodes";
-import { IPosition } from "../typings";
-
+const debug = require("debug")("nc-scanner Block");
 const blockSkipRegex: RegExp = /(^\/[0-9]?)/;
 const commentRegex: RegExp = /\(\s?(.+)\s?\)/;
 const addressRegex: RegExp = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
@@ -12,10 +12,14 @@ function zeroPadAddress(str: string): string {
 }
 
 export class Block {
+  public G00?: boolean;
+  public G01?: boolean;
   public G04?: boolean;
   public G10?: boolean;
   public G65?: boolean;
   public G80?: boolean;
+  public G90?: boolean;
+  public G91?: boolean;
   public G98?: boolean;
   public G99?: boolean;
 
@@ -24,19 +28,25 @@ export class Block {
   public X?: number;
   public Y?: number;
   public Z?: number;
+  public comment: string | null = null;
+  public blockSkip: string | null = null;
+  // public addresses: IAddress[] = [];
+  public addresses: string[] = [];
 
-  public rawLine: string;
-  public comment: string;
-  public blockSkip: string;
-  public addresses: string[];
+  private gCodes = [];
+  private readonly rawLine: string = "";
 
   constructor(line: any) {
     this.rawLine = line;
-    this.comment = null;
-    this.blockSkip = null;
-    this.addresses = this.rawLine.match(addressRegex) || [];
 
-    this._mapAddressValuesToObj();
+    this.addresses = this.rawLine.match(addressRegex);
+
+    this.gCodes = _.filter(this.addresses, a => a.startsWith("G"));
+    this.gCodes = _.map(this.gCodes, addr => parseInt(addr.slice(1)));
+
+    // debug(this.gCodes);
+
+    this.mapAddressValuesToObj();
 
     if (blockSkipRegex.test(this.rawLine)) {
       const match = this.rawLine.match(blockSkipRegex);
@@ -53,6 +63,10 @@ export class Block {
         this.comment = match[1];
       }
     }
+  }
+
+  public G(code) {
+    return this.gCodes.includes(code);
   }
 
   public getPosition(): IPosition {
@@ -103,9 +117,9 @@ export class Block {
     return cycle.length > 0 ? cycle[0] : null;
   }
 
-  public _mapAddressValuesToObj() {
+  public mapAddressValuesToObj() {
     // Map found G & M addresses to true on the block
-    this.addresses.forEach(addr => {
+    _.forEach(this.addresses, addr => {
       if (addr[0] === "G" || addr[0] === "M") {
         if (parseInt(addr.slice(1)) < 10) {
           this[zeroPadAddress(addr)] = true;
@@ -116,7 +130,7 @@ export class Block {
     });
 
     // Map all found Letter addresses to their cast values on the block
-    "ABCDEFHIJKLNOPQRSTUVWXYZ".split("").forEach(ltr => {
+    _.forEach("ABCDEFHIJKLNOPQRSTUVWXYZ".split(""), ltr => {
       if (this.hasAddress(ltr)) {
         this[ltr] = this.getAddress(ltr);
       }

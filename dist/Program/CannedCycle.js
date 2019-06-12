@@ -1,26 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = require("lodash");
-var NcCodes_1 = require("../NcCodes");
+var _ = require("lodash");
 var Block_1 = require("./Block");
-exports.CANNED_CYCLE_ARGS = ["Z", "R", "Q", "F"];
+exports.CANNED_CYCLE_DEFAULT_ARGS = ["Z", "R", "Q", "F"];
+exports.CANNED_CYCLE_START_CODES = [
+    "G73",
+    "G74",
+    "G81",
+    "G82",
+    "G83",
+    "G84",
+    "G85",
+    "G86",
+    "G87"
+];
 var CannedCycle = /** @class */ (function () {
     function CannedCycle(block) {
         var _this = this;
         this.points = [];
         this.block = block;
-        this.points = [];
         this.peck = this.block.getAddress("Q");
         this.depth = this.block.getAddress("Z");
         this.retract = this.block.getAddress("R");
         this.feedrate = this.block.getAddress("F");
-        this.cycleCommand = lodash_1.flatten(lodash_1.intersection(this.block.addresses, NcCodes_1.CANNED_CYCLE_START_CODES));
-        this.retractCommand = lodash_1.flatten(lodash_1.intersection(this.block.addresses, ["G98", "G99"]));
+        this.cycleCommand = _.flatten(_.intersection(this.block.addresses, exports.CANNED_CYCLE_START_CODES));
+        this.retractCommand = _.flatten(_.intersection(this.block.addresses, ["G98", "G99"]));
         this.G98 = this.block.addresses.indexOf("G98") > -1;
         this.G99 = this.block.addresses.indexOf("G99") > -1;
-        exports.CANNED_CYCLE_ARGS.forEach(function (ltr) {
-            _this[ltr] = _this.block.getAddress(ltr);
-        });
+        exports.CANNED_CYCLE_DEFAULT_ARGS.forEach(function (ltr) { return (_this[ltr] = _this.block.getAddress(ltr)); });
     }
     CannedCycle.prototype.addPoint = function (point) {
         var position = point instanceof Block_1.Block ? point.getPosition() : point;

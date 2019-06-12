@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Scans NC program for static analysis",
   "bin": "./bin/analyze",
-  "types": "./src/typings",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/harris-bruno/nc-scanner.git"
@@ -14,15 +13,21 @@
     "url": "https://gitlab.com/harris-bruno/nc-scanner/issues"
   },
   "homepage": "https://gitlab.com/harris-bruno/nc-scanner#readme",
+  "ava": {
+		"compileEnhancements": false,
+		"extensions": ["ts"		],
+		"require": [
+      "ts-node/register/transpile-only"
+    ]
+	},
   "scripts": {
     "test": "ava",
     "lint": "tslint 'src/**/*.ts'",
     "lint:fix": "tslint --fix 'src/**/*.ts'",
     "build": "tsc",
     "watch": "tsc --watch",
-    "example1": "node --no-warnings ./bin/analyze --canned-cycles ./nc/example1.NC",
-    "example2": "node --no-warnings ./bin/analyze --canned-cycles ./nc/example2.NC",
-    "start": "./bin/nc-scanner /mnt/c/\"H+405 PROGRAM VAULT\" -w \"HB PARTS,JOB SPECIFIC\""
+    "example1": "node --no-warnings ./bin/analyze ./nc/example1.NC",
+    "example2": "node --no-warnings ./bin/analyze ./nc/example2.NC"
   },
   "dependencies": {
     "chalk": "^2.4.2",
@@ -35,7 +40,6 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.134",
-    "@types/node": "^11",
     "ava": "^2.0.0",
     "prettier": "1.18.2",
     "ts-node": "^8.2.0",
