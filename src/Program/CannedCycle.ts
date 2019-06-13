@@ -1,63 +1,65 @@
-import * as _ from "lodash";
-
+import _ from "lodash";
+import { CANNED_CYCLE_START_CODES } from "../NcCodes";
+import { ICannedCycle } from "../types";
 import { Block } from "./Block";
 import { Point } from "./Point";
 
-export const CANNED_CYCLE_DEFAULT_ARGS = ["Z", "R", "Q", "F"];
+export class CannedCycle extends Block implements ICannedCycle {
+  public Z: number;
+  public R: number;
+  public F: number;
+  public Q: number;
 
-export const CANNED_CYCLE_START_CODES = [
-  "G73",
-  "G74",
-  "G81",
-  "G82",
-  "G83",
-  "G84",
-  "G85",
-  "G86",
-  "G87"
-];
+  public cycleCommand: string;
+  public retractCommand: string;
 
-export class CannedCycle {
-  public G98?: any;
-  public G99?: any;
-  public peck: any;
-  public depth: any;
-  public retract: any;
-  public feedrate: any;
-  public cycleCommand: any;
-  public retractCommand: any;
-
-  private block: Block;
   private points: Point[] = [];
 
-  constructor(block: Block) {
-    this.block = block;
+  constructor(line: string) {
+    super(line);
 
-    this.peck = this.block.getAddress("Q");
-    this.depth = this.block.getAddress("Z");
-    this.retract = this.block.getAddress("R");
-    this.feedrate = this.block.getAddress("F");
+    this.Q = this.getAddress("Q");
+    this.Z = this.getAddress("Z");
+    this.R = this.getAddress("R");
+    this.F = this.getAddress("F");
 
-    this.cycleCommand = _.flatten(
-      _.intersection(this.block.addresses, CANNED_CYCLE_START_CODES)
-    );
-
-    this.retractCommand = _.flatten(
-      _.intersection(this.block.addresses, ["G98", "G99"])
-    );
-
-    this.G98 = this.block.addresses.indexOf("G98") > -1;
-    this.G99 = this.block.addresses.indexOf("G99") > -1;
-
-    CANNED_CYCLE_DEFAULT_ARGS.forEach(
-      ltr => (this[ltr] = this.block.getAddress(ltr))
-    );
+    this.cycleCommand = this.getCannedCycleStartCode();
+    this.retractCommand = this.getRetractCode();
   }
 
-  public addPoint(point: Point): void {
+  get peck(): number {
+    return this.Q;
+  }
+
+  get depth(): number {
+    return this.Z;
+  }
+
+  get retract(): number {
+    return this.R;
+  }
+
+  get feedrate(): number {
+    return this.F;
+  }
+
+  public getRetractCode(): string {
+    return _(this.rawAddresses)
+      .intersection(["G98", "G99"])
+      .first();
+  }
+
+  public getCannedCycleStartCode(): string {
+    return _(this.rawAddresses)
+      .intersection(CANNED_CYCLE_START_CODES)
+      .first();
+  }
+  public addPoint(point: Point): CannedCycle {
     const position = point instanceof Block ? point.getPosition() : point;
 
     this.points.push(position);
+
+    return this;
   }
 
   public getPoints(): Point[] {

@@ -1,7 +1,6 @@
 import fs = require("fs");
-import _ = require("lodash");
+import _ from "lodash-es";
 import readline = require("readline");
-
 import { Modals } from "../NcCodes";
 import { IPosition } from "../types";
 import { Block } from "./Block";
@@ -12,7 +11,9 @@ export abstract class BaseProgram {
   public number: number;
   public title: string;
   public toolpaths: any[] = [];
+  public activeModals: any[];
 
+  public function;
   private position: {
     curr: IPosition;
     prev: IPosition;
@@ -107,7 +108,7 @@ export abstract class BaseProgram {
           toolpath.cannedCycles.push(cannedCycle);
         }
 
-        if (this.is("in-canned-cycle") && block.G80 === true) {
+        if (this.is("in-canned-cycle") && block.G(80)) {
           this.endCannedCycle();
         }
 
@@ -146,19 +147,23 @@ export abstract class BaseProgram {
     this.toolpaths.push(toolpath);
   }
 
-  private setModals(block: Block) {
-    if (block.G00) {
+  private setModals(block: Block): void {
+    this.activeModals = [];
+
+    if (block.G(0)) {
       this.rapfeed = Modals.RAPID;
-    }
-    if (block.G01) {
+      this.activeModals.push(Modals.RAPID);
+    } else if (block.G(1)) {
       this.rapfeed = Modals.FEED;
+      this.activeModals.push(Modals.FEED);
     }
 
-    if (block.G90) {
+    if (block.G(90)) {
       this.absinc = Modals.ABSOLUTE;
-    }
-    if (block.G91) {
+      this.activeModals.push(Modals.ABSOLUTE);
+    } else if (block.G(91)) {
       this.absinc = Modals.INCREMENTAL;
+      this.activeModals.push(Modals.INCREMENTAL);
     }
   }
 }

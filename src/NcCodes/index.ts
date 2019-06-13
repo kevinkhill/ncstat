@@ -1,7 +1,6 @@
-import { forEach } from "lodash";
+import * as _ from "lodash";
 import { G_CODES as RAW_G_CODES } from "./gcodes";
 import { M_CODES as RAW_M_CODES } from "./mcodes";
-
 import { Modals } from "./Modals";
 
 export { Modals };
@@ -26,8 +25,8 @@ export const COMMANDS = {
   M: (n: number) => M_CODES[`M${n}`]
 };
 
-forEach(RAW_G_CODES, (groupName, group) => {
-  forEach(groupName, (command, gcode) => {
+_.forEach(RAW_G_CODES, (groupName: string, group: string) => {
+  _.forEach(groupName, (command: string, gcode: string) => {
     G_CODES[gcode] = {
       COMMAND: command,
       GROUP: group
@@ -35,7 +34,7 @@ forEach(RAW_G_CODES, (groupName, group) => {
   });
 });
 
-forEach(RAW_M_CODES, (command, mcode) => {
+_.forEach(RAW_M_CODES, (command: string, mcode: string) => {
   M_CODES[mcode] = {
     COMMAND: command,
     GROUP: "MACHINE"

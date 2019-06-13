@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var lodash_1 = require("lodash");
+var _ = require("lodash");
 var gcodes_1 = require("./gcodes");
 var mcodes_1 = require("./mcodes");
 var Modals_1 = require("./Modals");
@@ -22,15 +22,15 @@ exports.COMMANDS = {
     G: function (n) { return exports.G_CODES["G" + n]; },
     M: function (n) { return exports.M_CODES["M" + n]; }
 };
-lodash_1.forEach(gcodes_1.G_CODES, function (groupName, group) {
-    lodash_1.forEach(groupName, function (command, gcode) {
+_.forEach(gcodes_1.G_CODES, function (groupName, group) {
+    _.forEach(groupName, function (command, gcode) {
         exports.G_CODES[gcode] = {
             COMMAND: command,
             GROUP: group
         };
     });
 });
-lodash_1.forEach(mcodes_1.M_CODES, function (command, mcode) {
+_.forEach(mcodes_1.M_CODES, function (command, mcode) {
     exports.M_CODES[mcode] = {
         COMMAND: command,
         GROUP: "MACHINE"

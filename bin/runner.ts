@@ -1,0 +1,75 @@
+#!/usr/bin/env node
+
+import chalk from "chalk";
+import cli from "commander";
+import _ from "lodash-es";
+import { Program } from "../src";
+
+const pkg = require("../package.json");
+
+const { log, error } = console;
+
+cli
+  .version(pkg.version)
+  .description("An app for analyzing NC files")
+  .option("-c, --canned-cycles", "Show found canned cycles in toolpaths")
+  .option("-p, --canned-points", "Show the location of points in canned cycles")
+  .parse(process.argv);
+
+if (cli.args.length === 0) {
+  error("ERR: You must provide the path to a NC file");
+  cli.help();
+  process.abort();
+}
+
+const program = new Program(cli.args[0]);
+
+(async () => {
+  try {
+    await program.analyze();
+
+    let output = `Program #${this.number} ${this.title}\n`;
+    output +=
+      "---------------------------------------------------------------------------------------\n";
+
+    program.toolpaths.forEach(toolpath => {
+      if (toolpath.hasFeedrates()) {
+        // const feedrates = toolpath.getFeedrates()
+
+        output += chalk.magenta(`T${_.padEnd(toolpath.tool.num, 3)}`);
+        output += " | ";
+        output += chalk.blue(`${toolpath.tool.desc}\n`);
+
+        if (cli.cannedCycles && toolpath.cannedCycles.length > 0) {
+          toolpath.cannedCycles.forEach(cannedCycle => {
+            output += chalk.greenBright(cannedCycle.retractCommand);
+            output += chalk.greenBright(cannedCycle.cycleCommand);
+            output += " with ";
+            output += `${chalk.yellow(cannedCycle.getPointCount())} points\n`;
+
+            if (cli.cannedPoints) {
+              cannedCycle.getPoints().forEach(position => {
+                output += `X${position.X}, Y${position.Y}\n`;
+              });
+            }
+          });
+        }
+
+        // const minFeedrate = chalk.red.bold(_.min(feedrates).toFixed(3))
+
+        // const average = _.sum(feedrates) / feedrates.length
+        // const averageFeedrate = chalk.red.bold(average.toFixed(3))
+
+        // const meanFeedrate = chalk.red.bold(_.mean(feedrates).toFixed(3))
+
+        // const maxFeedrate = chalk.red.bold(_.max(feedrates).toFixed(3))
+
+        // console.log(`${toolNum} | ${toolDesc} | MIN: ${minFeedrate} MAX: ${maxFeedrate} MEAN: ${meanFeedrate}`)
+      }
+    });
+    log(output);
+    log(`Analyzed ${program.toolpaths.length} toolpaths.`);
+  } catch (err) {
+    console.log(err);
+  }
+})();

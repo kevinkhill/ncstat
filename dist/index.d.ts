@@ -1,2 +1,2 @@
-import { Program } from "./Program";
-export = Program;
+import Program from "./Program";
+export { Program };

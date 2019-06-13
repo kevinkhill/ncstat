@@ -4,7 +4,8 @@
     "module": "commonjs",
     "declaration": true,
     "outDir": "./dist",
-    // "strict": true
+    "esModuleInterop": true,
+    // "noImplicitAny": true
   },
   "include": [
     "./src/**/*"

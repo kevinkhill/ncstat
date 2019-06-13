@@ -4,6 +4,8 @@ export declare abstract class BaseProgram {
     number: number;
     title: string;
     toolpaths: any[];
+    activeModals: any[];
+    function: any;
     private position;
     private rapfeed;
     private filepath;

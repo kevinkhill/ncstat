@@ -1,73 +1,85 @@
-import * as _ from "lodash";
-import { IPosition } from "../types";
-import { CANNED_CYCLE_START_CODES } from "./CannedCycle";
+import Debug from "debug";
+import _ from "lodash-es";
+import { extractors, zeroPadAddress } from "../lib";
+import { CANNED_CYCLE_START_CODES } from "../NcCodes";
+import { IPosition, IValueAddress } from "../types";
+import { Address } from "./Address";
 
-const debug = require("debug")("nc-scanner Block");
-const blockSkipRegex: RegExp = /(^\/[0-9]?)/;
-const commentRegex: RegExp = /\(\s?(.+)\s?\)/;
-const addressRegex: RegExp = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
-
-function zeroPadAddress(str: string): string {
-  return str ? str[0] + `00${str.slice(1)}`.slice(-2) : "";
-}
+const debug = Debug("nc-scanner");
 
 export class Block {
-  public G00?: boolean;
-  public G01?: boolean;
-  public G04?: boolean;
-  public G10?: boolean;
-  public G65?: boolean;
-  public G80?: boolean;
-  public G90?: boolean;
-  public G91?: boolean;
-  public G98?: boolean;
-  public G99?: boolean;
+  public comment: string | null = null;
+  public blockSkip: string | null = null;
 
+  public A?: number;
   public B?: number;
+  public C?: number;
+  public D?: number;
+  public E?: number;
+  public F?: number;
+  // public G?: number;
+  public H?: number;
+  public I?: number;
+  public J?: number;
+  public K?: number;
+  public L?: number;
+  // public M?: number;
+  public N?: number;
   public O?: number;
+  public P?: number;
+  public Q?: number;
+  public R?: number;
+  public S?: number;
+  public T?: number;
+  public U?: number;
+  public V?: number;
+  public W?: number;
   public X?: number;
   public Y?: number;
   public Z?: number;
-  public comment: string | null = null;
-  public blockSkip: string | null = null;
-  // public addresses: IAddress[] = [];
-  public addresses: string[] = [];
 
-  private gCodes = [];
+  protected readonly gCodes: number[] = [];
+  protected readonly rawAddresses: string[] = [];
+  protected readonly addresses: IValueAddress[] = [];
+  protected readonly addressRegex: RegExp = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
+
   private readonly rawLine: string = "";
 
-  constructor(line: any) {
+  constructor(line: string) {
     this.rawLine = line;
 
-    this.addresses = this.rawLine.match(addressRegex);
+    this.rawAddresses = this.rawLine.match(this.addressRegex);
 
-    this.gCodes = _.filter(this.addresses, a => a.startsWith("G"));
-    this.gCodes = _.map(this.gCodes, addr => parseInt(addr.slice(1)));
+    this.gCodes = _(this.rawAddresses)
+      .filter(a => a.startsWith("G"))
+      .map(a => parseInt(a.slice(1)))
+      .value();
 
-    // debug(this.gCodes);
+    this.addresses = _.map(this.rawAddresses, Address.factory);
+
+    _.forEach("ABCDEFHIJKLNOPQRSTUVWXYZ".split(""), ltr => {
+      if (this.hasAddress(ltr)) {
+        const value = this.getAddr(ltr).value;
+
+        debug(`setting this.${ltr} to`, value);
+
+        this[ltr] = value;
+      }
+    });
 
     this.mapAddressValuesToObj();
 
-    if (blockSkipRegex.test(this.rawLine)) {
-      const match = this.rawLine.match(blockSkipRegex);
-
-      if (match) {
-        this.blockSkip = match[1];
-      }
-    }
-
-    if (commentRegex.test(this.rawLine)) {
-      const match = this.rawLine.match(commentRegex);
-
-      if (match) {
-        this.comment = match[1];
-      }
-    }
+    this.comment = extractors.commentExtractor(this.rawLine);
+    this.blockSkip = extractors.blockSkipExtractor(this.rawLine);
   }
 
-  public G(code) {
+  public G(code: number): boolean {
     return this.gCodes.includes(code);
   }
+
+  // public M(code: number): boolean {
+  //   return this.mCodes.includes(code);
+  // }
 
   public getPosition(): IPosition {
     return {
@@ -79,11 +91,15 @@ export class Block {
   }
 
   public isStartOfCannedCycle(): boolean {
-    return this.getCannedCycleStartCode() != null;
+    const addresses = _(this.rawAddresses)
+      .intersection(CANNED_CYCLE_START_CODES)
+      .value();
+
+    return addresses.length > 0;
   }
 
   public hasMovement(): boolean {
-    if (this.G10 === true || this.G04 === true || this.G65 === true) {
+    if (_.difference(this.gCodes, [4, 10, 65])) {
       return false;
     }
 
@@ -96,30 +112,31 @@ export class Block {
   }
 
   public hasAddress(ltr: string): boolean {
-    return _.find(this.addresses, address => address[0] === ltr) !== undefined;
+    return _.some(this.addresses, ["ltr", ltr]);
   }
 
-  public getAddress(ltr: string): number {
-    if (this.hasAddress(ltr)) {
-      const code = _.find(this.addresses, address => address[0] === ltr);
-
-      const value = code.slice(1);
-
-      return code.indexOf(".") > -1 ? parseFloat(value) : parseInt(value);
+  public getAddress(addrPrefix: string): number | null {
+    if (this.hasAddress(addrPrefix)) {
+      return this.getAddr(addrPrefix).value;
     }
 
     return null;
   }
 
-  public getCannedCycleStartCode() {
-    const cycle = _.intersection(this.addresses, CANNED_CYCLE_START_CODES);
+  public getAddr(addrPrefix: string): IValueAddress {
+    if (this.hasAddress(addrPrefix)) {
+      return _.find(this.addresses, ["prefix", addrPrefix]);
+    }
 
-    return cycle.length > 0 ? cycle[0] : null;
+    return {
+      prefix: undefined,
+      value: undefined
+    } as IValueAddress;
   }
 
   public mapAddressValuesToObj() {
     // Map found G & M addresses to true on the block
-    _.forEach(this.addresses, addr => {
+    _.forEach(this.rawAddresses, addr => {
       if (addr[0] === "G" || addr[0] === "M") {
         if (parseInt(addr.slice(1)) < 10) {
           this[zeroPadAddress(addr)] = true;
@@ -132,7 +149,7 @@ export class Block {
     // Map all found Letter addresses to their cast values on the block
     _.forEach("ABCDEFHIJKLNOPQRSTUVWXYZ".split(""), ltr => {
       if (this.hasAddress(ltr)) {
-        this[ltr] = this.getAddress(ltr);
+        this[ltr] = this.getAddr(ltr).value;
       }
     });
   }

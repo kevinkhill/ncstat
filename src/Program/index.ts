@@ -12,4 +12,4 @@ const Program = StateMachine.factory(BaseProgram, {
   ]
 });
 
-export { Program };
+export default Program;

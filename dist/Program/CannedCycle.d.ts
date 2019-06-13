@@ -1,20 +1,22 @@
+import { ICannedCycle } from "../types";
 import { Block } from "./Block";
 import { Point } from "./Point";
-export declare const CANNED_CYCLE_DEFAULT_ARGS: string[];
-export declare const CANNED_CYCLE_START_CODES: string[];
-export declare class CannedCycle {
-    G98?: any;
-    G99?: any;
-    peck: any;
-    depth: any;
-    retract: any;
-    feedrate: any;
-    cycleCommand: any;
-    retractCommand: any;
-    private block;
+export declare class CannedCycle extends Block implements ICannedCycle {
+    Z: number;
+    R: number;
+    F: number;
+    Q: number;
+    cycleCommand: string;
+    retractCommand: string;
     private points;
-    constructor(block: Block);
-    addPoint(point: Point): void;
+    constructor(line: string);
+    readonly peck: number;
+    readonly depth: number;
+    readonly retract: number;
+    readonly feedrate: number;
+    getRetractCode(): string;
+    getCannedCycleStartCode(): string;
+    addPoint(point: Point): CannedCycle;
     getPoints(): Point[];
     getPointCount(): number;
 }

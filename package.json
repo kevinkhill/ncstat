@@ -14,20 +14,22 @@
   },
   "homepage": "https://gitlab.com/harris-bruno/nc-scanner#readme",
   "ava": {
-		"compileEnhancements": false,
-		"extensions": ["ts"		],
-		"require": [
+    "compileEnhancements": false,
+    "extensions": [
+      "ts"
+    ],
+    "require": [
       "ts-node/register/transpile-only"
     ]
-	},
+  },
   "scripts": {
     "test": "ava",
     "lint": "tslint 'src/**/*.ts'",
     "lint:fix": "tslint --fix 'src/**/*.ts'",
     "build": "tsc",
     "watch": "tsc --watch",
-    "example1": "node --no-warnings ./bin/analyze ./nc/example1.NC",
-    "example2": "node --no-warnings ./bin/analyze ./nc/example2.NC"
+    "example1": "ts-node ./bin/runner.ts -c ./nc/example1.NC",
+    "example2": "ts-node ./bin/runner.ts -c ./nc/example2.NC"
   },
   "dependencies": {
     "chalk": "^2.4.2",
@@ -36,10 +38,12 @@
     "fs-extra": "^7.0.1",
     "javascript-state-machine": "^3.1.0",
     "js-yaml": "^3.13.1",
-    "lodash": "^4.17.11"
+    "lodash-es": "^4.17.11",
+    "lodash-ts": "^1.2.7"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.134",
+    "@types/debug": "^4.1.4",
+    "@types/lodash-es": "^4.17.3",
     "ava": "^2.0.0",
     "prettier": "1.18.2",
     "ts-node": "^8.2.0",

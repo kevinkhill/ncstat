@@ -1,2 +1,2 @@
 declare const Program: any;
-export { Program };
+export default Program;

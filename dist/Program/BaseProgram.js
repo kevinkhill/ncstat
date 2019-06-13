@@ -41,9 +41,12 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
     function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
     function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
-var _ = require("lodash");
+var lodash_es_1 = __importDefault(require("lodash-es"));
 var readline = require("readline");
 var NcCodes_1 = require("../NcCodes");
 var Block_1 = require("./Block");
@@ -127,12 +130,12 @@ var BaseProgram = /** @class */ (function () {
                                 cannedCycle = new CannedCycle_1.CannedCycle(block);
                                 toolpath.cannedCycles.push(cannedCycle);
                             }
-                            if (this.is("in-canned-cycle") && block.G80 === true) {
+                            if (this.is("in-canned-cycle") && block.G(80)) {
                                 this.endCannedCycle();
                             }
                             if (this.is("in-canned-cycle") && block.hasMovement()) {
-                                point = _.clone(this.position.curr);
-                                lastCC = _.last(toolpath.cannedCycles);
+                                point = lodash_es_1.default.clone(this.position.curr);
+                                lastCC = lodash_es_1.default.last(toolpath.cannedCycles);
                                 lastCC.addPoint(point);
                             }
                             if (line[0] === "N") {
@@ -180,17 +183,22 @@ var BaseProgram = /** @class */ (function () {
         });
     };
     BaseProgram.prototype.setModals = function (block) {
-        if (block.G00) {
+        this.activeModals = [];
+        if (block.G(0)) {
             this.rapfeed = NcCodes_1.Modals.RAPID;
+            this.activeModals.push(NcCodes_1.Modals.RAPID);
         }
-        if (block.G01) {
+        else if (block.G(1)) {
             this.rapfeed = NcCodes_1.Modals.FEED;
+            this.activeModals.push(NcCodes_1.Modals.FEED);
         }
-        if (block.G90) {
+        if (block.G(90)) {
             this.absinc = NcCodes_1.Modals.ABSOLUTE;
+            this.activeModals.push(NcCodes_1.Modals.ABSOLUTE);
         }
-        if (block.G91) {
+        else if (block.G(91)) {
             this.absinc = NcCodes_1.Modals.INCREMENTAL;
+            this.activeModals.push(NcCodes_1.Modals.INCREMENTAL);
         }
     };
     return BaseProgram;

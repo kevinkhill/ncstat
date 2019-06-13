@@ -1,0 +1,364 @@
+
+{
+  "header": {
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20190613.133440.20151.0.001.json",
+    "dumpEventTime": "2019-06-13T13:34:40Z",
+    "dumpEventTimeStamp": "1560458080292",
+    "processId": 20151,
+    "cwd": "/mnt/h/projects/harris-bruno/nc-scanner",
+    "commandLine": [
+      "/usr/bin/node",
+      "/mnt/h/projects/harris-bruno/nc-scanner/node_modules/.bin/ava",
+      "-w"
+    ],
+    "nodejsVersion": "v11.15.0",
+    "glibcVersionRuntime": "2.27",
+    "glibcVersionCompiler": "2.12",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "linux",
+    "componentVersions": {
+      "node": "11.15.0",
+      "v8": "7.0.276.38-node.19",
+      "uv": "1.27.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "67",
+      "nghttp2": "1.37.0",
+      "napi": "4",
+      "llhttp": "1.1.1",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1b",
+      "cldr": "34.0",
+      "icu": "63.1",
+      "tz": "2018e",
+      "unicode": "11.0"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v11.15.0/node-v11.15.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v11.15.0/node-v11.15.0.tar.gz"
+    },
+    "osName": "Linux",
+    "osRelease": "4.4.0-17763-Microsoft",
+    "osVersion": "#253-Microsoft Mon Dec 31 17:49:00 PST 2018",
+    "osMachine": "x86_64",
+    "host": "HBcncprog01"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x0000000000a702fd",
+      "symbol": "report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::string const&, v8::Local<v8::String>) [ava]"
+    },
+    {
+      "pc": "0x000000000095ccb3",
+      "symbol": "node::OnFatalError(char const*, char const*) [ava]"
+    },
+    {
+      "pc": "0x0000000000b3dbde",
+      "symbol": "v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [ava]"
+    },
+    {
+      "pc": "0x0000000000b3de14",
+      "symbol": "v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [ava]"
+    },
+    {
+      "pc": "0x0000000000f3ce52",
+      "symbol": " [ava]"
+    },
+    {
+      "pc": "0x0000000000f3cf58",
+      "symbol": "v8::internal::Heap::CheckIneffectiveMarkCompact(unsigned long, double) [ava]"
+    },
+    {
+      "pc": "0x0000000000f49678",
+      "symbol": "v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [ava]"
+    },
+    {
+      "pc": "0x0000000000f4a18b",
+      "symbol": "v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [ava]"
+    },
+    {
+      "pc": "0x0000000000f4cec1",
+      "symbol": "v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationSpace, v8::internal::AllocationAlignment) [ava]"
+    },
+    {
+      "pc": "0x0000000000f170f4",
+      "symbol": "v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationSpace) [ava]"
+    },
+    {
+      "pc": "0x00000000011cd3fe",
+      "symbol": "v8::internal::Runtime_AllocateInNewSpace(int, v8::internal::Object**, v8::internal::Isolate*) [ava]"
+    },
+    {
+      "pc": "0x00003a41eeecfc5d",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 1498169344,
+    "totalCommittedMemory": 1494018280,
+    "usedMemory": 1465360920,
+    "availableMemory": 30901720,
+    "memoryLimit": 1526909922,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 524288,
+        "committedMemory": 42224,
+        "capacity": 515584,
+        "used": 33520,
+        "available": 482064
+      },
+      "new_space": {
+        "memorySize": 4194304,
+        "committedMemory": 1418200,
+        "capacity": 2062336,
+        "used": 317440,
+        "available": 1744896
+      },
+      "old_space": {
+        "memorySize": 1486557184,
+        "committedMemory": 1486356448,
+        "capacity": 1461133856,
+        "used": 1461007704,
+        "available": 126152
+      },
+      "code_space": {
+        "memorySize": 2097152,
+        "committedMemory": 1828672,
+        "capacity": 1540000,
+        "used": 1540000,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 2109440,
+        "committedMemory": 1685760,
+        "capacity": 1121520,
+        "used": 1121520,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 2686976,
+        "committedMemory": 2686976,
+        "capacity": 29889344,
+        "used": 1340736,
+        "available": 28548608
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 0,
+        "used": 0,
+        "available": 0
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 135.812,
+    "kernelCpuSeconds": 129.359,
+    "cpuConsumptionPercent": 2.61614,
+    "maxRss": 2359771136,
+    "pageFaults": {
+      "IORequired": 0,
+      "IONotRequired": 3109509
+    },
+    "fsActivity": {
+      "reads": 0,
+      "writes": 0
+    }
+  },
+  "uvthreadResourceUsage": {
+    "userCpuSeconds": 69,
+    "kernelCpuSeconds": 39.4219,
+    "cpuConsumptionPercent": 1.06967,
+    "fsActivity": {
+      "reads": 0,
+      "writes": 0
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "LESSOPEN": "| /usr/bin/lesspipe %s",
+    "npm_package_devDependencies_tslint": "^5.17.0",
+    "npm_package_devDependencies_ts_node": "^8.2.0",
+    "TMUX": "/tmp/tmux-1000/default,258,0",
+    "_fzf_orig_completion_cd": "complete -o nospace -F %s cd #_cd",
+    "_fzf_orig_completion_sed": "complete -F %s sed #_longopt",
+    "USER": "kevin",
+    "npm_config_version_commit_hooks": "true",
+    "npm_config_user_agent": "yarn/1.16.0 npm/? node/v11.15.0 linux x64",
+    "_fzf_orig_completion_tee": "complete -F %s tee #_longopt",
+    "npm_package_bugs_url": "https://gitlab.com/harris-bruno/nc-scanner/issues",
+    "npm_config_bin_links": "true",
+    "npm_node_execpath": "/usr/bin/node",
+    "npm_config_init_version": "1.0.0",
+    "SHLVL": "2",
+    "HISTIGNORE": "l:ll:la:ls:cd:cd -:pwd:exit:date:* --help:src",
+    "HOME": "/home/kevin",
+    "OLDPWD": "/mnt/h/projects/harris-bruno/nc-scanner",
+    "ZSH_PLUGIN_DOTS_PATH": "/home/kevin/.dotfiles/.dots",
+    "LESS": "-F -g -i -M -R -S -w -X -z-4",
+    "_fzf_orig_completion_less": "complete -F %s less #_longopt",
+    "ZGEN_PREZTO_LOAD_DEFAULT": "0",
+    "_fzf_orig_completion_awk": "complete -F %s awk #_longopt",
+    "LSCOLORS": "exfxcxdxbxegedAbAgacad",
+    "npm_package_devDependencies_tslint_plugin_prettier": "^2.0.1",
+    "npm_package_ava_compileEnhancements": "false",
+    "npm_config_init_license": "MIT",
+    "_fzf_orig_completion_head": "complete -F %s head #_longopt",
+    "PAGER": "less",
+    "YARN_WRAP_OUTPUT": "false",
+    "npm_package_bin_nc_scanner": "./bin/analyze",
+    "npm_config_version_tag_prefix": "v",
+    "_fzf_orig_completion_ld": "complete -F %s ld #_longopt",
+    "npm_package_scripts_lint_fix": "tslint --fix 'src/**/*.ts'",
+    "npm_package_ava_extensions_0": "ts",
+    "VISUAL": "vim",
+    "npm_package_devDependencies_typescript": "^3.5.1",
+    "npm_package_description": "Scans NC program for static analysis",
+    "_fzf_orig_completion_cp": "complete -F %s cp #_longopt",
+    "_fzf_orig_completion_uniq": "complete -F %s uniq #_longopt",
+    "npm_package_homepage": "https://gitlab.com/harris-bruno/nc-scanner#readme",
+    "npm_package_devDependencies_prettier": "1.18.2",
+    "LOGNAME": "kevin",
+    "_fzf_orig_completion_ftp": "complete -F %s ftp #_known_hosts",
+    "NAME": "HBcncprog01",
+    "_": "/usr/bin/yarn",
+    "_fzf_orig_completion_diff": "complete -F %s diff #_longopt",
+    "npm_package_scripts_lint": "tslint 'src/**/*.ts'",
+    "npm_config_registry": "https://registry.yarnpkg.com",
+    "TERM": "xterm-256color",
+    "ZGEN_AUTO_COMPAUDIT_FIX": "true",
+    "npm_package_devDependencies__types_lodash": "^4.14.134",
+    "_fzf_orig_completion_du": "complete -F %s du #_longopt",
+    "npm_config_ignore_scripts": "",
+    "npm_config__hb_registry": "http://hbcncprog01.harris-bruno.net:8010/",
+    "_fzf_orig_completion_ln": "complete -F %s ln #_longopt",
+    "_fzf_orig_completion_wc": "complete -F %s wc #_longopt",
+    "npm_package_dependencies_fs_extra": "^7.0.1",
+    "PATH": "/tmp/yarn--1560447943328-0.3605048039791683:/mnt/h/projects/harris-bruno/nc-scanner/node_modules/.bin:/home/kevin/.config/yarn/link/node_modules/.bin:/usr/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/lib/node_modules/npm/bin/node-gyp-bin:/usr/bin/node_modules/npm/bin/node-gyp-bin:/home/kevin/.local/bin:/home/kevin/bin:/usr/local/bin:/usr/local/sbin:/home/kevin/.yarn/bin:/home/kevin/.dotfiles/git/bin:/home/kevin/.dotfiles/bin:/home/kevin/.dotfiles/.dots:/home/kevin/.local/bin:/home/kevin/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/Windows/System32:/mnt/c/Windows:/mnt/c/Windows/System32/wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0:/mnt/c/ProgramData/chocolatey/bin:/mnt/c/Program Files (x86)/HashiCorp/Vagrant/bin:/mnt/c/Program Files/Git/cmd:/mnt/c/ProgramData/ComposerSetup/bin:/mnt/c/Program Files/nodejs:/mnt/c/Program Files (x86)/Yarn/bin:/mnt/c/salt:/mnt/c/Users/Public/bin:/mnt/c/Users/kevinh/.windows-build-tools/python27:/mnt/c/Users/kevinh/.windows-build-tools/python27/Scripts:/mnt/c/Program Files/Python36:/mnt/c/Program Files/Python36/Scripts:/mnt/c/Program Files/OpenSSH-Win64:/mnt/c/Program Files/PuTTY:/mnt/c/Users/kevinh/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/kevinh/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/kevinh/AppData/Local/Yarn/bin:/mnt/c/Users/kevinh/AppData/Roaming/npm:/snap/bin:/home/kevin/.fzf/bin:/home/kevin/.zgen/unixorn/warhol.plugin.zsh-master/bin",
+    "NODE": "/usr/bin/node",
+    "npm_package_repository_type": "git",
+    "npm_package_name": "nc-scanner",
+    "COMPLETION_WAITING_DOTS": "true",
+    "npm_package_devDependencies_tslint_config_prettier": "^1.18.0",
+    "npm_package_dependencies_javascript_state_machine": "^3.1.0",
+    "npm_package_ava_require_0": "ts-node/register/transpile-only",
+    "_fzf_orig_completion_sort": "complete -F %s sort #_longopt",
+    "HISTSIZE": "50000",
+    "LANG": "en_US.UTF-8",
+    "npm_package_scripts_example1": "node --no-warnings ./bin/analyze ./nc/example1.NC",
+    "LS_COLORS": "di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=1;;41:sg=1;;46:tw=0;42:ow=0;43:",
+    "_fzf_orig_completion_ls": "complete -F %s ls #_longopt",
+    "_fzf_orig_completion_rm": "complete -F %s rm #_longopt",
+    "_fzf_orig_completion_telnet": "complete -F %s telnet #_known_hosts",
+    "npm_package_scripts_example2": "node --no-warnings ./bin/analyze ./nc/example2.NC",
+    "npm_package_dependencies_chalk": "^2.4.2",
+    "npm_package_scripts_test": "ava",
+    "npm_config_version_git_message": "v%s",
+    "SHELL": "/bin/zsh",
+    "npm_lifecycle_event": "ava",
+    "npm_package_repository_url": "git+ssh://git@gitlab.com/harris-bruno/nc-scanner.git",
+    "npm_package_version": "1.0.0",
+    "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"ava\"],\"original\":[\"ava\",\"-w\"]}",
+    "npm_package_dependencies_js_yaml": "^3.13.1",
+    "npm_package_scripts_build": "tsc",
+    "LESSCLOSE": "/usr/bin/lesspipe %s %s",
+    "_fzf_orig_completion_mv": "complete -F %s mv #_longopt",
+    "npm_package_dependencies_lodash": "^4.17.11",
+    "npm_package_dependencies_debug": "^4.1.1",
+    "npm_config_version_git_tag": "true",
+    "npm_config_version_git_sign": "",
+    "npm_package_license": "UNLICENSED",
+    "npm_config_strict_ssl": "true",
+    "_fzf_orig_completion_rmdir": "complete -F %s rmdir #_longopt",
+    "SAVEHIST": "10000",
+    "npm_package_devDependencies_ava": "^2.0.0",
+    "npm_package_dependencies_commander": "^2.19.0",
+    "PWD": "/mnt/h/projects/harris-bruno/nc-scanner",
+    "_fzf_orig_completion_tail": "complete -F %s tail #_longopt",
+    "OMZ_PLUGIN_COMPOSER_SKIP_PATH_GEN": "true",
+    "LC_ALL": "en_US.UTF-8",
+    "npm_execpath": "/usr/share/yarn/bin/yarn.js",
+    "XDG_DATA_DIRS": "/usr/local/share:/usr/share:/var/lib/snapd/desktop",
+    "PYENV_ROOT": "/home/kevin/.pyenv",
+    "npm_package_author_name": "Kevin Hill",
+    "npm_package_scripts_watch": "tsc --watch",
+    "npm_config_save_prefix": "^",
+    "npm_config_ignore_optional": "",
+    "_fzf_orig_completion_cat": "complete -F %s cat #_longopt",
+    "HISTFILE": "/home/kevin/.zsh_history",
+    "HOSTTYPE": "x86_64",
+    "TMUX_PANE": "%3",
+    "_fzf_orig_completion_grep": "complete -F %s grep #_longopt",
+    "DOTS": "/home/kevin/.dotfiles",
+    "MANPATH": "/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:",
+    "INIT_CWD": "/mnt/h/projects/harris-bruno/nc-scanner",
+    "WSLENV": "",
+    "_fzf_orig_completion_pushd": "complete -o nospace -F %s pushd #_cd",
+    "EDITOR": "vim"
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": 0,
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": 65536,
+      "hard": 65536
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": 65536,
+      "hard": 65536
+    },
+    "stack_size_bytes": {
+      "soft": 8388608,
+      "hard": 8388608
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": 7823,
+      "hard": 7823
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "linux-vdso.so.1",
+    "/lib/x86_64-linux-gnu/libdl.so.2",
+    "/lib/x86_64-linux-gnu/librt.so.1",
+    "/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+    "/lib/x86_64-linux-gnu/libm.so.6",
+    "/lib/x86_64-linux-gnu/libgcc_s.so.1",
+    "/lib/x86_64-linux-gnu/libpthread.so.0",
+    "/lib/x86_64-linux-gnu/libc.so.6",
+    "/lib64/ld-linux-x86-64.so.2"
+  ]
+}

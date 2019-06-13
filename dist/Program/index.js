@@ -11,4 +11,4 @@ var Program = StateMachine.factory(BaseProgram_1.BaseProgram, {
         { name: "end-canned-cycle", from: "in-canned-cycle", to: "toolpathing" }
     ]
 });
-exports.Program = Program;
+exports.default = Program;
