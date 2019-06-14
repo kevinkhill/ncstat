@@ -2,11 +2,8 @@
 
 import chalk from "chalk";
 import cli from "commander";
-import _ from "lodash-es";
+import * as pkg from "../package.json";
 import { Program } from "../src";
-
-const pkg = require("../package.json");
-
 const { log, error } = console;
 
 cli
@@ -36,16 +33,17 @@ const program = new Program(cli.args[0]);
       if (toolpath.hasFeedrates()) {
         // const feedrates = toolpath.getFeedrates()
 
-        output += chalk.magenta(`T${_.padEnd(toolpath.tool.num, 3)}`);
+        output += chalk.magenta(`T${toolpath.tool.num}`);
         output += " | ";
         output += chalk.blue(`${toolpath.tool.desc}\n`);
 
         if (cli.cannedCycles && toolpath.cannedCycles.length > 0) {
           toolpath.cannedCycles.forEach(cannedCycle => {
-            output += chalk.greenBright(cannedCycle.retractCommand);
+            output += chalk.greenBright(cannedCycle.retractCommand) + " ";
             output += chalk.greenBright(cannedCycle.cycleCommand);
             output += " with ";
-            output += `${chalk.yellow(cannedCycle.getPointCount())} points\n`;
+            output += chalk.yellow(cannedCycle.getPointCount().toString());
+            output += " points\n";
 
             if (cli.cannedPoints) {
               cannedCycle.getPoints().forEach(position => {

@@ -1,5 +1,5 @@
 import Debug from "debug";
-import _ from "lodash-es";
+import _ from "lodash";
 import { extractors, zeroPadAddress } from "../lib";
 import { CANNED_CYCLE_START_CODES } from "../NcCodes";
 import { IPosition, IValueAddress } from "../types";
@@ -8,22 +8,19 @@ import { Address } from "./Address";
 const debug = Debug("nc-scanner");
 
 export class Block {
-  public comment: string | null = null;
   public blockSkip: string | null = null;
-
+  public readonly values: any = {};
   public A?: number;
   public B?: number;
   public C?: number;
   public D?: number;
   public E?: number;
   public F?: number;
-  // public G?: number;
   public H?: number;
   public I?: number;
   public J?: number;
   public K?: number;
   public L?: number;
-  // public M?: number;
   public N?: number;
   public O?: number;
   public P?: number;
@@ -38,11 +35,12 @@ export class Block {
   public Y?: number;
   public Z?: number;
 
-  protected readonly gCodes: number[] = [];
-  protected readonly rawAddresses: string[] = [];
-  protected readonly addresses: IValueAddress[] = [];
-  protected readonly addressRegex: RegExp = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
-
+  private readonly addresses: IValueAddress[] = [];
+  private readonly addressRegex: RegExp = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
+  private readonly comment: string | null = null;
+  private readonly gCodes: number[] = [];
+  private readonly mCodes: number[] = [];
+  private readonly rawAddresses: string[] = [];
   private readonly rawLine: string = "";
 
   constructor(line: string) {
@@ -55,7 +53,16 @@ export class Block {
       .map(a => parseInt(a.slice(1)))
       .value();
 
+    this.mCodes = _(this.rawAddresses)
+      .filter(a => a.startsWith("M"))
+      .map(a => parseInt(a.slice(1)))
+      .value();
+
     this.addresses = _.map(this.rawAddresses, Address.factory);
+
+    _.forEach(_.keyBy(this.addresses, "prefix"), (v, k) => {
+      this.values[k] = v.value;
+    });
 
     _.forEach("ABCDEFHIJKLNOPQRSTUVWXYZ".split(""), ltr => {
       if (this.hasAddress(ltr)) {
@@ -77,9 +84,13 @@ export class Block {
     return this.gCodes.includes(code);
   }
 
-  // public M(code: number): boolean {
-  //   return this.mCodes.includes(code);
-  // }
+  public M(code: number): boolean {
+    return this.mCodes.includes(code);
+  }
+
+  public getComment(): string {
+    return this.comment;
+  }
 
   public getPosition(): IPosition {
     return {
@@ -90,12 +101,24 @@ export class Block {
     };
   }
 
+  public getRetractCode(): string {
+    return _(this.rawAddresses)
+      .intersection(["G98", "G99"])
+      .first();
+  }
+
   public isStartOfCannedCycle(): boolean {
     const addresses = _(this.rawAddresses)
       .intersection(CANNED_CYCLE_START_CODES)
       .value();
 
     return addresses.length > 0;
+  }
+
+  public getCannedCycleStartCode(): string {
+    return _(this.rawAddresses)
+      .intersection(CANNED_CYCLE_START_CODES)
+      .first();
   }
 
   public hasMovement(): boolean {

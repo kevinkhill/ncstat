@@ -38,12 +38,12 @@
     "fs-extra": "^7.0.1",
     "javascript-state-machine": "^3.1.0",
     "js-yaml": "^3.13.1",
-    "lodash-es": "^4.17.11",
+    "lodash": "^4.17.11",
     "lodash-ts": "^1.2.7"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.4",
-    "@types/lodash-es": "^4.17.3",
+    "@types/debug": "*",
+    "@types/lodash": "^4.14.134",
     "ava": "^2.0.0",
     "prettier": "1.18.2",
     "ts-node": "^8.2.0",

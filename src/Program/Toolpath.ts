@@ -1,22 +1,20 @@
+import _ from "lodash";
 import { ITool } from "../types";
+import { Block } from "./Block";
+import { CannedCycle } from "./CannedCycle";
 
 export class Toolpath {
   public tool: ITool;
-  public lines: string[];
-  public cannedCycles: string[];
+  public lines: string[] = [];
+  public cannedCycles: CannedCycle[] = [];
 
   private feedrateRegex: RegExp = /F([0-9]+(?:\\.[0-9]*)?)/g;
 
-  constructor(line: string) {
-    this.lines = [];
-    this.cannedCycles = [];
-
+  constructor(block: Block) {
     this.tool = {
-      desc: "",
-      num: parseInt(line.match(/^N([0-9]+)/)[1])
+      desc: block.getComment(),
+      num: block.getAddress("N")
     };
-
-    this.tool.desc = this.uncomment(line.replace(`N${this.tool.num}`, ""));
   }
 
   public hasFeedrates(): boolean {
@@ -24,17 +22,17 @@ export class Toolpath {
   }
 
   public getFeedrates() {
-    const feedrates = [];
-
-    this.lines.forEach(line => {
+    return _.map(this.lines, line => {
       if (this.feedrateRegex.test(line)) {
         const feedrate = line.match(this.feedrateRegex);
 
-        feedrates.push(parseFloat(feedrate[1]));
+        return parseFloat(feedrate[1]);
       }
     });
+  }
 
-    return feedrates;
+  public addCannedCycle(cycle: CannedCycle) {
+    this.cannedCycles.push(cycle);
   }
 
   public getCannedCycleCount(): number {

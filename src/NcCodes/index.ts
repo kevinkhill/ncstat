@@ -1,9 +1,13 @@
-import * as _ from "lodash";
+import _ from "lodash";
 import { G_CODES as RAW_G_CODES } from "./gcodes";
 import { M_CODES as RAW_M_CODES } from "./mcodes";
-import { Modals } from "./Modals";
 
-export { Modals };
+export enum Modals {
+  RAPID = "G00",
+  FEED = "G01",
+  ABSOLUTE = "G90",
+  INCREMENTAL = "G91"
+}
 
 export const G_CODES = {};
 export const M_CODES = {};
@@ -25,8 +29,8 @@ export const COMMANDS = {
   M: (n: number) => M_CODES[`M${n}`]
 };
 
-_.forEach(RAW_G_CODES, (groupName: string, group: string) => {
-  _.forEach(groupName, (command: string, gcode: string) => {
+_.forEach(RAW_G_CODES, (groupName, group) => {
+  _.forEach(groupName, (command, gcode) => {
     G_CODES[gcode] = {
       COMMAND: command,
       GROUP: group
@@ -34,7 +38,7 @@ _.forEach(RAW_G_CODES, (groupName: string, group: string) => {
   });
 });
 
-_.forEach(RAW_M_CODES, (command: string, mcode: string) => {
+_.forEach(RAW_M_CODES, (command, mcode) => {
   M_CODES[mcode] = {
     COMMAND: command,
     GROUP: "MACHINE"

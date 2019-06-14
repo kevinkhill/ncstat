@@ -1,10 +1,8 @@
-import _ from "lodash";
-import { CANNED_CYCLE_START_CODES } from "../NcCodes";
 import { ICannedCycle } from "../types";
 import { Block } from "./Block";
 import { Point } from "./Point";
 
-export class CannedCycle extends Block implements ICannedCycle {
+export class CannedCycle implements ICannedCycle {
   public Z: number;
   public R: number;
   public F: number;
@@ -15,16 +13,14 @@ export class CannedCycle extends Block implements ICannedCycle {
 
   private points: Point[] = [];
 
-  constructor(line: string) {
-    super(line);
+  constructor(block: Block) {
+    this.Q = block.getAddress("Q");
+    this.Z = block.getAddress("Z");
+    this.R = block.getAddress("R");
+    this.F = block.getAddress("F");
 
-    this.Q = this.getAddress("Q");
-    this.Z = this.getAddress("Z");
-    this.R = this.getAddress("R");
-    this.F = this.getAddress("F");
-
-    this.cycleCommand = this.getCannedCycleStartCode();
-    this.retractCommand = this.getRetractCode();
+    this.cycleCommand = block.getCannedCycleStartCode();
+    this.retractCommand = block.getRetractCode();
   }
 
   get peck(): number {
@@ -43,23 +39,10 @@ export class CannedCycle extends Block implements ICannedCycle {
     return this.F;
   }
 
-  public getRetractCode(): string {
-    return _(this.rawAddresses)
-      .intersection(["G98", "G99"])
-      .first();
-  }
-
-  public getCannedCycleStartCode(): string {
-    return _(this.rawAddresses)
-      .intersection(CANNED_CYCLE_START_CODES)
-      .first();
-  }
-  public addPoint(point: Point): CannedCycle {
+  public addPoint(point: Point): void {
     const position = point instanceof Block ? point.getPosition() : point;
 
     this.points.push(position);
-
-    return this;
   }
 
   public getPoints(): Point[] {

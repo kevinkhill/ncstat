@@ -1,5 +1,5 @@
-export function zeroPadAddress(str: string): string {
-  return str ? str[0] + `00${str.slice(1)}`.slice(-2) : "";
+export function zeroPadAddress(val: string): string {
+  return val ? val[0] + `00${val.slice(1)}`.slice(-2) : "";
 }
 
 export function extractorFactory(matcher: RegExp): Function {

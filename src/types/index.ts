@@ -19,6 +19,6 @@ export interface IPosition extends IPoint {
 }
 
 export interface ICannedCycle {
-  cycleCommand: any;
-  retractCommand: any;
+  cycleCommand: string;
+  retractCommand: string;
 }
