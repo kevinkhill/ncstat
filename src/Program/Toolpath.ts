@@ -13,7 +13,7 @@ export class Toolpath {
   constructor(block: Block) {
     this.tool = {
       desc: block.getComment(),
-      num: block.getAddress("N")
+      num: block.values.N
     };
   }
 

@@ -1,15 +1,13 @@
 import Debug from "debug";
 import _ from "lodash";
-import { extractors, zeroPadAddress } from "../lib";
+import { extractors } from "../lib";
 import { CANNED_CYCLE_START_CODES } from "../NcCodes";
 import { IPosition, IValueAddress } from "../types";
 import { Address } from "./Address";
 
-const debug = Debug("nc-scanner");
+const log = Debug("nc-scanner");
 
 export class Block {
-  public blockSkip: string | null = null;
-  public readonly values: any = {};
   public A?: number;
   public B?: number;
   public C?: number;
@@ -35,46 +33,42 @@ export class Block {
   public Y?: number;
   public Z?: number;
 
-  private readonly addresses: IValueAddress[] = [];
-  private readonly addressRegex: RegExp = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
-  private readonly comment: string | null = null;
+  public blockSkip: string | null = null;
+
+  public readonly values: any = {};
+
+  private readonly rawLine: string = "";
   private readonly gCodes: number[] = [];
   private readonly mCodes: number[] = [];
   private readonly rawAddresses: string[] = [];
-  private readonly rawLine: string = "";
+  private readonly comment: string | null = null;
+  private readonly addresses: IValueAddress[] = [];
+  private readonly addressRegex: RegExp = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
 
   constructor(line: string) {
     this.rawLine = line;
 
     this.rawAddresses = this.rawLine.match(this.addressRegex);
 
+    // Map all found G codes to an integer array
     this.gCodes = _(this.rawAddresses)
       .filter(a => a.startsWith("G"))
       .map(a => parseInt(a.slice(1)))
       .value();
 
+    // Map all found M codes to an integer array
     this.mCodes = _(this.rawAddresses)
       .filter(a => a.startsWith("M"))
       .map(a => parseInt(a.slice(1)))
       .value();
 
+    // Create an array of `Addresses`
     this.addresses = _.map(this.rawAddresses, Address.factory);
 
+    // Map all found letter addresses to `this.values`
     _.forEach(_.keyBy(this.addresses, "prefix"), (v, k) => {
       this.values[k] = v.value;
     });
-
-    _.forEach("ABCDEFHIJKLNOPQRSTUVWXYZ".split(""), ltr => {
-      if (this.hasAddress(ltr)) {
-        const value = this.getAddr(ltr).value;
-
-        debug(`setting this.${ltr} to`, value);
-
-        this[ltr] = value;
-      }
-    });
-
-    this.mapAddressValuesToObj();
 
     this.comment = extractors.commentExtractor(this.rawLine);
     this.blockSkip = extractors.blockSkipExtractor(this.rawLine);
@@ -94,10 +88,10 @@ export class Block {
 
   public getPosition(): IPosition {
     return {
-      B: this.getAddress("B"),
-      X: this.getAddress("X"),
-      Y: this.getAddress("Y"),
-      Z: this.getAddress("Z")
+      B: this.values.B,
+      X: this.values.X,
+      Y: this.values.Y,
+      Z: this.values.Z
     };
   }
 
@@ -135,12 +129,15 @@ export class Block {
   }
 
   public hasAddress(ltr: string): boolean {
-    return _.some(this.addresses, ["ltr", ltr]);
+    log(this.addresses);
+    log(_.some(this.addresses, ["prefix", ltr]));
+
+    return _.some(this.addresses, ["prefix", ltr]);
   }
 
   public getAddress(addrPrefix: string): number | null {
     if (this.hasAddress(addrPrefix)) {
-      return this.getAddr(addrPrefix).value;
+      return this.values[addrPrefix].value;
     }
 
     return null;
@@ -155,25 +152,5 @@ export class Block {
       prefix: undefined,
       value: undefined
     } as IValueAddress;
-  }
-
-  public mapAddressValuesToObj() {
-    // Map found G & M addresses to true on the block
-    _.forEach(this.rawAddresses, addr => {
-      if (addr[0] === "G" || addr[0] === "M") {
-        if (parseInt(addr.slice(1)) < 10) {
-          this[zeroPadAddress(addr)] = true;
-        } else {
-          this[addr] = true;
-        }
-      }
-    });
-
-    // Map all found Letter addresses to their cast values on the block
-    _.forEach("ABCDEFHIJKLNOPQRSTUVWXYZ".split(""), ltr => {
-      if (this.hasAddress(ltr)) {
-        this[ltr] = this.getAddr(ltr).value;
-      }
-    });
   }
 }

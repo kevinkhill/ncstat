@@ -20,10 +20,11 @@ export default class Program {
     prev: IPosition;
   };
   private rapfeed: any;
-  private filepath: string;
-  private blocks: any[] = [];
+  private blocks: Block[] = [];
   private rawLines: string[] = [];
   private absinc: any = Modals.ABSOLUTE;
+
+  private readonly filepath: string;
 
   constructor(filepath: string) {
     this.filepath = filepath;
@@ -48,6 +49,14 @@ export default class Program {
 
   public toString(): string {
     return this.rawLines.join("\n");
+  }
+
+  public getNumber(): number {
+    return this.number
+  }
+
+  public getTitle(): string {
+    return this.title
   }
 
   public getToolpathCount(): number {
@@ -100,7 +109,8 @@ export default class Program {
         this.setModals(block);
 
         if (block.hasAddress("O")) {
-          this.number = block.getAddress("O");
+
+          this.number = block.values.O;
           this.title = block.getComment();
         }
 

@@ -3,10 +3,10 @@ import { Block } from "./Block";
 import { Point } from "./Point";
 
 export class CannedCycle implements ICannedCycle {
-  public Z: number;
-  public R: number;
-  public F: number;
-  public Q: number;
+  public Z?: number;
+  public R?: number;
+  public F?: number;
+  public Q?: number;
 
   public cycleCommand: string;
   public retractCommand: string;
@@ -14,10 +14,10 @@ export class CannedCycle implements ICannedCycle {
   private points: Point[] = [];
 
   constructor(block: Block) {
-    this.Q = block.getAddress("Q");
-    this.Z = block.getAddress("Z");
-    this.R = block.getAddress("R");
-    this.F = block.getAddress("F");
+    this.Q = block.values.Q;
+    this.Z = block.values.Z;
+    this.R = block.values.R;
+    this.F = block.values.F;
 
     this.cycleCommand = block.getCannedCycleStartCode();
     this.retractCommand = block.getRetractCode();

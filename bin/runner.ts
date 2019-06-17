@@ -25,7 +25,7 @@ const program = new Program(cli.args[0]);
   try {
     await program.analyze();
 
-    let output = `Program #${this.number} ${this.title}\n`;
+    let output = `Program #${program.getNumber()} ${program.getTitle()}\n`;
     output +=
       "---------------------------------------------------------------------------------------\n";
 
