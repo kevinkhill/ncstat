@@ -8,33 +8,11 @@ import Address from "./Address";
 const log = Debug("nc-scanner");
 
 export default class Block {
-  public A?: number;
-  public B?: number;
-  public C?: number;
-  public D?: number;
-  public E?: number;
-  public F?: number;
-  public H?: number;
-  public I?: number;
-  public J?: number;
-  public K?: number;
-  public L?: number;
-  public N?: number;
-  public O?: number;
-  public P?: number;
-  public Q?: number;
-  public R?: number;
-  public S?: number;
-  public T?: number;
-  public U?: number;
-  public V?: number;
-  public W?: number;
-  public X?: number;
-  public Y?: number;
-  public Z?: number;
   public blockSkip: string | null = null;
 
-  public readonly values: any = {};
+  public readonly values: {
+    [K: string]: number;
+  } = {};
 
   private readonly rawLine: string = "";
   private readonly gCodes: number[] = [];
@@ -65,8 +43,8 @@ export default class Block {
     this.addresses = _.map(this.rawAddresses, Address.factory);
 
     // Map all found letter addresses to `this.values`
-    _.forEach(_.keyBy(this.addresses, "prefix"), (v, k) => {
-      this.values[k] = v.value;
+    _.forEach(this.addresses, address => {
+      this.values[address.prefix] = address.value;
     });
 
     this.comment = extractors.commentExtractor(this.rawLine);
@@ -120,23 +98,19 @@ export default class Block {
     }
 
     return (
-      _.isNumber(this.B) ||
-      _.isNumber(this.X) ||
-      _.isNumber(this.Y) ||
-      _.isNumber(this.Z)
+      _.isNumber(this.values.B) ||
+      _.isNumber(this.values.X) ||
+      _.isNumber(this.values.Y) ||
+      _.isNumber(this.values.Z)
     );
   }
 
   public hasAddress(ltr: string): boolean {
-    return _.some(this.addresses, ["prefix", ltr]);
+    return this.values.hasOwnProperty(ltr);
   }
 
-  public getAddress(addrPrefix: string): number | null {
-    if (this.hasAddress(addrPrefix)) {
-      return this.values[addrPrefix].value;
-    }
-
-    return null;
+  public getValue(prefix: string): number | null {
+    return this.hasAddress(prefix) ? this.values[prefix] : null;
   }
 
   public getAddr(addrPrefix: string): Address {
