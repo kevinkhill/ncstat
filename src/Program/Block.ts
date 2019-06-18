@@ -93,7 +93,7 @@ export default class Block {
   }
 
   public hasMovement(): boolean {
-    if (_.difference(this.gCodes, [4, 10, 65])) {
+    if (_.intersection(this.gCodes, [4, 10, 65]).length > 0) {
       return false;
     }
 

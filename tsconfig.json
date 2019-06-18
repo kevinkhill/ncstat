@@ -2,17 +2,20 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "declaration": true,
+    // "declaration": true,
     "outDir": "./dist",
-    "resolveJsonModule": true,
+    "noImplicitAny": true,
     "esModuleInterop": true,
     "typeRoots": [
         "./typings/",
         "./node_modules/@types/"
     ]
-    // "noImplicitAny": true
   },
   "include": [
-    "./src/**/*"
+    "src/**/*"
+  ],
+  "exclude": [
+    "test/**/*",
+    "node_modules/**/*"
   ]
 }

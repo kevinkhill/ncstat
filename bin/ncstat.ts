@@ -1,11 +1,11 @@
 import chalk from "chalk";
 import cli from "commander";
-import * as pkg from "../package.json";
 import { Program } from "../src";
+
 const { log, error } = console;
 
 cli
-  .version(pkg.version)
+  .version(process.env.npm_package_version)
   .description("An app for analyzing NC files")
   .option("-t, --tool-list", "Show a list of tools found")
   .option("-c, --canned-cycles", "Show found canned cycles in toolpaths")

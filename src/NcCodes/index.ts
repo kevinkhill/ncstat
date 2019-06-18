@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { INcCodeDef } from "../types";
 import { G_CODES as RAW_G_CODES } from "./gcodes";
 import { M_CODES as RAW_M_CODES } from "./mcodes";
 
@@ -9,8 +10,13 @@ export enum Modals {
   INCREMENTAL = "G91"
 }
 
-export const G_CODES = {};
-export const M_CODES = {};
+export const G_CODES: {
+  [K: string]: INcCodeDef;
+} = {};
+
+export const M_CODES: {
+  [K: string]: INcCodeDef;
+} = {};
 
 export const CANNED_CYCLE = {
   RETRACT_CODES: ["G98", "G99"],

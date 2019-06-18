@@ -316,6 +316,11 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/javascript-state-machine@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@types/javascript-state-machine/-/javascript-state-machine-2.4.1.tgz#af80a8016b3a4844c4768277422ace1f452cba65"
+  integrity sha512-PcqbLTNXYLqsw/GDDXPGA+SKZxLkjzgQi0anjDeRQbmSaXa0J2iSRFksaql2/bEI/Qc+aKg5c1UowTlpPu16Dw==
+
 "@types/lodash@^4.14.134":
   version "4.14.134"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.134.tgz#9032b440122db3a2a56200e91191996161dde5b9"
@@ -2066,11 +2071,6 @@ locate-path@^5.0.0:
   integrity sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
   dependencies:
     p-locate "^4.1.0"
-
-lodash-ts@^1.2.7:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/lodash-ts/-/lodash-ts-1.2.7.tgz#d286ddb304507c5cf53decb17a99bae3ef0fad26"
-  integrity sha512-O9+vr6ikDdABxQX6TGfpD5nY4dBxCQi6rIfRgShHcmNWS3HRo68RORaBoDn82b+C9pZomnGWQUKcebfERU1WKA==
 
 lodash.clonedeep@^4.5.0:
   version "4.5.0"

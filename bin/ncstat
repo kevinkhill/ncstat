@@ -1,17 +1,15 @@
 #!/usr/bin/env node
-/* tslint:disable */
-const _ = require('lodash')
-const chalk = require("chalk");
-const cli = require("commander");
 
-const { version } = require("../package.json");
-const Program = require("../dist");
+import chalk from "chalk";
+import cli from "commander";
+import { Program } from "../dist";
 
 const { log, error } = console;
 
 cli
-  .version(version)
+  .version(process.env.npm_package_version)
   .description("An app for analyzing NC files")
+  .option("-t, --tool-list", "Show a list of tools found")
   .option("-c, --canned-cycles", "Show found canned cycles in toolpaths")
   .option("-p, --canned-points", "Show the location of points in canned cycles")
   .parse(process.argv);
@@ -26,26 +24,29 @@ const program = new Program(cli.args[0]);
 
 (async () => {
   try {
-    await program.analyze();
+    const toolpaths = await program.analyze();
 
-    let output = `Program #${this.number} ${this.title}\n`;
+    let output =
+      "---------------------------------------------------------------------------------------\n";
+    output += `Program #${program.getNumber()} ${program.getTitle()}\n`;
     output +=
       "---------------------------------------------------------------------------------------\n";
 
-    program.toolpaths.forEach(toolpath => {
+    toolpaths.forEach(toolpath => {
       if (toolpath.hasFeedrates()) {
         // const feedrates = toolpath.getFeedrates()
 
-        output += chalk.magenta(`T${_.padEnd(toolpath.tool.num, 3)}`);
+        output += chalk.magenta(`T${toolpath.tool.num}`);
         output += " | ";
         output += chalk.blue(`${toolpath.tool.desc}\n`);
 
         if (cli.cannedCycles && toolpath.cannedCycles.length > 0) {
           toolpath.cannedCycles.forEach(cannedCycle => {
-            output += chalk.greenBright(cannedCycle.retractCommand);
+            output += chalk.greenBright(cannedCycle.retractCommand) + " ";
             output += chalk.greenBright(cannedCycle.cycleCommand);
             output += " with ";
-            output += `${chalk.yellow(cannedCycle.getPointCount())} points\n`;
+            output += chalk.yellow(cannedCycle.getPointCount().toString());
+            output += " points\n";
 
             if (cli.cannedPoints) {
               cannedCycle.getPoints().forEach(position => {
@@ -70,6 +71,6 @@ const program = new Program(cli.args[0]);
     log(output);
     log(`Analyzed ${program.toolpaths.length} toolpaths.`);
   } catch (err) {
-    console.log(err);
+    log(err);
   }
 })();

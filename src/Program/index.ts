@@ -1,13 +1,16 @@
-import fs = require("fs");
+import Debug from "debug";
+import fs from "fs";
 import StateMachine from "javascript-state-machine";
 import _ from "lodash";
-import readline = require("readline");
+import readline from "readline";
 import { Modals } from "../NcCodes";
-import { IPosition } from "../types";
+import { IPosition, IProgramStateMachine } from "../types";
 import Block from "./Block";
 import CannedCycle from "./CannedCycle";
 import Tool from "./Tool";
 import Toolpath from "./Toolpath";
+
+const log = Debug("nc-scanner:Program");
 
 export default class Program {
   public activeModals: {
@@ -17,7 +20,7 @@ export default class Program {
   public title: string;
   public toolpaths: Toolpath[] = [];
 
-  private prgExec: StateMachine;
+  private prgExec: IProgramStateMachine;
   private position: {
     curr: IPosition;
     prev: IPosition;
@@ -151,22 +154,6 @@ export default class Program {
     return this.toolpaths;
   }
 
-  private updatePosition(block: Block): void {
-    const position = block.getPosition();
-
-    this.position.prev = this.position.curr;
-
-    ["B", "X", "Y", "Z"].forEach(axis => {
-      if (position[axis]) {
-        if (this.activeModals[Modals.INCREMENTAL]) {
-          this.position.curr[axis] += position[axis];
-        } else if (this.activeModals[Modals.ABSOLUTE]) {
-          this.position.curr[axis] = position[axis];
-        }
-      }
-    });
-  }
-
   private async *getLine(): AsyncIterableIterator<string> {
     const filestream = readline.createInterface({
       crlfDelay: Infinity,
@@ -180,6 +167,22 @@ export default class Program {
 
       yield line;
     }
+  }
+
+  private updatePosition(block: Block): void {
+    const blockPosition = block.getPosition();
+
+    this.position.prev = this.position.curr;
+
+    ["B", "X", "Y", "Z"].forEach(axis => {
+      if (blockPosition[axis]) {
+        if (this.activeModals[Modals.INCREMENTAL]) {
+          this.position.curr[axis] += blockPosition[axis];
+        } else if (this.activeModals[Modals.ABSOLUTE]) {
+          this.position.curr[axis] = blockPosition[axis];
+        }
+      }
+    });
   }
 
   private extractProgramNumberAndTitle(block: Block) {
