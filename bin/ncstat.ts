@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import chalk from "chalk";
 import cli from "commander";
 import * as pkg from "../package.json";
@@ -9,6 +7,7 @@ const { log, error } = console;
 cli
   .version(pkg.version)
   .description("An app for analyzing NC files")
+  .option("-t, --tool-list", "Show a list of tools found")
   .option("-c, --canned-cycles", "Show found canned cycles in toolpaths")
   .option("-p, --canned-points", "Show the location of points in canned cycles")
   .parse(process.argv);
@@ -23,13 +22,15 @@ const program = new Program(cli.args[0]);
 
 (async () => {
   try {
-    await program.analyze();
+    const toolpaths = await program.analyze();
 
-    let output = `Program #${program.getNumber()} ${program.getTitle()}\n`;
+    let output =
+      "---------------------------------------------------------------------------------------\n";
+    output += `Program #${program.getNumber()} ${program.getTitle()}\n`;
     output +=
       "---------------------------------------------------------------------------------------\n";
 
-    program.toolpaths.forEach(toolpath => {
+    toolpaths.forEach(toolpath => {
       if (toolpath.hasFeedrates()) {
         // const feedrates = toolpath.getFeedrates()
 
@@ -68,6 +69,6 @@ const program = new Program(cli.args[0]);
     log(output);
     log(`Analyzed ${program.toolpaths.length} toolpaths.`);
   } catch (err) {
-    console.log(err);
+    log(err);
   }
 })();

@@ -1,8 +1,8 @@
 import { ICannedCycle } from "../types";
-import { Block } from "./Block";
-import { Point } from "./Point";
+import Block from "./Block";
+import Point from "./Point";
 
-export class CannedCycle implements ICannedCycle {
+export default class CannedCycle implements ICannedCycle {
   public Z?: number;
   public R?: number;
   public F?: number;

@@ -1,13 +1,13 @@
 import Debug from "debug";
 import _ from "lodash";
 import { extractors } from "../lib";
-import { CANNED_CYCLE_START_CODES } from "../NcCodes";
-import { IPosition, IValueAddress } from "../types";
-import { Address } from "./Address";
+import { CANNED_CYCLE } from "../NcCodes";
+import { IPosition } from "../types";
+import Address from "./Address";
 
 const log = Debug("nc-scanner");
 
-export class Block {
+export default class Block {
   public A?: number;
   public B?: number;
   public C?: number;
@@ -32,7 +32,6 @@ export class Block {
   public X?: number;
   public Y?: number;
   public Z?: number;
-
   public blockSkip: string | null = null;
 
   public readonly values: any = {};
@@ -40,9 +39,9 @@ export class Block {
   private readonly rawLine: string = "";
   private readonly gCodes: number[] = [];
   private readonly mCodes: number[] = [];
+  private readonly addresses: Address[] = [];
   private readonly rawAddresses: string[] = [];
   private readonly comment: string | null = null;
-  private readonly addresses: IValueAddress[] = [];
   private readonly addressRegex: RegExp = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
 
   constructor(line: string) {
@@ -97,13 +96,13 @@ export class Block {
 
   public getRetractCode(): string {
     return _(this.rawAddresses)
-      .intersection(["G98", "G99"])
+      .intersection(CANNED_CYCLE.RETRACT_CODES)
       .first();
   }
 
   public isStartOfCannedCycle(): boolean {
     const addresses = _(this.rawAddresses)
-      .intersection(CANNED_CYCLE_START_CODES)
+      .intersection(CANNED_CYCLE.START_CODES)
       .value();
 
     return addresses.length > 0;
@@ -111,7 +110,7 @@ export class Block {
 
   public getCannedCycleStartCode(): string {
     return _(this.rawAddresses)
-      .intersection(CANNED_CYCLE_START_CODES)
+      .intersection(CANNED_CYCLE.START_CODES)
       .first();
   }
 
@@ -129,9 +128,6 @@ export class Block {
   }
 
   public hasAddress(ltr: string): boolean {
-    log(this.addresses);
-    log(_.some(this.addresses, ["prefix", ltr]));
-
     return _.some(this.addresses, ["prefix", ltr]);
   }
 
@@ -143,7 +139,7 @@ export class Block {
     return null;
   }
 
-  public getAddr(addrPrefix: string): IValueAddress {
+  public getAddr(addrPrefix: string): Address {
     if (this.hasAddress(addrPrefix)) {
       return _.find(this.addresses, ["prefix", addrPrefix]);
     }
@@ -151,6 +147,6 @@ export class Block {
     return {
       prefix: undefined,
       value: undefined
-    } as IValueAddress;
+    } as Address;
   }
 }

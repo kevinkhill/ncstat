@@ -1,8 +1,8 @@
-import { IValueAddress } from "../types";
+import _ from "lodash";
 
-export class Address implements IValueAddress {
-  public static factory(addr: string): Address {
-    return new Address(addr);
+export default class Address {
+  public static factory(valAddr: string): Address {
+    return new Address(valAddr);
   }
 
   public prefix: string;
@@ -17,6 +17,10 @@ export class Address implements IValueAddress {
 
   public toString(): string {
     return `${this.prefix}${this.value}`;
+  }
+
+  public matches(valAddr: string): boolean {
+    return _.isEqual(this, new Address(valAddr));
   }
 
   public isPositive(): boolean {

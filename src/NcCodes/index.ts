@@ -12,17 +12,10 @@ export enum Modals {
 export const G_CODES = {};
 export const M_CODES = {};
 
-export const CANNED_CYCLE_START_CODES = [
-  "G73",
-  "G74",
-  "G81",
-  "G82",
-  "G83",
-  "G84",
-  "G85",
-  "G86",
-  "G87"
-];
+export const CANNED_CYCLE = {
+  RETRACT_CODES: ["G98", "G99"],
+  START_CODES: ["G73", "G74", "G81", "G82", "G83", "G84", "G85", "G86", "G87"]
+};
 
 export const COMMANDS = {
   G: (n: number) => G_CODES[`G${n}`],

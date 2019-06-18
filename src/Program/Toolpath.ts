@@ -1,34 +1,27 @@
 import _ from "lodash";
-import { ITool } from "../types";
-import { Block } from "./Block";
-import { CannedCycle } from "./CannedCycle";
+import Block from "./Block";
+import CannedCycle from "./CannedCycle";
+import Tool from "./Tool";
 
-export class Toolpath {
-  public tool: ITool;
+const feedrateRegex: RegExp = /F([0-9]+(?:\\.[0-9]*)?)/g;
+
+export default class Toolpath {
+  public tool: Tool;
   public lines: string[] = [];
   public cannedCycles: CannedCycle[] = [];
 
-  private feedrateRegex: RegExp = /F([0-9]+(?:\\.[0-9]*)?)/g;
-
   constructor(block: Block) {
-    this.tool = {
-      desc: block.getComment(),
-      num: block.values.N
-    };
+    this.tool = new Tool(block);
   }
 
   public hasFeedrates(): boolean {
-    return this.lines.some(line => this.feedrateRegex.test(line));
+    return this.lines.some(line => feedrateRegex.test(line));
   }
 
   public getFeedrates() {
-    return _.map(this.lines, line => {
-      if (this.feedrateRegex.test(line)) {
-        const feedrate = line.match(this.feedrateRegex);
-
-        return parseFloat(feedrate[1]);
-      }
-    });
+    return _(this.lines)
+      .filter(line => feedrateRegex.test(line))
+      .map(line => parseFloat(line.match(feedrateRegex)[1]));
   }
 
   public addCannedCycle(cycle: CannedCycle) {
@@ -37,12 +30,5 @@ export class Toolpath {
 
   public getCannedCycleCount(): number {
     return this.cannedCycles.length;
-  }
-
-  private uncomment(str: string): string {
-    return str
-      .replace("(", "")
-      .replace(")", "")
-      .trim();
   }
 }

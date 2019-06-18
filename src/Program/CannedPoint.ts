@@ -1,7 +1,7 @@
-import { Block } from "./Block";
-import { Point } from "./Point";
+import Block from "./Block";
+import Point from "./Point";
 
-export class CannedPoint extends Point {
+export default class CannedPoint extends Point {
   public R?: number;
   public Z?: number;
 

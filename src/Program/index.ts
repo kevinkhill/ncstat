@@ -4,25 +4,26 @@ import _ from "lodash";
 import readline = require("readline");
 import { Modals } from "../NcCodes";
 import { IPosition } from "../types";
-import { Block } from "./Block";
-import { CannedCycle } from "./CannedCycle";
-import { Toolpath } from "./Toolpath";
+import Block from "./Block";
+import CannedCycle from "./CannedCycle";
+import Tool from "./Tool";
+import Toolpath from "./Toolpath";
 
 export default class Program {
+  public activeModals: {
+    [K: string]: boolean;
+  } = {};
   public number: number;
   public title: string;
   public toolpaths: Toolpath[] = [];
-  public activeModals: string[];
 
   private prgExec: StateMachine;
   private position: {
     curr: IPosition;
     prev: IPosition;
   };
-  private rapfeed: any;
   private blocks: Block[] = [];
   private rawLines: string[] = [];
-  private absinc: any = Modals.ABSOLUTE;
 
   private readonly filepath: string;
 
@@ -52,11 +53,11 @@ export default class Program {
   }
 
   public getNumber(): number {
-    return this.number
+    return this.number;
   }
 
   public getTitle(): string {
-    return this.title
+    return this.title;
   }
 
   public getToolpathCount(): number {
@@ -71,122 +72,138 @@ export default class Program {
     return this.position.prev;
   }
 
-  public updatePosition(block: Block): void {
+  public getToolPaths(): Toolpath[] {
+    return this.toolpaths;
+  }
+
+  public getToolList(): Tool[] {
+    return _.map(this.toolpaths, toolpath => toolpath.tool);
+  }
+
+  public isActiveModal(valAddr: string) {
+    return this.activeModals[valAddr];
+  }
+
+  public async analyze(): Promise<Toolpath[]> {
+    let toolpath: Toolpath;
+
+    for await (const line of this.getLine()) {
+      const block = new Block(line);
+
+      this.rawLines.push(line);
+      this.blocks.push(block);
+
+      this.setModals(block);
+      this.extractProgramNumberAndTitle(block);
+
+      if (block.hasMovement()) {
+        this.updatePosition(block);
+      }
+
+      if (block.isStartOfCannedCycle() && this.prgExec.is("toolpathing")) {
+        this.prgExec.startCannedCycle();
+
+        const cannedCycle = new CannedCycle(block);
+
+        toolpath.addCannedCycle(cannedCycle);
+      }
+
+      if (this.prgExec.is("in-canned-cycle")) {
+        if (block.G(80)) {
+          this.prgExec.endCannedCycle();
+        }
+
+        if (block.hasMovement()) {
+          const point = _.clone(this.position.curr);
+          const lastCC = _.last(toolpath.cannedCycles) as CannedCycle;
+
+          lastCC.addPoint(point);
+        }
+      }
+
+      // Tracking toolpaths (tools) via Nxxx lines with a comment
+      // This has been defined in the custom H&B posts
+      if (line.startsWith("N")) {
+        if (this.prgExec.is("toolpathing")) {
+          this.prgExec.endToolpath();
+          this.toolpaths.push(toolpath);
+        }
+
+        if (this.prgExec.is("idle")) {
+          toolpath = new Toolpath(block);
+
+          this.prgExec.startToolpath();
+        }
+      }
+
+      // If we're toolpathing or in a canned cycle, save it to the toolpath
+      if (
+        this.prgExec.is("toolpathing") ||
+        this.prgExec.is("in-canned-cycle")
+      ) {
+        toolpath.lines.push(line);
+      }
+    }
+
+    this.prgExec.endToolpath();
+    this.toolpaths.push(toolpath);
+
+    return this.toolpaths;
+  }
+
+  private updatePosition(block: Block): void {
     const position = block.getPosition();
 
     this.position.prev = this.position.curr;
 
     ["B", "X", "Y", "Z"].forEach(axis => {
       if (position[axis]) {
-        if (this.absinc === Modals.INCREMENTAL) {
+        if (this.activeModals[Modals.INCREMENTAL]) {
           this.position.curr[axis] += position[axis];
-        }
-
-        if (this.absinc === Modals.ABSOLUTE) {
+        } else if (this.activeModals[Modals.ABSOLUTE]) {
           this.position.curr[axis] = position[axis];
         }
       }
     });
   }
 
-  public getFileStream(): readline.Interface {
-    return readline.createInterface({
+  private async *getLine(): AsyncIterableIterator<string> {
+    const filestream = readline.createInterface({
       crlfDelay: Infinity,
       input: fs.createReadStream(this.filepath)
     });
+
+    for await (const line of filestream) {
+      if (line === "" || line === " ") {
+        continue;
+      }
+
+      yield line;
+    }
   }
 
-  public async analyze() {
-    let toolpath = null;
-
-    for await (const line of this.getFileStream()) {
-      if (line !== "") {
-        const block = new Block(line);
-
-        this.blocks.push(block);
-        this.rawLines.push(line);
-
-        this.setModals(block);
-
-        if (block.hasAddress("O")) {
-
-          this.number = block.values.O;
-          this.title = block.getComment();
-        }
-
-        if (block.hasMovement()) {
-          this.updatePosition(block);
-        }
-
-        if (block.isStartOfCannedCycle() && this.prgExec.is("toolpathing")) {
-          this.prgExec.startCannedCycle();
-
-          const cannedCycle = new CannedCycle(block);
-
-          toolpath.addCannedCycle(cannedCycle);
-        }
-
-        if (this.prgExec.is("in-canned-cycle")) {
-          if (block.G(80)) {
-            this.prgExec.endCannedCycle();
-          }
-
-          if (block.hasMovement()) {
-            const point = _.clone(this.position.curr);
-            const lastCC = _.last(toolpath.cannedCycles) as CannedCycle;
-
-            lastCC.addPoint(point);
-          }
-        }
-
-        // Tracking toolpaths (tools) via Nxxx lines with a comment
-        // This has been defined in the custom H&B posts
-        if (line.startsWith("N")) {
-          if (this.prgExec.is("toolpathing")) {
-            this.prgExec.endToolpath();
-            this.toolpaths.push(toolpath);
-          }
-
-          if (this.prgExec.is("idle")) {
-            toolpath = new Toolpath(block);
-
-            this.prgExec.startToolpath();
-          }
-        }
-
-        // If we're toolpathing and `line` is not empty, save it to the toolpath
-        if (
-          (this.prgExec.is("toolpathing") ||
-            this.prgExec.is("in-canned-cycle")) &&
-          line !== "" &&
-          line !== " "
-        ) {
-          toolpath.lines.push(line);
-        }
-      }
+  private extractProgramNumberAndTitle(block: Block) {
+    if (block.hasAddress("O")) {
+      this.number = block.values.O;
+      this.title = block.getComment();
     }
-
-    this.prgExec.endToolpath();
-    this.toolpaths.push(toolpath);
   }
 
   private setModals(block: Block): void {
-    this.activeModals = [];
-
     if (block.G(0)) {
-      this.rapfeed = Modals.RAPID;
-      this.activeModals.push(Modals.RAPID);
+      this.activeModals[Modals.RAPID] = true;
+      this.activeModals[Modals.FEED] = false;
     } else if (block.G(1)) {
-      this.rapfeed = Modals.FEED;
-      this.activeModals.push(Modals.FEED);
+      this.activeModals[Modals.FEED] = true;
+      this.activeModals[Modals.RAPID] = false;
     }
 
     if (block.G(90)) {
-      this.absinc = Modals.ABSOLUTE;
-      this.activeModals.push(Modals.ABSOLUTE);
+      this.activeModals[Modals.ABSOLUTE] = true;
+      this.activeModals[Modals.INCREMENTAL] = false;
     } else if (block.G(91)) {
-      this.absinc = Modals.INCREMENTAL;
-      this.activeModals.push(Modals.INCREMENTAL);
+      this.activeModals[Modals.INCREMENTAL] = true;
+      this.activeModals[Modals.ABSOLUTE] = false;
     }
   }
 }
