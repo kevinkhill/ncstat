@@ -28,10 +28,7 @@ export default class Program {
   private blocks: Block[] = [];
   private rawLines: string[] = [];
 
-  private readonly filepath: string;
-
-  constructor(filepath: string) {
-    this.filepath = filepath;
+  constructor(private readonly filepath: string) {
     this.position = {
       curr: { X: 0, Y: 0, Z: 0, B: 0 },
       prev: { X: 0, Y: 0, Z: 0, B: 0 }
@@ -48,7 +45,7 @@ export default class Program {
         },
         { name: "end-canned-cycle", from: "in-canned-cycle", to: "toolpathing" }
       ]
-    });
+    }) as IProgramStateMachine;
   }
 
   public toString(): string {

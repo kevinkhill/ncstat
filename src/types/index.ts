@@ -1,3 +1,5 @@
+import StateMachine from "javascript-state-machine";
+
 export interface IPoint {
   [K: string]: number;
 
@@ -20,8 +22,7 @@ export interface ICannedCycle {
   retractCommand: string;
 }
 
-export interface IProgramStateMachine {
-  is(state: string): boolean;
+export interface IProgramStateMachine extends StateMachine {
   startToolpath(): void;
   endToolpath(): void;
   endCannedCycle(): void;

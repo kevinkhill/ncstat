@@ -7,14 +7,17 @@ import Address from "./Address";
 
 const log = Debug("nc-scanner");
 
+/**
+ * Block Class
+ *
+ * Represents one line of NC code.
+ */
 export default class Block {
-  public blockSkip: string | null = null;
-
   public readonly values: {
     [K: string]: number;
   } = {};
+  public readonly blockSkip: string | null = null;
 
-  private readonly rawLine: string = "";
   private readonly gCodes: number[] = [];
   private readonly mCodes: number[] = [];
   private readonly addresses: Address[] = [];
@@ -22,30 +25,30 @@ export default class Block {
   private readonly comment: string | null = null;
   private readonly addressRegex: RegExp = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
 
-  constructor(line: string) {
-    this.rawLine = line;
-
+  constructor(private readonly rawLine: string) {
     this.rawAddresses = this.rawLine.match(this.addressRegex);
 
-    // Map all found G codes to an integer array
-    this.gCodes = _(this.rawAddresses)
-      .filter(a => a.startsWith("G"))
-      .map(a => parseInt(a.slice(1)))
-      .value();
+    if (this.rawAddresses) {
+      this.addresses = this.rawAddresses.map(Address.factory);
 
-    // Map all found M codes to an integer array
-    this.mCodes = _(this.rawAddresses)
-      .filter(a => a.startsWith("M"))
-      .map(a => parseInt(a.slice(1)))
-      .value();
+      // Map all found G & M codes to integer arrays
+      this.rawAddresses.forEach((a: string) => {
+        const num = parseInt(a.slice(1));
 
-    // Create an array of `Addresses`
-    this.addresses = _.map(this.rawAddresses, Address.factory);
+        if (a.startsWith("G")) {
+          this.gCodes.push(num);
+        }
 
-    // Map all found letter addresses to `this.values`
-    _.forEach(this.addresses, address => {
-      this.values[address.prefix] = address.value;
-    });
+        if (a.startsWith("M")) {
+          this.mCodes.push(num);
+        }
+      });
+
+      // Map all found letter addresses to `this.values`
+      this.addresses.forEach(address => {
+        this.values[address.prefix] = address.value;
+      });
+    }
 
     this.comment = extractors.commentExtractor(this.rawLine);
     this.blockSkip = extractors.blockSkipExtractor(this.rawLine);

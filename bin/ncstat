@@ -2,7 +2,7 @@
 
 import chalk from "chalk";
 import cli from "commander";
-import { Program } from "../dist";
+import { Program } from "../build";
 
 const { log, error } = console;
 

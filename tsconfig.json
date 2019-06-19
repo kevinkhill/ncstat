@@ -2,10 +2,12 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
+    "sourceMap": true,
     // "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./build",
     "noImplicitAny": true,
     "esModuleInterop": true,
+    "removeComments": true,
     "typeRoots": [
         "./typings/",
         "./node_modules/@types/"
@@ -13,9 +15,5 @@
   },
   "include": [
     "src/**/*"
-  ],
-  "exclude": [
-    "test/**/*",
-    "node_modules/**/*"
   ]
 }
