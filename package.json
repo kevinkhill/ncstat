@@ -26,6 +26,7 @@
     "test": "ava",
     "lint": "tslint 'src/**/*.ts'",
     "lint:fix": "tslint --fix 'src/**/*.ts'",
+    "docs": "typedoc --out docs ./src",
     "build": "tsc",
     "watch": "tsc --watch",
     "stat": "node --inspect -r ts-node/register ./bin/ncstat.ts"
@@ -41,6 +42,7 @@
     "@types/debug": "*",
     "@types/lodash": "^4.14.134",
     "ava": "^2.0.0",
+    "awesome-typescript-loader": "^5.2.1",
     "js-yaml": "^3.13.1",
     "prettier": "1.18.2",
     "ts-loader": "^6.0.3",
