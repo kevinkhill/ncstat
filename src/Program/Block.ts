@@ -1,6 +1,6 @@
 import Debug from "debug";
 import _ from "lodash";
-import { extractors } from "../lib";
+import { blockSkipExtractor, commentExtractor } from "../lib";
 import { CANNED_CYCLE } from "../NcCodes";
 import { IPosition } from "../types";
 import Address from "./Address";
@@ -50,8 +50,8 @@ export default class Block {
       });
     }
 
-    this.comment = extractors.commentExtractor(this.rawLine);
-    this.blockSkip = extractors.blockSkipExtractor(this.rawLine);
+    this.comment = commentExtractor(this.rawLine);
+    this.blockSkip = blockSkipExtractor(this.rawLine);
   }
 
   public G(code: number): boolean {

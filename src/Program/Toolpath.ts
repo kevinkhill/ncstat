@@ -6,12 +6,24 @@ import Tool from "./Tool";
 const feedrateRegex: RegExp = /F([0-9]+(?:\\.[0-9]*)?)/g;
 
 export default class Toolpath {
+  public static fromLines(lines: string[]): Toolpath {
+    const toolpath = new Toolpath(new Block(lines[0]));
+
+    lines.slice(1).map(toolpath.addLine);
+
+    return toolpath;
+  }
+
   public tool: Tool;
   public lines: string[] = [];
   public cannedCycles: CannedCycle[] = [];
 
   constructor(block: Block) {
     this.tool = new Tool(block);
+  }
+
+  public addLine(line: string): void {
+    this.lines.push(line);
   }
 
   public hasFeedrates(): boolean {

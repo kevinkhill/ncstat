@@ -1,4 +1,4 @@
-import StateMachine = require("javascript-state-machine");
+import StateMachine from "javascript-state-machine";
 
 export const AXES = ["B", "X", "Y", "Z"];
 
@@ -8,9 +8,9 @@ function zeroPos() {
 
 const transitions = [
   /* eslint-disable */
-  { name: "cycle-start",    from: ["idle", "paused"], to: "running" },
-  { name: "feed-hold",      from: "running",          to: "paused" },
-  { name: "cycle-complete", from: "running",          to: "idle" },
+  { name: "cycle-start", from: ["idle", "paused"], to: "running" },
+  { name: "feed-hold", from: "running", to: "paused" },
+  { name: "cycle-complete", from: "running", to: "idle" }
   /* eslint-enable */
 ];
 
@@ -22,16 +22,16 @@ const data = {
     G56: zeroPos(),
     G57: zeroPos(),
     G58: zeroPos(),
-    G59: zeroPos(),
+    G59: zeroPos()
   },
   position: {
     ...zeroPos(),
-    prev: zeroPos(),
+    prev: zeroPos()
   },
   spindle: {
     rpms: 0,
-    state: "",
-  },
+    state: ""
+  }
 };
 
 const methods = {
@@ -52,12 +52,12 @@ const methods = {
   },
   onCycleComplete() {
     //
-  },
+  }
 };
 
 module.exports = new StateMachine({
   data,
   init: "idle",
   methods,
-  transitions,
+  transitions
 });

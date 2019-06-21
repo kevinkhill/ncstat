@@ -23,19 +23,19 @@ export default class CannedCycle implements ICannedCycle {
     this.retractCommand = block.getRetractCode();
   }
 
-  get peck(): number {
+  public getPeck(): number {
     return this.Q;
   }
 
-  get depth(): number {
+  public getDepth(): number {
     return this.Z;
   }
 
-  get retract(): number {
+  public getRetract(): number {
     return this.R;
   }
 
-  get feedrate(): number {
+  public getFeedrate(): number {
     return this.F;
   }
 

@@ -54,5 +54,20 @@
     "typescript": "^3.5.1",
     "webpack": "^4.34.0",
     "webpack-cli": "^3.3.4"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "es6": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "rules": {
+      "no-console": "off",
+      "prettier/prettier": [
+        "error"
+      ]
+    }
   }
 }
