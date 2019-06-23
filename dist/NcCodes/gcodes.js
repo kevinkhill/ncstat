@@ -76,4 +76,3 @@ export var G_CODES = {
         G99: "RETURN_TO_INITIAL_R_PLANE"
     }
 };
-//# sourceMappingURL=gcodes.js.map

@@ -27,4 +27,3 @@ var Address = (function () {
     return Address;
 }());
 export default Address;
-//# sourceMappingURL=Address.js.map

@@ -23,4 +23,3 @@ var CannedPoint = (function (_super) {
     return CannedPoint;
 }(Point));
 export default CannedPoint;
-//# sourceMappingURL=CannedPoint.js.map

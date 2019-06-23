@@ -95,4 +95,3 @@ var Block = (function () {
     return Block;
 }());
 export default Block;
-//# sourceMappingURL=Block.js.map

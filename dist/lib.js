@@ -14,4 +14,3 @@ function extractorFactory(matcher) {
 }
 export var commentExtractor = extractorFactory(/\(\s?(.+)\s?\)/);
 export var blockSkipExtractor = extractorFactory(/(^\/[0-9]?)/);
-//# sourceMappingURL=lib.js.map

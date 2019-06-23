@@ -10,4 +10,3 @@ var Point = (function () {
     return Point;
 }());
 export default Point;
-//# sourceMappingURL=Point.js.map

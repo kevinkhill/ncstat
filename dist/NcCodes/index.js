@@ -32,4 +32,3 @@ _.forEach(RAW_M_CODES, function (command, mcode) {
         GROUP: "MACHINE"
     };
 });
-//# sourceMappingURL=index.js.map

@@ -57,4 +57,3 @@ module.exports = new StateMachine({
     methods: methods,
     transitions: transitions
 });
-//# sourceMappingURL=index.js.map

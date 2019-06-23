@@ -9,4 +9,3 @@ var Tool = (function () {
     return Tool;
 }());
 export default Tool;
-//# sourceMappingURL=Tool.js.map

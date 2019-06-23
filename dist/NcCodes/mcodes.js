@@ -20,4 +20,3 @@ export var M_CODES = {
     M99: "RETURN_FROM_SUB_OR_LOOP",
     M107: "SAFE_START"
 };
-//# sourceMappingURL=mcodes.js.map

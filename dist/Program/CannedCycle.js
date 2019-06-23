@@ -34,4 +34,3 @@ var CannedCycle = (function () {
     return CannedCycle;
 }());
 export default CannedCycle;
-//# sourceMappingURL=CannedCycle.js.map
