@@ -1,8 +1,9 @@
 {
   "name": "ncstat",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Read NC programs for stats",
   "bin": "./bin/ncstat",
+  "main":"./dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/harris-bruno/ncstat.git"
@@ -29,7 +30,10 @@
     "docs": "typedoc --out docs ./src",
     "build": "tsc",
     "watch": "tsc --watch",
-    "stat": "node --inspect -r ts-node/register ./bin/ncstat.ts"
+    "stat": "node --inspect -r ts-node/register ./bin/ncstat.ts",
+    "preversion": "npm test",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags && rm -rf build/temp"
   },
   "dependencies": {
     "chalk": "^2.4.2",
@@ -68,6 +72,9 @@
       "prettier/prettier": [
         "error"
       ]
+    },
+    "parserOptions": {
+      "sourceType": "module"
     }
   }
 }
