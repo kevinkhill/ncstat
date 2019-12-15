@@ -23,12 +23,14 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:import/warnings",
+    "plugin:import/errors",
+    "plugin:import/typescript",
     "node",
     "prettier",
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended", // KEEP THIS LAST
   ],
-
   rules: {
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/no-var-requires": "off",
@@ -46,6 +48,10 @@ module.exports = {
     "@typescript-eslint/consistent-type-definitions": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
+    "@typescript-eslint/explicit-function-return-type": ["warn", {
+      allowExpressions: false,
+      allowTypedFunctionExpressions: true,
+    }],
 
     //
     // eslint base
@@ -80,9 +86,10 @@ module.exports = {
     "import/prefer-default-export": "off",
     "import/first": "error",
     "import/no-amd": "error",
+    "import/no-unresolved": "error",
     "import/no-self-import": "error",
-    "import/no-absolute-path": "error",
     "import/no-named-default": "error",
+    "import/no-absolute-path": "error",
     "import/no-mutable-exports": "error",
     "import/newline-after-import": "error",
     "import/no-extraneous-dependencies": [
@@ -93,6 +100,11 @@ module.exports = {
         optionalDependencies: false
       }
     ]
+  },
+  settings: {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx" ]
+    }
   },
   overrides: [
     {

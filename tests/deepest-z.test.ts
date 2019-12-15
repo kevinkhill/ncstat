@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
 import { each, filter, min, uniq } from "lodash/fp";
-import path from "path";
 
-import { Program } from "../src";
+import { NcFile } from "../src";
+import { getTestNcFile } from "./helpers";
 
-test("Scan the program for the deepest (largest negative) Z address", async () => {
-  const filepath = path.join(__dirname, "../nc/example2.NC");
+test("Manually scan a program for the largest negative Z address", async () => {
+  const filepath = getTestNcFile("example2.NC");
   const buffer = await fs.promises.readFile(filepath);
   const contents = buffer.toString();
   const lines = filter(l => l !== " ", contents.split("\n"));
-  const z: any = [];
+  const z: number[] = [];
   const zRegex = /Z(-[0-9.]+)\s/g;
 
   each(line => {
@@ -25,4 +25,11 @@ test("Scan the program for the deepest (largest negative) Z address", async () =
   expect(z).toHaveLength(24);
   expect(uniq(z)).toHaveLength(6);
   expect(min(uniq(z))).toBe(-0.8686);
+});
+
+test("Using the NcFile class, use method to find the largest negative Z address", async () => {
+  const filepath = getTestNcFile("example2.NC");
+  const ncfile = await NcFile.createFromPath(filepath);
+
+  expect(await ncfile.getDeepestZ()).toBe(-0.8686);
 });

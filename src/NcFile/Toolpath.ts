@@ -1,5 +1,7 @@
-import { filter } from "lodash-es";
+// import filter from "lodash/filter";
+import { filter, map } from "lodash/fp";
 
+import { regexExtract } from "../lib";
 import { Maybe } from "../types";
 import { Block } from "./Block";
 import { CannedCycle } from "./CannedCycle";
@@ -50,18 +52,11 @@ export class Toolpath {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  getFeedrates() {
-    const filteredLines = filter(this.lines, FEEDRATE_REGEX.test);
-
-    return filteredLines.map(line => {
-      const result = FEEDRATE_REGEX.exec(line);
-
-      if (result) {
-        return parseFloat(result[1]);
-      }
-
-      // return result[1];
-    });
+  getFeedrates(): number[] {
+    return map(
+      (line: string) => parseFloat(regexExtract(FEEDRATE_REGEX, line)),
+      filter(FEEDRATE_REGEX.test, this.lines)
+    );
   }
 
   addCannedCycle(cycle: CannedCycle): this {

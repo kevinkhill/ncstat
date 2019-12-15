@@ -1,8 +1,9 @@
 import StateMachine from "javascript-state-machine";
-import { clone, filter, last } from "lodash-es";
+import { clone, filter, last } from "lodash";
+
+import { Position, ProgramStateMachine } from "@/types";
 
 import { Modals } from "../NcCodes";
-import { Position, ProgramStateMachine } from "../types";
 import { Block } from "./Block";
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
@@ -28,8 +29,8 @@ export class Program {
       curr: { X: 0, Y: 0, Z: 0, B: 0 },
       prev: { X: 0, Y: 0, Z: 0, B: 0 }
     };
-    this.prgExec = new StateMachine({
-      init: "idle",
+    this.prgExec = StateMachine.create({
+      initial: "idle",
       transitions: [
         {
           name: "start-toolpath",

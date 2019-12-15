@@ -1,4 +1,4 @@
-import { forEach } from "lodash-es";
+import forEach from "lodash/forEach";
 
 import { NcCodeDef } from "../types";
 import { G_CODES as RAW_G_CODES } from "./gcodes";

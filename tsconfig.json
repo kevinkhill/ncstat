@@ -7,10 +7,14 @@
     "module": "commonjs",
     "importHelpers": true,
     "esModuleInterop": true,
+    "strictNullChecks": true,
     "moduleResolution": "node",
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "T/*": [
+        "tests/*"
       ]
     },
     "lib": [

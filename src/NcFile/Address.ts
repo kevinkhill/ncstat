@@ -1,4 +1,4 @@
-import { isEqual } from "lodash-es";
+import isEqual from "lodash/isEqual";
 
 export class Address {
   static factory(valAddr: string): Address {

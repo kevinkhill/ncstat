@@ -1,11 +1,11 @@
-import path from "path";
-import { Program } from './src';
+import { NcFile } from "./src";
+import { getTestNcFile } from "./tests/helpers";
 
 (async () => {
-  const filepath = path.join(__dirname, "../nc/example2.NC");
+  const filepath = getTestNcFile("example2.NC");
 
-  const program = Program.createFromFile(filepath);
-  const deepestZ = await program.deepestZ();
+  const ncfile = await NcFile.createFromPath(filepath);
+  const deepestZ = await ncfile.getDeepestZ();
 
   console.log(`Deepest Z = ${deepestZ}`);
 })();

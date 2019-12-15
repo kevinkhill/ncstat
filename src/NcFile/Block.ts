@@ -1,4 +1,4 @@
-import { find, intersection, isNumber } from "lodash-es";
+import { find, intersection, isNumber } from "lodash";
 
 import { extractorFactory } from "../lib";
 import { Maybe, Position } from "../types";

@@ -6,14 +6,13 @@
   "dependencies": {
     "debug": "^4.1.1",
     "javascript-state-machine": "^3.1.0",
-    "lodash": "^4.17.15",
-    "lodash-es": "^4.17.15"
+    "lodash": "^4.17.15"
   },
   "scripts": {
     "start": "node -r ts-node/register ./demo.ts",
     "test": "jest",
     "build": "yarn run bili",
-    "lint": "yarn run eslint"
+    "lint": "yarn run eslint --ext .ts ./src"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -33,18 +32,19 @@
     "@types/javascript-state-machine": "^2.4.1",
     "@types/jest": "^24.0.23",
     "@types/lodash": "^4.14.149",
-    "@types/lodash-es": "^4.17.3",
     "@types/node": "^12.12.14",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
-    "@typescript-eslint/parser": "^2.7.0",
+    "@typescript-eslint/parser": "^2.11.0",
     "babel-eslint": "^10.0.3",
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "bili": "^4.8.1",
     "eslint": "^6.6.0",
     "eslint-config-node": "^4.0.0",
     "eslint-config-prettier": "^6.5.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-babel": "^5.3.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jest": "^23.1.1",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-prettier": "^3.1.1",
