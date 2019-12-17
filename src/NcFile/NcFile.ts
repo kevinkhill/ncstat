@@ -1,6 +1,8 @@
 import fs from "fs";
-import { each, filter, min, split, uniq } from "lodash/fp";
+import { each, filter, join, min, split, uniq } from "lodash/fp";
 import path from "path";
+
+import { Program } from "./Program";
 
 export class NcFile {
   static async createFromBuffer(buffer: Buffer): Promise<NcFile> {
@@ -19,6 +21,19 @@ export class NcFile {
 
   constructor(private contents = "") {
     this.contents = contents;
+  }
+
+  toString(): string {
+    return join("\n", this.getLines);
+  }
+
+  /**
+   * @todo look into this more
+   */
+  analyze(): Program {
+    const program = new Program(this.getLines());
+
+    return program.analyze();
   }
 
   getLines(options = { filterEmptyLines: true }): string[] {

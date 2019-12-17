@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from "fs";
 import { each, filter, min, uniq } from "lodash/fp";
 
-import { NcFile } from "../src";
+import { NcFile } from "../src/NcFile";
 import { getTestNcFile } from "./helpers";
 
 test("Manually scan a program for the largest negative Z address", async () => {

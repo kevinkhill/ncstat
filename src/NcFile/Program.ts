@@ -1,9 +1,9 @@
 import StateMachine from "javascript-state-machine";
 import { clone, filter, last } from "lodash";
-
-import { Position, ProgramStateMachine } from "@/types";
+import { get } from "lodash/fp";
 
 import { Modals } from "../NcCodes";
+import { Point, ProgramStateMachine } from "../types";
 import { Block } from "./Block";
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
@@ -17,21 +17,21 @@ export class Program {
   title = "";
   toolpaths: Toolpath[] = [];
 
+  private blocks: Block[] = [];
   private prgExec: ProgramStateMachine;
   private position: {
-    curr: Position;
-    prev: Position;
+    curr: { [K: string]: number; X: number; Y: number; Z: number; B: number };
+    prev: { [K: string]: number; X: number; Y: number; Z: number; B: number };
   };
-  private blocks: Block[] = [];
 
   constructor(private readonly rawLines: string[]) {
-    this.position = {
-      curr: { X: 0, Y: 0, Z: 0, B: 0 },
-      prev: { X: 0, Y: 0, Z: 0, B: 0 }
-    };
-    this.prgExec = StateMachine.create({
+    ["B", "X", "Y", "Z"].forEach(axis => {
+      this.position.curr[axis] = this.position.prev[axis] = 0;
+    });
+
+    this.prgExec = (StateMachine.create({
       initial: "idle",
-      transitions: [
+      events: [
         {
           name: "start-toolpath",
           from: "idle",
@@ -53,7 +53,7 @@ export class Program {
           to: "toolpathing"
         }
       ]
-    }) as ProgramStateMachine;
+    }) as unknown) as ProgramStateMachine;
   }
 
   toString(): string {
@@ -72,11 +72,11 @@ export class Program {
     return this.toolpaths.length;
   }
 
-  getPosition(): Position {
+  getPosition(): Point {
     return this.position.curr;
   }
 
-  getPrevPosition(): Position {
+  getPrevPosition(): Point {
     return this.position.prev;
   }
 
@@ -94,7 +94,7 @@ export class Program {
     return this.activeModals[valAddr];
   }
 
-  analyze(): void {
+  analyze(): this {
     let toolpath = new Toolpath();
 
     for (const line of this.rawLines) {
@@ -162,6 +162,8 @@ export class Program {
 
     this.prgExec.endToolpath();
     this.toolpaths.push(toolpath);
+
+    return this;
   }
 
   private updatePosition(block: Block): void {

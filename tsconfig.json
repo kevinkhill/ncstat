@@ -2,9 +2,10 @@
   "compilerOptions": {
     "baseUrl": ".",
     "strict": true,
+    "target": "es5",
     "sourceMap": true,
-    "target": "esnext",
     "module": "commonjs",
+    "noImplicitAny": true,
     "importHelpers": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
@@ -12,9 +13,6 @@
     "paths": {
       "@/*": [
         "src/*"
-      ],
-      "T/*": [
-        "tests/*"
       ]
     },
     "lib": [

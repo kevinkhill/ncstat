@@ -1,9 +1,12 @@
 import { find, intersection, isNumber } from "lodash";
+import { map } from "lodash/fp";
 
 import { extractorFactory } from "../lib";
-import { Maybe, Position } from "../types";
+import { Maybe } from "../types";
+import { regexExtract } from './../lib';
 import { Address } from "./Address";
 import { RETRACT_CODES, START_CODES } from "./CannedCycle";
+import { RotatedPoint } from "./RotatedPoint";
 import { Tool } from "./Tool";
 
 export const ADDRESS_REGEX = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
@@ -24,7 +27,11 @@ export class Block {
   private readonly comment?: string;
   private readonly gCodes: number[] = [];
   private readonly mCodes: number[] = [];
-  private readonly _addresses: string[] = [];
+  private readonly _addresses: Maybe<RegExpExecArray>;
+
+  static parse(line: string): Block {
+    return new Block(line);
+  }
 
   get hasToolCall(): boolean {
     return this.hasAddress("T");
@@ -32,11 +39,12 @@ export class Block {
 
   constructor(private readonly rawLine: string) {
     // eslint-disable-next-line @typescript-eslint/prefer-regexp-exec
-    const matches = this.rawLine.match(ADDRESS_REGEX);
+    const matches = ADDRESS_REGEX.exec(this.rawLine);
 
     if (matches) {
       this._addresses = matches;
-      this.addresses = matches.map(Address.factory);
+      console.log(this._addresses);
+      this.addresses = map(Address.factory, matches);
 
       // Map all found G & M codes to integer arrays
       this._addresses.forEach((a: string) => {
@@ -57,11 +65,8 @@ export class Block {
       });
     }
 
-    const commentExtractor = extractorFactory(/\(\s?(.+)\s?\)/);
-    const blockSkipExtractor = extractorFactory(/(^\/[0-9]?)/);
-
-    this.comment = commentExtractor(this.rawLine);
-    this.blockSkip = blockSkipExtractor(this.rawLine);
+    this.comment = regexExtract(/\(\s?(.+)\s?\)/, this.rawLine);
+    this.blockSkip = regexExtract(/(^\/[0-9]?)/, this.rawLine);
   }
 
   G(code: number): boolean {
@@ -82,7 +87,7 @@ export class Block {
     return this.comment || "";
   }
 
-  getPosition(): Position {
+  getPosition(): RotatedPoint {
     return {
       B: this.values.B,
       X: this.values.X,

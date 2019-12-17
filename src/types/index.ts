@@ -2,15 +2,13 @@ import StateMachine from "javascript-state-machine";
 
 export type Maybe<T> = T | undefined;
 
-export interface Point {
-  [K: string]: number;
+export type VMCAxes = "X" | "Y" | "Z";
+export type HMCAxes = VMCAxes | "B";
 
+export interface Point {
   X: number;
   Y: number;
   Z: number;
-}
-
-export interface Position extends Point {
   B: number;
 }
 
@@ -25,6 +23,7 @@ export interface CannedCycle {
 }
 
 export interface ProgramStateMachine extends StateMachine {
+  is(state: string): boolean;
   startToolpath(): void;
   endToolpath(): void;
   endCannedCycle(): void;

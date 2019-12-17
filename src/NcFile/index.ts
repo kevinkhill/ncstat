@@ -1,9 +1,12 @@
-export * from "./Address";
+import { NcFile } from "./NcFile";
+
+// export * from "./Address";
+// export * from "./CannedCycle";
+// export * from "./CannedPoint";
 export * from "./Block";
-export * from "./CannedCycle";
-export * from "./CannedPoint";
-export * from "./NcFile";
-export * from "./Point";
+// export * from "./Point";
 // export * from "./Program";
 export * from "./Tool";
-export * from "./Toolpath";
+// export * from "./Toolpath";
+
+export { NcFile };
