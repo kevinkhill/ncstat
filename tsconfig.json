@@ -2,15 +2,22 @@
   "compilerOptions": {
     "baseUrl": ".",
     "strict": true,
+    "target": "es5",
     "sourceMap": true,
-    "target": "esnext",
     "module": "commonjs",
+    "noImplicitAny": true,
     "importHelpers": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
     "moduleResolution": "node",
     "paths": {
+<<<<<<< HEAD
       "@/*": ["src/*"]
+=======
+      "@/*": [
+        "src/*"
+      ]
+>>>>>>> 871fe3cdda0415dadb61dd5cc56a787e9530b4fe
     },
     "lib": ["esnext"]
   },

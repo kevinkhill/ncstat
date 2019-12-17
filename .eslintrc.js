@@ -43,6 +43,7 @@ module.exports = {
     "@typescript-eslint/consistent-type-definitions": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
+<<<<<<< HEAD
     "@typescript-eslint/explicit-function-return-type": [
       "warn",
       {
@@ -50,6 +51,12 @@ module.exports = {
         allowTypedFunctionExpressions: true
       }
     ],
+=======
+    "@typescript-eslint/explicit-function-return-type": ["error", {
+      allowExpressions: true,
+      allowTypedFunctionExpressions: true,
+    }],
+>>>>>>> 871fe3cdda0415dadb61dd5cc56a787e9530b4fe
 
     //
     // eslint base
