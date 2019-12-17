@@ -10,24 +10,10 @@
     "strictNullChecks": true,
     "moduleResolution": "node",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "T/*": [
-        "tests/*"
-      ]
+      "@/*": ["src/*"]
     },
-    "lib": [
-      "esnext"
-    ]
+    "lib": ["esnext"]
   },
-  "include": [
-    "*.ts",
-    "*.js",
-    "src/**/*.ts",
-    "tests/**/*.ts",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["*.ts", "*.js", "src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules"]
 }

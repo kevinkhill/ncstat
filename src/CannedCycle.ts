@@ -1,5 +1,6 @@
 import { Block } from "./Block";
-import { Point } from "./Point";
+import { Point } from "./types";
+// import { Point } from "./Point";
 
 type MaybeNumber = number | undefined;
 

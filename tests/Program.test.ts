@@ -2,9 +2,10 @@ import { NcFile } from "@/NcFile";
 
 import { getTestNcFile } from "./helpers";
 
-test("Test getting lines and line count.", async () => {
+test("Test Program", async () => {
   const filepath = getTestNcFile("example2.NC");
   const ncfile = await NcFile.createFromPath(filepath);
+  const program = await ncfile.analyze();
 
-  expect(ncfile.getLines()).toHaveLength(444);
+  expect(program.toolpaths).toHaveLength(6);
 });

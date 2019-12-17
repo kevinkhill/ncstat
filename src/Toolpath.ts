@@ -1,13 +1,11 @@
 // import filter from "lodash/filter";
 import { filter, map } from "lodash/fp";
 
-import { regexExtract } from "../lib";
-import { Maybe } from "../types";
-import { Block } from "./Block";
-import { CannedCycle } from "./CannedCycle";
-import { Tool } from "./Tool";
-
-export const FEEDRATE_REGEX = /F([0-9]+(?:\\.[0-9]*)?)/g;
+import { Block } from "@/Block";
+import { CannedCycle } from "@/CannedCycle";
+import { regexExtract, FEEDRATE_REGEX } from "@/lib";
+import { Tool } from "@/Tool";
+import { Maybe } from "@/types";
 
 export class Toolpath {
   static fromTool(tool: Tool): Toolpath {
@@ -24,7 +22,7 @@ export class Toolpath {
     return Toolpath.fromBlock(block);
   }
 
-  tool?: Tool;
+  tool: Tool = new Tool();
   lines: string[] = [];
   cannedCycles: CannedCycle[] = [];
 
@@ -39,7 +37,7 @@ export class Toolpath {
 
   getToolRecord(): Maybe<[number, Tool]> {
     if (this.hasTool) {
-      return [this.tool!.number, this.tool!];
+      return [this.tool.number, this.tool];
     }
   }
 

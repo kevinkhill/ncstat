@@ -3,7 +3,7 @@ import StateMachine from "javascript-state-machine";
 export type Maybe<T> = T | undefined;
 
 export interface Point {
-  [K: string]: number;
+  [K: string]: number | undefined;
 
   X: number;
   Y: number;
@@ -12,6 +12,14 @@ export interface Point {
 
 export interface Position extends Point {
   B: number;
+}
+
+export interface CannedPoint extends Point {
+  I?: number;
+  J?: number;
+  K?: number;
+  R: number;
+  Q: number;
 }
 
 export interface NcCodeDef {

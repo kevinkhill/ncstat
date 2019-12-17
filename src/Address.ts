@@ -1,12 +1,10 @@
-import isEqual from "lodash/isEqual";
-
 export class Address {
-  static factory(valAddr: string): Address {
-    return new Address(valAddr);
-  }
-
   prefix: string;
   value: number;
+
+  static parse(valAddr: string): Address {
+    return new Address(valAddr);
+  }
 
   constructor(valAddr: string) {
     this.prefix = valAddr[0];
@@ -19,19 +17,30 @@ export class Address {
     return `${this.prefix}${this.value}`;
   }
 
-  matches(valAddr: string): boolean {
-    return isEqual(this, new Address(valAddr));
+  isGcode(): boolean {
+    return this.prefix === "G";
   }
 
-  isPositive(): boolean {
-    return this.value > 0;
+  isMcode(): boolean {
+    return this.prefix === "M";
   }
 
   isZero(): boolean {
     return this.value === 0;
   }
 
+  isPositive(): boolean {
+    return this.value > 0;
+  }
+
   isNegative(): boolean {
     return this.value < 0;
+  }
+
+  isSameAs(valAddr: string): boolean {
+    return (
+      this.prefix === Address.parse(valAddr).prefix &&
+      this.value === Address.parse(valAddr).value
+    );
   }
 }

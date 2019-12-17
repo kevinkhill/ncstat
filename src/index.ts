@@ -1,3 +1,2 @@
-export * from "./NcFile";
-export * from "./NcFile";
 export * from "./NcCodes";
+export * from "./types";

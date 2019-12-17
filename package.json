@@ -4,15 +4,14 @@
   "private": true,
   "main": "./src/index.ts",
   "dependencies": {
-    "debug": "^4.1.1",
-    "javascript-state-machine": "^3.1.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "xstate": "^4.7.3"
   },
   "scripts": {
-    "start": "node -r ts-node/register ./demo.ts",
+    "start": "ts-node -r tsconfig-paths/register",
     "test": "jest",
-    "build": "yarn run bili",
-    "lint": "yarn run eslint --ext .ts ./src"
+    "build": "bili",
+    "lint": "eslint --ext .ts ./src"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -29,7 +28,6 @@
     "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-typescript": "^7.7.2",
-    "@types/javascript-state-machine": "^2.4.1",
     "@types/jest": "^24.0.23",
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.14",
@@ -50,11 +48,11 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-simple-import-sort": "^4.0.0",
     "jest": "^24.9.0",
-    "micromatch": "^4.0.2",
     "prettier": "^1.19.1",
     "rollup-plugin-typescript2": "^0.25.3",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.5.4",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.2"
   }
 }

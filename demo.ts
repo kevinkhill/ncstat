@@ -1,4 +1,4 @@
-import { NcFile } from "./src";
+import { NcFile } from "./src/NcFile";
 import { getTestNcFile } from "./tests/helpers";
 
 (async () => {

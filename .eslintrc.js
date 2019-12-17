@@ -6,19 +6,14 @@ module.exports = {
     sourceType: "module",
     project: "./tsconfig.json",
     ecmaFeatures: {
-      jsx: true,
-    },
+      jsx: true
+    }
   },
   env: {
     es6: true,
     node: true
   },
-  plugins: [
-    "import",
-    "prettier",
-    "simple-import-sort",
-    "@typescript-eslint"
-  ],
+  plugins: ["import", "prettier", "simple-import-sort", "@typescript-eslint"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -29,7 +24,7 @@ module.exports = {
     "node",
     "prettier",
     "prettier/@typescript-eslint",
-    "plugin:prettier/recommended", // KEEP THIS LAST
+    "plugin:prettier/recommended" // KEEP THIS LAST
   ],
   rules: {
     "@typescript-eslint/indent": "off",
@@ -48,10 +43,13 @@ module.exports = {
     "@typescript-eslint/consistent-type-definitions": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
-    "@typescript-eslint/explicit-function-return-type": ["warn", {
-      allowExpressions: false,
-      allowTypedFunctionExpressions: true,
-    }],
+    "@typescript-eslint/explicit-function-return-type": [
+      "warn",
+      {
+        allowExpressions: false,
+        allowTypedFunctionExpressions: true
+      }
+    ],
 
     //
     // eslint base
@@ -74,7 +72,6 @@ module.exports = {
     //
 
     "simple-import-sort/sort": "error",
-
 
     //
     // eslint-plugin-import
@@ -103,21 +100,21 @@ module.exports = {
   },
   settings: {
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts", ".tsx" ]
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      typescript: {
+        alwaysTryTypes: true
+      }
     }
   },
   overrides: [
     {
-      files: [
-        "tests/**/*.test.ts"
-      ],
+      files: ["tests/**/*.test.ts"],
       env: {
         "jest/globals": true
       },
-      extends: [
-        "plugin:jest/recommended",
-        "plugin:jest/style"
-      ],
+      extends: ["plugin:jest/recommended", "plugin:jest/style"],
       plugins: ["jest"],
       rules: {
         "@typescript-eslint/no-misused-promises": "off",
@@ -126,6 +123,12 @@ module.exports = {
         "jest/valid-expect": "error",
         "jest/no-focused-tests": "error",
         "jest/no-identical-title": "error"
+      }
+    },
+    {
+      files: ["**/*.js"],
+      rules: {
+        import: "off"
       }
     }
   ]
