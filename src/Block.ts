@@ -1,5 +1,5 @@
 import { isNumber } from "lodash";
-import { each, find, first, intersection, map, clone } from "lodash/fp";
+import { clone, each, find, first, intersection, map } from "lodash/fp";
 
 import { Address } from "@/Address";
 import { RETRACT_CODES, START_CODES } from "@/CannedCycle";
@@ -8,7 +8,8 @@ import {
   BLOCK_SKIP_REGEX,
   COMMENT_REGEX,
   getAddrVal,
-  regexExtract
+  regexExtract,
+  regexMatch
 } from "@/lib";
 import { Tool } from "@/Tool";
 import { Maybe, Position } from "@/types";
@@ -43,28 +44,12 @@ export class Block {
     return this.hasAddress("T") && this.hasAddress("M");
   }
 
-  constructor(private readonly rawLine: string) {
-    const addressRegex = clone(ADDRESS_REGEX);
+  constructor(private readonly input: string) {
+    this._addresses = regexMatch(ADDRESS_REGEX, this.input);
+    this.comment = regexExtract(COMMENT_REGEX, this.input);
+    this.blockSkip = regexExtract(BLOCK_SKIP_REGEX, this.input);
 
-    let match;
-
-    do {
-      match = addressRegex.exec(this.rawLine);
-      if (match) {
-        this._addresses.push({
-          match: match[1],
-          index: match.index,
-          input: match.input
-        });
-      }
-    } while (match);
-
-    console.log(this._addresses);
-
-    this.blockSkip = regexExtract(BLOCK_SKIP_REGEX, this.rawLine);
-    this.comment = regexExtract(COMMENT_REGEX, this.rawLine);
-
-    if (this._addresses !== null) {
+    if (this._addresses.length > 0) {
       this.addresses = map(a => Address.parse(a.match), this._addresses);
 
       each(addr => {

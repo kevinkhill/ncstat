@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Block } from "@/Block";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -6,12 +5,6 @@ const testMsg = (l: string) => `Parsing: ${l}`;
 
 const line1 = "M80 S762";
 test(testMsg(line1), () => {
-=======
-import { Block } from "../src/NcFile/Block";
-
-const line1 = "M80 S762";
-test(`Parsing: ${line1}`, function() {
->>>>>>> 871fe3cdda0415dadb61dd5cc56a787e9530b4fe
   const block = Block.parse(line1);
 
   expect(block.M(80)).toBeTruthy();
