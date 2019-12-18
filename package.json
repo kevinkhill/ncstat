@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "node -r ts-node/register",
-    "test": "jest",
+    "test": "jest --runInBand",
+    "dev": "yarn test --notify --watch",
     "build": "bili",
     "lint": "eslint --ext .ts ./src"
   },

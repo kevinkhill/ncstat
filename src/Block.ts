@@ -1,5 +1,4 @@
-import { isNumber } from "lodash";
-import { clone, each, find, first, has, intersection, map } from "lodash/fp";
+import { get, clone, each, find, first, has, intersection, map } from "lodash/fp";
 
 import { Address } from "./Address";
 import { RETRACT_CODES, START_CODES } from "./CannedCycle";
@@ -9,10 +8,13 @@ import {
   COMMENT_REGEX,
   getAddrVal,
   regexExtract,
-  regexMatch
+  regexMatch,
+  isNumeric
 } from "./lib";
 import { Tool } from "./Tool";
 import { Position } from "./types";
+
+const parseAddresses = map(Address.parse);
 
 /**
  * A Block represents one line of NC code.
@@ -42,6 +44,10 @@ export class Block {
     return this.hasAddress("T") && this.hasAddress("M");
   }
 
+  get blockSkipLevel(): number {
+    return parseInt(String.prototype.substr.call(this.blockSkip, 1));
+  }
+
   constructor(private readonly input: string) {
     this.rawAddresses = regexMatch(ADDRESS_REGEX, this.input);
 
@@ -49,7 +55,7 @@ export class Block {
     this.blockSkip = regexExtract(BLOCK_SKIP_REGEX, this.input);
 
     if (this.rawAddresses.length > 0) {
-      this.addresses = map(Address.parse, this.rawAddresses);
+      this.addresses = parseAddresses(this.rawAddresses);
 
       each(addr => {
         if (addr.isGcode()) {
@@ -90,19 +96,31 @@ export class Block {
     };
   }
 
-  // getRetractCode(): string {
-  //   return first(intersection(map(getAddrVal, RETRACT_CODES), this.rawAddresses));
-  // }
+  getRetract(): Address {
+    const match = intersection(RETRACT_CODES, this.rawAddresses);
 
-  // isStartOfCannedCycle(): boolean {
-  //   const addresses = intersection(START_CODES, this.rawAddresses);
+    if (match.length > 1) {
+      throw Error("Duplicate codes from the same code group found.")
+    }
 
-  //   return addresses.length > 0;
-  // }
+    return Address.parse(match[0]);
+  }
 
-  // getCannedCycleStartCode(): string | undefined {
-  //   return first(intersection(START_CODES, this.rawAddresses));
-  // }
+  getRetractCode(): string {
+    return this.getRetract().toString();
+  }
+
+  isStartOfCannedCycle(): boolean {
+    const startAddresses = parseAddresses(START_CODES);
+
+    const addresses = intersection(START_CODES, this.rawAddresses);
+
+    return addresses.length > 0;
+  }
+
+  getCannedCycleStartCode(): string | undefined {
+    return first(intersection(START_CODES, this.rawAddresses));
+  }
 
   hasMovement(): boolean {
     if (intersection(this.gCodes, [4, 10, 65]).length > 0) {
@@ -110,10 +128,10 @@ export class Block {
     }
 
     return (
-      isNumber(this.values.B) ||
-      isNumber(this.values.X) ||
-      isNumber(this.values.Y) ||
-      isNumber(this.values.Z)
+      typeof this.values.B === "number" ||
+      typeof this.values.X === "number" ||
+      typeof this.values.Y === "number" ||
+      typeof this.values.Z === "number"
     );
   }
 

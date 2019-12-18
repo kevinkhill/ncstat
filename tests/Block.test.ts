@@ -54,7 +54,7 @@ const line6 = "/3 G103 M1. ( TOOL BREAK CHECK )";
 test(testMsg(line6), () => {
   const block = Block.parse(line6);
 
-  expect(block.blockSkip).toBe("/3");
+  expect(block.blockSkipLevel).toBe(3);
   expect(block.G(103)).toBeTruthy();
   expect(block.getComment()).toBe("TOOL BREAK CHECK");
 });
@@ -65,7 +65,7 @@ test.only(testMsg(line7), () => {
 
   expect(block.isStartOfCannedCycle()).toBeTruthy();
   expect(block.getCannedCycleStartCode()).toBe("G83");
-  expect(block.getRetractCode()).toBe("G99");
+  expect(block.getRetractCode().toString()).toBe("G99");
 });
 
 const line8 = "G43 H27 Z1. T17";

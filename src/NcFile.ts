@@ -42,12 +42,6 @@ export class NcFile {
     return options.filterEmptyLines ? filter(l => l !== " ", lines) : lines;
   }
 
-  analyze(): Program {
-    const program = new Program(this.getLines());
-
-    return program.analyze();
-  }
-
   async getDeepestZ(): Promise<number | undefined> {
     const lines = filter(l => l !== " ", this.getLines());
     const z: number[] = [];
