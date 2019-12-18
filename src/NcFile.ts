@@ -2,7 +2,7 @@ import fs from "fs";
 import { each, filter, join, min, split, uniq } from "lodash/fp";
 import path from "path";
 
-import { Program } from "@/Program";
+import { Program } from "./Program";
 
 export class NcFile {
   static async createFromBuffer(buffer: Buffer): Promise<NcFile> {

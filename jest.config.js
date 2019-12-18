@@ -4,8 +4,5 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest"
   },
   moduleFileExtensions: ["ts", "tsx", "js"],
-  testRegex: "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-  moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1"
-  }
+  testRegex: "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
 };

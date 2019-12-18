@@ -1,11 +1,10 @@
 // import filter from "lodash/filter";
 import { filter, map } from "lodash/fp";
 
-import { Block } from "@/Block";
-import { CannedCycle } from "@/CannedCycle";
-import { regexExtract, FEEDRATE_REGEX } from "@/lib";
-import { Tool } from "@/Tool";
-import { Maybe } from "@/types";
+import { Block } from "./Block";
+import { CannedCycle } from "./CannedCycle";
+import { FEEDRATE_REGEX, regexExtract } from "./lib";
+import { Tool } from "./Tool";
 
 export class Toolpath {
   static fromTool(tool: Tool): Toolpath {
@@ -35,7 +34,7 @@ export class Toolpath {
     return this;
   }
 
-  getToolRecord(): Maybe<[number, Tool]> {
+  getToolRecord(): [number, Tool] | undefined {
     if (this.hasTool) {
       return [this.tool.number, this.tool];
     }
@@ -50,12 +49,12 @@ export class Toolpath {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  getFeedrates(): number[] {
-    return map(
-      (line: string) => parseFloat(regexExtract(FEEDRATE_REGEX, line)),
-      filter(FEEDRATE_REGEX.test, this.lines)
-    );
-  }
+  // getFeedrates(): number[] {
+  //   return map(
+  //     (line: string) => parseFloat(regexExtract(FEEDRATE_REGEX, line)),
+  //     filter(FEEDRATE_REGEX.test, this.lines)
+  //   );
+  // }
 
   addCannedCycle(cycle: CannedCycle): this {
     this.cannedCycles.push(cycle);

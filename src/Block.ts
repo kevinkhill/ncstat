@@ -1,8 +1,8 @@
 import { isNumber } from "lodash";
-import { clone, each, find, first, intersection, map } from "lodash/fp";
+import { clone, each, find, first, has, intersection, map } from "lodash/fp";
 
-import { Address } from "@/Address";
-import { RETRACT_CODES, START_CODES } from "@/CannedCycle";
+import { Address } from "./Address";
+import { RETRACT_CODES, START_CODES } from "./CannedCycle";
 import {
   ADDRESS_REGEX,
   BLOCK_SKIP_REGEX,
@@ -10,14 +10,12 @@ import {
   getAddrVal,
   regexExtract,
   regexMatch
-} from "@/lib";
-import { Tool } from "@/Tool";
-import { Maybe, Position } from "@/types";
+} from "./lib";
+import { Tool } from "./Tool";
+import { Position } from "./types";
 
 /**
- * Block Class
- *
- * Represents one line of NC code.
+ * A Block represents one line of NC code.
  */
 export class Block {
   static parse(line: string): Block {
@@ -28,13 +26,13 @@ export class Block {
     [K: string]: number;
   } = {};
 
-  readonly blockSkip?: string;
   readonly addresses: Address[] = [];
 
   private readonly comment?: string;
+  private readonly blockSkip?: string;
   private readonly gCodes: number[] = [];
   private readonly mCodes: number[] = [];
-  private readonly _addresses: any[] = [];
+  private readonly rawAddresses: string[] = [];
 
   get hasToolCall(): boolean {
     return this.hasAddress("T");
@@ -45,20 +43,21 @@ export class Block {
   }
 
   constructor(private readonly input: string) {
-    this._addresses = regexMatch(ADDRESS_REGEX, this.input);
+    this.rawAddresses = regexMatch(ADDRESS_REGEX, this.input);
+
     this.comment = regexExtract(COMMENT_REGEX, this.input);
     this.blockSkip = regexExtract(BLOCK_SKIP_REGEX, this.input);
 
-    if (this._addresses.length > 0) {
-      this.addresses = map(a => Address.parse(a.match), this._addresses);
+    if (this.rawAddresses.length > 0) {
+      this.addresses = map(Address.parse, this.rawAddresses);
 
       each(addr => {
         if (addr.isGcode()) {
-          this.gCodes.push(addr.value);
+          this.gCodes.push(addr.value as number);
         } else if (addr.isMcode()) {
-          this.mCodes.push(addr.value);
+          this.mCodes.push(addr.value as number);
         } else {
-          this.values[addr.prefix] = addr.value;
+          this.values[addr.prefix] = addr.value as number;
         }
       }, this.addresses);
     }
@@ -92,17 +91,17 @@ export class Block {
   }
 
   // getRetractCode(): string {
-  //   return first(intersection(map(getAddrVal, RETRACT_CODES), this._addresses));
+  //   return first(intersection(map(getAddrVal, RETRACT_CODES), this.rawAddresses));
   // }
 
   // isStartOfCannedCycle(): boolean {
-  //   const addresses = intersection(START_CODES, this._addresses);
+  //   const addresses = intersection(START_CODES, this.rawAddresses);
 
   //   return addresses.length > 0;
   // }
 
   // getCannedCycleStartCode(): string | undefined {
-  //   return first(intersection(START_CODES, this._addresses));
+  //   return first(intersection(START_CODES, this.rawAddresses));
   // }
 
   hasMovement(): boolean {
@@ -118,21 +117,23 @@ export class Block {
     );
   }
 
-  hasAddress(ltr: string): boolean {
-    return Object.prototype.hasOwnProperty.call(this.values, ltr);
+  hasAddress(addr: string): boolean {
+    return has(addr, this.values);
   }
 
   hasCommand(mcode: number): boolean {
     return this.mCodes.includes(mcode);
   }
 
-  getValue(prefix: string): number | null {
-    return this.hasAddress(prefix) ? this.values[prefix] : null;
+  getValue(prefix: string): number | undefined {
+    if (this.hasAddress(prefix)) {
+      return this.values[prefix];
+    }
   }
 
-  getAddr(addrPrefix: string): Maybe<Address> {
-    if (this.hasAddress(addrPrefix)) {
-      return find(["prefix", addrPrefix], this.addresses);
+  getAddress(prefix: string): Address | undefined {
+    if (this.hasAddress(prefix)) {
+      return find(["prefix", prefix], this.addresses);
     }
   }
 }

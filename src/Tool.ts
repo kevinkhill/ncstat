@@ -1,5 +1,5 @@
-import { Block } from "@/Block";
-import { Toolpath } from "@/Toolpath";
+import { Block } from "./Block";
+import { Toolpath } from "./Toolpath";
 
 export class Tool {
   static fromBlock(block: Block | any): Tool | undefined {
@@ -13,10 +13,10 @@ export class Tool {
     return undefined;
   }
 
-  public desc: string = "";
-  public number: number = 0;
+  public desc = "";
+  public number = 0;
 
-  constructor(config?: Partial<{ number: number, desc: string }>) {
+  constructor(config?: Partial<{ number: number; desc: string }>) {
     Object.assign(this, config);
   }
 

@@ -1,5 +1,4 @@
-import { NcFile } from "@/NcFile";
-
+import { NcFile } from "../src/NcFile";
 import { getTestNcFile } from "./helpers";
 
 test("Test getting lines and line count.", async () => {

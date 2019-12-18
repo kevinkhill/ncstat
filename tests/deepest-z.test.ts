@@ -1,8 +1,7 @@
 import fs from "fs";
 import { each, filter, min, uniq } from "lodash/fp";
 
-import { NcFile } from "@/NcFile";
-
+import { NcFile } from "../src/NcFile";
 import { getTestNcFile } from "./helpers";
 
 test("Manually scan a program for the largest negative Z address", async () => {

@@ -1,4 +1,4 @@
-import { Block } from "@/Block";
+import { Block } from "../src/Block";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const testMsg = (l: string) => `Parsing: ${l}`;

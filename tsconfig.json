@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    // "baseUrl": ".",
     "strict": true,
     "target": "es5",
     "sourceMap": true,
@@ -10,9 +10,6 @@
     "esModuleInterop": true,
     "strictNullChecks": true,
     "moduleResolution": "node",
-    "paths": {
-      "@/*": ["src/*"]
-    },
     "lib": ["esnext"]
   },
   "include": ["*.ts", "*.js", "src/**/*.ts", "tests/**/*.ts"],

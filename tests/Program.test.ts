@@ -1,4 +1,4 @@
-import { NcFile } from "@/NcFile";
+import { NcFile } from "../src/NcFile";
 
 import { getTestNcFile } from "./helpers";
 

@@ -1,8 +1,12 @@
 import forEach from "lodash/forEach";
 
-import { NcCodeDef } from "../types";
 import { G_CODES as RAW_G_CODES } from "./gcodes";
 import { M_CODES as RAW_M_CODES } from "./mcodes";
+
+export interface NcCodeDef {
+  COMMAND: string;
+  GROUP: string;
+}
 
 export enum Modals {
   RAPID = "G00",

@@ -1,16 +1,32 @@
+import { hasDot, isNumeric } from "./lib";
+
+interface AddressArgs {
+  prefix: string;
+  value: number;
+}
+
 export class Address {
   prefix: string;
   value: number;
 
-  static parse(valAddr: string): Address {
-    return new Address(valAddr);
+  static parse(input: string): Address {
+    const prefix = input[0];
+    const val = input.substr(1);
+
+    if (isNumeric(val) === false) {
+      console.log(val);
+      throw Error("Addresses must contain numeric value.");
+    }
+
+    return new Address({
+      prefix,
+      value: hasDot(val) ? parseFloat(val) : parseInt(val)
+    });
   }
 
-  constructor(valAddr: string) {
-    this.prefix = valAddr[0];
-    this.value = valAddr.includes(".")
-      ? parseFloat(valAddr.slice(1))
-      : parseInt(valAddr.slice(1));
+  constructor({ prefix, value }: AddressArgs) {
+    this.prefix = prefix;
+    this.value = value;
   }
 
   toString(): string {

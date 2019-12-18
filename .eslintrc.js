@@ -1,10 +1,12 @@
+const { resolve } = require("path");
+
 module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: 8,
     sourceType: "module",
-    project: "./tsconfig.json",
+    project: resolve(__dirname, "./tsconfig.json"),
     ecmaFeatures: {
       jsx: true
     }
@@ -43,10 +45,13 @@ module.exports = {
     "@typescript-eslint/consistent-type-definitions": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
-    "@typescript-eslint/explicit-function-return-type": ["error", {
-      allowExpressions: true,
-      allowTypedFunctionExpressions: true,
-    }],
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        allowExpressions: true,
+        allowTypedFunctionExpressions: true
+      }
+    ],
 
     //
     // eslint base
