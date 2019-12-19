@@ -39,7 +39,9 @@ export class NcFile {
   getLines(options = { filterEmptyLines: true }): string[] {
     const lines = split("\n", this.contents);
 
-    return options.filterEmptyLines ? filter(l => l !== " ", lines) : lines;
+    return options.filterEmptyLines
+      ? filter(l => l !== " ", lines)
+      : lines;
   }
 
   async getDeepestZ(): Promise<number | undefined> {

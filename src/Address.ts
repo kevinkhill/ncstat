@@ -1,6 +1,6 @@
 import { hasDot, isNumeric } from "./lib";
 
-interface AddressArgs {
+interface AddressDefinition {
   prefix: string;
   value: number;
 }
@@ -14,7 +14,6 @@ export class Address {
     const val = input.substr(1);
 
     if (isNumeric(val) === false) {
-      console.log(val);
       throw Error("Addresses must contain numeric value.");
     }
 
@@ -24,7 +23,7 @@ export class Address {
     });
   }
 
-  constructor({ prefix, value }: AddressArgs) {
+  constructor({ prefix, value }: AddressDefinition) {
     this.prefix = prefix;
     this.value = value;
   }

@@ -18,7 +18,7 @@ test(testMsg(line2), () => {
   expect(block.G(0)).toBeTruthy();
   expect(block.G(90)).toBeTruthy();
   expect(block.G(55)).toBeTruthy();
-  expect(block.isStartOfCannedCycle()).toBeFalsy();
+  expect(block.isStartOfCannedCycle).toBeFalsy();
 });
 
 const line3 = "X1.75 Y.19 S762 M3";
@@ -46,34 +46,34 @@ const line5 = "N44 ( M5 X 0.8 ROLL TAP, PULLEY )";
 test(testMsg(line5), () => {
   const block = Block.parse(line5);
 
-  expect(block.values.N).toBe(44);
-  expect(block.getComment()).toBe("M5 X 0.8 ROLL TAP, PULLEY");
+  expect(block.lineNumber).toBe(44);
+  expect(block.comment).toBe("M5 X 0.8 ROLL TAP, PULLEY");
 });
 
 const line6 = "/3 G103 M1. ( TOOL BREAK CHECK )";
 test(testMsg(line6), () => {
   const block = Block.parse(line6);
 
-  expect(block.blockSkipLevel).toBe(3);
+  expect(block.blockSkip).toBe(3);
   expect(block.G(103)).toBeTruthy();
-  expect(block.getComment()).toBe("TOOL BREAK CHECK");
+  expect(block.comment).toBe("TOOL BREAK CHECK");
 });
 
 const line7 = "G83 G99 Z-.75 R.1 Q.144 F50.";
-test.only(testMsg(line7), () => {
+test(testMsg(line7), () => {
   const block = Block.parse(line7);
 
-  expect(block.isStartOfCannedCycle()).toBeTruthy();
+  expect(block.isStartOfCannedCycle).toBeTruthy();
   expect(block.getCannedCycleStartCode()).toBe("G83");
-  expect(block.getRetractCode().toString()).toBe("G99");
+  expect(block.getRetractCode()).toBe("G99");
 });
 
 const line8 = "G43 H27 Z1. T17";
 test(testMsg(line8), () => {
   const block = Block.parse(line8);
 
-  expect(block.G(0)).toBeTruthy();
-  expect(block.G(90)).toBeTruthy();
-  expect(block.G(55)).toBeTruthy();
-  expect(block.isStartOfCannedCycle()).toBeFalsy();
+  expect(block.G(43)).toBeTruthy();
+  expect(block.values.Z).toBe(1.);
+  expect(block.values.T).toBe(17);
+  expect(block.isStartOfCannedCycle).toBeFalsy();
 });

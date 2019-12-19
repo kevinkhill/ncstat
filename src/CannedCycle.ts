@@ -1,8 +1,5 @@
 import { Block } from "./Block";
-import { Point } from "./types";
-// import { Point } from "./Point";
-
-type MaybeNumber = number | undefined;
+import { Point } from "./Point";
 
 export const RETRACT_CODES = ["G98", "G99"];
 export const START_CODES = [
@@ -17,45 +14,82 @@ export const START_CODES = [
   "G87"
 ];
 
-export class CannedCycle {
-  Z?: number;
-  R?: number;
-  F?: number;
+interface CannedCycleConfig {
+  Z: number;
+  R: number;
+  F: number;
   Q?: number;
 
   cycleCommand: string;
   retractCommand: string;
+}
+
+export class CannedCycle {
+  static START_CODES = START_CODES;
+  static RETRACT_CODES = RETRACT_CODES;
+
+  static fromBlock(block: Block): CannedCycle {
+    if (block.isStartOfCannedCycle) {
+      throw Error(
+        "The provided Block is not the start of a CannedCycle."
+      );
+    }
+
+    return new CannedCycle({
+      Q: block.values?.Q,
+      Z: block.values.Z,
+      R: block.values.R,
+      F: block.values.F,
+      retractCommand: block.getRetractCode(),
+      cycleCommand: block.getCannedCycleStartCode() as string
+    });
+  }
+
+  Z: number;
+  R: number;
+  F: number;
+  cycleCommand: string;
+  retractCommand: string;
+
+  Q?: number;
+  I?: number;
+  J?: number;
+  K?: number;
 
   private points: Point[] = [];
 
-  constructor(block: Block) {
-    this.Q = block.values.Q;
-    this.Z = block.values.Z;
-    this.R = block.values.R;
-    this.F = block.values.F;
+  constructor(config: CannedCycleConfig) {
+    this.Z = config.Z;
+    this.R = config.R;
+    this.F = config.F;
+    this.cycleCommand = config.cycleCommand;
+    this.retractCommand = config.retractCommand;
 
-    this.cycleCommand = block.getCannedCycleStartCode();
-    this.retractCommand = block.getRetractCode();
+    this.Q = config?.Q;
   }
 
-  getPeck(): MaybeNumber {
+  getPeck(): number | undefined {
     return this.Q;
   }
 
-  getDepth(): MaybeNumber {
+  getDepth(): number | undefined {
     return this.Z;
   }
 
-  getRetract(): MaybeNumber {
+  getRetract(): number | undefined {
     return this.R;
   }
 
-  getFeedrate(): MaybeNumber {
+  getFeedrate(): number | undefined {
     return this.F;
   }
 
-  addPoint(point: Point | Block): void {
-    this.points.push(point instanceof Block ? point.getPosition() : point);
+  addPoint(obj: Point | Block): void {
+    if (obj instanceof Block) {
+      this.points.push(obj.getPoint());
+    } else {
+      this.points.push(obj);
+    }
   }
 
   getPoints(): Point[] {

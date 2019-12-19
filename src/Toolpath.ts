@@ -3,7 +3,7 @@ import { filter, map } from "lodash/fp";
 
 import { Block } from "./Block";
 import { CannedCycle } from "./CannedCycle";
-import { FEEDRATE_REGEX, regexExtract } from "./lib";
+import { FEEDRATE_REGEX } from "./lib";
 import { Tool } from "./Tool";
 
 export class Toolpath {

@@ -1,25 +1,24 @@
-import StateMachine from "javascript-state-machine";
-import { filter, get, last } from "lodash";
-import { clone, has, map } from "lodash/fp";
+import { clone, each, filter, get, has, last, map } from "lodash/fp";
 import { Machine } from "xstate";
 
 import { Block } from "./Block";
 import { CannedCycle } from "./CannedCycle";
+import { HMC_AXES } from "./constants";
 import { Modals } from "./NcCodes";
 import { Tool } from "./Tool";
 import { Toolpath } from "./Toolpath";
-import { Position, ProgramStateMachine } from "./types";
+import { HmcAxis, Position, ToolInfo } from "./types";
 
 export class Program {
   activeModals: {
     [K: string]: boolean;
   } = {};
   number = 0;
-  title = "";
+  title?: string;
   toolpaths: Toolpath[] = [];
 
-  // private prgExec: ProgramStateMachine;
-  private prgExec;
+  // private prgExec: typeof Machine;
+  private prgExec: any;
   private position: {
     curr: Position;
     prev: Position;
@@ -81,7 +80,7 @@ export class Program {
     return this.number;
   }
 
-  getTitle(): string {
+  getTitle(): string | undefined {
     return this.title;
   }
 
@@ -97,18 +96,23 @@ export class Program {
     return this.position.prev;
   }
 
-  getToolPaths(): Toolpath[] {
+  getAllToolPaths(): Toolpath[] {
     return this.toolpaths;
   }
 
-  getToolList(): [number, Tool][] {
-    const toolpathsWithTools = filter(this.toolpaths, t => t.hasTool);
-
-    return toolpathsWithTools.map(t => t.tool!.toTuple());
+  getToolPathsWithTools(): Toolpath[] {
+    return filter(path => path.hasTool, this.toolpaths);
   }
 
-  isActiveModal(valAddr: string): boolean {
-    return this.activeModals[valAddr];
+  getToolList(): ToolInfo[] {
+    return map(
+      (path: Toolpath) => path.tool.toTuple(),
+      this.getToolPathsWithTools()
+    );
+  }
+
+  isActiveModal(input: string): boolean {
+    return has(input, this.activeModals);
   }
 
   analyze(): this {
@@ -124,17 +128,20 @@ export class Program {
 
         if (block.hasAddress("O")) {
           this.number = block.values.O;
-          this.title = block.getComment();
+          this.title = block.comment;
         }
 
         if (block.hasMovement()) {
           this.updatePosition(block);
         }
 
-        if (block.isStartOfCannedCycle() && this.prgExec.is("toolpathing")) {
+        if (
+          block.isStartOfCannedCycle &&
+          this.prgExec.is("toolpathing")
+        ) {
           this.prgExec.startCannedCycle();
 
-          const cannedCycle = new CannedCycle(block);
+          const cannedCycle = CannedCycle.fromBlock(block);
 
           toolpath.addCannedCycle(cannedCycle);
         }
@@ -184,20 +191,28 @@ export class Program {
 
   private updatePosition(block: Block): void {
     const blockPosition = block.getPosition();
-    console.log(blockPosition);
+
+    // console.log(blockPosition);
+
     this.position.prev = clone(this.position.curr);
 
-    map(axis => get(blockPosition, axis, null), ["X", "Y", "Z", "B"]);
+    each(axis => {
+      if (has(axis, blockPosition)) {
+        const blockAxisPosition = get(axis, blockPosition);
 
-    ["B", "X", "Y", "Z"].forEach(axis => {
-      if (blockPosition[axis]) {
-        if (this.activeModals[Modals.INCREMENTAL]) {
-          this.position.curr[axis] += blockPosition[axis];
-        } else if (this.activeModals[Modals.ABSOLUTE]) {
-          this.position.curr[axis] = blockPosition[axis];
-        }
+        this.updateAxis(axis as HmcAxis, blockAxisPosition);
       }
-    });
+    }, HMC_AXES);
+  }
+
+  private updateAxis(axis: HmcAxis, value: number): void {
+    if (this.activeModals[Modals.INCREMENTAL]) {
+      this.position.curr[axis] += value;
+    }
+
+    if (this.activeModals[Modals.ABSOLUTE]) {
+      this.position.curr[axis] = value;
+    }
   }
 
   private setModals(block: Block): void {

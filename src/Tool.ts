@@ -1,23 +1,28 @@
 import { Block } from "./Block";
 import { Toolpath } from "./Toolpath";
+import { ToolInfo } from "./types";
+
+export interface ToolDefinition {
+  number: number;
+  desc?: string;
+}
 
 export class Tool {
-  static fromBlock(block: Block | any): Tool | undefined {
-    if (block instanceof Block) {
+  static fromBlock(block: Block): Tool | undefined {
+    if (block.hasToolCall) {
       return new Tool({
-        number: block.values.N,
-        desc: block.getComment()
+        number: block.values.T,
+        desc: block.comment
       });
     }
-
-    return undefined;
   }
 
-  public desc = "";
-  public number = 0;
+  public desc: string;
+  public number: number;
 
-  constructor(config?: Partial<{ number: number; desc: string }>) {
-    Object.assign(this, config);
+  constructor(config?: ToolDefinition) {
+    this.number = config?.number ?? 0;
+    this.desc = config?.desc ?? "";
   }
 
   getToolpath(): Toolpath {
@@ -26,7 +31,7 @@ export class Tool {
     return toolpath.setTool(this);
   }
 
-  toTuple(): [number, Tool] {
+  toTuple(): ToolInfo {
     return [this.number, this];
   }
 

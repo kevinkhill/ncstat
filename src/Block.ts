@@ -1,4 +1,12 @@
-import { get, clone, each, find, first, has, intersection, map } from "lodash/fp";
+import {
+  each,
+  find,
+  get,
+  has,
+  includes,
+  intersection,
+  map
+} from "lodash/fp";
 
 import { Address } from "./Address";
 import { RETRACT_CODES, START_CODES } from "./CannedCycle";
@@ -6,15 +14,15 @@ import {
   ADDRESS_REGEX,
   BLOCK_SKIP_REGEX,
   COMMENT_REGEX,
-  getAddrVal,
+  filterGcodes,
+  filterMcodes,
+  mapByValue,
   regexExtract,
-  regexMatch,
-  isNumeric
+  regexMatch
 } from "./lib";
+import { Point } from "./Point";
 import { Tool } from "./Tool";
 import { Position } from "./types";
-
-const parseAddresses = map(Address.parse);
 
 /**
  * A Block represents one line of NC code.
@@ -28,43 +36,57 @@ export class Block {
     [K: string]: number;
   } = {};
 
+  readonly N?: number;
+  readonly comment?: string;
+  readonly blockSkip?: number;
+  readonly gCodes: number[] = [];
+  readonly mCodes: number[] = [];
   readonly addresses: Address[] = [];
 
-  private readonly comment?: string;
-  private readonly blockSkip?: string;
-  private readonly gCodes: number[] = [];
-  private readonly mCodes: number[] = [];
   private readonly rawAddresses: string[] = [];
+
+  get lineNumber(): number {
+    return this.values.N;
+  }
 
   get hasToolCall(): boolean {
     return this.hasAddress("T");
   }
 
   get hasToolChange(): boolean {
-    return this.hasAddress("T") && this.hasAddress("M");
+    return includes("M6", this.rawAddresses);
   }
 
-  get blockSkipLevel(): number {
-    return parseInt(String.prototype.substr.call(this.blockSkip, 1));
+  get isStartOfCannedCycle(): boolean {
+    const addresses = intersection(START_CODES, this.rawAddresses);
+
+    return addresses.length > 0;
   }
 
   constructor(private readonly input: string) {
     this.rawAddresses = regexMatch(ADDRESS_REGEX, this.input);
 
-    this.comment = regexExtract(COMMENT_REGEX, this.input);
-    this.blockSkip = regexExtract(BLOCK_SKIP_REGEX, this.input);
+    const comment = regexExtract(COMMENT_REGEX, this.input);
+
+    if (comment) {
+      this.comment = comment.trim();
+    }
+
+    const blockSkip = regexExtract(BLOCK_SKIP_REGEX, this.input);
+
+    if (blockSkip) {
+      this.blockSkip = parseInt(blockSkip);
+    }
 
     if (this.rawAddresses.length > 0) {
-      this.addresses = parseAddresses(this.rawAddresses);
+      this.addresses = map(Address.parse, this.rawAddresses);
+      // this.addresses = map(Address.parse, this.rawAddresses);
+      this.gCodes = mapByValue(filterGcodes(this.addresses));
+      this.mCodes = mapByValue(filterMcodes(this.addresses));
 
-      each(addr => {
-        if (addr.isGcode()) {
-          this.gCodes.push(addr.value as number);
-        } else if (addr.isMcode()) {
-          this.mCodes.push(addr.value as number);
-        } else {
-          this.values[addr.prefix] = addr.value as number;
-        }
+      each(a => {
+        if (a.prefix !== "G" && a.prefix !== "M")
+          this.values[a.prefix] = a.value;
       }, this.addresses);
     }
   }
@@ -83,10 +105,6 @@ export class Block {
     }
   }
 
-  getComment(): string | undefined {
-    return this.comment;
-  }
-
   getPosition(): Position {
     return {
       B: this.values.B,
@@ -100,30 +118,34 @@ export class Block {
     const match = intersection(RETRACT_CODES, this.rawAddresses);
 
     if (match.length > 1) {
-      throw Error("Duplicate codes from the same code group found.")
+      throw Error("Duplicate codes from the same code group found.");
     }
 
     return Address.parse(match[0]);
+  }
+
+  getPoint(): Point {
+    return Point.fromBlock(this);
   }
 
   getRetractCode(): string {
     return this.getRetract().toString();
   }
 
-  isStartOfCannedCycle(): boolean {
-    const startAddresses = parseAddresses(START_CODES);
+  getCannedCycleStartCode(): string | undefined {
+    if (!this.isStartOfCannedCycle) {
+      throw Error("This Block is not the start of a CannedCycle.");
+    }
 
-    const addresses = intersection(START_CODES, this.rawAddresses);
-
-    return addresses.length > 0;
+    return intersection(START_CODES, this.rawAddresses)[0];
   }
 
-  getCannedCycleStartCode(): string | undefined {
-    return first(intersection(START_CODES, this.rawAddresses));
+  hasCommand(mcode: number): boolean {
+    return includes(mcode, this.mCodes);
   }
 
   hasMovement(): boolean {
-    if (intersection(this.gCodes, [4, 10, 65]).length > 0) {
+    if (intersection([4, 10, 65], this.gCodes).length > 0) {
       return false;
     }
 
@@ -136,22 +158,26 @@ export class Block {
   }
 
   hasAddress(addr: string): boolean {
-    return has(addr, this.values);
-  }
-
-  hasCommand(mcode: number): boolean {
-    return this.mCodes.includes(mcode);
-  }
-
-  getValue(prefix: string): number | undefined {
-    if (this.hasAddress(prefix)) {
-      return this.values[prefix];
-    }
+    return has(addr, map(get("prefix"), this.addresses));
   }
 
   getAddress(prefix: string): Address | undefined {
-    if (this.hasAddress(prefix)) {
-      return find(["prefix", prefix], this.addresses);
+    if (this.hasAddress(prefix) === false) {
+      throw Error(
+        `The address [${prefix}xx] is not present in the Block.`
+      );
     }
+
+    return find(["prefix", prefix], this.addresses);
+  }
+
+  getValue(prefix: string): number | undefined {
+    if (this.hasAddress(prefix) === false) {
+      throw Error(
+        `The address [${prefix}xx] is not present in the Block.`
+      );
+    }
+
+    return get("value", this.getAddress(prefix));
   }
 }
