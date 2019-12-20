@@ -4,6 +4,7 @@
   "private": true,
   "main": "./src/index.ts",
   "dependencies": {
+    "@xstate/fsm": "^1.1.0",
     "lodash": "^4.17.15",
     "xstate": "^4.7.3"
   },
@@ -45,6 +46,7 @@
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-lodash-fp": "^2.2.0-a1",
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-simple-import-sort": "^4.0.0",

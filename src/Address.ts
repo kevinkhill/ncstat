@@ -9,12 +9,18 @@ export class Address {
   prefix: string;
   value: number;
 
+  /**
+   * @TODO how are we going to tackle variables... H#518
+   * stripping # for now
+   */
   static parse(input: string): Address {
     const prefix = input[0];
-    const val = input.substr(1);
+    const val = input.replace("#", "").substr(1);
 
     if (isNumeric(val) === false) {
-      throw Error("Addresses must contain numeric value.");
+      throw Error(
+        `ERROR: Addresses must contain numeric value, failed to parse "${input}"`
+      );
     }
 
     return new Address({

@@ -2,8 +2,6 @@ import fs from "fs";
 import { each, filter, join, min, split, uniq } from "lodash/fp";
 import path from "path";
 
-import { Program } from "./Program";
-
 export class NcFile {
   static async createFromBuffer(buffer: Buffer): Promise<NcFile> {
     return new NcFile(buffer.toString());
@@ -27,21 +25,8 @@ export class NcFile {
     return join("\n", this.getLines);
   }
 
-  /**
-   * @todo look into this more
-   */
-  analyze(): Program {
-    const program = new Program(this.getLines());
-
-    return program.analyze();
-  }
-
-  getLines(options = { filterEmptyLines: true }): string[] {
-    const lines = split("\n", this.contents);
-
-    return options.filterEmptyLines
-      ? filter(l => l !== " ", lines)
-      : lines;
+  getLines(): string[] {
+    return split("\n", this.contents);
   }
 
   async getDeepestZ(): Promise<number | undefined> {

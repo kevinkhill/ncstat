@@ -1,4 +1,4 @@
-import { createMachine, interpret } from "@xstate/fsm";
+import { createMachine } from "@xstate/fsm";
 import {
   clone,
   each,
@@ -18,21 +18,13 @@ import { HMC_AXES } from "./constants";
 import { filterEmptyLines } from "./lib";
 import { Modals } from "./NcCodes";
 import { NcFile } from "./NcFile";
-import { Events, NcService, NcStateMachine } from "./NcService";
+import { NcService, NcStateMachine } from "./NcService";
 import { Toolpath } from "./Toolpath";
 import { HmcAxis, Position, ToolInfo } from "./types";
 
-export class Program {
-  static create(lines: string[]): Program {
-    return new Program(lines);
-  }
-
-  static fromFile(file: NcFile): Program {
-    return new Program(file.getLines());
-  }
-
-  static analyzeNcFile(file: NcFile): Program {
-    const program = Program.fromFile(file);
+export class NcAnalyzer {
+  static analyzeNcFile(file: NcFile) {
+    const program = new Program(file.getLines());
 
     return program.analyze();
   }
@@ -45,23 +37,24 @@ export class Program {
   toolpaths: Toolpath[] = [];
 
   private blocks: Block[] = [];
-  private nc: any;
+  // private state: typeof Machine;
+  private exec: any;
   private position: {
     curr: Position;
     prev: Position;
   };
 
-  constructor(private readonly rawInput: string[]) {
+  constructor(private readonly rawInput: string) {
     this.position = {
       curr: { X: 0, Y: 0, Z: 0, B: 0 },
       prev: { X: 0, Y: 0, Z: 0, B: 0 }
     };
 
-    this.nc = NcService;
+    this.exec = NcService;
   }
 
   toString(): string {
-    return this.rawInput.join("\n");
+    return this.rawInput;
   }
 
   isActiveModal(input: string): boolean {
@@ -69,7 +62,7 @@ export class Program {
   }
 
   getLines(): string[] {
-    return this.rawInput;
+    return split("\n", this.rawInput);
   }
 
   getNumber(): number {
@@ -108,17 +101,15 @@ export class Program {
   }
 
   analyze(): this {
-    const stateIs = eq(this.nc.state);
-
     let toolpath = new Toolpath();
 
     const lines = filterEmptyLines(this.rawInput);
 
     this.blocks = map(Block.parse, lines);
 
-    // const { initialState } = NcStateMachine;
+    const { initialState } = NcStateMachine;
 
-    // console.log(initialState);
+    console.log(initialState);
 
     for (const block of this.blocks) {
       this.setModals(block);
@@ -132,17 +123,17 @@ export class Program {
         this.updatePosition(block);
       }
 
-      if (block.isStartOfCannedCycle && stateIs("toolpathing")) {
-        this.nc.send(Events.START_CANNED_CYCLE);
+      if (block.isStartOfCannedCycle && this.exec.is("toolpathing")) {
+        this.exec.startCannedCycle();
 
         const cannedCycle = CannedCycle.fromBlock(block);
 
         toolpath.addCannedCycle(cannedCycle);
       }
 
-      if (stateIs("in-canned-cycle")) {
+      if (this.exec.is("in-canned-cycle")) {
         if (block.G(80)) {
-          this.nc.send(Events.END_CANNED_CYCLE);
+          this.exec.endCannedCycle();
         }
 
         if (block.hasMovement()) {
@@ -156,25 +147,28 @@ export class Program {
       // Tracking toolpaths (tools) via Nxxx lines with a comment
       // This has been defined in the custom H&B posts
       if (block.rawInput.startsWith("N")) {
-        if (stateIs("toolpathing")) {
-          this.nc.send(Events.END_TOOLPATH);
+        if (this.exec.is("toolpathing")) {
+          this.exec.endToolpath();
           this.toolpaths.push(toolpath);
         }
 
-        if (stateIs("idle")) {
+        if (this.exec.is("idle")) {
           toolpath = Toolpath.fromBlock(block);
 
-          this.nc.send(Events.START_TOOLPATH);
+          this.exec.startToolpath();
         }
       }
 
       // If we're toolpathing or in a canned cycle, save it to the toolpath
-      if (stateIs("toolpathing") || stateIs("in-canned-cycle")) {
+      if (
+        this.exec.is("toolpathing") ||
+        this.exec.is("in-canned-cycle")
+      ) {
         toolpath.pushBlock(block);
       }
     }
 
-    this.nc.send(Events.END_TOOLPATH);
+    this.exec.endToolpath();
 
     this.toolpaths.push(toolpath);
 
@@ -183,6 +177,8 @@ export class Program {
 
   private updatePosition(block: Block): void {
     const blockPosition = block.getPosition();
+
+    // console.log(blockPosition);
 
     this.position.prev = clone(this.position.curr);
 

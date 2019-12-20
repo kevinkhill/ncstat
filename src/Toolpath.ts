@@ -23,14 +23,22 @@ export class Toolpath {
 
   tool: Tool = new Tool();
   lines: string[] = [];
+  blocks: Block[] = [];
   cannedCycles: CannedCycle[] = [];
 
   get hasTool(): boolean {
-    return this.tool instanceof Tool;
+    return this.tool.number !== 0;
   }
 
   setTool(tool: Tool): this {
     this.tool = tool;
+
+    return this;
+  }
+
+  setToolFromBlock(block: Block): this {
+    this.tool = block.getTool() as Tool;
+
     return this;
   }
 
@@ -40,8 +48,16 @@ export class Toolpath {
     }
   }
 
-  addLine(line: string): void {
+  pushBlock(block: Block): this {
+    this.blocks.push(block);
+
+    return this;
+  }
+
+  addLine(line: string): this {
     this.lines.push(line);
+
+    return this;
   }
 
   get hasFeedrates(): boolean {

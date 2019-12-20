@@ -1,17 +1,24 @@
 {
   "compilerOptions": {
-    // "baseUrl": ".",
+    "baseUrl": ".",
     "strict": true,
     "target": "es5",
     "sourceMap": true,
     "module": "commonjs",
-    "noImplicitAny": true,
+    // "noImplicitAny": true,
     "importHelpers": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
     "moduleResolution": "node",
     "lib": ["esnext"]
   },
-  "include": ["*.ts", "*.js", "src/*/*.ts", "tests/*/*.ts"],
+  "include": [
+    "*.ts",
+    "*.js",
+    "bin/*.ts",
+    "demos/*.ts",
+    "src/**/*.ts",
+    "tests/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }

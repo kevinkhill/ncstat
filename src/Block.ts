@@ -63,16 +63,16 @@ export class Block {
     return addresses.length > 0;
   }
 
-  constructor(private readonly input: string) {
-    this.rawAddresses = regexMatch(ADDRESS_REGEX, this.input);
+  constructor(readonly rawInput: string) {
+    this.rawAddresses = regexMatch(ADDRESS_REGEX, this.rawInput);
 
-    const comment = regexExtract(COMMENT_REGEX, this.input);
+    const comment = regexExtract(COMMENT_REGEX, this.rawInput);
 
     if (comment) {
       this.comment = comment.trim();
     }
 
-    const blockSkip = regexExtract(BLOCK_SKIP_REGEX, this.input);
+    const blockSkip = regexExtract(BLOCK_SKIP_REGEX, this.rawInput);
 
     if (blockSkip) {
       this.blockSkip = parseInt(blockSkip);
@@ -80,8 +80,12 @@ export class Block {
 
     if (this.rawAddresses.length > 0) {
       this.addresses = map(Address.parse, this.rawAddresses);
-      // this.addresses = map(Address.parse, this.rawAddresses);
+
       this.gCodes = mapByValue(filterGcodes(this.addresses));
+
+      /**
+       * @TODO I think this should be singular
+       */
       this.mCodes = mapByValue(filterMcodes(this.addresses));
 
       each(a => {
@@ -103,6 +107,8 @@ export class Block {
     if (this.hasToolCall) {
       return Tool.fromBlock(this);
     }
+
+    throw Error("ERROR: The block does not contain Txx");
   }
 
   getPosition(): Position {

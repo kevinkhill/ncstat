@@ -15,20 +15,38 @@ module.exports = {
     es6: true,
     node: true
   },
-  plugins: ["import", "prettier", "simple-import-sort", "@typescript-eslint"],
+  plugins: [
+    "import",
+    "prettier",
+    "lodash-fp",
+    "simple-import-sort",
+    "@typescript-eslint"
+  ],
   extends: [
+    "node",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
     "plugin:import/warnings",
     "plugin:import/errors",
     "plugin:import/typescript",
-    "node",
+    "plugin:lodash-fp/recommended",
+    "plugin:@typescript-eslint/recommended",
     "prettier",
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended" // KEEP THIS LAST
   ],
   rules: {
+    quotes: "off",
+    "sort-imports": "off",
+    "no-unused-vars": "off",
+    eqeqeq: ["error", "always"],
+    "no-param-reassign": "error",
+    "no-mixed-operators": "error",
+
+    //
+    // @typescript-eslint/eslint-plugin
+    //
+
     "@typescript-eslint/indent": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-use-before-define": "off",
@@ -54,16 +72,6 @@ module.exports = {
     ],
 
     //
-    // eslint base
-    //
-
-    quotes: "off",
-    "sort-imports": "off",
-    eqeqeq: ["error", "always"],
-    "no-param-reassign": "error",
-    "no-mixed-operators": "error",
-
-    //
     // eslint-plugin-prettier
     //
 
@@ -76,9 +84,46 @@ module.exports = {
     "simple-import-sort/sort": "error",
 
     //
+    // eslint-plugin-lodash-fp
+    //
+
+    "lodash-fp/no-for-each": "off",
+    "lodash-fp/preferred-alias": "off",
+    "lodash-fp/consistent-compose": "off",
+    "lodash-fp/consistent-name": ["error", "_"],
+    "lodash-fp/use-fp": "error",
+    "lodash-fp/no-chain": "error",
+    "lodash-fp/prefer-get": "error",
+    "lodash-fp/prefer-compact": "error",
+    "lodash-fp/prefer-flat-map": "error",
+    "lodash-fp/no-unused-result": "error",
+    "lodash-fp/no-extraneous-args": "error",
+    "lodash-fp/no-single-composition": "error",
+    "lodash-fp/no-argumentless-calls": "error",
+    "lodash-fp/no-partial-of-curried": "error",
+    "lodash-fp/no-extraneous-partials": "error",
+    "lodash-fp/no-submodule-destructuring": "error",
+    "lodash-fp/no-extraneous-iteratee-args": "error",
+    "lodash-fp/prefer-composition-grouping": "error",
+    "lodash-fp/no-extraneous-function-wrapping": "error",
+    "lodash-fp/prefer-constant": [
+      "error",
+      {
+        arrowFunctions: false
+      }
+    ],
+    "lodash-fp/prefer-identity": [
+      "error",
+      {
+        arrowFunctions: false
+      }
+    ],
+
+    //
     // eslint-plugin-import
     //
 
+    "import/named": "warn",
     "import/no-named-export": "off",
     "import/no-nodejs-modules": "off",
     "import/no-default-export": "off",
