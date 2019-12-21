@@ -9,7 +9,9 @@ import {
   last,
   map,
   reject,
-  split
+  split,
+  min,
+  uniq
 } from "lodash/fp";
 
 import { Block } from "./Block";
@@ -18,7 +20,7 @@ import { HMC_AXES } from "./constants";
 import { filterEmptyLines } from "./lib";
 import { Modals } from "./NcCodes";
 import { NcFile } from "./NcFile";
-import { Events, NcService, NcStateMachine } from "./NcService";
+import { Events, NcService, States } from "./NcService";
 import { Toolpath } from "./Toolpath";
 import { HmcAxis, Position, ToolInfo } from "./types";
 
@@ -100,6 +102,21 @@ export class Program {
     return filter(path => path.hasTool, this.toolpaths);
   }
 
+  getDeepestZ(): number | undefined {
+    const z: number[] = [];
+    const zRegex = /Z(-[0-9.]+)\s/g;
+
+    each(line => {
+      const m = zRegex.exec(line);
+
+      if (m) {
+        z.push(parseFloat(m[1]));
+      }
+    }, this.getLines()));
+
+    return min(uniq(z));
+  }
+
   getToolList(): ToolInfo[] {
     return map(
       (path: Toolpath) => path.tool.toTuple(),
@@ -140,7 +157,7 @@ export class Program {
         toolpath.addCannedCycle(cannedCycle);
       }
 
-      if (stateIs("in-canned-cycle")) {
+      if (stateIs(States.IN_CANNED_CYCLE)) {
         if (block.G(80)) {
           this.nc.send(Events.END_CANNED_CYCLE);
         }

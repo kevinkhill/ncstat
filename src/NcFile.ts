@@ -1,8 +1,12 @@
 import fs from "fs";
 import { each, filter, join, min, split, uniq } from "lodash/fp";
 import path from "path";
+import { Program } from './Program';
 
 export class NcFile {
+  static fromString(nc: string) {
+    throw new Error("Method not implemented.");
+  }
   static async createFromBuffer(buffer: Buffer): Promise<NcFile> {
     return new NcFile(buffer.toString());
   }
@@ -21,27 +25,17 @@ export class NcFile {
     this.contents = contents;
   }
 
+  analyze(): Program {
+    const program = Program.analyzeNcFile(this);
+
+    return program.analyze();
+  }
+
   toString(): string {
     return join("\n", this.getLines);
   }
 
   getLines(): string[] {
     return split("\n", this.contents);
-  }
-
-  async getDeepestZ(): Promise<number | undefined> {
-    const lines = filter(l => l !== " ", this.getLines());
-    const z: number[] = [];
-    const zRegex = /Z(-[0-9.]+)\s/g;
-
-    each(line => {
-      const m = zRegex.exec(line);
-
-      if (m) {
-        z.push(parseFloat(m[1]));
-      }
-    }, lines);
-
-    return min(uniq(z));
   }
 }

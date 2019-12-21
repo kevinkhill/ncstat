@@ -7,7 +7,7 @@ test("Test Program", async () => {
 
   const ncfile = await NcFile.createFromPath(filepath);
 
-  const program = Program.analyzeNcFile(ncfile);
+  const program = ncfile.analyze();
 
   expect(program.toolpaths).toHaveLength(6);
 });
