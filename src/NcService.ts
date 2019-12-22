@@ -45,16 +45,4 @@ export const NcStateMachine = createMachine({
   }
 });
 
-export const NcService = interpret(NcStateMachine).start();
-
-NcService.subscribe(state => {
-  console.log(state.value);
-});
-
-NcService.send("START_TOOLPATH");
-NcService.send("START_CANNED_CYCLE");
-NcService.send("END_CANNED_CYCLE");
-NcService.send("START_CANNED_CYCLE");
-NcService.send("END_CANNED_CYCLE");
-NcService.send("END_TOOLPATH");
-NcService.stop();
+export const NcService = interpret(NcStateMachine);

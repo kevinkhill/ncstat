@@ -1,5 +1,5 @@
-import { createMachine, interpret } from "@xstate/fsm";
 import {
+  assign,
   clone,
   each,
   eq,
@@ -8,70 +8,142 @@ import {
   has,
   last,
   map,
-  reject,
-  split,
   min,
+  split,
   uniq
 } from "lodash/fp";
 
 import { Block } from "./Block";
 import { CannedCycle } from "./CannedCycle";
-import { HMC_AXES } from "./constants";
-import { filterEmptyLines } from "./lib";
-import { Modals } from "./NcCodes";
+import { HMC_AXES } from "./lib/constants";
+import { Modals, PositioningMode } from "./NcCodes";
 import { NcFile } from "./NcFile";
 import { Events, NcService, States } from "./NcService";
 import { Toolpath } from "./Toolpath";
-import { HmcAxis, Position, ToolInfo } from "./types";
+import {
+  MachinePositions,
+  Position,
+  ProgramAnalysis,
+  ToolInfo
+} from "./types";
+
+function getDeepestZ(lines: string[]): number | undefined {
+  const z: number[] = [];
+  const zRegex = /Z(-[0-9.]+)\s/g;
+
+  each(line => {
+    const m = zRegex.exec(line);
+
+    if (m) {
+      z.push(parseFloat(m[1]));
+    }
+  }, lines);
+
+  return min(uniq(z));
+}
+
+export function updatePosition(
+  position: MachinePositions,
+  positionType: PositioningMode,
+  block: Block
+): void {
+  const blockPosition = block.getPosition();
+
+  const newPosition = clone(position);
+
+  newPosition.prev = position.curr;
+
+  each(axis => {
+    if (has(axis, blockPosition)) {
+      const blockAxisPosition = get(axis, blockPosition);
+
+      if (positionType === Modals.INCREMENTAL) {
+        newPosition.curr[axis] += blockAxisPosition;
+      }
+
+      if (positionType === Modals.ABSOLUTE) {
+        newPosition.curr[axis] = blockAxisPosition;
+      }
+    }
+  }, HMC_AXES);
+}
+
+export function getModals(
+  block: Block
+): {
+  GROUP_01: string;
+  GROUP_02: string;
+  GROUP_03: string;
+} {
+  const modals = {
+    [Modals.MOTION_CODES]: Modals.RAPID,
+    [Modals.PLANE_SELECTION]: "G17",
+    [Modals.POSITIONING_MODE]: Modals.ABSOLUTE
+  };
+
+  if (block.has(Modals.RAPID)) {
+    modals[Modals.MOTION_CODES] = Modals.RAPID;
+  }
+
+  if (block.has(Modals.FEED)) {
+    modals[Modals.MOTION_CODES] = Modals.FEED;
+  }
+
+  // if (block.has(Modals.ABSOLUTE)) {
+  //   modals[Modals.PLANE_SELECTION] = "G17";
+  // }
+
+  if (block.has(Modals.ABSOLUTE)) {
+    modals[Modals.POSITIONING_MODE] = Modals.ABSOLUTE;
+  }
+
+  if (block.has(Modals.INCREMENTAL)) {
+    modals[Modals.POSITIONING_MODE] = Modals.INCREMENTAL;
+  }
+
+  return modals;
+}
 
 export class Program {
-  static create(lines: string[]): Program {
-    return new Program(lines);
+  static create(code: string): Program {
+    return new Program(code);
+  }
+
+  static fromLines(lines: string[]): Program {
+    return Program.create(lines.join());
   }
 
   static fromFile(file: NcFile): Program {
-    return new Program(file.getLines());
+    return Program.fromLines(file.getLines());
   }
 
-  static analyzeNcFile(file: NcFile): Program {
-    const program = Program.fromFile(file);
+  static parse(code: string): ProgramAnalysis {
+    const program = new Program(code);
 
     return program.analyze();
   }
 
-  activeModals: {
-    [K: string]: boolean;
-  } = {};
   number = 0;
   title?: string;
   toolpaths: Toolpath[] = [];
 
-  private blocks: Block[] = [];
   private nc: any;
-  private position: {
-    curr: Position;
-    prev: Position;
-  };
+  private blocks: Block[] = [];
 
-  constructor(private readonly rawInput: string[]) {
-    this.position = {
-      curr: { X: 0, Y: 0, Z: 0, B: 0 },
-      prev: { X: 0, Y: 0, Z: 0, B: 0 }
-    };
-
+  constructor(private readonly rawInput: string) {
     this.nc = NcService;
+
+    this.nc.subscribe((state: { value: States }) => {
+      console.log(state);
+    });
   }
 
   toString(): string {
-    return this.rawInput.join("\n");
-  }
-
-  isActiveModal(input: string): boolean {
-    return has(input, this.activeModals);
+    return this.rawInput;
   }
 
   getLines(): string[] {
-    return this.rawInput;
+    return split("\n", this.rawInput);
   }
 
   getNumber(): number {
@@ -90,31 +162,8 @@ export class Program {
     return this.toolpaths.length;
   }
 
-  getPosition(): Position {
-    return this.position.curr;
-  }
-
-  getPrevPosition(): Position {
-    return this.position.prev;
-  }
-
   getToolPathsWithTools(): Toolpath[] {
     return filter(path => path.hasTool, this.toolpaths);
-  }
-
-  getDeepestZ(): number | undefined {
-    const z: number[] = [];
-    const zRegex = /Z(-[0-9.]+)\s/g;
-
-    each(line => {
-      const m = zRegex.exec(line);
-
-      if (m) {
-        z.push(parseFloat(m[1]));
-      }
-    }, this.getLines()));
-
-    return min(uniq(z));
   }
 
   getToolList(): ToolInfo[] {
@@ -124,32 +173,50 @@ export class Program {
     );
   }
 
-  analyze(): this {
-    const stateIs = eq(this.nc.state);
-
+  analyze(): ProgramAnalysis {
     let toolpath = new Toolpath();
 
-    const lines = filterEmptyLines(this.rawInput);
+    let modals = {
+      [Modals.MOTION_CODES]: Modals.RAPID,
+      [Modals.PLANE_SELECTION]: "G17",
+      [Modals.POSITIONING_MODE]: Modals.ABSOLUTE as PositioningMode
+    };
+
+    let position = {
+      curr: { X: 0, Y: 0, Z: 0, B: 0 } as Position,
+      prev: { X: 0, Y: 0, Z: 0, B: 0 } as Position
+    };
+
+    this.nc.start();
+
+    const stateIs = eq(this.nc.state);
+
+    /**
+     * @TODO  Allow empty blocks as special case
+     */
+    const lines = filter((l: string) => l.length > 0, this.getLines());
 
     this.blocks = map(Block.parse, lines);
 
-    // const { initialState } = NcStateMachine;
-
-    // console.log(initialState);
-
     for (const block of this.blocks) {
-      this.setModals(block);
-
+      modals = Object.assign(modals, getModals(block));
+      console.log(modals);
       if (block.hasAddress("O")) {
         this.number = block.values.O;
         this.title = block.comment;
       }
 
       if (block.hasMovement()) {
-        this.updatePosition(block);
+        const newPosition = updatePosition(
+          position,
+          modals[Modals.POSITIONING_MODE],
+          block
+        );
+
+        position = Object.assign(position, newPosition);
       }
 
-      if (block.isStartOfCannedCycle && stateIs("toolpathing")) {
+      if (block.isStartOfCannedCycle && stateIs(States.TOOLPATHING)) {
         this.nc.send(Events.START_CANNED_CYCLE);
 
         const cannedCycle = CannedCycle.fromBlock(block);
@@ -163,7 +230,7 @@ export class Program {
         }
 
         if (block.hasMovement()) {
-          const point = clone(this.position.curr);
+          const point = clone(position.curr);
           const lastCC = last(toolpath.cannedCycles) as CannedCycle;
 
           lastCC.addPoint(point);
@@ -173,12 +240,12 @@ export class Program {
       // Tracking toolpaths (tools) via Nxxx lines with a comment
       // This has been defined in the custom H&B posts
       if (block.rawInput.startsWith("N")) {
-        if (stateIs("toolpathing")) {
+        if (stateIs(States.TOOLPATHING)) {
           this.nc.send(Events.END_TOOLPATH);
           this.toolpaths.push(toolpath);
         }
 
-        if (stateIs("idle")) {
+        if (stateIs(States.IDLE)) {
           toolpath = Toolpath.fromBlock(block);
 
           this.nc.send(Events.START_TOOLPATH);
@@ -186,7 +253,10 @@ export class Program {
       }
 
       // If we're toolpathing or in a canned cycle, save it to the toolpath
-      if (stateIs("toolpathing") || stateIs("in-canned-cycle")) {
+      if (
+        stateIs(States.TOOLPATHING) ||
+        stateIs(States.IN_CANNED_CYCLE)
+      ) {
         toolpath.pushBlock(block);
       }
     }
@@ -195,48 +265,15 @@ export class Program {
 
     this.toolpaths.push(toolpath);
 
-    return this;
-  }
-
-  private updatePosition(block: Block): void {
-    const blockPosition = block.getPosition();
-
-    this.position.prev = clone(this.position.curr);
-
-    each(axis => {
-      if (has(axis, blockPosition)) {
-        const blockAxisPosition = get(axis, blockPosition);
-
-        this.updateAxis(axis as HmcAxis, blockAxisPosition);
+    return {
+      // blocks: this.blocks,
+      toolpaths: this.toolpaths,
+      extents: {
+        X: { min: -Infinity, max: Infinity },
+        Y: { min: -Infinity, max: Infinity },
+        Z: { min: -Infinity, max: Infinity },
+        B: { min: -Infinity, max: Infinity }
       }
-    }, HMC_AXES);
-  }
-
-  private updateAxis(axis: HmcAxis, value: number): void {
-    if (this.activeModals[Modals.INCREMENTAL]) {
-      this.position.curr[axis] += value;
-    }
-
-    if (this.activeModals[Modals.ABSOLUTE]) {
-      this.position.curr[axis] = value;
-    }
-  }
-
-  private setModals(block: Block): void {
-    if (block.G(0)) {
-      this.activeModals[Modals.RAPID] = true;
-      this.activeModals[Modals.FEED] = false;
-    } else if (block.G(1)) {
-      this.activeModals[Modals.FEED] = true;
-      this.activeModals[Modals.RAPID] = false;
-    }
-
-    if (block.G(90)) {
-      this.activeModals[Modals.ABSOLUTE] = true;
-      this.activeModals[Modals.INCREMENTAL] = false;
-    } else if (block.G(91)) {
-      this.activeModals[Modals.INCREMENTAL] = true;
-      this.activeModals[Modals.ABSOLUTE] = false;
-    }
+    };
   }
 }

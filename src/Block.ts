@@ -63,6 +63,9 @@ export class Block {
     return addresses.length > 0;
   }
 
+  /**
+   * Create a new {@link Block} from a line of NC code.
+   */
   constructor(readonly rawInput: string) {
     this.rawAddresses = regexMatch(ADDRESS_REGEX, this.rawInput);
 
@@ -101,6 +104,10 @@ export class Block {
 
   M(code: number): boolean {
     return this.mCodes.includes(code);
+  }
+
+  has(address: string): boolean {
+    return this.rawAddresses.includes(address);
   }
 
   getTool(): Tool | undefined {

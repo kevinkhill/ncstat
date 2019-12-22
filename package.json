@@ -5,11 +5,10 @@
   "main": "./src/index.ts",
   "dependencies": {
     "@xstate/fsm": "^1.1.0",
-    "lodash": "^4.17.15",
-    "xstate": "^4.7.3"
+    "lodash": "^4.17.15"
   },
   "scripts": {
-    "start": "node -r ts-node/register",
+    "start": "ts-node ",
     "test": "jest --runInBand",
     "dev": "yarn test --notify --watch",
     "build": "bili",

@@ -28,7 +28,7 @@ test("Manually scan a program for the largest negative Z address", async () => {
 
 test("Using the NcFile class, use method to find the largest negative Z address", async () => {
   const filepath = getTestNcFile("example2.NC");
-  const ncfile = await NcFile.createFromPath(filepath);
+  const ncfile = await NcFile.fromPath(filepath);
 
   expect(await ncfile.getDeepestZ()).toBe(-0.8686);
 });

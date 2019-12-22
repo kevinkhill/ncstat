@@ -1,13 +1,10 @@
-import { NcFile } from "../src/NcFile";
 import { Program } from "../src/Program";
-import { getTestNcFile } from "./helpers";
+import { getTestNcFileContents } from "./helpers";
 
-test("Test Program", async () => {
-  const filepath = getTestNcFile("example2.NC");
+test("Analyzing example1.NC", async () => {
+  const contents = await getTestNcFileContents("example1.NC");
 
-  const ncfile = await NcFile.createFromPath(filepath);
+  const stats = Program.parse(contents);
 
-  const program = ncfile.analyze();
-
-  expect(program.toolpaths).toHaveLength(6);
+  expect(stats.toolpaths).toHaveLength(2);
 });

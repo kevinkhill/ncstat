@@ -1,9 +1,6 @@
-import { filter } from "lodash/fp";
-
 export * from "./regex";
 export * from "./addresses";
-
-export const filterEmptyLines = filter((l: string) => l.length > 0);
+export * from "./constants";
 
 export function hasDot(input: string): boolean {
   return String.prototype.includes.call(input, ".");

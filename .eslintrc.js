@@ -123,7 +123,7 @@ module.exports = {
     // eslint-plugin-import
     //
 
-    "import/named": "warn",
+    "import/named": "off",
     "import/no-named-export": "off",
     "import/no-nodejs-modules": "off",
     "import/no-default-export": "off",

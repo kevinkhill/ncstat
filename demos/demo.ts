@@ -1,7 +1,7 @@
-import { NcFile } from '../src/NcFile';
+import { Program } from "../src/Program";
 
 (async () => {
-  const nc = `
+  const program = Program.create(`
 %
 O1234 (TEST PROGRAM)
 (CREATED: 12/20/2019)
@@ -23,8 +23,7 @@ X5.
 G80
 M30
 %
-`
-  const program = NcFile.fromString(nc);
+`);
 
   const deepestZ = await program.getDeepestZ();
 

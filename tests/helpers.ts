@@ -1,5 +1,12 @@
+import fs from "fs";
 import path from "path";
 
-export function getTestNcFile(filename: string): string {
-  return path.join(__dirname, "ncfiles", filename);
+export async function getTestNcFileContents(
+  filename: string
+): Promise<string> {
+  const abspath = path.join(__dirname, "ncfiles", filename);
+
+  const buffer = await fs.promises.readFile(abspath);
+
+  return buffer.toString();
 }

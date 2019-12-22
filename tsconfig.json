@@ -4,21 +4,26 @@
     "strict": true,
     "target": "es5",
     "sourceMap": true,
+    "lib": ["esnext"],
     "module": "commonjs",
-    // "noImplicitAny": true,
     "importHelpers": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
+    // "noImplicitAny": true,
     "moduleResolution": "node",
-    "lib": ["esnext"]
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "*.ts",
     "*.js",
     "bin/*.ts",
+    "src/*.ts",
+
+    "**/src/**/*.ts",
+    "**/test/**/*.ts",
     "demos/*.ts",
-    "src/**/*.ts",
-    "tests/**/*.ts"
+    "tests/*.ts",
+    "src/*/*.ts",
   ],
   "exclude": ["node_modules"]
 }

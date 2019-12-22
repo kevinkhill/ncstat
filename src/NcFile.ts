@@ -1,24 +1,26 @@
 import fs from "fs";
-import { each, filter, join, min, split, uniq } from "lodash/fp";
+import { join, split } from "lodash/fp";
 import path from "path";
-import { Program } from './Program';
+
+import { Program } from "./Program";
 
 export class NcFile {
-  static fromString(nc: string) {
-    throw new Error("Method not implemented.");
+  static create(code: string): NcFile {
+    throw new NcFile(code);
   }
-  static async createFromBuffer(buffer: Buffer): Promise<NcFile> {
+
+  static fromBuffer(buffer: Buffer): NcFile {
     return new NcFile(buffer.toString());
   }
 
-  static async createFromPath(abspath: string): Promise<NcFile> {
+  static async fromPath(abspath: string): Promise<NcFile> {
     if (!path.isAbsolute(abspath)) {
       throw Error("The path must be absolute.");
     }
 
     const buffer = await fs.promises.readFile(abspath);
 
-    return NcFile.createFromBuffer(buffer);
+    return NcFile.fromBuffer(buffer);
   }
 
   constructor(private contents = "") {
@@ -31,11 +33,11 @@ export class NcFile {
     return program.analyze();
   }
 
-  toString(): string {
-    return join("\n", this.getLines);
-  }
-
   getLines(): string[] {
     return split("\n", this.contents);
+  }
+
+  toString(): string {
+    return join("\n", this.getLines());
   }
 }

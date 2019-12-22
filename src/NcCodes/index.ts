@@ -8,11 +8,28 @@ export interface NcCodeDef {
   GROUP: string;
 }
 
+export type PositioningMode = "G90" | "G91";
+export type PlaneSelection = "G17" | "G18" | "G19";
+
+export type MOTION_CODES = "GROUP_01";
+export type PLANE_SELECTION = "GROUP_02";
+export type POSITIONING_MODE = "GROUP_03";
+
+export interface ActiveModals {
+  GROUP_01: string;
+  GROUP_02: string;
+  GROUP_03: string;
+}
+
 export enum Modals {
   RAPID = "G00",
   FEED = "G01",
   ABSOLUTE = "G90",
-  INCREMENTAL = "G91"
+  INCREMENTAL = "G91",
+  NON_MODAL = "GROUP_00",
+  MOTION_CODES = "GROUP_01",
+  PLANE_SELECTION = "GROUP_02",
+  POSITIONING_MODE = "GROUP_03"
 }
 
 export const G_CODES: {
