@@ -1,80 +1,59 @@
 {
-  "name": "ncstat",
-  "version": "1.0.1",
-  "description": "Read NC programs for stats",
-  "bin": "./bin/ncstat",
-  "main":"./dist/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/harris-bruno/ncstat.git"
-  },
-  "author": "Kevin Hill",
-  "license": "UNLICENSED",
-  "bugs": {
-    "url": "https://gitlab.com/harris-bruno/ncstat/issues"
-  },
-  "homepage": "https://gitlab.com/harris-bruno/ncstat#readme",
-  "ava": {
-    "compileEnhancements": false,
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "ts-node/register/transpile-only"
-    ]
+  "name": "nc-file-stat",
+  "version": "1.2.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@xstate/fsm": "^1.1.0",
+    "lodash": "^4.17.15"
   },
   "scripts": {
-    "test": "ava",
-    "lint": "tslint 'src/**/*.ts'",
-    "lint:fix": "tslint --fix 'src/**/*.ts'",
-    "docs": "typedoc --out docs ./src",
-    "build": "tsc",
-    "watch": "tsc --watch",
-    "stat": "node --inspect -r ts-node/register ./bin/ncstat.ts",
-    "preversion": "npm test",
-    "version": "npm run build && git add -A dist",
-    "postversion": "git push && git push --tags && rm -rf build/temp"
-  },
-  "dependencies": {
-    "chalk": "^2.4.2",
-    "commander": "^2.19.0",
-    "debug": "^4.1.1",
-    "javascript-state-machine": "^3.1.0",
-    "lodash": "^4.17.11"
+    "tsn": "ts-node",
+    "build": "bili",
+    "test": "jest --runInBand",
+    "dev": "yarn test --notify --watch",
+    "lint": "eslint --ext .ts ./src"
   },
   "devDependencies": {
-    "@types/debug": "*",
-    "@types/lodash": "^4.14.134",
-    "ava": "^2.0.0",
-    "awesome-typescript-loader": "^5.2.1",
-    "js-yaml": "^3.13.1",
-    "prettier": "1.18.2",
-    "ts-loader": "^6.0.3",
-    "ts-node": "^8.2.0",
-    "ts-node-dev": "^1.0.0-pre.40",
-    "tslint": "^5.17.0",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.0.1",
-    "typescript": "^3.5.1",
-    "webpack": "^4.34.0",
-    "webpack-cli": "^3.3.4"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "es6": true
-    },
-    "extends": [
-      "eslint:recommended"
-    ],
-    "rules": {
-      "no-console": "off",
-      "prettier/prettier": [
-        "error"
-      ]
-    },
-    "parserOptions": {
-      "sourceType": "module"
-    }
+    "@babel/cli": "^7.7.4",
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-typescript": "^7.7.2",
+    "@types/jest": "^24.0.23",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.12.14",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.11.0",
+    "babel-eslint": "^10.0.3",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
+    "bili": "^4.8.1",
+    "eslint": "^6.6.0",
+    "eslint-config-node": "^4.0.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-lodash-fp": "^2.2.0-a1",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "rollup-plugin-typescript2": "^0.25.3",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.2"
   }
 }
