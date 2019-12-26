@@ -1,5 +1,4 @@
 import {
-  assign,
   clone,
   each,
   eq,
@@ -15,32 +14,25 @@ import {
 
 import { Block } from "./Block";
 import { CannedCycle } from "./CannedCycle";
+import { newlineJoin } from "./lib";
 import { HMC_AXES } from "./lib/constants";
 import { Modals, PositioningMode } from "./NcCodes";
 import { NcFile } from "./NcFile";
-import { Events, NcService, States } from "./NcService";
+import {
+  Events,
+  isIdle,
+  isInCannedCycle,
+  isToolpathing,
+  NcService,
+  States
+} from "./NcService";
 import { Toolpath } from "./Toolpath";
 import {
+  ActiveModals,
   MachinePositions,
-  Position,
   ProgramAnalysis,
   ToolInfo
 } from "./types";
-
-function getDeepestZ(lines: string[]): number | undefined {
-  const z: number[] = [];
-  const zRegex = /Z(-[0-9.]+)\s/g;
-
-  each(line => {
-    const m = zRegex.exec(line);
-
-    if (m) {
-      z.push(parseFloat(m[1]));
-    }
-  }, lines);
-
-  return min(uniq(z));
-}
 
 export function updatePosition(
   position: MachinePositions,
@@ -68,14 +60,8 @@ export function updatePosition(
   }, HMC_AXES);
 }
 
-export function getModals(
-  block: Block
-): {
-  GROUP_01: string;
-  GROUP_02: string;
-  GROUP_03: string;
-} {
-  const modals = {
+export function getModals(block: Block): ActiveModals {
+  const modals: ActiveModals = {
     [Modals.MOTION_CODES]: Modals.RAPID,
     [Modals.PLANE_SELECTION]: "G17",
     [Modals.POSITIONING_MODE]: Modals.ABSOLUTE
@@ -110,11 +96,11 @@ export class Program {
   }
 
   static fromLines(lines: string[]): Program {
-    return Program.create(lines.join());
+    return Program.create(newlineJoin(lines));
   }
 
   static fromFile(file: NcFile): Program {
-    return Program.fromLines(file.getLines());
+    return Program.fromLines(file.lines);
   }
 
   static parse(code: string): ProgramAnalysis {
@@ -125,6 +111,7 @@ export class Program {
 
   number = 0;
   title?: string;
+  state: States = States.IDLE;
   toolpaths: Toolpath[] = [];
 
   private nc: any;
@@ -134,7 +121,7 @@ export class Program {
     this.nc = NcService;
 
     this.nc.subscribe((state: { value: States }) => {
-      console.log(state);
+      this.state = state.value;
     });
   }
 
@@ -176,35 +163,31 @@ export class Program {
   analyze(): ProgramAnalysis {
     let toolpath = new Toolpath();
 
-    let modals = {
+    let modals: ActiveModals = {
       [Modals.MOTION_CODES]: Modals.RAPID,
       [Modals.PLANE_SELECTION]: "G17",
       [Modals.POSITIONING_MODE]: Modals.ABSOLUTE as PositioningMode
     };
 
-    let position = {
-      curr: { X: 0, Y: 0, Z: 0, B: 0 } as Position,
-      prev: { X: 0, Y: 0, Z: 0, B: 0 } as Position
+    let position: MachinePositions = {
+      curr: { X: 0, Y: 0, Z: 0, B: 0 },
+      prev: { X: 0, Y: 0, Z: 0, B: 0 }
     };
 
     this.nc.start();
 
-    const stateIs = eq(this.nc.state);
-
     /**
      * @TODO  Allow empty blocks as special case
      */
-    const lines = filter((l: string) => l.length > 0, this.getLines());
+    const lines = filter(l => l.length > 0, this.getLines());
 
     this.blocks = map(Block.parse, lines);
 
     for (const block of this.blocks) {
       modals = Object.assign(modals, getModals(block));
-      console.log(modals);
-      if (block.hasAddress("O")) {
-        this.number = block.values.O;
-        this.title = block.comment;
-      }
+
+      this.number = block.values.O;
+      this.title = block.comment;
 
       if (block.hasMovement()) {
         const newPosition = updatePosition(
@@ -216,7 +199,7 @@ export class Program {
         position = Object.assign(position, newPosition);
       }
 
-      if (block.isStartOfCannedCycle && stateIs(States.TOOLPATHING)) {
+      if (block.isStartOfCannedCycle && isToolpathing(this.state)) {
         this.nc.send(Events.START_CANNED_CYCLE);
 
         const cannedCycle = CannedCycle.fromBlock(block);
@@ -224,7 +207,7 @@ export class Program {
         toolpath.addCannedCycle(cannedCycle);
       }
 
-      if (stateIs(States.IN_CANNED_CYCLE)) {
+      if (isInCannedCycle(this.state)) {
         if (block.G(80)) {
           this.nc.send(Events.END_CANNED_CYCLE);
         }
@@ -240,23 +223,23 @@ export class Program {
       // Tracking toolpaths (tools) via Nxxx lines with a comment
       // This has been defined in the custom H&B posts
       if (block.rawInput.startsWith("N")) {
-        if (stateIs(States.TOOLPATHING)) {
+        if (isToolpathing(this.state)) {
           this.nc.send(Events.END_TOOLPATH);
           this.toolpaths.push(toolpath);
         }
 
-        if (stateIs(States.IDLE)) {
+        if (isIdle(this.state)) {
           toolpath = Toolpath.fromBlock(block);
 
           this.nc.send(Events.START_TOOLPATH);
         }
       }
 
-      // If we're toolpathing or in a canned cycle, save it to the toolpath
-      if (
-        stateIs(States.TOOLPATHING) ||
-        stateIs(States.IN_CANNED_CYCLE)
-      ) {
+      if (isToolpathing(this.state) || isInCannedCycle(this.state)) {
+        if (block.hasToolChange) {
+          toolpath.setToolFromBlock(block);
+        }
+
         toolpath.pushBlock(block);
       }
     }

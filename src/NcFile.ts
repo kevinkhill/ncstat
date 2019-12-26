@@ -1,8 +1,9 @@
 import fs from "fs";
-import { join, split } from "lodash/fp";
 import path from "path";
 
+import { newlineJoin, newlineSplit } from "./lib";
 import { Program } from "./Program";
+import { ProgramAnalysis } from "./types";
 
 export class NcFile {
   static create(code: string): NcFile {
@@ -23,21 +24,21 @@ export class NcFile {
     return NcFile.fromBuffer(buffer);
   }
 
+  get lines(): string[] {
+    return newlineSplit(this.contents);
+  }
+
   constructor(private contents = "") {
     this.contents = contents;
   }
 
-  analyze(): Program {
-    const program = Program.analyzeNcFile(this);
+  toString(): string {
+    return newlineJoin(this.lines);
+  }
+
+  analyze(): ProgramAnalysis {
+    const program = Program.fromFile(this);
 
     return program.analyze();
-  }
-
-  getLines(): string[] {
-    return split("\n", this.contents);
-  }
-
-  toString(): string {
-    return join("\n", this.getLines());
   }
 }

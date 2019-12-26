@@ -29,7 +29,7 @@ export class CannedCycle {
   static RETRACT_CODES = RETRACT_CODES;
 
   static fromBlock(block: Block): CannedCycle {
-    if (block.isStartOfCannedCycle) {
+    if (!block.isStartOfCannedCycle) {
       throw Error(
         "The provided Block is not the start of a CannedCycle."
       );
@@ -41,7 +41,7 @@ export class CannedCycle {
       R: block.values.R,
       F: block.values.F,
       retractCommand: block.getRetractCode(),
-      cycleCommand: block.getCannedCycleStartCode() as string
+      cycleCommand: block.cannedCycleStartCode as string
     });
   }
 

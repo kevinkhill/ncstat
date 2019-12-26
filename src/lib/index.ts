@@ -1,10 +1,14 @@
+import { includes, join, split } from "lodash/fp";
+
+export * from "./modal";
 export * from "./regex";
 export * from "./addresses";
 export * from "./constants";
+export * from "./deepest-z";
 
-export function hasDot(input: string): boolean {
-  return String.prototype.includes.call(input, ".");
-}
+export const hasDot = includes(".");
+export const newlineJoin = join("\n");
+export const newlineSplit = split("\n");
 
 export function isNumeric(input: string): boolean {
   if (typeof input === "number") {
@@ -12,5 +16,6 @@ export function isNumeric(input: string): boolean {
   } else if (typeof input === "string" && input.trim() !== "") {
     return Number.isFinite ? Number.isFinite(+input) : isFinite(+input);
   }
+
   return false;
 }

@@ -1,9 +1,24 @@
-import { NcFile } from "../src/NcFile";
-import { getTestNcFile } from "./helpers";
+import { getDeepestZ } from "../src/lib/deepest-z";
+import { Program } from "../src/Program";
+import { getTestNcFileContents } from "./helpers";
 
-test("Test getting lines and line count.", async () => {
-  const filepath = getTestNcFile("example2.NC");
-  const ncfile = await NcFile.fromPath(filepath);
+test("find the largest -Z in example1.NC", async () => {
+  const contents = await getTestNcFileContents("example1.NC");
+  const program = Program.create(contents);
 
-  expect(ncfile.getLines()).toHaveLength(444);
+  expect(getDeepestZ(program)).toBe(-0.5631);
+});
+
+test("find the largest -Z in example2.NC", async () => {
+  const contents = await getTestNcFileContents("example2.NC");
+  const program = Program.create(contents);
+
+  expect(getDeepestZ(program)).toBe(-0.8686);
+});
+
+test("find the largest -Z in example3.NC", async () => {
+  const contents = await getTestNcFileContents("example3.NC");
+  const program = Program.create(contents);
+
+  expect(getDeepestZ(program)).toBe(-2.189);
 });

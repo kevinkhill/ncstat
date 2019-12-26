@@ -64,7 +64,7 @@ test(testMsg(line7), () => {
   const block = Block.parse(line7);
 
   expect(block.isStartOfCannedCycle).toBeTruthy();
-  expect(block.getCannedCycleStartCode()).toBe("G83");
+  expect(block.cannedCycleStartCode).toBe("G83");
   expect(block.getRetractCode()).toBe("G99");
 });
 
@@ -73,7 +73,7 @@ test(testMsg(line8), () => {
   const block = Block.parse(line8);
 
   expect(block.G(43)).toBeTruthy();
-  expect(block.values.Z).toBe(1.);
+  expect(block.values.Z).toBe(1);
   expect(block.values.T).toBe(17);
   expect(block.isStartOfCannedCycle).toBeFalsy();
 });

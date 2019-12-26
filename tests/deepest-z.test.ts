@@ -1,34 +1,24 @@
-import fs from "fs";
-import { each, filter, min, uniq } from "lodash/fp";
+import { getDeepestZ } from "../src/lib/deepest-z";
+import { Program } from "../src/Program";
+import { getTestNcFileContents } from "./helpers";
 
-import { NcFile } from "../src/NcFile";
-import { getTestNcFile } from "./helpers";
+test("find the largest -Z in example1.NC", async () => {
+  const contents = await getTestNcFileContents("example1.NC");
+  const program = Program.create(contents);
 
-test("Manually scan a program for the largest negative Z address", async () => {
-  const filepath = getTestNcFile("example2.NC");
-  const buffer = await fs.promises.readFile(filepath);
-  const contents = buffer.toString();
-  const lines = filter(l => l !== " ", contents.split("\n"));
-  const z: number[] = [];
-  const zRegex = /Z(-[0-9.]+)\s/g;
-
-  each(line => {
-    const m = zRegex.exec(line);
-
-    if (m) {
-      z.push(parseFloat(m[1]));
-    }
-  }, lines);
-
-  expect(lines).toHaveLength(444);
-  expect(z).toHaveLength(24);
-  expect(uniq(z)).toHaveLength(6);
-  expect(min(uniq(z))).toBe(-0.8686);
+  expect(getDeepestZ(program)).toBe(-0.5631);
 });
 
-test("Using the NcFile class, use method to find the largest negative Z address", async () => {
-  const filepath = getTestNcFile("example2.NC");
-  const ncfile = await NcFile.fromPath(filepath);
+test("find the largest -Z in example2.NC", async () => {
+  const contents = await getTestNcFileContents("example2.NC");
+  const program = Program.create(contents);
 
-  expect(await ncfile.getDeepestZ()).toBe(-0.8686);
+  expect(getDeepestZ(program)).toBe(-0.8686);
+});
+
+test("find the largest -Z in example3.NC", async () => {
+  const contents = await getTestNcFileContents("example3.NC");
+  const program = Program.create(contents);
+
+  expect(getDeepestZ(program)).toBe(-2.189);
 });

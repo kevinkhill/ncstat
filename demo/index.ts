@@ -9,9 +9,8 @@ O1234 (TEST PROGRAM)
 
 G10 L2 P1 X1.23 Y4.56 Z7.89 B0.
 
-( DRILL FOR M5 X 0.8 ROLL TAP )
-N43 ( #14 [.182"] DRILL, CARB, TSC )
-T43 M6
+N43 ( DRILL FOR M5 X 0.8 ROLL TAP )
+T43 M6 ( #14 [.182"] DRILL, CARB, TSC )
 G0 G90 G54
 X1.75 Y.19 S10495 M3
 M50 (TSC COOLANT ON)
@@ -25,7 +24,7 @@ M30
 %
 `);
 
-  const deepestZ = await program.getDeepestZ();
+  const stats = program.analyze();
 
-  console.log(`Deepest Z = ${deepestZ}`);
+  console.log(JSON.stringify(stats, null, 2));
 })();

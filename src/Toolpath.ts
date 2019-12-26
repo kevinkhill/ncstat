@@ -1,6 +1,3 @@
-// import filter from "lodash/filter";
-import { filter, map } from "lodash/fp";
-
 import { Block } from "./Block";
 import { CannedCycle } from "./CannedCycle";
 import { FEEDRATE_REGEX } from "./lib";
@@ -14,16 +11,22 @@ export class Toolpath {
   }
 
   static fromBlock(block: Block): Toolpath {
-    if (!block.hasToolCall) {
-      throw new Error("Txx missing from block");
+    const toolpath = new Toolpath();
+
+    if (block.hasToolChange) {
+      toolpath.setToolFromBlock(block);
     }
 
-    return Toolpath.fromBlock(block);
+    if (block.comment) {
+      toolpath.description = block.comment;
+    }
+
+    return toolpath;
   }
 
   tool: Tool = new Tool();
-  lines: string[] = [];
   blocks: Block[] = [];
+  description?: string;
   cannedCycles: CannedCycle[] = [];
 
   get hasTool(): boolean {
@@ -54,15 +57,9 @@ export class Toolpath {
     return this;
   }
 
-  addLine(line: string): this {
-    this.lines.push(line);
-
-    return this;
-  }
-
-  get hasFeedrates(): boolean {
-    return this.lines.some(line => FEEDRATE_REGEX.test(line));
-  }
+  // get hasFeedrates(): boolean {
+  //   return this.lines.some(line => FEEDRATE_REGEX.test(line));
+  // }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   // getFeedrates(): number[] {

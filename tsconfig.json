@@ -5,6 +5,7 @@
     "target": "es5",
     "sourceMap": true,
     "lib": ["esnext"],
+    "outDir": "dist",
     "module": "commonjs",
     "importHelpers": true,
     "esModuleInterop": true,
@@ -21,9 +22,9 @@
 
     "**/src/**/*.ts",
     "**/test/**/*.ts",
-    "demos/*.ts",
+    "demo/*.ts",
     "tests/*.ts",
-    "src/*/*.ts",
+    "src/*/*.ts"
   ],
   "exclude": ["node_modules"]
 }

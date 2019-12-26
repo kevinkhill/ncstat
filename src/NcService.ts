@@ -1,4 +1,5 @@
 import { createMachine, interpret } from "@xstate/fsm";
+import { eq } from "lodash/fp";
 
 export const enum States {
   IDLE = "IDLE",
@@ -12,6 +13,10 @@ export const enum Events {
   START_CANNED_CYCLE = "START_CANNED_CYCLE",
   END_CANNED_CYCLE = "END_CANNED_CYCLE"
 }
+
+export const isIdle = eq(States.IDLE);
+export const isToolpathing = eq(States.TOOLPATHING);
+export const isInCannedCycle = eq(States.IN_CANNED_CYCLE);
 
 export const NcStateMachine = createMachine({
   id: "nc",

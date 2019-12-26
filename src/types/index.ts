@@ -9,10 +9,10 @@ export type ToolInfo = [number, Tool];
 export interface ProgramAnalysis {
   toolpaths: Toolpath[];
   extents: {
-    X: { min: number; max: number };
-    Y: { min: number; max: number };
-    Z: { min: number; max: number };
-    B: { min: number; max: number };
+    X: Partial<{ min: number; max: number }>;
+    Y: Partial<{ min: number; max: number }>;
+    Z: Partial<{ min: number; max: number }>;
+    B: Partial<{ min: number; max: number }>;
   };
 }
 
@@ -36,3 +36,9 @@ export interface MachinePositions {
 //   R: number;
 //   Q: number;
 // }
+
+export interface ActiveModals {
+  GROUP_01: "G00" | "G01";
+  GROUP_02: "G17" | "G18" | "G19";
+  GROUP_03: "G90" | "G91";
+}

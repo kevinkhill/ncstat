@@ -2,9 +2,9 @@ import {
   each,
   find,
   get,
-  has,
   includes,
   intersection,
+  join,
   map
 } from "lodash/fp";
 
@@ -54,13 +54,15 @@ export class Block {
   }
 
   get hasToolChange(): boolean {
-    return includes("M6", this.rawAddresses);
+    return this.rawAddresses.includes("M6");
+  }
+
+  get cannedCycleStartCode(): string | undefined {
+    return intersection(START_CODES, this.rawAddresses)[0];
   }
 
   get isStartOfCannedCycle(): boolean {
-    const addresses = intersection(START_CODES, this.rawAddresses);
-
-    return addresses.length > 0;
+    return Boolean(this.cannedCycleStartCode);
   }
 
   /**
@@ -98,6 +100,14 @@ export class Block {
     }
   }
 
+  toPoint(): Point {
+    return Point.fromBlock(this);
+  }
+
+  toString(): string {
+    return join(" ", this.rawAddresses);
+  }
+
   G(code: number): boolean {
     return this.gCodes.includes(code);
   }
@@ -108,6 +118,10 @@ export class Block {
 
   has(address: string): boolean {
     return this.rawAddresses.includes(address);
+  }
+
+  hasCommand(mcode: number): boolean {
+    return this.mCodes.includes(mcode);
   }
 
   getTool(): Tool | undefined {
@@ -137,24 +151,8 @@ export class Block {
     return Address.parse(match[0]);
   }
 
-  getPoint(): Point {
-    return Point.fromBlock(this);
-  }
-
   getRetractCode(): string {
     return this.getRetract().toString();
-  }
-
-  getCannedCycleStartCode(): string | undefined {
-    if (!this.isStartOfCannedCycle) {
-      throw Error("This Block is not the start of a CannedCycle.");
-    }
-
-    return intersection(START_CODES, this.rawAddresses)[0];
-  }
-
-  hasCommand(mcode: number): boolean {
-    return includes(mcode, this.mCodes);
   }
 
   hasMovement(): boolean {
@@ -171,7 +169,7 @@ export class Block {
   }
 
   hasAddress(addr: string): boolean {
-    return has(addr, map(get("prefix"), this.addresses));
+    return includes(addr, map(get("prefix"), this.addresses));
   }
 
   getAddress(prefix: string): Address | undefined {

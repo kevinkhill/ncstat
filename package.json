@@ -8,10 +8,10 @@
     "lodash": "^4.17.15"
   },
   "scripts": {
-    "start": "ts-node ",
+    "tsn": "ts-node",
+    "build": "bili",
     "test": "jest --runInBand",
     "dev": "yarn test --notify --watch",
-    "build": "bili",
     "lint": "eslint --ext .ts ./src"
   },
   "devDependencies": {
