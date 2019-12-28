@@ -100,10 +100,6 @@ export class Block {
     }
   }
 
-  toPoint(): Point {
-    return Point.fromBlock(this);
-  }
-
   toString(): string {
     return join(" ", this.rawAddresses);
   }
@@ -122,6 +118,10 @@ export class Block {
 
   hasCommand(mcode: number): boolean {
     return this.mCodes.includes(mcode);
+  }
+
+  getPoint(): Point {
+    return Point.fromBlock(this);
   }
 
   getTool(): Tool | undefined {
