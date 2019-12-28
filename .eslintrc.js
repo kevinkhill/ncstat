@@ -16,9 +16,11 @@ module.exports = {
     node: true
   },
   plugins: [
+    "jest",
     "import",
     "prettier",
     "lodash-fp",
+    "jest-formatting",
     "simple-import-sort",
     "@typescript-eslint"
   ],
