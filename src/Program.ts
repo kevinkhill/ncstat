@@ -1,20 +1,16 @@
 import {
   clone,
   each,
-  eq,
   filter,
   get,
   has,
   last,
   map,
-  min,
-  split,
-  uniq
+  split
 } from "lodash/fp";
 
 import { Block } from "./Block";
 import { CannedCycle } from "./CannedCycle";
-import { newlineJoin } from "./lib";
 import { HMC_AXES } from "./lib/constants";
 import { Modals, PositioningMode } from "./NcCodes";
 import { NcFile } from "./NcFile";
@@ -96,7 +92,7 @@ export class Program {
   }
 
   static fromLines(lines: string[]): Program {
-    return Program.create(newlineJoin(lines));
+    return Program.create(lines.join("\n"));
   }
 
   static fromFile(file: NcFile): Program {

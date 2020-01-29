@@ -1,9 +1,9 @@
 import { Block } from "../src/Block";
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const testMsg = (l: string) => `Parsing: ${l}`;
+const testMsg = (l: string): string => `parses: "${l}"`;
 
 const line1 = "M80 S762";
+
 test(testMsg(line1), () => {
   const block = Block.parse(line1);
 
@@ -12,6 +12,7 @@ test(testMsg(line1), () => {
 });
 
 const line2 = "G0 G90 G55";
+
 test(testMsg(line2), () => {
   const block = Block.parse(line2);
 
@@ -22,6 +23,7 @@ test(testMsg(line2), () => {
 });
 
 const line3 = "X1.75 Y.19 S762 M3";
+
 test(testMsg(line3), () => {
   const block = Block.parse(line3);
 
@@ -32,6 +34,7 @@ test(testMsg(line3), () => {
 });
 
 const line4 = "G98 G81 Z-.5631 R.1 F83.96";
+
 test(testMsg(line4), () => {
   const block = Block.parse(line4);
 
@@ -43,6 +46,7 @@ test(testMsg(line4), () => {
 });
 
 const line5 = "N44 ( M5 X 0.8 ROLL TAP, PULLEY )";
+
 test(testMsg(line5), () => {
   const block = Block.parse(line5);
 
@@ -51,6 +55,7 @@ test(testMsg(line5), () => {
 });
 
 const line6 = "/3 G103 M1. ( TOOL BREAK CHECK )";
+
 test(testMsg(line6), () => {
   const block = Block.parse(line6);
 
@@ -60,6 +65,7 @@ test(testMsg(line6), () => {
 });
 
 const line7 = "G83 G99 Z-.75 R.1 Q.144 F50.";
+
 test(testMsg(line7), () => {
   const block = Block.parse(line7);
 
@@ -69,6 +75,7 @@ test(testMsg(line7), () => {
 });
 
 const line8 = "G43 H27 Z1. T17";
+
 test(testMsg(line8), () => {
   const block = Block.parse(line8);
 

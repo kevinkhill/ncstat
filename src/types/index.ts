@@ -6,6 +6,8 @@ export type HmcAxis = VmcAxis | "B";
 
 export type ToolInfo = [number, Tool];
 
+export type ExtractorFn = (subject: string) => string | undefined;
+
 export interface ProgramAnalysis {
   toolpaths: Toolpath[];
   extents: {

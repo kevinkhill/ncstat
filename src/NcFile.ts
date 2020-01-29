@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 
-import { newlineJoin, newlineSplit } from "./lib";
 import { Program } from "./Program";
 import { ProgramAnalysis } from "./types";
 
@@ -25,7 +24,7 @@ export class NcFile {
   }
 
   get lines(): string[] {
-    return newlineSplit(this.contents);
+    return this.contents.split("\n");
   }
 
   constructor(private contents = "") {
@@ -33,7 +32,7 @@ export class NcFile {
   }
 
   toString(): string {
-    return newlineJoin(this.lines);
+    return this.lines.join("\n");
   }
 
   analyze(): ProgramAnalysis {

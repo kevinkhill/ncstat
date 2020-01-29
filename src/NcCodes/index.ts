@@ -1,4 +1,4 @@
-import forEach from "lodash/forEach";
+import _ from "lodash";
 
 import { G_CODES as RAW_G_CODES } from "./gcodes";
 import { M_CODES as RAW_M_CODES } from "./mcodes";
@@ -14,12 +14,6 @@ export type PlaneSelection = "G17" | "G18" | "G19";
 export type MOTION_CODES = "GROUP_01";
 export type PLANE_SELECTION = "GROUP_02";
 export type POSITIONING_MODE = "GROUP_03";
-
-export interface ActiveModals {
-  GROUP_01: string;
-  GROUP_02: string;
-  GROUP_03: string;
-}
 
 export enum Modals {
   RAPID = "G00",
@@ -45,8 +39,8 @@ export const COMMANDS = {
   M: (n: number): NcCodeDef => M_CODES[`M${n}`]
 };
 
-forEach(RAW_G_CODES, (groupName, group) => {
-  forEach(groupName, (command, gcode) => {
+_.forEach(RAW_G_CODES, (groupName, group) => {
+  _.forEach(groupName, (command, gcode) => {
     G_CODES[gcode] = {
       COMMAND: command,
       GROUP: group
@@ -54,7 +48,7 @@ forEach(RAW_G_CODES, (groupName, group) => {
   });
 });
 
-forEach(RAW_M_CODES, (command, mcode) => {
+_.forEach(RAW_M_CODES, (command, mcode) => {
   M_CODES[mcode] = {
     COMMAND: command,
     GROUP: "MACHINE"

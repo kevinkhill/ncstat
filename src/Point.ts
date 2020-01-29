@@ -13,7 +13,7 @@ export class Point {
   Y?: number;
   Z?: number;
 
-  constructor({ X, Y, Z }: { X: number, Y: number, Z: number }) {
+  constructor({ X, Y, Z }: { X: number; Y: number; Z: number }) {
     this.X = X;
     this.Y = Y;
     this.Z = Z;

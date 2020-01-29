@@ -1,12 +1,11 @@
+import { CannedCycle } from "../src/CannedCycle";
 import { Program } from "../src/Program";
 import { Tool } from "../src/Tool";
-import { ProgramAnalysis } from "../src/types/index";
-import { CannedCycle } from '../src/CannedCycle';
+import { ProgramAnalysis } from "../src/types";
 
 let stats: ProgramAnalysis;
 
-beforeAll(() => {
-  const program = Program.create(`
+const sampleProgram = `
 %
 O1234 (TEST PROGRAM)
 (CREATED: 12/20/2019)
@@ -30,7 +29,10 @@ X5.
 G80
 M30
 %
-`);
+`;
+
+beforeAll(() => {
+  const program = Program.create(sampleProgram);
 
   stats = program.analyze();
 });

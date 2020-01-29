@@ -6,10 +6,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 8,
     sourceType: "module",
-    project: resolve(__dirname, "./tsconfig.json"),
-    ecmaFeatures: {
-      jsx: true
-    }
+    project: "./tsconfig.json"
   },
   env: {
     es6: true,
@@ -31,6 +28,7 @@ module.exports = {
     "plugin:import/warnings",
     "plugin:import/errors",
     "plugin:import/typescript",
+    "plugin:jest-formatting/strict",
     "plugin:lodash-fp/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
@@ -159,12 +157,22 @@ module.exports = {
   },
   overrides: [
     {
+      files: ["*.js"],
+      rules: {
+        "import/no-commonjs": "off"
+      }
+    },
+    {
       files: ["tests/*/*.test.ts"],
       env: {
         "jest/globals": true
       },
-      extends: ["plugin:jest/recommended", "plugin:jest/style"],
-      plugins: ["jest"],
+      extends: [
+        "plugin:jest/style",
+        "plugin:jest/recommended",
+        "plugin:jest-formatting/recommended"
+      ],
+      plugins: ["jest", "jest-formatting"],
       rules: {
         "@typescript-eslint/no-misused-promises": "off",
         "jest/no-disabled-tests": "warn",

@@ -31,7 +31,7 @@ export class Tool {
     return toolpath.setTool(this);
   }
 
-  toTuple(): ToolInfo {
+  getToolInfo(): ToolInfo {
     return [this.number, this];
   }
 

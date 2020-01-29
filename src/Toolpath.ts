@@ -1,7 +1,9 @@
+import { forEach, map } from "lodash/fp";
+
 import { Block } from "./Block";
 import { CannedCycle } from "./CannedCycle";
-import { FEEDRATE_REGEX } from "./lib";
 import { Tool } from "./Tool";
+import { ToolInfo } from "./types";
 
 export class Toolpath {
   static fromTool(tool: Tool): Toolpath {
@@ -24,13 +26,44 @@ export class Toolpath {
     return toolpath;
   }
 
-  tool: Tool = new Tool();
+  static parse(multiline: string): Toolpath {
+    const toolpath = new Toolpath();
+
+    forEach(
+      line => toolpath.parseLine(line),
+      multiline.split(/\r?\n/g)
+    );
+
+    return toolpath.analyze();
+  }
+
+  tool = new Tool();
+  hasCoolant = false;
   blocks: Block[] = [];
   description?: string;
   cannedCycles: CannedCycle[] = [];
 
   get hasTool(): boolean {
     return this.tool.number !== 0;
+  }
+
+  analyze(): this {
+    for (const block of this.blocks) {
+      // @TODO gross!!
+      if (block.hasCommand(8) || block.hasCommand(50)) {
+        this.hasCoolant = true;
+      }
+
+      if (block.hasToolChange) {
+        this.setToolFromBlock(block);
+      }
+
+      if (block.comment) {
+        this.description = block.comment;
+      }
+    }
+
+    return this;
   }
 
   setTool(tool: Tool): this {
@@ -45,10 +78,18 @@ export class Toolpath {
     return this;
   }
 
-  getToolRecord(): [number, Tool] | undefined {
+  getToolInfo(): ToolInfo | undefined {
     if (this.hasTool) {
-      return [this.tool.number, this.tool];
+      return this.tool.getToolInfo();
     }
+  }
+
+  parseLine(line: string): this {
+    const block = Block.parse(line);
+
+    this.blocks.push(block);
+
+    return this;
   }
 
   pushBlock(block: Block): this {
