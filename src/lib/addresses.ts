@@ -1,7 +1,5 @@
 import { filter, get, map } from "lodash/fp";
 
-import { Address } from "../Address";
-
 export const getValue = get("value");
 export const getPrefix = get("prefix");
 export const mapByValue = map("value");

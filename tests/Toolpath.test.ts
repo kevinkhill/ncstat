@@ -1,5 +1,4 @@
-import { Tool } from "../src/Tool";
-import { Toolpath } from "../src/Toolpath";
+import { getLimits, Tool, Toolpath } from "../src/Toolpath";
 
 let toolpath: Toolpath;
 
@@ -53,4 +52,28 @@ test("If the toolpath identified the Tool", () => {
 test("If the toolpath has a Tool, is it correct", () => {
   expect(toolpath.tool.number).toBe(83);
   expect(toolpath.tool.desc).toBe('1/2" BALL MILL, 2 FLT');
+});
+
+test("detect the X limits", () => {
+  const { axis, min, max } = getLimits("X", toolpath);
+
+  expect(axis).toBe("X");
+  expect(min).toBe(-1.4483);
+  expect(max).toBe(3.025);
+});
+
+test("detect the Y limits", () => {
+  const { axis, min, max } = getLimits("Y", toolpath);
+
+  expect(axis).toBe("Y");
+  expect(min).toBe(-4.025);
+  expect(max).toBe(-0.475);
+});
+
+test("detect the Z limits", () => {
+  const { axis, min, max } = getLimits("Z", toolpath);
+
+  expect(axis).toBe("Z");
+  expect(min).toBe(-0.3);
+  expect(max).toBe(1.0);
 });

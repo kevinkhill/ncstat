@@ -6,7 +6,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 8,
     sourceType: "module",
-    project: "./tsconfig.json"
+    project: "tsconfig.json"
   },
   env: {
     es6: true,

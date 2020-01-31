@@ -1,4 +1,4 @@
-import { Block } from "../src/Block";
+import { Block } from "../src/Toolpath";
 
 const testMsg = (l: string): string => `parses: "${l}"`;
 

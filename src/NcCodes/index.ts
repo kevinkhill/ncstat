@@ -3,6 +3,8 @@ import _ from "lodash";
 import { G_CODES as RAW_G_CODES } from "./gcodes";
 import { M_CODES as RAW_M_CODES } from "./mcodes";
 
+export { Address } from "./Address";
+
 export interface NcCodeDef {
   COMMAND: string;
   GROUP: string;
@@ -39,6 +41,7 @@ export const COMMANDS = {
   M: (n: number): NcCodeDef => M_CODES[`M${n}`]
 };
 
+//@TODO Fix This
 _.forEach(RAW_G_CODES, (groupName, group) => {
   _.forEach(groupName, (command, gcode) => {
     G_CODES[gcode] = {

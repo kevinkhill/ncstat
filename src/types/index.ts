@@ -1,8 +1,13 @@
-import { Tool } from "../Tool";
-import { Toolpath } from "../Toolpath";
+import { Tool, Toolpath } from "../Toolpath";
 
 export type VmcAxis = "X" | "Y" | "Z";
 export type HmcAxis = VmcAxis | "B";
+
+export interface AxisLimits {
+  axis: HmcAxis;
+  min: number;
+  max: number;
+}
 
 export type ToolInfo = [number, Tool];
 
