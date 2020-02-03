@@ -12,7 +12,8 @@
   },
   "scripts": {
     "build": "bili",
-    "test": "jest --notify --watch",
+    "test": "jest",
+    "test-watch": "jest --notify --watch",
     "lint": "eslint --ext .ts ./src",
     "lint-fix": "yarn lint --fix"
   },
@@ -27,12 +28,14 @@
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@types/jest": "^25.1.0",
+    "@types/jest": "^25.1.1",
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.5.1",
     "@types/tokenizr": "^1.5.1",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.11.0",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^25.1.0",
     "bili": "^4.8.1",
     "eslint": "^6.8.0",
     "eslint-config-node": "^4.0.0",
@@ -53,7 +56,7 @@
     "pretty-quick": "^2.0.1",
     "rollup": "^1.30.1",
     "rollup-plugin-typescript2": "^0.25.3",
-    "ts-jest": "^25.0.0",
+    "ts-jest": "^25.1.0",
     "ts-node": "^8.6.2",
     "typescript": "^3.8.0-beta"
   }

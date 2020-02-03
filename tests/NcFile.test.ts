@@ -1,36 +1,7 @@
-import { get, map, minBy } from "lodash/fp";
+import { NcFile } from "../src";
 
-import { AxisLimits, getLimits, Toolpath } from "../src";
-import { Program } from "../src/Program";
-import { getTestNcFileContents } from "./helpers";
+test("creating a new instance from a string of text lines", async () => {
+  const ncfile = new NcFile(`%\nO1234(TACO)\nG4X1000\nM30\n%`);
 
-const getZlimits = (toolpaths: Toolpath[]): AxisLimits => {
-  return minBy(
-    get("min"),
-    map(getLimits("Z"), toolpaths)
-  ) as AxisLimits;
-};
-
-test("find the largest -Z in example1.NC", async () => {
-  const contents = await getTestNcFileContents("example1.NC");
-  const stats = Program.analyze(contents);
-  const zLimits = getZlimits(stats.toolpaths);
-
-  expect(zLimits?.min).toBe(-0.5631);
-});
-
-test("find the largest -Z in example2.NC", async () => {
-  const contents = await getTestNcFileContents("example2.NC");
-  const stats = Program.analyze(contents);
-  const zLimits = getZlimits(stats.toolpaths);
-
-  expect(zLimits?.min).toBe(-0.8686);
-});
-
-test("find the largest -Z in example3.NC", async () => {
-  const contents = await getTestNcFileContents("example3.NC");
-  const stats = Program.analyze(contents);
-  const zLimits = getZlimits(stats.toolpaths);
-
-  expect(zLimits?.min).toBe(-2.189);
+  expect(ncfile.lines).toHaveLength(5);
 });

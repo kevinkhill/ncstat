@@ -1,3 +1,7 @@
 node_modules
 dist
 coverage
+.yarn
+
+.pnp.js
+yarn-error.log

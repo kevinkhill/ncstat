@@ -1,3 +1,4 @@
+import { Program } from "../Program";
 import { Tool, Toolpath } from "../Toolpath";
 
 export type VmcAxis = "X" | "Y" | "Z";
@@ -14,6 +15,7 @@ export type ToolInfo = [number, Tool];
 export type ExtractorFn = (subject: string) => string | undefined;
 
 export interface ProgramAnalysis {
+  program: Program;
   toolpaths: Toolpath[];
   extents: {
     X: Partial<{ min: number; max: number }>;

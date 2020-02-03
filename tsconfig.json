@@ -6,20 +6,13 @@
     "lib": ["esnext"],
     "outDir": "dist",
     "module": "commonjs",
-    // "importHelpers": true,
     "esModuleInterop": true,
-    // "noImplicitAny": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "*.js",
-    "bin/*.ts",
-    "demo/*.ts",
-    "src/**/*.ts",
-    "tests/**/*.test.ts",
-    "**/src/**/*.ts",
-    "**/test/**/*.ts"
-  ],
+  "include": ["*.js", "bin/*.ts", "src/**/*.ts", "tests/**/*.test.ts"],
   "exclude": ["node_modules"]
 }

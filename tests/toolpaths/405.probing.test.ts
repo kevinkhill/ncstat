@@ -1,39 +1,21 @@
-import { getLimits, Tool, Toolpath } from "../src/Toolpath";
+import { getLimits, Tool, Toolpath } from "../../src";
 
-let toolpath: Toolpath;
-
-const sampleToolpath = `M107
-N83 ( 1/2" BALL MILL, 2 FLT )
-T83 M106
-M01 ( 1/2" BALL MILL, 2 FLT )
+const input = `N226 ( SPINDLE PROBE )
+M107
+T226 M6
+M01 ( SPINDLE PROBE )
 G0 G90 G54
+M22
 B0.
-X-1.4483 Y-2.4167 S10000 M3
-G43 H83 Z1. M8 T97
-Z.5
-G1 Z-.3 F100.
-G41 D83 X-1.4417 F60.
-G3 X-1.275 Y-2.25 I0. J.1667
-G1 Y-.765
-G2 X-.985 Y-.475 I.29 J0.
-G1 X2.735
-G2 X3.025 Y-.765 I0. J-.29
-G1 Y-3.735
-G2 X2.735 Y-4.025 I-.29 J0.
-G1 X-.985
-G2 X-1.275 Y-3.735 I0. J.29
-G1 Y-2.25
-Y-2.125
-G3 X-1.4417 Y-1.9583 I-.1667 J0.
-G1 G40 X-1.4483
-G0 Z1.
-M09`;
+M21
+X-1.25 Y1.25
+G43 H226 Z8. T27
+( POINTS AT Z VERIFICATION )
+G65 P9832
+G65 P7997 X-1.25 Y1.25 Z.22
+G65 P7980`;
 
-beforeAll(() => {
-  toolpath = Toolpath.parse(sampleToolpath);
-
-  toolpath.analyze();
-});
+const toolpath = Toolpath.parse(input);
 
 test("If a toolpath instance was created", () => {
   expect(toolpath).toBeInstanceOf(Toolpath);
@@ -41,7 +23,7 @@ test("If a toolpath instance was created", () => {
 
 test("If the toolpath has the correct # of blocks", () => {
   expect(toolpath).toHaveProperty("blocks");
-  expect(toolpath.blocks).toHaveLength(26);
+  expect(toolpath.blocks).toHaveLength(14);
 });
 
 test("If the toolpath identified the Tool", () => {
@@ -50,8 +32,8 @@ test("If the toolpath identified the Tool", () => {
 });
 
 test("If the toolpath has a Tool, is it correct", () => {
-  expect(toolpath.tool.number).toBe(83);
-  expect(toolpath.tool.desc).toBe('1/2" BALL MILL, 2 FLT');
+  expect(toolpath.tool.number).toBe(226);
+  expect(toolpath.tool.desc).toBe("SPINDLE PROBE");
 });
 
 test("detect the X limits", () => {

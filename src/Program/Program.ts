@@ -2,11 +2,7 @@ import { clone, filter, last, map, split } from "lodash/fp";
 
 import { Modals, PositioningMode } from "../NcCodes";
 import { Block, CannedCycle, Toolpath } from "../Toolpath";
-import {
-  ActiveModals,
-  MachinePositions,
-  ProgramAnalysis
-} from "../types";
+import { ActiveModals, MachinePositions } from "../types";
 import { getModals } from "./getModals";
 import { NcFile } from "./NcFile";
 import {
@@ -30,12 +26,6 @@ export class Program {
 
   static fromFile(file: NcFile): Program {
     return Program.fromLines(file.lines);
-  }
-
-  static analyze(code: string): ProgramAnalysis {
-    const program = new Program(code);
-
-    return program.analyze();
   }
 
   number = 0;
@@ -90,7 +80,7 @@ export class Program {
   //   );
   // }
 
-  analyze(): ProgramAnalysis {
+  analyze(): Program {
     let toolpath = new Toolpath();
 
     let modals: ActiveModals = {
@@ -180,15 +170,6 @@ export class Program {
 
     this.toolpaths.push(toolpath);
 
-    return {
-      // blocks: this.blocks,
-      toolpaths: this.toolpaths,
-      extents: {
-        X: { min: -Infinity, max: Infinity },
-        Y: { min: -Infinity, max: Infinity },
-        Z: { min: -Infinity, max: Infinity },
-        B: { min: -Infinity, max: Infinity }
-      }
-    };
+    return this;
   }
 }

@@ -1,4 +1,5 @@
 export { getLimits } from "./getLimits";
+export { getZLimits } from "./getZLimits";
 
 export { Block } from "./Block";
 export { CannedCycle } from "./CannedCycle";

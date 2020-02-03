@@ -8,13 +8,15 @@ export interface ToolDefinition {
 }
 
 export class Tool {
-  static fromBlock(block: Block): Tool | undefined {
+  static fromBlock(block: Block): Tool {
     if (block.hasToolCall) {
       return new Tool({
         number: block.values.T,
         desc: block.comment
       });
     }
+
+    return new Tool();
   }
 
   public desc: string;

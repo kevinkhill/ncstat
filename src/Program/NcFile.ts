@@ -1,8 +1,11 @@
 import fs from "fs";
 import path from "path";
 
-import { ProgramAnalysis } from "../types";
 import { Program } from "./Program";
+
+export function analyzeNcFile(file: NcFile): Program {
+  return Program.fromFile(file).analyze();
+}
 
 export class NcFile {
   static create(code: string): NcFile {
@@ -33,11 +36,5 @@ export class NcFile {
 
   toString(): string {
     return this.lines.join("\n");
-  }
-
-  analyze(): ProgramAnalysis {
-    const program = Program.fromFile(this);
-
-    return program.analyze();
   }
 }
