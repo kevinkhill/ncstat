@@ -10,6 +10,8 @@ export interface AxisLimits {
   max: number;
 }
 
+export type AxesLimits = Record<VmcAxis, AxisLimits>;
+
 export type ToolInfo = [number, Tool];
 
 export type ExtractorFn = (subject: string) => string | undefined;

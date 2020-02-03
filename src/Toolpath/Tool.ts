@@ -4,27 +4,17 @@ import { Toolpath } from "./Toolpath";
 
 export interface ToolDefinition {
   number: number;
-  desc?: string;
+  desc: string;
 }
 
 export class Tool {
-  static fromBlock(block: Block): Tool {
-    if (block.hasToolCall) {
-      return new Tool({
-        number: block.values.T,
-        desc: block.comment
-      });
-    }
-
-    return new Tool();
+  static create({ number, desc }: ToolDefinition): Tool {
+    return new Tool(number, desc);
   }
 
-  public desc: string;
-  public number: number;
-
-  constructor(config?: ToolDefinition) {
-    this.number = config?.number ?? 0;
-    this.desc = config?.desc ?? "";
+  constructor(public number = 0, public desc = "") {
+    this.number = number;
+    this.desc = desc;
   }
 
   getToolpath(): Toolpath {

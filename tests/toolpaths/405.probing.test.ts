@@ -32,8 +32,8 @@ test("If the toolpath identified the Tool", () => {
 });
 
 test("If the toolpath has a Tool, is it correct", () => {
-  expect(toolpath.tool.number).toBe(226);
-  expect(toolpath.tool.desc).toBe("SPINDLE PROBE");
+  expect(toolpath?.tool?.number).toBe(226);
+  expect(toolpath?.tool?.desc).toBe("SPINDLE PROBE");
 });
 
 test("detect the X limits", () => {

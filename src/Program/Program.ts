@@ -1,7 +1,16 @@
-import { clone, filter, last, map, split } from "lodash/fp";
+import {
+  clone,
+  eq,
+  filter,
+  flow,
+  last,
+  map,
+  reject,
+  split
+} from "lodash/fp";
 
 import { Modals, PositioningMode } from "../NcCodes";
-import { Block, CannedCycle, Toolpath } from "../Toolpath";
+import { Block, CannedCycle, Tool, Toolpath } from "../Toolpath";
 import { ActiveModals, MachinePositions } from "../types";
 import { getModals } from "./getModals";
 import { NcFile } from "./NcFile";
@@ -99,9 +108,13 @@ export class Program {
     /**
      * @TODO  Allow empty blocks as special case
      */
-    const lines = filter(l => l.length > 0, this.getLines());
+    const mapLinesToBlocks = flow([
+      reject(eq("")),
+      reject(eq("%")),
+      map(Block.parse)
+    ]);
 
-    this.blocks = map(Block.parse, lines);
+    this.blocks = mapLinesToBlocks(this.getLines());
 
     for (const block of this.blocks) {
       modals = Object.assign(modals, getModals(block));
@@ -109,7 +122,7 @@ export class Program {
       this.number = block.values.O;
       this.title = block.comment;
 
-      if (block.hasMovement()) {
+      if (block.hasMovement) {
         const newPosition = updatePosition(
           position,
           modals[Modals.POSITIONING_MODE],
@@ -132,7 +145,7 @@ export class Program {
           this.nc.send(Events.END_CANNED_CYCLE);
         }
 
-        if (block.hasMovement()) {
+        if (block.hasMovement) {
           const point = clone(position.curr);
           const lastCC = last(toolpath.cannedCycles) as CannedCycle;
 
@@ -151,6 +164,12 @@ export class Program {
         if (isIdle(this.state)) {
           toolpath = new Toolpath();
 
+          const tool = Tool.create({
+            number: block.values.N,
+            desc: block.comment as string
+          });
+
+          toolpath.setTool(tool);
           toolpath.pushBlock(block);
 
           this.nc.send(Events.START_TOOLPATH);
@@ -158,9 +177,19 @@ export class Program {
       }
 
       if (isToolpathing(this.state) || isInCannedCycle(this.state)) {
-        if (block.hasToolChange) {
-          toolpath.setToolFromBlock(block);
+        if (block.hasCommand(8) || block.hasCommand(50)) {
+          toolpath.hasCoolant = true;
         }
+
+        //@TODO Utilize this to add pre-stage tool detection
+        // if (block.hasToolChange) {
+        //   const tool = Tool.create({
+        //     number: block.values.T,
+        //     desc: block.comment as string
+        //   });
+
+        //   toolpath.setTool(tool);
+        // }
 
         toolpath.pushBlock(block);
       }

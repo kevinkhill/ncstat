@@ -44,8 +44,8 @@ test("If the toolpath identified the Tool", () => {
 });
 
 test("If the toolpath has a Tool, is it correct", () => {
-  expect(toolpath.tool.number).toBe(83);
-  expect(toolpath.tool.desc).toBe('1/2" BALL MILL, 2 FLT');
+  expect(toolpath?.tool?.number).toBe(83);
+  expect(toolpath?.tool?.desc).toBe('1/2" BALL MILL, 2 FLT');
 });
 
 test("detect the X limits", () => {

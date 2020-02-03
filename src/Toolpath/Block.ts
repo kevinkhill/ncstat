@@ -56,6 +56,19 @@ export class Block {
     return this.rawAddresses.includes("M6");
   }
 
+  get hasMovement(): boolean {
+    if (intersection([4, 10, 65], this.gCodes).length > 0) {
+      return false;
+    }
+
+    return (
+      typeof this.values.B === "number" ||
+      typeof this.values.X === "number" ||
+      typeof this.values.Y === "number" ||
+      typeof this.values.Z === "number"
+    );
+  }
+
   get cannedCycleStartCode(): string | undefined {
     return intersection(START_CODES, this.rawAddresses)[0];
   }
@@ -77,6 +90,7 @@ export class Block {
     const comment = regexExtract(COMMENT_REGEX, this.rawInput);
 
     if (comment) {
+      // console.log(comment);
       this.comment = comment.trim();
     }
 
@@ -127,9 +141,12 @@ export class Block {
     return Point.fromBlock(this);
   }
 
-  getTool(): Tool | undefined {
+  getTool(): Tool {
     if (this.hasToolCall) {
-      return Tool.fromBlock(this);
+      return Tool.create({
+        number: this.values.T,
+        desc: this.comment ?? ""
+      });
     }
 
     throw Error("ERROR: The block does not contain Txx");
@@ -156,19 +173,6 @@ export class Block {
 
   getRetractCode(): string {
     return this.getRetract().toString();
-  }
-
-  hasMovement(): boolean {
-    if (intersection([4, 10, 65], this.gCodes).length > 0) {
-      return false;
-    }
-
-    return (
-      typeof this.values.B === "number" ||
-      typeof this.values.X === "number" ||
-      typeof this.values.Y === "number" ||
-      typeof this.values.Z === "number"
-    );
   }
 
   hasAddress(addr: string): boolean {
