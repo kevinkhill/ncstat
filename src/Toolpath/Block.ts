@@ -90,7 +90,6 @@ export class Block {
     const comment = regexExtract(COMMENT_REGEX, this.rawInput);
 
     if (comment) {
-      // console.log(comment);
       this.comment = comment.trim();
     }
 

@@ -11,7 +11,7 @@ export function _getAxisLimits(
   const getAxisValue = get(`values.${axis}`);
   const axisValueMap = map(getAxisValue);
   const onlyNumbers = filter(Boolean);
-  const getUniqAxisValues = flow([dedupe, onlyNumbers, axisValueMap]);
+  const getUniqAxisValues = flow([onlyNumbers, dedupe, axisValueMap]);
 
   const axisValues = getUniqAxisValues(toolpaths.blocks);
 

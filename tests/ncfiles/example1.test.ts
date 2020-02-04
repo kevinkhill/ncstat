@@ -16,8 +16,6 @@ test("If the toolpaths were identified", () => {
 
   const [drill, tap] = program.toolpaths;
 
-  // console.log(drill);
-
   expect(drill).toHaveProperty("tool");
   expect(drill.tool).toBeInstanceOf(Tool);
   expect(drill?.tool?.number).toBe(43);
