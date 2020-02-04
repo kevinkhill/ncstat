@@ -10,8 +10,14 @@ import {
 } from "lodash/fp";
 
 import { Modals, PositioningMode } from "../NcCodes";
-import { Block, CannedCycle, Tool, Toolpath } from "../Toolpath";
-import { ActiveModals, MachinePositions } from "../types";
+import {
+  Block,
+  CannedCycle,
+  getLimits,
+  Tool,
+  Toolpath
+} from "../Toolpath";
+import { ActiveModals, AxesLimits, MachinePositions } from "../types";
 import { getModals } from "./getModals";
 import { NcFile } from "./NcFile";
 import {
@@ -60,6 +66,14 @@ export class Program {
 
   getLines(): string[] {
     return split("\n", this.rawInput);
+  }
+
+  getLimits(): Partial<AxesLimits> {
+    return {
+      X: getLimits("X", this.toolpaths),
+      Y: getLimits("Y", this.toolpaths),
+      Z: getLimits("Z", this.toolpaths)
+    };
   }
 
   getNumber(): number {
@@ -170,7 +184,6 @@ export class Program {
           });
 
           toolpath.setTool(tool);
-          toolpath.pushBlock(block);
 
           this.nc.send(Events.START_TOOLPATH);
         }
@@ -181,15 +194,20 @@ export class Program {
           toolpath.hasCoolant = true;
         }
 
-        //@TODO Utilize this to add pre-stage tool detection
-        // if (block.hasToolChange) {
-        //   const tool = Tool.create({
-        //     number: block.values.T,
-        //     desc: block.comment as string
-        //   });
+        /**
+         * Override N line tool description with Txx Mxx ()
+         * Move the N line desc to toolpath.desc
+         */
+        if (block.hasToolChange) {
+          toolpath.description = toolpath?.tool?.desc;
 
-        //   toolpath.setTool(tool);
-        // }
+          const tool = Tool.create({
+            number: block.values.T,
+            desc: block.comment as string
+          });
+
+          toolpath.setTool(tool);
+        }
 
         toolpath.pushBlock(block);
       }

@@ -1,6 +1,3 @@
-import { Program } from "../Program";
-import { Tool, Toolpath } from "../Toolpath";
-
 export type VmcAxis = "X" | "Y" | "Z";
 export type HmcAxis = VmcAxis | "B";
 
@@ -10,22 +7,9 @@ export interface AxisLimits {
   max: number;
 }
 
-export type AxesLimits = Record<VmcAxis, AxisLimits>;
-
-export type ToolInfo = [number, Tool];
+export type AxesLimits = Record<HmcAxis, AxisLimits>;
 
 export type ExtractorFn = (subject: string) => string | undefined;
-
-export interface ProgramAnalysis {
-  program: Program;
-  toolpaths: Toolpath[];
-  extents: {
-    X: Partial<{ min: number; max: number }>;
-    Y: Partial<{ min: number; max: number }>;
-    Z: Partial<{ min: number; max: number }>;
-    B: Partial<{ min: number; max: number }>;
-  };
-}
 
 export interface Position {
   [K: string]: number;

@@ -7,6 +7,6 @@ const program = analyzeCode(contents);
 test("find the largest -Z in example3.NC", async () => {
   const zLimits = getLimits("Z", program.toolpaths);
 
-  expect(zLimits?.min).toBe(-0.5631);
-  expect(zLimits?.max).toBe(1.0);
+  expect(zLimits?.min).toBe(-2.189);
+  expect(zLimits?.max).toBe(3.0);
 });

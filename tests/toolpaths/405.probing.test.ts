@@ -1,4 +1,4 @@
-import { getLimits, Tool, Toolpath } from "../../src";
+import { analyzeCode, getLimits, Tool, Toolpath } from "../../src";
 
 const input = `N226 ( SPINDLE PROBE )
 M107
@@ -15,7 +15,8 @@ G65 P9832
 G65 P7997 X-1.25 Y1.25 Z.22
 G65 P7980`;
 
-const toolpath = Toolpath.parse(input);
+const program = analyzeCode(input);
+const toolpath = program.toolpaths.pop() as Toolpath;
 
 test("If a toolpath instance was created", () => {
   expect(toolpath).toBeInstanceOf(Toolpath);
@@ -32,15 +33,15 @@ test("If the toolpath identified the Tool", () => {
 });
 
 test("If the toolpath has a Tool, is it correct", () => {
-  expect(toolpath?.tool?.number).toBe(226);
-  expect(toolpath?.tool?.desc).toBe("SPINDLE PROBE");
+  expect(toolpath.tool?.number).toBe(226);
+  expect(toolpath.tool?.desc).toBe("SPINDLE PROBE");
 });
 
 test("detect the X limits", () => {
   const { axis, min, max } = getLimits("X", toolpath);
 
   expect(axis).toBe("X");
-  expect(min).toBe(-1.4483);
+  expect(min).toBe(-1.25);
   expect(max).toBe(3.025);
 });
 
@@ -48,7 +49,7 @@ test("detect the Y limits", () => {
   const { axis, min, max } = getLimits("Y", toolpath);
 
   expect(axis).toBe("Y");
-  expect(min).toBe(-4.025);
+  expect(min).toBe(1.25);
   expect(max).toBe(-0.475);
 });
 
@@ -56,6 +57,6 @@ test("detect the Z limits", () => {
   const { axis, min, max } = getLimits("Z", toolpath);
 
   expect(axis).toBe("Z");
-  expect(min).toBe(-0.3);
+  expect(min).toBe(0.22);
   expect(max).toBe(1.0);
 });

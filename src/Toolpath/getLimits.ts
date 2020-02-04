@@ -1,19 +1,6 @@
-import {
-  curry,
-  each,
-  filter,
-  flow,
-  get,
-  keyBy,
-  map,
-  max,
-  maxBy,
-  min,
-  minBy
-} from "lodash/fp";
+import { curry, get, map, maxBy, minBy } from "lodash/fp";
 
-import { Program } from "../Program";
-import { AxesLimits, AxisLimits, HmcAxis } from "../types";
+import { AxisLimits, HmcAxis } from "../types";
 import { getAxisLimits } from "./getAxisLimits";
 import { Toolpath } from "./Toolpath";
 
@@ -24,6 +11,7 @@ export function _getLimits(
   const toolpaths: Toolpath[] = [];
 
   if (toolp instanceof Toolpath) {
+    // eslint-disable-next-line no-param-reassign
     toolp = [toolp];
   }
 
@@ -39,14 +27,3 @@ export function _getLimits(
 }
 
 export const getLimits = curry(_getLimits);
-
-// export function getProgramLimits(program: Program): AxesLimits {
-//   const limits: AxesLimits = {};
-
-//   VMC_AXES.forEach(axis => {
-//     const a = axis as VmcAxis;
-//     limits[a] = map(getLimits(a), program.toolpaths);
-//   }
-
-//   return  limits;
-// }

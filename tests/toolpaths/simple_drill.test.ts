@@ -29,6 +29,7 @@ const program = analyzeCode(sampleProgram);
 
 test("If a toolpath was created", () => {
   expect(program).toHaveProperty("toolpaths");
+  expect(program.toolpaths).toHaveLength(1);
 });
 
 // test("If the toolpath is identified as a CannedCycle", () => {
@@ -39,11 +40,17 @@ test("If the toolpath has a Tool", () => {
   expect(program.toolpaths[0].tool).toBeInstanceOf(Tool);
 });
 
-test("If the Tool has the proper info", () => {
+test("If the Tool was created from toolchange line", () => {
   const tool = program.toolpaths[0].tool;
 
-  expect(tool.number).toBe(43);
-  expect(tool.desc).toBe('#14 [.182"] DRILL, CARB, TSC');
+  expect(tool?.number).toBe(43);
+  expect(tool?.desc).toBe('#14 [.182"] DRILL, CARB, TSC');
+});
+
+test("If the N line was comment was preserved", () => {
+  expect(program.toolpaths[0].description).toBe(
+    "DRILL FOR M5 X 0.8 ROLL TAP"
+  );
 });
 
 // test.skip("If extents were properly identified", () => {

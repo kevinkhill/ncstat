@@ -14,7 +14,10 @@ export class Toolpath {
   static parse(multiline: string): Toolpath {
     const toolpath = new Toolpath();
 
-    forEach(toolpath.parseLine, multiline.split(/\r?\n/g));
+    forEach(
+      line => toolpath.parseLine(line),
+      multiline.split(/\r?\n/g)
+    );
 
     return toolpath;
   }

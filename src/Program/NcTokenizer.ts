@@ -51,6 +51,10 @@ lexer.rule(/[ \t\r\n]+/, (ctx, match) => {
 
 lexer.input(sample);
 lexer.debug(true);
-lexer.tokens().forEach(token => {
-  console.log(token.toString());
-});
+try {
+  lexer.tokens().forEach(token => {
+    console.log(token.toString());
+  });
+} catch (err) {
+  console.error(err.toString());
+}

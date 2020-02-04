@@ -1,5 +1,3 @@
-import { ToolInfo } from "../types";
-import { Block } from "./Block";
 import { Toolpath } from "./Toolpath";
 
 export interface ToolDefinition {
@@ -23,7 +21,7 @@ export class Tool {
     return toolpath.setTool(this);
   }
 
-  getToolInfo(): ToolInfo {
+  getToolInfo(): [number, Tool] {
     return [this.number, this];
   }
 
