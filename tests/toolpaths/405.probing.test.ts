@@ -42,7 +42,7 @@ test("detect the X limits", () => {
 
   expect(axis).toBe("X");
   expect(min).toBe(-1.25);
-  expect(max).toBe(3.025);
+  expect(max).toBe(-1.25);
 });
 
 test("detect the Y limits", () => {
@@ -50,7 +50,7 @@ test("detect the Y limits", () => {
 
   expect(axis).toBe("Y");
   expect(min).toBe(1.25);
-  expect(max).toBe(-0.475);
+  expect(max).toBe(1.25);
 });
 
 test("detect the Z limits", () => {
@@ -58,5 +58,5 @@ test("detect the Z limits", () => {
 
   expect(axis).toBe("Z");
   expect(min).toBe(0.22);
-  expect(max).toBe(1.0);
+  expect(max).toBe(8.0);
 });

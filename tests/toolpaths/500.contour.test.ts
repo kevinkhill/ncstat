@@ -1,4 +1,4 @@
-import { getLimits, Tool, Toolpath } from "../../src";
+import { analyzeCode, getLimits, Tool, Toolpath } from "../../src";
 
 const input = `M107
 N83 ( 1/2" BALL MILL, 2 FLT )
@@ -27,7 +27,8 @@ G1 G40 X-1.4483
 G0 Z1.
 M09`;
 
-const toolpath = Toolpath.parse(input);
+const program = analyzeCode(input);
+const toolpath = program.toolpaths[0];
 
 test("If a toolpath instance was created", () => {
   expect(toolpath).toBeInstanceOf(Toolpath);
@@ -35,7 +36,7 @@ test("If a toolpath instance was created", () => {
 
 test("If the toolpath has the correct # of blocks", () => {
   expect(toolpath).toHaveProperty("blocks");
-  expect(toolpath.blocks).toHaveLength(26);
+  expect(toolpath.blocks).toHaveLength(25);
 });
 
 test("If the toolpath identified the Tool", () => {

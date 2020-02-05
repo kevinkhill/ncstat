@@ -199,14 +199,13 @@ export class Program {
          * Move the N line desc to toolpath.desc
          */
         if (block.hasToolChange) {
-          toolpath.description = toolpath?.tool?.desc;
+          if (toolpath.tool) {
+            toolpath.tool.number = block.values.T;
+          }
 
-          const tool = Tool.create({
-            number: block.values.T,
-            desc: block.comment as string
-          });
-
-          toolpath.setTool(tool);
+          if (block.comment) {
+            toolpath.description = toolpath?.tool?.desc;
+          }
         }
 
         toolpath.pushBlock(block);
