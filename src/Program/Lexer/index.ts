@@ -1,2 +1,2 @@
 export { getTokens } from "./getTokens";
-export { getBlocks } from "./getBlocks";
+export { parseNcCode } from "./parseNcCode";

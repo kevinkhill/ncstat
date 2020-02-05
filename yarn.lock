@@ -2391,6 +2391,11 @@ dot-prop@^4.1.1:
   dependencies:
     is-obj "^1.0.0"
 
+doublie@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/doublie/-/doublie-1.1.0.tgz#dd610f9309e3aa9e8c12aa6d8208f1b1bf55c2f8"
+  integrity sha512-acgfh2kbSbzMImWkVqO5k3yMPYxcfoAY3I+jJnMaIMmtC9btO391CdnRypVkKMl6uiGNVRejROjpM8ac/dRndQ==
+
 dynamic-dedupe@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/dynamic-dedupe/-/dynamic-dedupe-0.3.0.tgz#06e44c223f5e4e94d78ef9db23a6515ce2f962a1"
