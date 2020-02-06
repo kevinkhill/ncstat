@@ -10,6 +10,7 @@ import {
 } from "lodash/fp";
 
 import { Modals, PositioningMode } from "../NcCodes";
+import { NcFile } from "../NcFile";
 import {
   Block,
   CannedCycle,
@@ -19,7 +20,6 @@ import {
 } from "../Toolpath";
 import { ActiveModals, AxesLimits, MachinePositions } from "../types";
 import { getModals } from "./getModals";
-import { NcFile } from "./NcFile";
 import {
   Events,
   isIdle,
@@ -33,14 +33,6 @@ import { updatePosition } from "./updatePosition";
 export class Program {
   static create(code: string): Program {
     return new Program(code);
-  }
-
-  static fromLines(lines: string[]): Program {
-    return Program.create(lines.join("\n"));
-  }
-
-  static fromFile(file: NcFile): Program {
-    return Program.fromLines(file.lines);
   }
 
   number = 0;

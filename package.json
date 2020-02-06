@@ -16,7 +16,8 @@
     "test-watch": "jest --notify --watch",
     "lint": "eslint --ext .ts ./src",
     "lint-fix": "yarn lint --fix",
-    "dev": "tsnd --respawn"
+    "dev": "tsnd --respawn",
+    "build:cli": "babel ./cli -o ./bin/cli.js --extensions \".ts\""
   },
   "husky": {
     "hooks": {
@@ -26,6 +27,8 @@
   "devDependencies": {
     "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
@@ -33,11 +36,13 @@
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.5.1",
     "@types/tokenizr": "^1.5.1",
+    "@types/yup": "^0.26.30",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.11.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^25.1.0",
     "bili": "^4.8.1",
+    "clipanion": "^2.1.6",
     "eslint": "^6.8.0",
     "eslint-config-node": "^4.0.0",
     "eslint-config-prettier": "^6.5.0",
@@ -60,6 +65,7 @@
     "ts-jest": "^25.1.0",
     "ts-node": "^8.6.2",
     "ts-node-dev": "^1.0.0-pre.44",
-    "typescript": "^3.8.0-beta"
+    "typescript": "^3.8.0-beta",
+    "yup": "^0.28.1"
   }
 }
