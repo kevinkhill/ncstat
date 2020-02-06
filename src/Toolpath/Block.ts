@@ -16,11 +16,12 @@ import {
   regexMatch
 } from "../lib";
 import { Address } from "../NcCodes";
-import { Tokens } from "../NcLexer";
 import { Position } from "../types";
 import { RETRACT_CODES, START_CODES } from "./CannedCycle";
 import { Point } from "./Point";
 import { Tool } from "./Tool";
+
+export const ADDRESS_REGEX = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
 
 /**
  * A Block represents one line of NC code.
@@ -83,15 +84,15 @@ export class Block {
    * Create a new {@link Block} from a line of NC code.
    */
   constructor(readonly rawInput: string) {
-    this.rawAddresses = regexMatch(Tokens.ADDRESS, this.rawInput);
+    this.rawAddresses = regexMatch(ADDRESS_REGEX, this.rawInput);
 
-    const comment = regexExtract(Tokens.COMMENT, this.rawInput);
+    const comment = regexExtract(/\(\s?(.+)\s?\)/, this.rawInput);
 
     if (comment) {
       this.comment = comment.trim();
     }
 
-    const blockSkip = regexExtract(Tokens.BLOCK_SKIP, this.rawInput);
+    const blockSkip = regexExtract(/^\/([0-9]?)/, this.rawInput);
 
     if (blockSkip) {
       this.blockSkip = parseInt(blockSkip);
