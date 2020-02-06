@@ -17,6 +17,7 @@
     "lint": "eslint --ext .ts ./src",
     "lint-fix": "yarn lint --fix",
     "dev": "tsnd --respawn",
+    "lex": "ts-node ./src/cli lex",
     "build:cli": "babel ./cli -o ./bin/cli.js --extensions \".ts\""
   },
   "husky": {

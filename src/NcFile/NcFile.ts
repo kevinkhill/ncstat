@@ -2,10 +2,6 @@ import fs from "fs";
 import path from "path";
 
 export class NcFile {
-  static create(code: string): NcFile {
-    throw new NcFile(code);
-  }
-
   static async fromPath(abspath: string): Promise<NcFile> {
     if (!path.isAbsolute(abspath)) {
       throw Error("The path must be absolute.");
@@ -13,7 +9,7 @@ export class NcFile {
 
     const buffer = await fs.promises.readFile(abspath);
 
-    return NcFile.create(buffer.toString());
+    return new NcFile(buffer.toString());
   }
 
   get lines(): string[] {

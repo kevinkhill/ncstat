@@ -15,16 +15,16 @@ export const Tokens = {
   PRG_NUMBER: /(?:O|:)([0-9]{4,5}?)/,
 
   // Match <G_CODE> as "G00", "G10", "G43"
-  G_CODE: /G([0-9]+(?:\\.[0-9]*)?)/,
+  G_CODE: /(G[0-9]+(?:\\.[0-9]*)?)/,
 
   // Match <M_CODE> as "M00", "M6", "M107"
-  M_CODE: /M([0-9]+(?:\\.[0-9]*)?)/,
+  M_CODE: /(M[0-9]+)/,
 
   // Match <FEEDRATE> as "F12.3"
-  FEEDRATE: /F([0-9]+(?:\\.[0-9]*)?)/,
+  FEEDRATE: /(F[0-9]+(?:\\.[0-9]*)?)/,
 
   // Match <ADDRESS> as "A1", "B2.0"
-  ADDRESS: /([A-Z][#-]*[0-9.]+)(?![^(]*\))/,
+  ADDRESS: /([A-FH-LN-P-Z][#-]*[0-9.]+)(?![^(]*\))/,
 
   // Ignore whitespace
   WHITESPACE: /[ \t]+/,

@@ -9,9 +9,6 @@ import {
 } from "lodash/fp";
 
 import {
-  ADDRESS_REGEX,
-  BLOCK_SKIP_REGEX,
-  COMMENT_REGEX,
   filterGcodes,
   filterMcodes,
   mapByValue,
@@ -19,6 +16,7 @@ import {
   regexMatch
 } from "../lib";
 import { Address } from "../NcCodes";
+import { Tokens } from "../NcLexer";
 import { Position } from "../types";
 import { RETRACT_CODES, START_CODES } from "./CannedCycle";
 import { Point } from "./Point";
@@ -85,15 +83,15 @@ export class Block {
    * Create a new {@link Block} from a line of NC code.
    */
   constructor(readonly rawInput: string) {
-    this.rawAddresses = regexMatch(ADDRESS_REGEX, this.rawInput);
+    this.rawAddresses = regexMatch(Tokens.ADDRESS, this.rawInput);
 
-    const comment = regexExtract(COMMENT_REGEX, this.rawInput);
+    const comment = regexExtract(Tokens.COMMENT, this.rawInput);
 
     if (comment) {
       this.comment = comment.trim();
     }
 
-    const blockSkip = regexExtract(BLOCK_SKIP_REGEX, this.rawInput);
+    const blockSkip = regexExtract(Tokens.BLOCK_SKIP, this.rawInput);
 
     if (blockSkip) {
       this.blockSkip = parseInt(blockSkip);
