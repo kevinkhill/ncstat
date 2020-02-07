@@ -1,4 +1,4 @@
-export const M_CODES = {
+export const M_CODES: Record<string, string> = {
   M00: "PROGRAM_STOP",
   M01: "OPTIONAL_STOP",
   M03: "SPINDLE_FORWARD",
@@ -20,3 +20,11 @@ export const M_CODES = {
   M99: "RETURN_FROM_SUB_OR_LOOP",
   M107: "SAFE_START"
 };
+
+export function M(value: number): string {
+  return M_CODES[`M${value}`];
+}
+
+export function mCode(mcode: string): string {
+  return M_CODES[mcode];
+}
