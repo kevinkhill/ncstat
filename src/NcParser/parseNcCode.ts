@@ -2,7 +2,7 @@ import { Linear } from "doublie";
 import { clone } from "lodash/fp";
 
 // import { Block } from "../../Toolpath/Block";
-import { getTokens } from "./getTokens";
+import { getTokens } from "../NcLexer/getTokens";
 
 export function parseNcCode(input: string, debug = false): any {
   const tokens = getTokens(input, debug);
