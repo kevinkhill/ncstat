@@ -1,20 +1,19 @@
 import { getTokens } from "../../src/NcLexer/getTokens";
+import {
+  testAddrTokenPrefixAndValue,
+  testProp,
+  testToken
+} from "./helpers";
 
 const input = `%
 O1234 (TEST PROGRAM)
-(CREATED: 12/20/2019)
 
-G10 L2 P1 X1.23 Y4.56 Z7.89 B0.
-
-( DRILL FOR M5 X 0.8 ROLL TAP )
-N43 ( #14 [.182"] DRILL, CARB, TSC )
-T43 M6
+T43 M6 ( #14 [.182"] DRILL, CARB, TSC )
 G0 G90 G54 X.75 Y.19
 S10495 M3
 M50 (TSC COOLANT ON)
 G43 H#518 Z1. T44
 G98 G81 Z-.5631 R.1 F83.96
-Y1.5
 X5.
 G80
 M30
@@ -25,78 +24,129 @@ const tokens = getTokens(input).filter(
   token => token.type !== "NEWLINE"
 );
 
-describe("token[0]", () => {
-  const { type, value } = tokens[0];
-
-  test(`type is "PRG_DELIM"`, () => {
-    expect(type).toBe("PRG_DELIM");
+describe("the lexer", () => {
+  test("identified all the tokens", () => {
+    // Don't forget about the "EOF" token
+    expect(tokens).toHaveLength(29);
   });
 
-  test(`value is "%"`, () => {
-    expect(value).toBe("%");
-  });
-});
-
-describe("token[1]", () => {
-  const { type, value } = tokens[1];
-
-  test(`type is "PRG_NUMBER"`, () => {
-    expect(type).toBe("PRG_NUMBER");
-  });
-
-  test(`value is "1234"`, () => {
-    expect(value).toBe(1234);
+  test(`the last token is the "EOF"`, () => {
+    expect(tokens.pop()?.type).toBe("EOF");
   });
 });
 
-describe("token[2]", () => {
-  const { type, value } = tokens[2];
-
-  test(`type is "COMMENT"`, () => {
-    expect(type).toBe("COMMENT");
-  });
-
-  test(`value is "TEST PROGRAM"`, () => {
-    expect(value).toBe("TEST PROGRAM");
-  });
+describe(`token "${tokens[0].text}"`, () => {
+  testToken(tokens[0], "PRG_DELIM", "%");
 });
 
-describe("token[3]", () => {
-  const { type, value } = tokens[3];
-
-  test(`type is "COMMENT"`, () => {
-    expect(type).toBe("COMMENT");
-  });
-
-  test(`value is "CREATED: 12/20/2019"`, () => {
-    expect(value).toBe("CREATED: 12/20/2019");
-  });
+describe(`token "${tokens[1].text}"`, () => {
+  testToken(tokens[1], "PRG_NUMBER", 1234);
 });
 
-describe("token[4]", () => {
-  const { type, value } = tokens[4];
-
-  test(`type is "G_CODE"`, () => {
-    expect(type).toBe("G_CODE");
-  });
-
-  test(`value is "10"`, () => {
-    expect(value).toBe(10);
-  });
+describe(`token "${tokens[2].text}"`, () => {
+  testToken(tokens[2], "COMMENT", "TEST PROGRAM");
 });
 
-describe("token[5]", () => {
-  const { type, value, text } = tokens[5];
+describe(`token "${tokens[3].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[3], "T", 43);
+});
 
-  test(`text is "L2"`, () => {
-    expect(text).toBe("L2");
-  });
+describe(`token "${tokens[4].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[4], "M", 6);
+});
 
-  test(`type is "ADDRESS"`, () => {
-    expect(type).toBe("ADDRESS");
-  });
+describe(`token "${tokens[5].text}"`, () => {
+  testToken(tokens[5], "COMMENT", `#14 [.182"] DRILL, CARB, TSC`);
+});
 
-  test(`value is "2"`, () => {
-    expect(value).toBe(2);
-  });
+describe(`token "${tokens[6].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[6], "G", 0);
+});
+
+describe(`token "${tokens[7].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[7], "G", 90);
+});
+
+describe(`token "${tokens[8].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[8], "G", 54);
+});
+
+describe(`token "${tokens[9].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[9], "X", 0.75);
+});
+
+describe(`token "${tokens[10].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[10], "Y", 0.19);
+});
+
+describe(`token "${tokens[11].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[11], "S", 10495);
+});
+
+describe(`token "${tokens[12].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[12], "M", 3);
+});
+
+describe(`token "${tokens[13].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[13], "M", 50);
+});
+
+describe(`token "${tokens[14].text}"`, () => {
+  testToken(tokens[14], "COMMENT", "TSC COOLANT ON");
+});
+
+describe(`token "${tokens[15].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[15], "G", 43);
+});
+
+describe.skip(`token "${tokens[16].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[16], "H", 0);
+});
+
+describe(`token "${tokens[17].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[17], "Z", 1.0);
+});
+
+describe(`token "${tokens[18].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[18], "T", 44);
+});
+
+describe(`token "${tokens[19].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[19], "G", 98);
+});
+
+describe(`token "${tokens[20].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[20], "G", 81);
+});
+
+describe(`token "${tokens[21].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[21], "Z", -0.5631);
+});
+
+describe(`token "${tokens[22].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[22], "R", 0.1);
+});
+
+describe(`token "${tokens[23].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[23], "F", 83.96);
+});
+
+describe(`token "${tokens[24].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[24], "X", 5.0);
+});
+
+describe(`token "${tokens[25].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[25], "G", 80);
+});
+
+describe(`token "${tokens[26].text}"`, () => {
+  testAddrTokenPrefixAndValue(tokens[26], "M", 30);
+});
+
+describe(`token "${tokens[27].text}"`, () => {
+  testToken(tokens[27], "PRG_DELIM", "%");
+});
+
+describe(` "EOF"`, () => {
+  testToken(tokens[28], "EOF", "");
 });

@@ -1,26 +1,17 @@
 import Tokenizr from "tokenizr";
 
-import { G_CODES, gCode } from "./gcodes";
-import { M_CODES, ValueAddress } from "./index";
-import { mCode } from "./mcodes";
+import { Address, G_CODES, M_CODES } from "../NcCodes";
 
 export const lexer = new Tokenizr();
-
-export interface TokenData {
-  raw: string;
-  desc: string;
-  value: number;
-  prefix: string;
-}
 
 // Match "%", required for proper NC files
 lexer.rule(/%/, ctx => ctx.accept("PRG_DELIM"));
 
 // Match "["
-// lexer.rule(/\[/, ctx => ctx.accept("OPEN_BRACKET"));
+lexer.rule(/\[/, ctx => ctx.accept("OPEN_BRACKET"));
 
 // Match "]"
-// lexer.rule(/\]/, ctx => ctx.accept("CLOSE_BRACKET"));
+lexer.rule(/\]/, ctx => ctx.accept("CLOSE_BRACKET"));
 
 // Match "\n" at end of a line
 lexer.rule(/\n/, ctx => ctx.accept("NEWLINE"));
@@ -31,49 +22,15 @@ lexer.rule(/(?:O|:)(\d{4,5})/, (ctx, match) => {
 });
 
 // Match "A1", "B2.0", "X41.2142"
-lexer.rule(/([A-Z])([#-]*[\d.]+)(?![^(]*\))/, (ctx, match) => {
-  let tokenType: string;
-  let tokenData: TokenData;
-
-  const prefix = match[1];
-
-  switch (prefix) {
-    case "G":
-      tokenType = "G_CODE";
-      tokenData = {
-        prefix,
-        raw: match[0],
-        desc: gCode(match[0]),
-        value: parseInt(match[2])
-      };
-      break;
-
-    case "M":
-      tokenType = "M_CODE";
-      tokenData = {
-        prefix,
-        raw: match[0],
-        desc: mCode(match[0]),
-        value: parseInt(match[2])
-      };
-      break;
-
-    default:
-      tokenType = `ADDRESS`;
-      tokenData = {
-        prefix,
-        raw: match[0],
-        desc: "",
-        value: parseFloat(match[2])
-      };
-      break;
-  }
-
-  ctx.accept(tokenType, tokenData);
+lexer.rule(/([A-NP-Z])([#-]*[0-9.]+)(?![^(]*\))/, (ctx, match) => {
+  ctx.accept("ADDR", {
+    prefix: match[1],
+    value: parseFloat(match[2])
+  });
 });
 
 // Match "/", "/3"
-lexer.rule(/\/([\d]?)/, (ctx, match) => {
+lexer.rule(/\/([0-9]?)/, (ctx, match) => {
   ctx.accept("BLKSKP", parseInt(match[1]));
 });
 
