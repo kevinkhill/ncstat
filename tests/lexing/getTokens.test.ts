@@ -147,6 +147,6 @@ describe(`token "${tokens[27].text}"`, () => {
   testToken(tokens[27], "PRG_DELIM", "%");
 });
 
-describe(` "EOF"`, () => {
+describe(`token "EOF"`, () => {
   testToken(tokens[28], "EOF", "");
 });

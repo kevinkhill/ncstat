@@ -15,7 +15,7 @@ import {
   regexExtract,
   regexMatch
 } from "../lib";
-import { Address } from "../NcCodes";
+import { Address } from "../NcParser/codes";
 import { Position } from "../types";
 import { RETRACT_CODES, START_CODES } from "./CannedCycle";
 import { Point } from "./Point";

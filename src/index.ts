@@ -1,5 +1,5 @@
 export * from "./types";
 
-export * from "./NcCodes";
+export * from "./NcParser/codes";
 export * from "./Program";
 export * from "./Toolpath";

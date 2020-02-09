@@ -1,7 +1,7 @@
 import _ from "lodash";
 
-import { G_CODES as RAW_G_CODES } from "../NcLexer/gcodes";
-import { M_CODES as RAW_M_CODES } from "../NcLexer/mcodes";
+import { G_CODES as RAW_G_CODES } from "./gcodes";
+import { M_CODES as RAW_M_CODES } from "./mcodes";
 
 export { Address } from "./Address";
 

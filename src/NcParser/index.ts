@@ -1,1 +1,1 @@
-export { parseNcCode } from "./parseNcCode";
+export { getBlocks, getBlockGenerator } from "./getBlocks";

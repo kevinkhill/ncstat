@@ -1,4 +1,4 @@
-import { Modals } from "../NcCodes";
+import { Modals } from "../NcParser/codes";
 import { Block } from "../Toolpath";
 import { ActiveModals } from "../types";
 

@@ -1,7 +1,5 @@
 import Tokenizr from "tokenizr";
 
-import { Address, G_CODES, M_CODES } from "../NcCodes";
-
 export const lexer = new Tokenizr();
 
 // Match "%", required for proper NC files

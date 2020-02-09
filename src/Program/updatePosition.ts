@@ -1,7 +1,7 @@
 import { clone, each, get, has } from "lodash/fp";
 
 import { HMC_AXES } from "../lib/constants";
-import { Modals, PositioningMode } from "../NcCodes";
+import { Modals, PositioningMode } from "../NcParser/codes";
 import { Block } from "../Toolpath";
 import { MachinePositions } from "../types";
 

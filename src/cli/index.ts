@@ -1,7 +1,7 @@
 import { Cli } from "clipanion";
 
 import { NcLexerCommand } from "./NcLexerCommand";
-// import { GreetCommand } from "./GreetCommand";
+import { NcParserCommand } from "./NcParserCommand";
 
 export const cli = new Cli({
   binaryLabel: `NC Lexer`,
@@ -9,8 +9,8 @@ export const cli = new Cli({
   binaryVersion: `1.0.0`
 });
 
-// cli.register(GreetCommand);
 cli.register(NcLexerCommand);
+cli.register(NcParserCommand);
 
 cli.runExit(process.argv.slice(2), {
   stdin: process.stdin,

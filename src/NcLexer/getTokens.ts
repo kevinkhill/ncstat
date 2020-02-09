@@ -1,9 +1,5 @@
-import { IToken } from "tokenizr";
-
+import { NcToken } from ".";
 import { lexer } from "./lexer";
-
-export type NcToken = IToken<any>;
-export type LexerInput = string | string[] | Buffer;
 
 export function getTokens(input: string, debug = false): NcToken[] {
   lexer.debug(debug);

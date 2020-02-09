@@ -1,6 +1,6 @@
 import { forEach } from "lodash";
 
-import { NcCodeDef } from "../NcCodes";
+import { NcCodeDef } from "./codes";
 
 const MOTION: Record<string, string> = {
   G00: "RAPID",
@@ -37,13 +37,13 @@ const COMPENSATION: Record<string, string> = {
 const COORDINATE: Record<string, string> = {
   G15: "Turn Polar Coordinates OFF, return to Cartesian Coordinates",
   G16: "Turn Polar Coordinates ON",
-  G17: "Select X-Y plane",
-  G18: "Select X-Z plane",
-  G19: "Select Y-Z plane",
+  G17: "SELECT_X-Y_PLANE",
+  G18: "SELECT_X-Z_PLANE",
+  G19: "SELECT_Y-Z_PLANE",
   G20: "Program coordinates are inches",
   G21: "Program coordinates are mm",
   G52: "Local workshift for all coordinate systems, add XYZ offsets",
-  G53: "chine coordinate system (cancel work offsets)",
+  G53: "Machine coordinate system (cancel work offsets)",
   G54: "Work coordinate system (1st Workpiece)",
   G55: "Work coordinate system (2nd Workpiece)",
   G56: "Work coordinate system (3rd Workpiece)",

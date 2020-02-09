@@ -9,8 +9,8 @@ import {
   split
 } from "lodash/fp";
 
-import { Modals, PositioningMode } from "../NcCodes";
 import { NcFile } from "../NcFile";
+import { Modals, PositioningMode } from "../NcParser/codes";
 import {
   Block,
   CannedCycle,

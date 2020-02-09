@@ -1,7 +1,18 @@
-export { getTokens } from "./getTokens";
-export { M_CODES } from "./mcodes";
+import { IToken } from "tokenizr";
 
-export interface ValueAddress {
-  prefix: string;
+export { getTokens, getTokenGenerator } from "./getTokens";
+
+export type NcToken = IToken<any>;
+export type LexerInput = string | string[] | Buffer;
+
+export interface Address {
   value: number;
+  prefix: string;
+}
+
+export function getValue(token: NcToken): Address {
+  return {
+    value: token.value.value,
+    prefix: token.value.prefix
+  };
 }
