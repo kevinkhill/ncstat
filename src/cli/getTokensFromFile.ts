@@ -2,7 +2,9 @@
 import { Command } from "clipanion";
 import fs from "fs";
 
-export abstract class BaseCommand extends Command {
+import { getTokenGenerator, NcToken } from "../NcLexer";
+
+export abstract class getTokensFromFile extends Command {
   @Command.Boolean(`-d,--debug`)
   public debug = false;
 
@@ -10,9 +12,9 @@ export abstract class BaseCommand extends Command {
   public filepath!: string;
 
   // eslint-disable-next-line class-methods-use-this
-  async readFile(): Promise<string> {
+  async getTokensFromFile(): Promise<Generator<NcToken>> {
     const buffer = await fs.promises.readFile(this.filepath);
 
-    return buffer.toString();
+    return getTokenGenerator(buffer.toString(), this.debug);
   }
 }

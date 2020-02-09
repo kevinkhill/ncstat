@@ -1,1 +1,1 @@
-export { getBlocks, getBlockGenerator } from "./getBlocks";
+export { getBlockGenerator } from "./getBlocks";
