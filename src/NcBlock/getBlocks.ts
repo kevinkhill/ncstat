@@ -1,16 +1,8 @@
-import { filter } from "lodash/fp";
+// import { filter } from "lodash/fp";
 
 // import { isEqual } from "lodash/fp";
-import { NcToken, NcTokens, tokenizeNc } from "../NcLexer";
+import { NcToken, NcTokens } from "../NcLexer";
 import { NcBlock } from "./NcBlock";
-
-export function parseLine(input: string): NcBlock {
-  const tokens = filter(token => {
-    return token.type !== "NEWLINE" && token.type !== "EOF";
-  }, tokenizeNc(input));
-
-  return new NcBlock(tokens);
-}
 
 export function getBlocks(tokens: NcTokens): NcBlock[] {
   const blocks: NcBlock[] = [];

@@ -1,13 +1,13 @@
-import { Block } from "./Block";
+// import { Block } from "./Block";
 
 export class Point {
-  static fromBlock(block: Block): Point {
-    return new Point({
-      X: block.values.X,
-      Y: block.values.Y,
-      Z: block.values.Z
-    });
-  }
+  // static fromBlock(block: Block): Point {
+  //   return new Point({
+  //     X: block.values.X,
+  //     Y: block.values.Y,
+  //     Z: block.values.Z
+  //   });
+  // }
 
   X?: number;
   Y?: number;

@@ -1,7 +1,7 @@
-import { NcBlock, parseLine } from "../../src/NcBlock";
+import { NcBlock } from "../../src/NcBlock";
 
 const line = "/3 G103 M1. ( TOOL BREAK CHECK )";
-const block = parseLine(line);
+const block = NcBlock.parse(line);
 
 it(`parsed "${line}" into a NcBlock`, () => {
   expect(block).toBeInstanceOf(NcBlock);
