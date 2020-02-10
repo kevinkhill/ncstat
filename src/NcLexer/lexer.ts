@@ -29,7 +29,7 @@ lexer.rule(/([A-NP-Z])([#-]*[0-9.]+)(?![^(]*\))/, (ctx, match) => {
 
 // Match "/", "/3"
 lexer.rule(/\/([0-9]?)/, (ctx, match) => {
-  ctx.accept("BLKSKP", parseInt(match[1]));
+  ctx.accept("BLK_SKIP", parseInt(match[1]));
 });
 
 // Match comment text "(note)", "( comment )"

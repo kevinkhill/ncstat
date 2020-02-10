@@ -4,6 +4,8 @@ import { Address, NcToken } from "./types";
 
 export * from "./tokens";
 export * from "./types";
+export * from "./tokenMaps";
+export * from "./filterByPrefix";
 
 export const rejectNewline = reject(["type", "NEWLINE"]);
 
