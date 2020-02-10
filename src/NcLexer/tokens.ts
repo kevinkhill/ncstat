@@ -1,7 +1,7 @@
 import { NcToken } from ".";
 import { lexer } from "./lexer";
 
-export function getTokens(input: string, debug = false): NcToken[] {
+export function tokenizeNc(input: string, debug = false): NcToken[] {
   lexer.debug(debug);
   lexer.input(input);
 

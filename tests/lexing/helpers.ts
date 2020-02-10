@@ -2,7 +2,7 @@
 
 import { get } from "lodash/fp";
 
-import { NcToken } from "../../src/NcLexer/getTokens";
+import { NcToken } from "../../src/NcLexer/tokens";
 
 export function testProp(
   token: NcToken,

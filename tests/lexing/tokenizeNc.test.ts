@@ -1,9 +1,5 @@
-import { getTokens } from "../../src/NcLexer/getTokens";
-import {
-  testAddrTokenPrefixAndValue,
-  testProp,
-  testToken
-} from "./helpers";
+import { tokenizeNc } from "../../src/NcLexer";
+import { testAddrTokenPrefixAndValue, testToken } from "./helpers";
 
 const input = `%
 O1234 (TEST PROGRAM)
@@ -20,7 +16,7 @@ M30
 %`;
 
 // We don't need to test NEWLINE tokens here
-const tokens = getTokens(input).filter(
+const tokens = tokenizeNc(input).filter(
   token => token.type !== "NEWLINE"
 );
 
@@ -28,10 +24,6 @@ describe("the lexer", () => {
   test("identified all the tokens", () => {
     // Don't forget about the "EOF" token
     expect(tokens).toHaveLength(29);
-  });
-
-  test(`the last token is the "EOF"`, () => {
-    expect(tokens.pop()?.type).toBe("EOF");
   });
 });
 

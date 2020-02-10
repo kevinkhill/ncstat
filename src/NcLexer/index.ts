@@ -1,6 +1,6 @@
 import { IToken } from "tokenizr";
 
-export { getTokens, getTokenGenerator } from "./getTokens";
+export { tokenizeNc, getTokenGenerator } from "./tokens";
 
 export type NcToken = IToken<any>;
 export type LexerInput = string | string[] | Buffer;

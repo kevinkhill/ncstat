@@ -1,1 +1,1 @@
-export { getBlockGenerator } from "./getBlocks";
+export { makeProgram } from "./makeProgram";

@@ -1,3 +1,5 @@
+import { invokeMap, prop } from "lodash/fp";
+
 import { NcToken } from "../NcLexer";
 
 export class NcBlock {
@@ -6,12 +8,6 @@ export class NcBlock {
   }
 
   toString(): string {
-    let out = "[ ";
-
-    this.tokens.forEach(token => {
-      out += `<${token.text}> `;
-    });
-
-    return `${out}]`;
+    return invokeMap(prop("text"), this.tokens).join(" ");
   }
 }

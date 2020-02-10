@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Command } from "clipanion";
 
-import { getBlockGenerator } from "../NcParser";
+import { getBlockGenerator } from "../NcBlock";
 import { getTokensFromFile } from "./getTokensFromFile";
 
 export class NcParserCommand extends getTokensFromFile {
