@@ -2,13 +2,20 @@
 import { Command } from "clipanion";
 
 import { getBlockGenerator } from "../NcBlock";
-import { getTokensFromFile } from "./getTokensFromFile";
+import { getTokenGenerator } from "../NcLexer";
+import { GetFileContents } from "./GetFileContents";
 
-export class NcParserCommand extends getTokensFromFile {
+export class NcParserCommand extends GetFileContents {
+  @Command.Boolean(`-d,--debug`)
+  public debug = false;
+
   @Command.Path(`parse`)
   async execute() {
     try {
-      const tokens = await this.getTokensFromFile();
+      const tokens = getTokenGenerator(
+        await this.getFileContents(),
+        this.debug
+      );
       const blocks = getBlockGenerator(tokens);
 
       for (const block of blocks) {

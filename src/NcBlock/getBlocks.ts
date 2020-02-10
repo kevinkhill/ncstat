@@ -1,25 +1,31 @@
+// eslint-disable-next-line lodash-fp/use-fp
 import { isEqual, last, reduce } from "lodash";
+import { reject } from "lodash/fp";
 
 // import { isEqual } from "lodash/fp";
-import { NcToken } from "../NcLexer";
+import { NcToken, NcTokens, tokenizeNc } from "../NcLexer";
 import { NcBlock } from "./NcBlock";
 
-export function getBlocks(tokenGen: Generator<NcToken>): NcBlock[] {
-  const tokens = Array.from(tokenGen);
-  const delimiter = { type: "NEWLINE" };
-  const res = reduce(
-    tokens,
-    function(result, obj, index) {
-      if (isEqual(obj, delimiter)) {
-        if (index !== tokens.length - 1) result.push([]);
-      } else {
-        last(result).push(obj);
-      }
-      return result;
-    },
-    [[]]
-  );
+export function parseLine(input: string): NcBlock {
+  const tokens = reject(["type", "NEWLINE"], tokenizeNc(input));
 
-  console.log(res);
-  return res;
+  return new NcBlock(tokens);
+}
+
+export function getBlocks(tokens: NcTokens): NcBlock[] {
+  const blocks: NcBlock[] = [];
+
+  let line: NcToken[] = [];
+
+  for (const token of tokens) {
+    if (token.type === "NEWLINE") {
+      blocks.push(new NcBlock(line));
+
+      line = [];
+    } else {
+      line.push(token);
+    }
+  }
+
+  return blocks;
 }

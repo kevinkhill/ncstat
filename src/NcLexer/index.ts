@@ -1,14 +1,11 @@
-import { IToken } from "tokenizr";
+import { reject } from "lodash/fp";
 
-export { tokenizeNc, getTokenGenerator } from "./tokens";
+import { Address, NcToken } from "./types";
 
-export type NcToken = IToken<any>;
-export type LexerInput = string | string[] | Buffer;
+export * from "./tokens";
+export * from "./types";
 
-export interface Address {
-  value: number;
-  prefix: string;
-}
+export const rejectNewline = reject(["type", "NEWLINE"]);
 
 export function getValue(token: NcToken): Address {
   return {

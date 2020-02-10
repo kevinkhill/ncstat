@@ -1,4 +1,4 @@
-import { invokeMap, prop } from "lodash/fp";
+import { map } from "lodash/fp";
 
 import { NcToken } from "../NcLexer";
 
@@ -8,6 +8,6 @@ export class NcBlock {
   }
 
   toString(): string {
-    return invokeMap(prop("text"), this.tokens).join(" ");
+    return map("text", this.tokens).join(" ");
   }
 }

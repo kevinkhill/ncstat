@@ -1,13 +1,20 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Command } from "clipanion";
 
-import { getTokensFromFile } from "./getTokensFromFile";
+import { getTokenGenerator } from "../NcLexer";
+import { GetFileContents } from "./GetFileContents";
 
-export class NcLexerCommand extends getTokensFromFile {
+export class NcLexerCommand extends GetFileContents {
+  @Command.Boolean(`-d,--debug`)
+  public debug = false;
+
   @Command.Path(`tokenize`)
   async execute() {
     try {
-      const tokens = await this.getTokensFromFile();
+      const tokens = getTokenGenerator(
+        await this.getFileContents(),
+        this.debug
+      );
 
       for (const token of tokens) {
         this.context.stdout.write(token.toString());

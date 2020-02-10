@@ -1,11 +1,11 @@
-import { Block } from "../src/Toolpath";
+import { parseLine } from "../src/NcBlock";
 
 const testMsg = (l: string): string => `parses: "${l}"`;
 
 const line1 = "M80 S762";
 
 test(testMsg(line1), () => {
-  const block = Block.parse(line1);
+  const block = parseLine(line1);
 
   expect(block.M(80)).toBeTruthy();
   expect(block.values.S).toBe(762);
