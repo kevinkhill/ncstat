@@ -1,13 +1,17 @@
 import { analyzeCode, getLimits, Tool } from "../../src";
 import { getTestFileContents } from "./getTestFileContents";
 
-const contents = getTestFileContents("example1.NC");
+const testFile = "example1.NC";
+
+const contents = getTestFileContents(testFile);
 const program = analyzeCode(contents);
+const zLimits = getLimits("Z", program.toolpaths);
 
-test("find the largest -Z in example1.NC", async () => {
-  const zLimits = getLimits("Z", program.toolpaths);
-
+test(`find the lower Z extent in ${testFile}`, async () => {
   expect(zLimits?.min).toBe(-0.5631);
+});
+
+test(`find the upper Z extent in ${testFile}`, async () => {
   expect(zLimits?.max).toBe(1.0);
 });
 

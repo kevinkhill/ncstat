@@ -9,17 +9,11 @@ import {
   split
 } from "lodash/fp";
 
-import { Modals, PositioningMode } from "../NcCodes";
-import {
-  Block,
-  CannedCycle,
-  getLimits,
-  Tool,
-  Toolpath
-} from "../Toolpath";
+import { NcBlock } from "../NcBlock";
+import { Modals, PositioningMode } from "../NcParser/codes";
+import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
 import { ActiveModals, AxesLimits, MachinePositions } from "../types";
 import { getModals } from "./getModals";
-import { NcFile } from "./NcFile";
 import {
   Events,
   isIdle,
@@ -35,14 +29,6 @@ export class Program {
     return new Program(code);
   }
 
-  static fromLines(lines: string[]): Program {
-    return Program.create(lines.join("\n"));
-  }
-
-  static fromFile(file: NcFile): Program {
-    return Program.fromLines(file.lines);
-  }
-
   number = 0;
   title?: string;
   state: States = States.IDLE;
@@ -50,7 +36,7 @@ export class Program {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private nc: any;
-  private blocks: Block[] = [];
+  private blocks: NcBlock[] = [];
 
   constructor(private readonly rawInput: string) {
     this.nc = NcService;
@@ -125,7 +111,7 @@ export class Program {
     const mapLinesToBlocks = flow([
       reject(eq("")),
       reject(eq("%")),
-      map(Block.parse)
+      map(NcBlock.parse)
     ]);
 
     this.blocks = mapLinesToBlocks(this.getLines());
@@ -133,7 +119,7 @@ export class Program {
     for (const block of this.blocks) {
       modals = Object.assign(modals, getModals(block));
 
-      this.number = block.values.O;
+      this.number = block.O;
       this.title = block.comment;
 
       if (block.hasMovement) {
@@ -179,8 +165,8 @@ export class Program {
           toolpath = new Toolpath();
 
           const tool = Tool.create({
-            number: block.values.N,
-            desc: block.comment as string
+            number: block.N,
+            desc: block.comment
           });
 
           toolpath.setTool(tool);
@@ -190,7 +176,7 @@ export class Program {
       }
 
       if (isToolpathing(this.state) || isInCannedCycle(this.state)) {
-        if (block.hasCommand(8) || block.hasCommand(50)) {
+        if (block.M === 8 || block.M === 50) {
           toolpath.hasCoolant = true;
         }
 
@@ -200,7 +186,7 @@ export class Program {
          */
         if (block.hasToolChange) {
           if (toolpath.tool) {
-            toolpath.tool.number = block.values.T;
+            toolpath.tool.number = block.T;
           }
 
           if (block.comment) {

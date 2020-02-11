@@ -1,10 +1,5 @@
 import { map } from "lodash/fp";
 
-export const BLOCK_SKIP_REGEX = /^\/([0-9]?)/;
-export const COMMENT_REGEX = /\(\s?(.+)\s?\)/;
-export const FEEDRATE_REGEX = /F([0-9]+(?:\\.[0-9]*)?)/g;
-export const ADDRESS_REGEX = /([A-Z][#-]*[0-9.]+)(?![^(]*\))/g;
-
 export function regexExtract(
   matcher: RegExp,
   subject: string

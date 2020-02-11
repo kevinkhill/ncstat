@@ -1,6 +1,6 @@
 import { forEach } from "lodash/fp";
 
-import { Block } from "./Block";
+import { NcBlock, parseLine } from "../NcBlock";
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
 
@@ -24,7 +24,7 @@ export class Toolpath {
 
   tool?: Tool;
   hasCoolant = false;
-  blocks: Block[] = [];
+  blocks: NcBlock[] = [];
   description?: string;
   cannedCycles: CannedCycle[] = [];
 
@@ -38,14 +38,14 @@ export class Toolpath {
     return this;
   }
 
-  pushBlock(block: Block): this {
+  pushBlock(block: NcBlock): this {
     this.blocks.push(block);
 
     return this;
   }
 
   parseLine(line: string): this {
-    this.pushBlock(Block.parse(line));
+    this.pushBlock(parseLine(line));
 
     return this;
   }
