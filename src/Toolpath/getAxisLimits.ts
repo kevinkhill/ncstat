@@ -1,8 +1,11 @@
 import { curry, filter, flow, get, map, max, min } from "lodash/fp";
 
-import { dedupe } from "../lib";
 import { AxisLimits, HmcAxis } from "../types";
 import { Toolpath } from "./Toolpath";
+
+export function dedupe<T>(arr: T[]): T[] {
+  return Array.from(new Set(arr));
+}
 
 export function _getAxisLimits(
   axis: HmcAxis,

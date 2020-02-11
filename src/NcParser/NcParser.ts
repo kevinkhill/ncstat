@@ -1,44 +1,39 @@
-import {
-  clone,
-  eq,
-  filter,
-  flow,
-  last,
-  map,
-  reject,
-  split
-} from "lodash/fp";
+import { Linear } from "doublie";
+import { clone, eq, filter, last } from "lodash/fp";
 
-import { NcBlock } from "../NcBlock";
-import { Modals, PositioningMode } from "../NcParser/codes";
+import { getBlockGenerator, NcBlock } from "../NcBlock";
+import { NcTokens } from "../NcLexer";
+import { Events, NcService, States } from "../NcService";
 import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
 import { ActiveModals, AxesLimits, MachinePositions } from "../types";
+import { Modals, PositioningMode } from "./codes";
 import { getModals } from "./getModals";
-import {
-  Events,
-  isIdle,
-  isInCannedCycle,
-  isToolpathing,
-  NcService,
-  States
-} from "./NcService";
+import { NcProgram } from "./types";
 import { updatePosition } from "./updatePosition";
 
-export class Program {
-  static create(code: string): Program {
-    return new Program(code);
-  }
+const isIdle = eq(States.IDLE);
+const isToolpathing = eq(States.TOOLPATHING);
+const isInCannedCycle = eq(States.IN_CANNED_CYCLE);
 
-  number = 0;
-  title?: string;
+export class NcParser {
+  programNumber = NaN;
+  programTitle = "";
   state: States = States.IDLE;
+  program: NcProgram = new Linear<NcBlock>();
   toolpaths: Toolpath[] = [];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private nc: any;
-  private blocks: NcBlock[] = [];
 
-  constructor(private readonly rawInput: string) {
+  get blocks(): NcBlock[] {
+    return this.program.toArray();
+  }
+
+  constructor(readonly tokens: NcTokens) {
+    this.tokens = tokens;
+
+    this.program.append(...getBlockGenerator(this.tokens));
+
     this.nc = NcService;
 
     this.nc.subscribe((state: { value: States }) => {
@@ -47,12 +42,12 @@ export class Program {
   }
 
   toString(): string {
-    return this.rawInput;
+    return `%\n${this.blocks.join("\n")}%`;
   }
 
-  getLines(): string[] {
-    return split("\n", this.rawInput);
-  }
+  // get lines(): string[] {
+  //   return map(Object.toString, this.blocks);
+  // }
 
   getLimits(): Partial<AxesLimits> {
     return {
@@ -62,24 +57,12 @@ export class Program {
     };
   }
 
-  getNumber(): number {
-    return this.number;
-  }
-
-  getTitle(): string | undefined {
-    return this.title;
-  }
-
-  getToolPaths(): Toolpath[] {
-    return this.toolpaths;
-  }
-
-  getToolpathCount(): number {
+  get toolpathCount(): number {
     return this.toolpaths.length;
   }
 
   getToolPathsWithTools(): Toolpath[] {
-    return filter(path => path.hasTool, this.toolpaths);
+    return filter("hasTool", this.toolpaths);
   }
 
   // getToolList(): Array<> {
@@ -89,7 +72,7 @@ export class Program {
   //   );
   // }
 
-  analyze(): Program {
+  run(): NcProgram {
     let toolpath = new Toolpath();
 
     let modals: ActiveModals = {
@@ -106,21 +89,13 @@ export class Program {
     this.nc.start();
 
     /**
-     * @TODO  Allow empty blocks as special case
+     * Run the program
      */
-    const mapLinesToBlocks = flow([
-      reject(eq("")),
-      reject(eq("%")),
-      map(NcBlock.parse)
-    ]);
-
-    this.blocks = mapLinesToBlocks(this.getLines());
-
-    for (const block of this.blocks) {
+    this.program.forEach((block: NcBlock) => {
       modals = Object.assign(modals, getModals(block));
 
-      this.number = block.O;
-      this.title = block.comment;
+      this.programNumber = block.O;
+      this.programTitle = block.comment;
 
       if (block.hasMovement) {
         const newPosition = updatePosition(
@@ -141,7 +116,7 @@ export class Program {
       }
 
       if (isInCannedCycle(this.state)) {
-        if (block.G(80)) {
+        if (block.G.includes(80)) {
           this.nc.send(Events.END_CANNED_CYCLE);
         }
 
@@ -155,7 +130,7 @@ export class Program {
 
       // Tracking toolpaths (tools) via Nxxx lines with a comment
       // This has been defined in the custom H&B posts
-      if (block.rawInput.startsWith("N")) {
+      if (block.toString().startsWith("N")) {
         if (isToolpathing(this.state)) {
           this.nc.send(Events.END_TOOLPATH);
           this.toolpaths.push(toolpath);
@@ -176,7 +151,7 @@ export class Program {
       }
 
       if (isToolpathing(this.state) || isInCannedCycle(this.state)) {
-        if (block.M === 8 || block.M === 50) {
+        if ([8, 50].includes(block.M)) {
           toolpath.hasCoolant = true;
         }
 
@@ -196,12 +171,13 @@ export class Program {
 
         toolpath.pushBlock(block);
       }
-    }
+    });
 
     this.nc.send(Events.END_TOOLPATH);
+    this.nc.stop();
 
     this.toolpaths.push(toolpath);
 
-    return this;
+    return this.program;
   }
 }

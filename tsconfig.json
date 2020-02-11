@@ -1,19 +1,20 @@
 {
   "compilerOptions": {
-    "rootDir": "./",
+    // "rootDir": "./",
     "strict": true,
-    "target": "esnext",
-    "sourceMap": true,
-    "lib": ["esnext"],
+    "noEmit": true,
+    // "sourceMap": true,
     "outDir": "dist",
-    "module": "commonjs",
-    "esModuleInterop": true,
+    "target": "ES6",
+    "module": "CommonJS",
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "experimentalDecorators": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "lib": ["esnext"]
   },
   "include": ["*.js", "bin/*.ts", "src/**/*.ts", "tests/**/*.test.ts"],
   "exclude": ["node_modules"]

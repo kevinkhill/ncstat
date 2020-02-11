@@ -1,25 +1,10 @@
-import { createMachine, interpret } from "@xstate/fsm";
-import { eq } from "lodash/fp";
+import { createMachine } from "@xstate/fsm";
 
-export const enum States {
-  IDLE = "IDLE",
-  TOOLPATHING = "TOOLPATHING",
-  IN_CANNED_CYCLE = "IN_CANNED_CYCLE"
-}
-
-export const enum Events {
-  START_TOOLPATH = "START_TOOLPATH",
-  END_TOOLPATH = "END_TOOLPATH",
-  START_CANNED_CYCLE = "START_CANNED_CYCLE",
-  END_CANNED_CYCLE = "END_CANNED_CYCLE"
-}
-
-export const isIdle = eq(States.IDLE);
-export const isToolpathing = eq(States.TOOLPATHING);
-export const isInCannedCycle = eq(States.IN_CANNED_CYCLE);
+import { Events } from "./events";
+import { States } from "./states";
 
 export const NcStateMachine = createMachine({
-  id: "nc",
+  id: "ncstat",
   initial: States.IDLE,
   context: {
     position: {
@@ -49,5 +34,3 @@ export const NcStateMachine = createMachine({
     }
   }
 });
-
-export const NcService = interpret(NcStateMachine);

@@ -10,6 +10,13 @@ import {
 import { START_CODES } from "../Toolpath/CannedCycle";
 
 export class NcBlock {
+  retractCode?: string;
+
+  // eslint-disable-next-line class-methods-use-this, @typescript-eslint/explicit-function-return-type
+  getPosition() {
+    throw new Error("Method not implemented.");
+  }
+
   static parse(input: string): NcBlock {
     const tokens = filter(token => {
       return token.type !== "NEWLINE" && token.type !== "EOF";
@@ -20,10 +27,6 @@ export class NcBlock {
 
   static create(tokens: NcToken[]): NcBlock {
     return new NcBlock(tokens);
-  }
-
-  [Symbol.iterator](): Iterator<NcToken> {
-    return this.tokens.values();
   }
 
   constructor(public tokens: NcToken[]) {

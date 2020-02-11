@@ -4,7 +4,7 @@ import { NcLexerCommand } from "./NcLexerCommand";
 import { NcParserCommand } from "./NcParserCommand";
 
 export const cli = new Cli({
-  binaryLabel: `NC Lexer`,
+  binaryLabel: `NC Static Analyzer`,
   binaryName: `ncstat`,
   binaryVersion: `1.0.0`
 });

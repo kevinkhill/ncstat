@@ -28,22 +28,22 @@ export class CannedCycle {
   static START_CODES = START_CODES;
   static RETRACT_CODES = RETRACT_CODES;
 
-  // static fromBlock(block: Block): CannedCycle {
-  //   if (!block.isStartOfCannedCycle) {
-  //     throw Error(
-  //       "The provided Block is not the start of a CannedCycle."
-  //     );
-  //   }
+  static fromBlock(block: NcBlock): CannedCycle {
+    if (!block.isStartOfCannedCycle) {
+      throw Error(
+        "The provided Block is not the start of a CannedCycle."
+      );
+    }
 
-  //   return new CannedCycle({
-  //     Q: block.values?.Q,
-  //     Z: block.values.Z,
-  //     R: block.values.R,
-  //     F: block.values.F,
-  //     retractCommand: block.getRetractCode(),
-  //     cycleCommand: block.cannedCycleStartCode as string
-  //   });
-  // }
+    return new CannedCycle({
+      Q: block.Q,
+      Z: block.Z,
+      R: block.R,
+      F: block.F,
+      retractCommand: block.retractCode as string,
+      cycleCommand: block.cannedCycleStartCode as string
+    });
+  }
 
   Z: number;
   R: number;

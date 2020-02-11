@@ -4,7 +4,7 @@ export const M_CODES: Record<string, string> = {
   M03: "SPINDLE_FORWARD",
   M04: "SPINDLE_REVERSE",
   M05: "SPINDLE_STOP",
-  M06: "TOOLCHANGE",
+  M06: "TOOL_CHANGE",
   M07: "MIST_COOLANT_ON",
   M08: "FLOOD_COOLANT_ON",
   M09: "COOLANT_OFF",
@@ -21,10 +21,20 @@ export const M_CODES: Record<string, string> = {
   M107: "SAFE_START"
 };
 
-export function M(value: number): string {
-  return M_CODES[`M${value}`];
-}
+/**
+ * Return an M codes' description by string or number
+ *
+ * @example ```
+ *  M(30)             // => "PROGRAM_END"
+ *  M("M6")           // => "TOOL_CHANGE"
+ * ```
+ */
+export function M(input: number | string): string {
+  if (typeof input === "number") {
+    return M_CODES[`M${input}`];
+  } else if (typeof input === "string") {
+    return M_CODES[input];
+  }
 
-export function mCode(mcode: string): string {
-  return M_CODES[mcode];
+  return "";
 }
