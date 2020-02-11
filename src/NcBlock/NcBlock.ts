@@ -47,8 +47,9 @@ export class NcBlock {
     return NaN;
   }
 
-  map(prop: string): string[] {
-    return map(prop, this.tokens);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  map(iter: any): ReturnType<typeof iter> {
+    return map(iter, this.tokens);
   }
 
   toString(): string {

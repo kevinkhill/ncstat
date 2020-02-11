@@ -1,3 +1,9 @@
-export { getBlockGenerator } from "../NcBlock/blockGenerator";
-export { getBlocks } from "../NcBlock/getBlocks";
+// Types
+export { NcBlocks } from "./types";
+
+// Classes
 export { NcBlock } from "../NcBlock/NcBlock";
+
+//Functions
+export { getBlocks } from "../NcBlock/getBlocks";
+export { getBlockGenerator } from "../NcBlock/blockGenerator";

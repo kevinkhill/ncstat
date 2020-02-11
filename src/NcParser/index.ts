@@ -1,6 +1,6 @@
 // export { analyzeCode } from "./analyzeCode";
-export { getModals } from "./getModals";
-export { updatePosition } from "./updatePosition";
+export { getModals } from "./lib/getModals";
+export { updatePosition } from "./lib/updatePosition";
 
 export { NcParser } from "./NcParser";
 

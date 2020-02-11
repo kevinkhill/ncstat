@@ -34,10 +34,8 @@ export class Address {
   }
 
   constructor(token: NcToken) {
-    const { prefix, value } = getValue(token);
-
-    this.prefix = prefix;
-    this.value = value;
+    this.prefix = token.value?.prefix;
+    this.value = token.value?.value;
   }
 
   toString(): string {

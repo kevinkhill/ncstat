@@ -1,48 +1,55 @@
 import { Linear } from "doublie";
+import { EventEmitter } from "eventemitter3";
+import fs from "fs";
 import { clone, eq, filter, last } from "lodash/fp";
+import path from "path";
 
-import { getBlockGenerator, NcBlock } from "../NcBlock";
-import { NcTokens } from "../NcLexer";
+import { getBlockGenerator, NcBlock, NcBlocks } from "../NcBlock";
+import { getTokenGenerator, NcTokens } from "../NcLexer";
 import { Events, NcService, States } from "../NcService";
 import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
-import { ActiveModals, AxesLimits, MachinePositions } from "../types";
+import {
+  ActiveModals,
+  AxesLimits,
+  MachinePositions,
+  NcProgram
+} from "../types";
 import { Modals, PositioningMode } from "./codes";
-import { getModals } from "./getModals";
-import { NcProgram } from "./types";
-import { updatePosition } from "./updatePosition";
+import { getModals, updatePosition } from "./lib";
 
 const isIdle = eq(States.IDLE);
 const isToolpathing = eq(States.TOOLPATHING);
 const isInCannedCycle = eq(States.IN_CANNED_CYCLE);
 
-export class NcParser {
+export class NcParser extends EventEmitter {
   programNumber = NaN;
   programTitle = "";
-  state: States = States.IDLE;
+  tokens: NcTokens = [];
+  blocks: NcBlocks = [];
   program: NcProgram = new Linear<NcBlock>();
   toolpaths: Toolpath[] = [];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private nc: any;
+  private state: States = States.IDLE;
 
-  get blocks(): NcBlock[] {
-    return this.program.toArray();
-  }
-
-  constructor(readonly tokens: NcTokens) {
-    this.tokens = tokens;
-
-    this.program.append(...getBlockGenerator(this.tokens));
+  constructor() {
+    super();
 
     this.nc = NcService;
 
     this.nc.subscribe((state: { value: States }) => {
+      this.emit("stateChange", {
+        prev: this.state,
+        curr: state
+      });
+
       this.state = state.value;
     });
   }
 
   toString(): string {
-    return `%\n${this.blocks.join("\n")}%`;
+    return `%\n${this.program.join("\n")}%`;
   }
 
   // get lines(): string[] {
@@ -72,7 +79,27 @@ export class NcParser {
   //   );
   // }
 
-  run(): NcProgram {
+  async parseFile(abspath: string): Promise<NcProgram> {
+    if (!path.isAbsolute(abspath)) {
+      this.emit("error", `"${abspath}" is not an absolute path`);
+    }
+
+    try {
+      const buffer = await fs.promises.readFile(abspath);
+
+      return this.parse(buffer.toString());
+    } catch (err) {
+      this.emit("error", `Could not open "${abspath}"`);
+    }
+  }
+
+  parse(source: string): NcProgram {
+    this.tokens = getTokenGenerator(source);
+    this.blocks = getBlockGenerator(this.tokens);
+
+    //@TODO move this to the end?
+    this.program.append(...this.blocks);
+
     let toolpath = new Toolpath();
 
     let modals: ActiveModals = {
