@@ -11,8 +11,8 @@ stages:
 
 Build:
   stage: build
-  tags:
-    - node
+  # tags:
+  # - node
   before_script:
     - yarn config set cache-folder .yarn
     - yarn install
@@ -21,8 +21,8 @@ Build:
 
 Test:
   stage: test
-  tags:
-    - node
+  # tags:
+  # - node
   before_script:
     - yarn config set cache-folder .yarn
     - yarn install
