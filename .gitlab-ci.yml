@@ -1,10 +1,29 @@
 image: node:latest
 
-cache:
-  paths:
-    - node_modules/
+paths:
+  - node_modules/
+  - .yarn
 
-run_jest:
-  script:
+stages:
+  - build
+  - test
+
+Build:
+  stage: build
+  tags:
+    - node
+  before_script:
+    - yarn config set cache-folder .yarn
     - yarn install
-    - yarn jest
+  script:
+    - yarn build:cli
+
+Test:
+  stage: test
+  tags:
+    - node
+  before_script:
+    - yarn config set cache-folder .yarn
+    - yarn install
+  script:
+    - yarn test
