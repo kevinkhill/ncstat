@@ -1,12 +1,8 @@
 import { filter, find, intersection, map } from "lodash/fp";
 
-import {
-  addressValue,
-  filterByPrefix,
-  NcToken,
-  tokenizeNc
-} from "NcLexer";
+import { addressValue, filterByPrefix, NcToken } from "NcLexer";
 
+import { NcLexer } from "../NcLexer/NcLexer";
 // import { RETRACT_CODES, START_CODES } from "../Toolpath/CannedCycle";
 import { START_CODES } from "../Toolpath/CannedCycle";
 import { Position } from "../types";
@@ -14,21 +10,21 @@ import { Position } from "../types";
 export class NcBlock {
   retractCode?: string;
 
-  // eslint-disable-next-line class-methods-use-this, @typescript-eslint/explicit-function-return-type
-  getPosition() {
-    // throw new Error("Method not implemented.");
+  getPosition(): Position {
     return {
       B: this.B,
       X: this.X,
       Y: this.Y,
       Z: this.Z
-    } as Position;
+    };
   }
 
   static parse(input: string): NcBlock {
-    const tokens = filter(token => {
+    const lexer = new NcLexer({});
+
+    const tokens = filter((token: NcToken) => {
       return token.type !== "NEWLINE" && token.type !== "EOF";
-    }, tokenizeNc(input));
+    }, lexer.tokenize(input));
 
     return new NcBlock(tokens);
   }

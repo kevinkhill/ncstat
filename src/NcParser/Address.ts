@@ -34,6 +34,10 @@ export class Address {
   }
 
   constructor(token: NcToken) {
+    if (token.type !== "ADDR") {
+      throw Error(`Token must be of type "ADDR"`);
+    }
+
     this.prefix = token.value?.prefix;
     this.value = token.value?.value;
   }

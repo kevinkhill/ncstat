@@ -1,10 +1,9 @@
 import { Linear } from "doublie";
-import { EventEmitter } from "eventemitter3";
 import { clone, eq, filter, last } from "lodash/fp";
 
 import { getBlockGenerator, NcBlock, NcBlocks } from "NcBlock";
-import { getTokenGenerator, NcTokens } from "NcLexer";
-import { Events, NcService, States } from "NcService";
+import { NcLexer, NcTokens } from "NcLexer";
+import { NcMachineEvents, NcMachineStates, NcService } from "NcService";
 
 import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
 import {
@@ -15,32 +14,53 @@ import {
 } from "../types";
 import { Modals, PositioningMode } from "./codes";
 import { getModals, updatePosition } from "./lib";
+import { NcEventEmitter } from "./NcEventEmitter";
 
-const isIdle = eq(States.IDLE);
-const isToolpathing = eq(States.TOOLPATHING);
-const isInCannedCycle = eq(States.IN_CANNED_CYCLE);
+const isIdle = eq(NcMachineStates.IDLE);
+const isToolpathing = eq(NcMachineStates.TOOLPATHING);
+const isInCannedCycle = eq(NcMachineStates.IN_CANNED_CYCLE);
 
-export class NcParser extends EventEmitter {
+export class NcParser extends NcEventEmitter {
+  /**
+   * Settings
+   */
+  debug = false;
+
+  /**
+     Proram Vars
+    */
   programNumber = NaN;
   programTitle = "";
-  tokens: NcTokens = [];
-  blocks: NcBlocks = [];
   program: NcProgram = new Linear<NcBlock>();
   toolpaths: Toolpath[] = [];
 
+  /**
+   * Parser Variables
+   */
+  blocks: NcBlocks = [];
+
+  /**
+   * Internals
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private nc: any;
-  private state: States = States.IDLE;
+  private state = NcMachineStates.IDLE;
+  private lexer: NcLexer;
+  private tokens: NcTokens = [];
 
-  constructor() {
+  constructor({ debug }: { debug?: boolean }) {
     super();
+
+    this.debug = Boolean(debug);
+
+    this.lexer = new NcLexer({ debug: this.debug });
 
     this.nc = NcService;
 
-    this.nc.subscribe((state: { value: States }) => {
-      this.emit("stateChange", {
+    this.nc.subscribe((state: { value: NcMachineStates }) => {
+      this.$emitStateChange({
         prev: this.state,
-        curr: state
+        curr: state.value
       });
 
       this.state = state.value;
@@ -78,8 +98,18 @@ export class NcParser extends EventEmitter {
   //   );
   // }
 
+  tokenize(input: string): NcTokens {
+    try {
+      return this.lexer.tokenize(input);
+    } catch (error) {
+      this.$emitError(error);
+    }
+
+    return [];
+  }
+
   parse(source: string): NcProgram {
-    this.tokens = getTokenGenerator(source);
+    this.tokens = this.tokenize(source);
     this.blocks = getBlockGenerator(this.tokens);
 
     //@TODO move this to the end?
@@ -120,7 +150,7 @@ export class NcParser extends EventEmitter {
       }
 
       if (block.isStartOfCannedCycle && isToolpathing(this.state)) {
-        this.nc.send(Events.START_CANNED_CYCLE);
+        this.nc.send(NcMachineEvents.START_CANNED_CYCLE);
 
         const cannedCycle = CannedCycle.fromBlock(block);
 
@@ -129,7 +159,7 @@ export class NcParser extends EventEmitter {
 
       if (isInCannedCycle(this.state)) {
         if (block.G.includes(80)) {
-          this.nc.send(Events.END_CANNED_CYCLE);
+          this.nc.send(NcMachineEvents.END_CANNED_CYCLE);
         }
 
         if (block.hasMovement) {
@@ -144,7 +174,7 @@ export class NcParser extends EventEmitter {
       // This has been defined in the custom H&B posts
       if (block.toString().startsWith("N")) {
         if (isToolpathing(this.state)) {
-          this.nc.send(Events.END_TOOLPATH);
+          this.nc.send(NcMachineEvents.END_TOOLPATH);
           this.toolpaths.push(toolpath);
         }
 
@@ -158,7 +188,7 @@ export class NcParser extends EventEmitter {
 
           toolpath.setTool(tool);
 
-          this.nc.send(Events.START_TOOLPATH);
+          this.nc.send(NcMachineEvents.START_TOOLPATH);
         }
       }
 
@@ -185,7 +215,7 @@ export class NcParser extends EventEmitter {
       }
     });
 
-    this.nc.send(Events.END_TOOLPATH);
+    this.nc.send(NcMachineEvents.END_TOOLPATH);
     this.nc.stop();
 
     this.toolpaths.push(toolpath);

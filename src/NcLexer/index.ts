@@ -2,7 +2,8 @@ import { reject } from "lodash/fp";
 
 import { Address, NcToken } from "./types";
 
-export * from "./tokens";
+export { NcLexer } from "./NcLexer";
+
 export * from "./types";
 export * from "./tokenMaps";
 export * from "./filterByPrefix";

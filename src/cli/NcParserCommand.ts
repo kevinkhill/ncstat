@@ -14,9 +14,9 @@ export class NcParserCommand extends Command {
 
   @Command.Path(`parse`)
   async execute() {
-    const parser = new NcParser();
+    const parser = new NcParser({ debug: this.debug });
 
-    parser.on("error", error => {
+    parser.on("error", (error: Error) => {
       this.context.stderr.write(error.toString());
     });
 
