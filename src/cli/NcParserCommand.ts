@@ -2,6 +2,7 @@
 import { Command } from "clipanion";
 import fs from "fs";
 
+import { NcBlock } from "NcBlock";
 import { NcParser } from "NcParser";
 
 export class NcParserCommand extends Command {
@@ -15,19 +16,15 @@ export class NcParserCommand extends Command {
   async execute() {
     const parser = new NcParser();
 
-    try {
-      const buffer = await fs.promises.readFile(this.filepath);
-      const program = parser.parse(buffer.toString());
+    parser.on("error", error => {
+      this.context.stderr.write(error.toString());
+    });
 
-      this.context.stdout.write(program);
+    const buffer = await fs.promises.readFile(this.filepath);
+    const program = parser.parse(buffer.toString());
 
-      for (const block of program.toArray()) {
-        this.context.stdout.write(block.toString());
-        this.context.stdout.write("\n");
-      }
-    } catch (err) {
-      // this.context.stderr.write(err.toString());
-      this.context.stderr.write(err);
-    }
+    program.forEach((block: NcBlock) => {
+      this.context.stdout.write(`${block.toString()}\n`);
+    });
   }
 }

@@ -14,19 +14,14 @@
     "tokenizr": "^1.5.7"
   },
   "scripts": {
-    "build": "bili",
-    "test": "jest",
-    "test-watch": "jest --notify --watch",
-    "lint": "eslint --ext .ts ./src",
-    "lint-fix": "yarn lint --fix",
-    "dev": "tsnd --respawn",
     "cli": "ts-node -r tsconfig-paths/register ./src/cli/index.ts",
-    "build:cli": "bili ./src/cli/index.ts --file-name cli.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
+    "build": "bili",
+    "build:cli": "bili ./src/cli/index.ts --file-name cli.js",
+    "dev": "tsnd --respawn",
+    "lint": "eslint --ext .ts ./src",
+    "lint:fix": "yarn lint --fix",
+    "test": "jest",
+    "test:watch": "jest --notify --watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.3",
@@ -58,6 +53,7 @@
     "eslint-plugin-simple-import-sort": "^4.0.0",
     "husky": "^4.2.1",
     "jest": "^25.1.0",
+    "lint-staged": ">=10",
     "lodash-es": "^4.17.15",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
@@ -68,5 +64,13 @@
     "ts-node-dev": "^1.0.0-pre.44",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.5"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

@@ -9,13 +9,20 @@ import {
 
 // import { RETRACT_CODES, START_CODES } from "../Toolpath/CannedCycle";
 import { START_CODES } from "../Toolpath/CannedCycle";
+import { Position } from "../types";
 
 export class NcBlock {
   retractCode?: string;
 
   // eslint-disable-next-line class-methods-use-this, @typescript-eslint/explicit-function-return-type
   getPosition() {
-    throw new Error("Method not implemented.");
+    // throw new Error("Method not implemented.");
+    return {
+      B: this.B,
+      X: this.X,
+      Y: this.Y,
+      Z: this.Z
+    } as Position;
   }
 
   static parse(input: string): NcBlock {
