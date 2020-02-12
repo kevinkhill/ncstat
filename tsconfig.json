@@ -9,16 +9,24 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "noImplicitAny": true,
+    // "noImplicitAny": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
     "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "paths": {
-      "NcBlock/*": ["NcBlock/*"],
-      "NcLexer/*": ["NcLexer/*"],
-      "NcParser/*": ["NcParser/*"]
+      "NcBlock/*": [
+        "NcBlock/*"
+      ],
+      "NcLexer/*": [
+        "NcLexer/*"
+      ],
+      "NcParser/*": [
+        "NcParser/*"
+      ]
     }
   },
   "include": [
@@ -28,5 +36,7 @@
     "tests/**/*.test.ts",
     "tests/ncfiles/index.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
