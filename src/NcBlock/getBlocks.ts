@@ -1,7 +1,7 @@
-// import { filter } from "lodash/fp";
-
 // import { isEqual } from "lodash/fp";
-import { NcToken, NcTokens } from "../NcLexer";
+
+import { NcToken, NcTokens } from "NcLexer";
+
 import { NcBlock } from "./NcBlock";
 
 export function getBlocks(tokens: NcTokens): NcBlock[] {

@@ -1,12 +1,11 @@
 import { Linear } from "doublie";
 import { EventEmitter } from "eventemitter3";
-import fs from "fs";
 import { clone, eq, filter, last } from "lodash/fp";
-import path from "path";
 
-import { getBlockGenerator, NcBlock, NcBlocks } from "../NcBlock";
-import { getTokenGenerator, NcTokens } from "../NcLexer";
-import { Events, NcService, States } from "../NcService";
+import { getBlockGenerator, NcBlock, NcBlocks } from "NcBlock";
+import { getTokenGenerator, NcTokens } from "NcLexer";
+import { Events, NcService, States } from "NcService";
+
 import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
 import {
   ActiveModals,
@@ -78,20 +77,6 @@ export class NcParser extends EventEmitter {
   //     this.getToolPathsWithTools()
   //   );
   // }
-
-  async parseFile(abspath: string): Promise<NcProgram> {
-    if (!path.isAbsolute(abspath)) {
-      this.emit("error", `"${abspath}" is not an absolute path`);
-    }
-
-    try {
-      const buffer = await fs.promises.readFile(abspath);
-
-      return this.parse(buffer.toString());
-    } catch (err) {
-      this.emit("error", `Could not open "${abspath}"`);
-    }
-  }
 
   parse(source: string): NcProgram {
     this.tokens = getTokenGenerator(source);

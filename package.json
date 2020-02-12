@@ -20,7 +20,7 @@
     "lint": "eslint --ext .ts ./src",
     "lint-fix": "yarn lint --fix",
     "dev": "tsnd --respawn",
-    "cli": "ts-node ./src/cli",
+    "cli": "ts-node -r tsconfig-paths/register ./src/cli/index.ts",
     "build:cli": "bili ./src/cli/index.ts --file-name cli.js"
   },
   "husky": {
@@ -66,6 +66,7 @@
     "ts-jest": "^25.1.0",
     "ts-node": "^8.6.2",
     "ts-node-dev": "^1.0.0-pre.44",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.5"
   }
 }

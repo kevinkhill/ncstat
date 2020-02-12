@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Command } from "clipanion";
+import fs from "fs";
 
-import { NcParser } from "../NcParser";
+import { NcParser } from "NcParser";
 
 export class NcParserCommand extends Command {
   @Command.String({ required: true })
@@ -15,7 +16,8 @@ export class NcParserCommand extends Command {
     const parser = new NcParser();
 
     try {
-      const program = await parser.parseFile(this.filepath);
+      const buffer = await fs.promises.readFile(this.filepath);
+      const program = parser.parse(buffer.toString());
 
       this.context.stdout.write(program);
 

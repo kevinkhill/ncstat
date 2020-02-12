@@ -5,7 +5,8 @@ import {
   filterByPrefix,
   NcToken,
   tokenizeNc
-} from "../NcLexer";
+} from "NcLexer";
+
 // import { RETRACT_CODES, START_CODES } from "../Toolpath/CannedCycle";
 import { START_CODES } from "../Toolpath/CannedCycle";
 

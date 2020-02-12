@@ -1,5 +1,5 @@
 import { analyzeCode, getLimits, Tool } from "../../src";
-import { getTestFileContents } from "./getTestFileContents";
+import { getTestFileContents } from "./readFile";
 
 const testFile = "example1.NC";
 

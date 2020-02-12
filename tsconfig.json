@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    // "rootDir": "./",
+    "baseUrl": "./src",
     "strict": true,
     "noEmit": true,
-    // "sourceMap": true,
+    "sourceMap": true,
     "outDir": "dist",
     "target": "ES6",
     "module": "CommonJS",
@@ -14,8 +14,19 @@
     "noImplicitReturns": true,
     "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
-    "lib": ["esnext"]
+    "lib": ["esnext"],
+    "paths": {
+      "NcBlock/*": ["NcBlock/*"],
+      "NcLexer/*": ["NcLexer/*"],
+      "NcParser/*": ["NcParser/*"]
+    }
   },
-  "include": ["*.js", "bin/*.ts", "src/**/*.ts", "tests/**/*.test.ts"],
+  "include": [
+    "*.js",
+    "bin/*.ts",
+    "src/**/*.ts",
+    "tests/**/*.test.ts",
+    "tests/ncfiles/index.ts"
+  ],
   "exclude": ["node_modules"]
 }

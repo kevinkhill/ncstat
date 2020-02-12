@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Command } from "clipanion";
 
-import { getTokenGenerator } from "../NcLexer";
-import { GetFileContents } from "./GetFileContents";
+import { getTokenGenerator } from "NcLexer";
 
-export class NcLexerCommand extends GetFileContents {
+import { readFile } from "./readFile";
+
+export class NcLexerCommand extends Command {
+  @Command.String({ required: true })
+  public filepath!: string;
+
   @Command.Boolean(`-d,--debug`)
   public debug = false;
 
@@ -12,7 +16,7 @@ export class NcLexerCommand extends GetFileContents {
   async execute() {
     try {
       const tokens = getTokenGenerator(
-        await this.getFileContents(),
+        await readFile(this.filepath),
         this.debug
       );
 
