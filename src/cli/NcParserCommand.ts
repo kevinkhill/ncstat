@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Command } from "clipanion";
-import fs from "fs";
 
 import { NcParser } from "NcParser";
+
+import { NcProgram } from "../types/index";
+import { readFile } from "./readFile";
 
 export class NcParserCommand extends Command {
   @Command.String({ required: true })
@@ -12,16 +14,22 @@ export class NcParserCommand extends Command {
   public debug = false;
 
   @Command.Path(`parse`)
-  async execute() {
+  async execute(): Promise<void> {
     const parser = new NcParser({ debug: this.debug });
 
     parser.on("error", (error: Error) => {
       this.context.stderr.write(error.toString());
     });
 
-    const buffer = await fs.promises.readFile(this.filepath);
-    const program = parser.parse(buffer.toString());
+    const program = parser.parse(await readFile(this.filepath));
 
+    this.writeOut(program);
+  }
+
+  /**
+   * Print the program to stdout, line by line.
+   */
+  writeOut(program: NcProgram) {
     let blockCount = 1;
 
     program.forEach(block => {

@@ -1,14 +1,21 @@
 /** @type {import('bili').Config} */
+const pkg = require("./package.json");
+
 module.exports = {
   input: {
-    "ncstat.core": "src/index.ts",
-    "ncstat.cli": "src/cli/index.ts"
+    NcParser: "src/index.ts",
+    ncstat: "src/cli/index.ts"
   },
+  output: {
+    dir: "./dist",
+    format: ["cjs-min"]
+  },
+  externals: [...Object.keys(pkg.dependencies)],
   plugins: {
-    typescript2: {
-      tsconfigOverride: {
-        include: ["src"]
-      }
-    }
+    // typescript2: {
+    //   tsconfigOverride: {
+    //     include: ["src"]
+    //   }
+    // }
   }
 };

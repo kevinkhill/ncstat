@@ -1,6 +1,7 @@
 import { clone, each, get, has } from "lodash/fp";
 
-import { NcBlock } from "../../NcBlock";
+import { NcBlock } from "NcBlock";
+
 import { MachinePositions } from "../../types";
 import { Modals, PositioningMode } from "../codes";
 

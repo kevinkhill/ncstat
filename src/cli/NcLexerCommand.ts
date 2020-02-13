@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Command } from "clipanion";
 
 import { NcParser } from "NcParser";
@@ -13,7 +12,7 @@ export class NcLexerCommand extends Command {
   public debug = false;
 
   @Command.Path(`lex`)
-  async execute() {
+  async execute(): Promise<void> {
     const parser = new NcParser({ debug: this.debug });
 
     parser.on("error", (error: Error) => {
