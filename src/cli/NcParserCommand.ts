@@ -23,8 +23,20 @@ export class NcParserCommand extends Command {
     const buffer = await fs.promises.readFile(this.filepath);
     const program = parser.parse(buffer.toString());
 
+    let blockCount = 1;
+
     program.forEach((block: NcBlock) => {
+      this.context.stdout.write(
+        "N" + ("0000" + blockCount).slice(-4) + ": "
+      );
+
       this.context.stdout.write(`${block.toString()}\n`);
+
+      blockCount++;
     });
+
+    this.context.stdout.write(
+      `\n Parsed ${blockCount} lines of NC code.\n\n`
+    );
   }
 }
