@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Command } from "clipanion";
 
-import { NcLexer } from "NcLexer";
+import { NcParser } from "NcParser";
 
 import { readFile } from "./readFile";
 
@@ -12,16 +12,21 @@ export class NcLexerCommand extends Command {
   @Command.Boolean(`-d,--debug`)
   public debug = false;
 
-  @Command.Path(`tokenize`)
+  @Command.Path(`lex`)
   async execute() {
-    const lexer = new NcLexer({ debug: this.debug });
+    const parser = new NcParser({ debug: this.debug });
+
+    parser.on("error", (error: Error) => {
+      this.context.stderr.write(error.toString());
+    });
+
+    const lexer = parser.getLexer();
 
     try {
       const tokens = lexer.tokenize(await readFile(this.filepath));
 
       for (const token of tokens) {
-        this.context.stdout.write(token.toString());
-        this.context.stdout.write("\n");
+        this.context.stdout.write(`${token}\n`);
       }
     } catch (err) {
       this.context.stderr.write(err.toString());

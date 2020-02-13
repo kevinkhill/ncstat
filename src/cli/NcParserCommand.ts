@@ -2,7 +2,6 @@
 import { Command } from "clipanion";
 import fs from "fs";
 
-import { NcBlock } from "NcBlock";
 import { NcParser } from "NcParser";
 
 export class NcParserCommand extends Command {
@@ -25,7 +24,7 @@ export class NcParserCommand extends Command {
 
     let blockCount = 1;
 
-    program.forEach((block: NcBlock) => {
+    program.forEach(block => {
       this.context.stdout.write(
         "N" + ("0000" + blockCount).slice(-4) + ": "
       );

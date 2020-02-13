@@ -8,15 +8,20 @@
   "dependencies": {
     "@xstate/fsm": "^1.3.0",
     "clipanion": "^2.1.6",
+    "concurrently": "^5.1.0",
     "doublie": "^1.1.0",
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",
     "tokenizr": "^1.5.7"
   },
   "scripts": {
-    "cli": "ts-node -r tsconfig-paths/register ./src/cli/index.ts",
-    "build": "bili",
-    "build:cli": "bili ./src/cli/index.ts --file-name cli.js",
+    "ts": "ts-node -r tsconfig-paths/register",
+    "cli": "yarn ts ./src/cli/index.ts",
+    "cli:lex": "yarn cli lex",
+    "cli:parse": "yarn cli parse",
+    "build": "concurrently npm:build:*",
+    "build:core": "bili ./src/index.ts --file-name ncstat.js",
+    "build:cli": "bili -c bili.config.cli.js",
     "dev": "tsnd --respawn",
     "lint": "eslint --ext .ts ./src",
     "lint:fix": "yarn lint --fix",

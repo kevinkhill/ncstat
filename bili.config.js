@@ -1,6 +1,9 @@
 /** @type {import('bili').Config} */
-export const config = {
-  input: "src/index.ts",
+module.exports = {
+  input: {
+    "ncstat.core": "src/index.ts",
+    "ncstat.cli": "src/cli/index.ts"
+  },
   plugins: {
     typescript2: {
       tsconfigOverride: {

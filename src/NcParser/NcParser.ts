@@ -74,6 +74,9 @@ export class NcParser extends NcEventEmitter {
   // get lines(): string[] {
   //   return map(Object.toString, this.blocks);
   // }
+  getLexer(): NcLexer {
+    return this.lexer;
+  }
 
   getLimits(): Partial<AxesLimits> {
     return {
