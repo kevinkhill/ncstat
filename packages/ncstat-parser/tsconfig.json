@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "rootDir": "src",
+    "outDir": "build",
+    "paths": {
+      "NcBlock/*": [
+        "NcBlock/*"
+      ],
+      "Toolpath/*": [
+        "Toolpath/*"
+      ],
+      "NcParser/*": [
+        "NcParser/*"
+      ]
+    }
+  },
+  "references": [
+    {
+      "path": "../ncstat-lexer"
+    }
+  ]
+}

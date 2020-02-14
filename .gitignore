@@ -1,8 +1,16 @@
-node_modules
-dist
-coverage
-.yarn
+/node_modules
+/packages/*/node_modules
+
+
 .vscode
 .eslintcache
-.pnp.js
 yarn-error.log
+
+// Yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.pnp.*
+
+*.log
+*.cache

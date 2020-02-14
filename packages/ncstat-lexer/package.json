@@ -1,0 +1,18 @@
+{
+  "name": "@ncstat/lexer",
+  "description": "NC file lexer / tokenizer",
+  "version": "1.0.0",
+  "private": true,
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "dependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/node": "*",
+    "eventemitter3": "^4.0.0",
+    "lodash": "^4.17.15",
+    "tokenizr": "^1.5.7"
+  },
+  "devDependencies": {
+    "@types/tokenizr": "^1.5.1"
+  }
+}

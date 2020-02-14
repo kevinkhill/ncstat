@@ -1,42 +1,34 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    "strict": true,
-    "noEmit": true,
-    "sourceMap": true,
-    "outDir": "dist",
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    // "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "experimentalDecorators": true,
-    "noFallthroughCasesInSwitch": true,
+    "target": "es2017",
+    "module": "commonjs",
     "lib": [
-      "esnext"
+      "dom",
+      "es2017"
     ],
-    "paths": {
-      "NcBlock/*": [
-        "NcBlock/*"
-      ],
-      "NcLexer/*": [
-        "NcLexer/*"
-      ],
-      "NcParser/*": [
-        "NcParser/*"
-      ]
-    }
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true,
+    "emitDeclarationOnly": true,
+    // "isolatedModules": true,
+    "strict": true,
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    /* This needs to be false so our types are possible to consume without setting this */
+    "esModuleInterop": false,
+    "resolveJsonModule": true,
+    // "noImplicitAny": true,
+    "noImplicitThis": true
   },
-  "include": [
-    "*.js",
-    "bin/*.ts",
-    "src/**/*.ts",
-    "tests/**/*.test.ts",
-    "tests/ncfiles/index.ts"
-  ],
   "exclude": [
-    "node_modules"
+    ".yarn/releases/*",
+    "**/__tests__/**/*",
+    "**/__mocks__/**/*",
+    "**/build/**/*"
   ]
 }

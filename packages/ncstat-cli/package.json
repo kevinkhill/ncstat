@@ -1,0 +1,15 @@
+{
+  "name": "@ncstat/cli",
+  "description": "Command line utility for using the NcParser",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./build/index.js",
+  "dependencies": {
+    "@ncstat/parser": "workspace:^1.0.0",
+    "clipanion": "^2.1.6",
+    "import-local": "^3.0.2"
+  },
+  "bin": {
+    "ncstat": "./build/index.js"
+  }
+}

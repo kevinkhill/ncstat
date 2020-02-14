@@ -1,3 +1,10 @@
-dist
-coverage
-.yarn
+/lib
+/build
+/.git
+/scripts
+
+package.json
+
+packages/*/dist
+packages/*/coverage
+packages/*/node_modules
