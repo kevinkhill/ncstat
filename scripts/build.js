@@ -30,7 +30,7 @@ const chalk = require('chalk');
 const micromatch = require('micromatch');
 const prettier = require('prettier');
 const {getPackages, adjustToTerminalWidth, OK} = require('./buildUtils');
-const browserBuild = require('./browserBuild');
+// const browserBuild = require('./browserBuild');
 
 const SRC_DIR = 'src';
 const BUILD_DIR = 'build';
@@ -189,6 +189,6 @@ if (files.length) {
   packages.forEach(buildNodePackage);
   process.stdout.write('\n');
 
-  process.stdout.write(chalk.inverse(' Building browser packages \n'));
-  packages.forEach(buildBrowserPackage);
+  // process.stdout.write(chalk.inverse(' Building browser packages \n'));
+  // packages.forEach(buildBrowserPackage);
 }

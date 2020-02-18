@@ -1,11 +1,43 @@
-import { createMachine } from "@xstate/fsm";
+import { Machine } from "xstate";
 
-import { Events } from "./events";
-import { States } from "./states";
+export enum NcMachineState {
+  IDLE = "IDLE",
+  TOOLPATHING = "TOOLPATHING",
+  IN_CANNED_CYCLE = "IN_CANNED_CYCLE"
+}
 
-export const NcStateMachine = createMachine({
+// export enum NcMachineEvent {
+//   START_TOOLPATH = "START_TOOLPATH",
+//   END_TOOLPATH = "END_TOOLPATH",
+//   START_CANNED_CYCLE = "START_CANNED_CYCLE",
+//   END_CANNED_CYCLE = "END_CANNED_CYCLE"
+// }
+
+export type NcMachineEvent =
+  { type : "START_TOOLPATH"} |
+  { type : "END_TOOLPATH"} |
+  { type : "START_CANNED_CYCLE"} |
+  { type : "END_CANNED_CYCLE"}
+
+
+export interface NcMachineStateSchema {
+  states: {
+    IDLE: {},
+    TOOLPATHING: {},
+    IN_CANNED_CYCLE: {}
+  }
+}
+
+export interface NcMachineContext {
+  position: {
+    curr: { X: number, Y: number, Z: number, B: number },
+    prev: { X: number, Y: number, Z: number, B: number }
+  }
+};
+
+export const NcStateMachine = Machine<NcMachineContext, NcMachineStateSchema, NcMachineEvent>({
   id: "ncstat",
-  initial: States.IDLE,
+  initial: "IDLE",
   context: {
     position: {
       curr: { X: 0, Y: 0, Z: 0, B: 0 },
@@ -13,23 +45,23 @@ export const NcStateMachine = createMachine({
     }
   },
   states: {
-    [States.IDLE]: {
+    IDLE: {
       on: {
-        [Events.START_TOOLPATH]: {
-          target: States.TOOLPATHING
+        START_TOOLPATH: {
+          target: "TOOLPATHING"
         }
       }
     },
-    [States.TOOLPATHING]: {
+    TOOLPATHING: {
       on: {
-        [Events.END_TOOLPATH]: States.IDLE,
-        [Events.START_CANNED_CYCLE]: States.IN_CANNED_CYCLE
+        END_TOOLPATH: "IDLE",
+        START_CANNED_CYCLE: "IN_CANNED_CYCLE"
       }
     },
-    [States.IN_CANNED_CYCLE]: {
+    IN_CANNED_CYCLE: {
       on: {
-        [Events.END_TOOLPATH]: States.IDLE,
-        [Events.END_CANNED_CYCLE]: States.TOOLPATHING
+        END_TOOLPATH: "IDLE",
+        END_CANNED_CYCLE: "TOOLPATHING"
       }
     }
   }

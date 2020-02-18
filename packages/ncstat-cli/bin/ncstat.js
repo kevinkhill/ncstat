@@ -6,14 +6,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const importLocal = require('import-local');
+const importLocal = require("import-local");
 
 if (!importLocal(__filename)) {
-  if (process.env.NODE_ENV == null) {
-    process.env.NODE_ENV = 'test';
+  if (process.env.NODE_ENV === null) {
+    process.env.NODE_ENV = "test";
   }
 
-  const cli = require('../build/cli');
+  const cli = require("../build/cli");
 
   cli.runExit(process.argv.slice(2), {
     stdin: process.stdin,

@@ -6,8 +6,6 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "dependencies": {
-    "@types/lodash": "^4.14.149",
-    "@types/node": "*",
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",
     "tokenizr": "^1.5.7"

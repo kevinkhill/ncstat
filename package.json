@@ -8,7 +8,6 @@
     "build:ts": "node ./scripts/buildTs.js",
     "clean-all": "rimraf ./node_modules && rimraf ./packages/*/node_modules && yarn clean-e2e && yarn build-clean",
     "clean-e2e": "node ./scripts/cleanE2e.js",
-    "jest": "node ./packages/jest-cli/bin/jest.js",
     "jest-coverage": "yarn jest --coverage",
     "lint": "eslint ./packages/**/src/*.ts --cache",
     "lint:prettier": "yarn --silent lint:prettier:ci --fix",
@@ -30,6 +29,7 @@
     "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.11.0",
+    "@yarnpkg/pnpify": "^2.0.0-rc.18",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^25.1.0",
     "chalk": "^3.0.0",
@@ -45,9 +45,12 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-simple-import-sort": "^4.0.0",
     "execa": "^4.0.0",
+    "glob": "^7.1.6",
     "husky": "^4.2.1",
     "jest": "^25.1.0",
     "lint-staged": ">=10",
+    "make-dir": "^3.0.2",
+    "micromatch": "^4.0.2",
     "prettier": "^1.19.1",
     "string-length": "^3.1.0",
     "ts-jest": "^25.1.0",
@@ -65,8 +68,5 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "dependencies": {
-    "@yarnpkg/pnpify": "^2.0.0-rc.18"
   }
 }

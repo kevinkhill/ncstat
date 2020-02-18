@@ -4,18 +4,18 @@
       "path": "."
     },
     {
-      "path": "packages\\ncstat-cli"
+      "path": "packages/ncstat-cli"
     },
     {
-      "path": "packages\\ncstat-lexer"
+      "path": "packages/ncstat-lexer"
     },
     {
-      "path": "packages\\ncstat-parser"
+      "path": "packages/ncstat-parser"
     }
   ],
   "settings": {
     "eslint.nodePath": ".vscode/pnpify",
     // "prettier.prettierPath": ".vscode/pnpify/prettier/index.js",
-    "typescript.tsdk": "@ncstat\\.vscode\\pnpify\\typescript\\lib"
+    "typescript.tsdk": "@ncstat/.vscode/pnpify/typescript/lib"
   }
 }

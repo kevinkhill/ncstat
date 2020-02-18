@@ -2,37 +2,33 @@
 import { EventEmitter } from "eventemitter3";
 
 import { NcToken } from "@ncstat/lexer";
-import { NcMachineStates } from "NcService";
 
-export const enum NcEvents {
-  EOB = "eob",
-  EOF = "eof",
-  TOKEN = "token",
-  ERROR = "error",
-  STATE_CHANGE = "stateChange"
-}
+export type NcEvents = "eob" | "eof" | "token" | "error" | "stateChange";
+
+// export interface StateChange {
+//   prev: NcMachineContext;
+//   curr: NcMachineStates;
+// }
 
 export class NcEventEmitter extends EventEmitter {
   protected $emitEndOfBlock() {
-    this.emit(NcEvents.EOB);
+    this.emit<NcEvents>("eob");
   }
 
   protected $emitEndOfFile() {
-    this.emit(NcEvents.EOF);
+    this.emit<NcEvents>("eof");
   }
 
   protected $emitToken(token: NcToken) {
-    this.emit(NcEvents.TOKEN, token);
+    this.emit<NcEvents>("token", token);
   }
 
-  protected $emitStateChange(state: {
-    prev: NcMachineStates;
-    curr: NcMachineStates;
-  }) {
-    this.emit(NcEvents.STATE_CHANGE, state);
+  // @TODO type this
+  protected $emitStateChange(state: any) {
+    this.emit<NcEvents>("stateChange", state);
   }
 
   protected $emitError(error: Error) {
-    this.emit(NcEvents.ERROR, error);
+    this.emit<NcEvents>("error", error);
   }
 }
