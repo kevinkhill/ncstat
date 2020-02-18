@@ -163,9 +163,14 @@ module.exports = {
   overrides: [
     {
       files: ["*.js"],
-
       rules: {
         "import/no-commonjs": "off"
+      }
+    },
+    {
+      files: ["scripts/*.js"],
+      rules: {
+        "prettier/prettier": "error"
       }
     },
     {

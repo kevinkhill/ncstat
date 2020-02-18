@@ -6,9 +6,9 @@
       "dom",
       "es2017"
     ],
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
-    "composite": true,
     "emitDeclarationOnly": true,
     // "isolatedModules": true,
     "strict": true,
@@ -20,7 +20,7 @@
     /* Module Resolution Options */
     "moduleResolution": "node",
     /* This needs to be false so our types are possible to consume without setting this */
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "resolveJsonModule": true,
     // "noImplicitAny": true,
     "noImplicitThis": true

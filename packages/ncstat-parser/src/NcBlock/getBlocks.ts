@@ -1,6 +1,6 @@
 // import { isEqual } from "lodash/fp";
 
-import { NcToken, NcTokens } from "@ncstat/lexer";
+import { NcToken, NcTokens } from "@ncstat/types";
 
 import { NcBlock } from "./NcBlock";
 

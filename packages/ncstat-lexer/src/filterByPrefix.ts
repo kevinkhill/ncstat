@@ -1,12 +1,12 @@
-import { curry, filter } from "lodash/fp";
+import { filter, curry } from "lodash/fp";
 
-import { NcToken } from "./types";
+import { NcToken } from "@ncstat/types";
 
 export function _filterByPrefix(
   prefix: string,
   tokens: NcToken[]
 ): NcToken[] {
-  return filter(token => {
+  return filter((token: NcToken) => {
     return token.value?.prefix === prefix;
   }, tokens);
 }

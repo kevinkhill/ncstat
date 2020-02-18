@@ -11,5 +11,8 @@
   },
   "bin": {
     "ncstat": "./build/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

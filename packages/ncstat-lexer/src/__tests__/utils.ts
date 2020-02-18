@@ -2,7 +2,7 @@
 
 import { get } from "lodash/fp";
 
-import { NcToken } from "../NcLexer";
+import { NcToken } from "@ncstat/lexer";
 
 export function testProp(
   token: NcToken,
@@ -34,10 +34,13 @@ export function testAddrTokenPrefixAndValue(
   testValue: number
 ) {
   testProp(token, "type", "ADDR");
+
   const tokenVal = get("value", token);
+
   test(`prefix is "${testPrefix}"`, () => {
     return expect(tokenVal.prefix).toBe(testPrefix);
   });
+
   test(`value is "${testValue}"`, () => {
     return expect(tokenVal.value).toBe(testValue);
   });

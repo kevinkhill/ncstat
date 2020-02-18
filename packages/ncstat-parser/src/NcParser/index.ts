@@ -1,7 +1,10 @@
-// export { analyzeCode } from "./analyzeCode";
+import { Linear } from "doublie";
+
+import { NcBlock } from "NcBlock";
+
+export * from "NcParser";
+
 export { getModals } from "./lib/getModals";
 export { updatePosition } from "./lib/updatePosition";
 
-export { NcParser } from "./NcParser";
-
-// export { analyzeNcFile, NcFile } from "../NcFile";
+export type NcProgram = Linear<NcBlock>;

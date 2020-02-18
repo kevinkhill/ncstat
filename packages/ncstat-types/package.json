@@ -1,0 +1,15 @@
+{
+  "name": "@ncstat/types",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/node": "*",
+    "@types/tokenizr": "^1.5.1",
+    "doublie": "^1.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

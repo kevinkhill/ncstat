@@ -1,9 +1,11 @@
 import { Linear } from "doublie";
 import { clone, eq, filter, last } from "lodash/fp";
 
-import { getBlockGenerator, NcBlock, NcBlocks } from "NcBlock";
+import { getBlockGenerator } from "NcBlock";
+import { NcBlock, NcBlocks } from "@ncstat/types";
 import { NcLexer, NcTokens } from "@ncstat/lexer";
-import { NcMachineEvents, NcMachineStates, NcService } from "NcService";
+import { NcMachineState, NcService } from "NcService";
+
 
 import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
 import {
@@ -16,9 +18,9 @@ import { Modals, PositioningMode } from "./codes";
 import { getModals, updatePosition } from "./lib";
 import { NcEventEmitter } from "./NcEventEmitter";
 
-const isIdle = eq(NcMachineStates.IDLE);
-const isToolpathing = eq(NcMachineStates.TOOLPATHING);
-const isInCannedCycle = eq(NcMachineStates.IN_CANNED_CYCLE);
+const isIdle = eq(NcMachineState.IDLE);
+const isToolpathing = eq(NcMachineState.TOOLPATHING);
+const isInCannedCycle = eq(NcMachineState.IN_CANNED_CYCLE);
 
 export class NcParser extends NcEventEmitter {
   /**
@@ -44,7 +46,7 @@ export class NcParser extends NcEventEmitter {
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private nc: any;
-  private state = NcMachineStates.IDLE;
+  private state = NcMachineState.IDLE;
   private lexer: NcLexer;
   private tokens: NcTokens = [];
 
@@ -57,7 +59,7 @@ export class NcParser extends NcEventEmitter {
 
     this.nc = NcService;
 
-    this.nc.subscribe((state: { value: NcMachineStates }) => {
+    this.nc.subscribe((state: { value: NcMachineState }) => {
       this.$emitStateChange({
         prev: this.state,
         curr: state.value
@@ -153,7 +155,7 @@ export class NcParser extends NcEventEmitter {
       }
 
       if (block.isStartOfCannedCycle && isToolpathing(this.state)) {
-        this.nc.send(NcMachineEvents.START_CANNED_CYCLE);
+        this.nc.send("START_CANNED_CYCLE");
 
         const cannedCycle = CannedCycle.fromBlock(block);
 
@@ -162,7 +164,7 @@ export class NcParser extends NcEventEmitter {
 
       if (isInCannedCycle(this.state)) {
         if (block.G.includes(80)) {
-          this.nc.send(NcMachineEvents.END_CANNED_CYCLE);
+          this.nc.send("END_CANNED_CYCLE");
         }
 
         if (block.hasMovement) {
@@ -177,7 +179,7 @@ export class NcParser extends NcEventEmitter {
       // This has been defined in the custom H&B posts
       if (block.toString().startsWith("N")) {
         if (isToolpathing(this.state)) {
-          this.nc.send(NcMachineEvents.END_TOOLPATH);
+          this.nc.send("END_TOOLPATH");
           this.toolpaths.push(toolpath);
         }
 
@@ -191,7 +193,7 @@ export class NcParser extends NcEventEmitter {
 
           toolpath.setTool(tool);
 
-          this.nc.send(NcMachineEvents.START_TOOLPATH);
+          this.nc.send("START_TOOLPATH");
         }
       }
 
@@ -218,7 +220,7 @@ export class NcParser extends NcEventEmitter {
       }
     });
 
-    this.nc.send(NcMachineEvents.END_TOOLPATH);
+    this.nc.send("END_TOOLPATH");
     this.nc.stop();
 
     this.toolpaths.push(toolpath);

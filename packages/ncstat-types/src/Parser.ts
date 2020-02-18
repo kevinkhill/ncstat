@@ -1,9 +1,3 @@
-import { Linear } from "doublie";
-
-import { NcBlock } from "NcBlock";
-
-export type NcProgram = Linear<NcBlock>;
-
 export type VmcAxis = "X" | "Y" | "Z";
 export type HmcAxis = VmcAxis | "B";
 

@@ -1,10 +1,9 @@
 import { reject } from "lodash/fp";
 
-import { Address, NcToken } from "./types";
+import { Address, NcToken } from "@ncstat/types";
 
 export { NcLexer } from "./NcLexer";
 
-export * from "./types";
 export * from "./tokenMaps";
 export * from "./filterByPrefix";
 

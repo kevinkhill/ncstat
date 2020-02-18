@@ -8,10 +8,10 @@ exports.NcLexer = void 0;
 var _lexer = require("./lexer");
 
 class NcLexer {
-  constructor({ debug }) {
+  constructor({ debug = false }) {
     this.debug = void 0;
     this.lexer = _lexer.lexer;
-    this.debug = Boolean(debug);
+    this.debug = debug;
   }
 
   *tokenize(input) {

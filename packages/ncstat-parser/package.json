@@ -5,6 +5,7 @@
   "main": "./dist/index.js",
   "dependencies": {
     "@ncstat/lexer": "workspace:*",
+    "@ncstat/types": "workspace:*",
     "doublie": "^1.1.0",
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",

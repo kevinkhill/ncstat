@@ -1,13 +1,13 @@
 import { lexer } from "./lexer";
-import { NcTokens } from "./types";
+import { NcTokens, LexerConfig } from "./types";
 
 export class NcLexer {
   debug: boolean;
 
   private lexer = lexer;
 
-  constructor({ debug }: { debug?: boolean }) {
-    this.debug = Boolean(debug);
+  constructor({ debug = false }: Partial<LexerConfig>) {
+    this.debug = debug;
   }
 
   *tokenize(input: string): NcTokens {

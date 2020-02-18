@@ -24,7 +24,7 @@ const TSC = path.resolve('.vscode/pnpify/typescript/bin/tsc');
 
 const args = ['node', TSC, '-b', ...packagesWithTs, ...process.argv.slice(2)];
 
-console.log(args);
+// console.log(args);
 
 console.log(chalk.inverse(' Building TypeScript definition files '));
 

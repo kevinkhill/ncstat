@@ -1,5 +1,3 @@
-import { map } from "lodash/fp";
-
 import { NcToken } from "./types";
 
 export function addressValue(token: NcToken): number {
@@ -9,5 +7,3 @@ export function addressValue(token: NcToken): number {
 
   return NaN;
 }
-
-export const textMap = map("text");

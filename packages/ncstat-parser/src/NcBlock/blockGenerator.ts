@@ -1,4 +1,5 @@
 import { NcToken, NcTokens } from "@ncstat/lexer";
+
 import { NcBlock } from "./NcBlock";
 
 export function* getBlockGenerator(

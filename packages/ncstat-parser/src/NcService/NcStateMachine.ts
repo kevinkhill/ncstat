@@ -19,6 +19,11 @@ export type NcMachineEvent =
   { type : "START_CANNED_CYCLE"} |
   { type : "END_CANNED_CYCLE"}
 
+export type NcMachineEventType =
+  "START_TOOLPATH" |
+  "END_TOOLPATH" |
+  "START_CANNED_CYCLE" |
+  "END_CANNED_CYCLE";
 
 export interface NcMachineStateSchema {
   states: {

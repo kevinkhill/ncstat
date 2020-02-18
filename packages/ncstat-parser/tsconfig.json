@@ -18,7 +18,7 @@
   },
   "references": [
     {
-      "path": "../ncstat-lexer"
+      "path": "../ncstat-types"
     }
   ]
 }

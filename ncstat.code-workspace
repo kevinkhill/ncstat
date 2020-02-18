@@ -11,11 +11,14 @@
     },
     {
       "path": "packages/ncstat-parser"
+    },
+    {
+      "path": "packages/ncstat-types"
     }
   ],
   "settings": {
     "eslint.nodePath": ".vscode/pnpify",
-    // "prettier.prettierPath": ".vscode/pnpify/prettier/index.js",
+    // "prettier.prettierPath": ".vscode/pnspify/prettier/index.js",
     "typescript.tsdk": "@ncstat/.vscode/pnpify/typescript/lib"
   }
 }
