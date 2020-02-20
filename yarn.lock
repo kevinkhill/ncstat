@@ -9978,6 +9978,8 @@ resolve@1.1.7:
   dependenciesMeta:
     lodash:
       unplugged: true
+    xstate:
+      unplugged: true
   languageName: unknown
   linkType: soft
 

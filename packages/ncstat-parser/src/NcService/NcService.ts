@@ -1,4 +1,4 @@
-import { interpret } from "@xstate/fsm";
+import { interpret } from "xstate";
 
 import { NcStateMachine } from "./NcStateMachine";
 

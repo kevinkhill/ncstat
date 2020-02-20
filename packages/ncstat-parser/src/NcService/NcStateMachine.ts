@@ -1,9 +1,14 @@
 import { Machine } from "xstate";
 
-export enum NcMachineState {
-  IDLE = "IDLE",
-  TOOLPATHING = "TOOLPATHING",
-  IN_CANNED_CYCLE = "IN_CANNED_CYCLE"
+export type NcMachineStateType =
+  "IDLE" |
+  "TOOLPATHING" |
+  "IN_CANNED_CYCLE";
+
+export const NcMachineState = {
+  IDLE: "IDLE",
+  TOOLPATHING: "TOOLPATHING",
+  IN_CANNED_CYCLE: "IN_CANNED_CYCLE"
 }
 
 // export enum NcMachineEvent {
@@ -13,17 +18,17 @@ export enum NcMachineState {
 //   END_CANNED_CYCLE = "END_CANNED_CYCLE"
 // }
 
-export type NcMachineEvent =
-  { type : "START_TOOLPATH"} |
-  { type : "END_TOOLPATH"} |
-  { type : "START_CANNED_CYCLE"} |
-  { type : "END_CANNED_CYCLE"}
-
 export type NcMachineEventType =
   "START_TOOLPATH" |
   "END_TOOLPATH" |
   "START_CANNED_CYCLE" |
   "END_CANNED_CYCLE";
+
+export type NcMachineEvent =
+  { type : "START_TOOLPATH"} |
+  { type : "END_TOOLPATH"} |
+  { type : "START_CANNED_CYCLE"} |
+  { type : "END_CANNED_CYCLE"}
 
 export interface NcMachineStateSchema {
   states: {
@@ -40,7 +45,11 @@ export interface NcMachineContext {
   }
 };
 
-export const NcStateMachine = Machine<NcMachineContext, NcMachineStateSchema, NcMachineEvent>({
+export const NcStateMachine = Machine<
+  NcMachineContext,
+  NcMachineStateSchema,
+  NcMachineEvent
+>({
   id: "ncstat",
   initial: "IDLE",
   context: {

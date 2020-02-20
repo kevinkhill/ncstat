@@ -4,7 +4,7 @@ import { clone, eq, filter, last } from "lodash/fp";
 import { NcLexer, NcTokens } from "@ncstat/lexer";
 
 import { NcBlock, getBlockGenerator } from "NcBlock";
-import { NcMachineState, NcService } from "NcService";
+import { NcMachineState, NcService, NcMachineStateType } from "NcService";
 
 import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
 import { NcBlocks } from "../types";
@@ -60,7 +60,7 @@ export class NcParser extends NcEventEmitter {
 
     this.nc = NcService;
 
-    this.nc.subscribe((state: { value: NcMachineState }) => {
+    this.nc.subscribe((state: { value: NcMachineStateType }) => {
       this.$emitStateChange({
         prev: this.state,
         curr: state.value

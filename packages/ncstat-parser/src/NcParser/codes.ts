@@ -1,4 +1,4 @@
-import _ from "lodash";
+import { forEach } from "lodash";
 
 import { G_CODES as RAW_G_CODES } from "./gcodes";
 import { M_CODES as RAW_M_CODES } from "./mcodes";
@@ -42,8 +42,8 @@ export const COMMANDS = {
 };
 
 //@TODO Fix This
-_.forEach(RAW_G_CODES, (groupName: any, group: any) => {
-  _.forEach(groupName, (command: any, gcode: string | number) => {
+forEach(RAW_G_CODES, (groupName: any, group: any) => {
+  forEach(groupName, (command: any, gcode: string | number) => {
     G_CODES[gcode] = {
       COMMAND: command,
       GROUP: group
@@ -51,7 +51,7 @@ _.forEach(RAW_G_CODES, (groupName: any, group: any) => {
   });
 });
 
-_.forEach(RAW_M_CODES, (command: any, mcode: string | number) => {
+forEach(RAW_M_CODES, (command: any, mcode: string | number) => {
   M_CODES[mcode] = {
     COMMAND: command,
     GROUP: "MACHINE"

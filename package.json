@@ -73,6 +73,9 @@
   "dependenciesMeta": {
     "lodash": {
       "unplugged": true
+    },
+    "xstate": {
+      "unplugged": true
     }
   }
 }
