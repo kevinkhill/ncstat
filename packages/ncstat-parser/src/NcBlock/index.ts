@@ -1,4 +1,4 @@
-export { NcBlock } from "./NcBlock";
+export * from "./NcBlock";
 
-export { getBlocks } from "./getBlocks";
-export { getBlockGenerator } from "./blockGenerator";
+export * from "./getBlocks";
+export * from "./blockGenerator";

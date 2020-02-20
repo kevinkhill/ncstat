@@ -2233,7 +2233,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@ncstat/lexer@workspace:packages/ncstat-lexer"
   dependencies:
-    "@ncstat/types": "workspace:*"
+    "@types/lodash": ^4.14.149
+    "@types/tokenizr": ^1.5.1
     eventemitter3: ^4.0.0
     lodash: ^4.17.15
     tokenizr: ^1.5.7
@@ -2245,7 +2246,7 @@ __metadata:
   resolution: "@ncstat/parser@workspace:packages/ncstat-parser"
   dependencies:
     "@ncstat/lexer": "workspace:*"
-    "@ncstat/types": "workspace:*"
+    "@types/lodash": ^4.14.149
     doublie: ^1.1.0
     eventemitter3: ^4.0.0
     lodash: ^4.17.15
@@ -2253,7 +2254,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@ncstat/types@workspace:*, @ncstat/types@workspace:packages/ncstat-types":
+"@ncstat/types@workspace:packages/ncstat-types":
   version: 0.0.0-use.local
   resolution: "@ncstat/types@workspace:packages/ncstat-types"
   dependencies:
@@ -2637,13 +2638,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^2.11.0":
-  version: 2.19.2
-  resolution: "@typescript-eslint/parser@npm:2.19.2"
+"@typescript-eslint/experimental-utils@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@typescript-eslint/experimental-utils@npm:2.20.0"
+  dependencies:
+    "@types/json-schema": ^7.0.3
+    "@typescript-eslint/typescript-estree": 2.20.0
+    eslint-scope: ^5.0.0
+  peerDependencies:
+    eslint: "*"
+  checksum: 2/6ba9083c032be6bf985f5a2912d5322ca254fcfd314d6de9d06c822b94eb3c5abfcee90c40eb2ea0f600e8ff2a484ea1bd3e915c29eab5ea3711c9b77466979e
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/parser@npm:^2.20.0":
+  version: 2.20.0
+  resolution: "@typescript-eslint/parser@npm:2.20.0"
   dependencies:
     "@types/eslint-visitor-keys": ^1.0.0
-    "@typescript-eslint/experimental-utils": 2.19.2
-    "@typescript-eslint/typescript-estree": 2.19.2
+    "@typescript-eslint/experimental-utils": 2.20.0
+    "@typescript-eslint/typescript-estree": 2.20.0
     eslint-visitor-keys: ^1.1.0
   peerDependencies:
     eslint: ^5.0.0 || ^6.0.0
@@ -2651,7 +2665,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 2/1cfdd57f5e87ede548d3b49800caaba47c044fba1ef8a3622022555cd0d6d666ff3bde76930872dbd39928a2762e39a90b0c4e014535d507fe3d23d9a2f439de
+  checksum: 2/b0f2760c9c74c1a2f2b35b469799126b361ad84ef8e160159027bfda8bf04c6ab3b133e99d14510363f58ad49d8fca6ee8117d4c50763f9cbfbca595123d9aae
   languageName: node
   linkType: hard
 
@@ -2672,6 +2686,26 @@ __metadata:
     typescript:
       optional: true
   checksum: 2/ab0dd0226861ec9f52c769b56a06d4f80e0f24375f820f8c3b7421a533b559175c1712785159223e060ba788924862d2af55e9a9348a5fcc30ccd6f9db93017f
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/typescript-estree@npm:2.20.0":
+  version: 2.20.0
+  resolution: "@typescript-eslint/typescript-estree@npm:2.20.0"
+  dependencies:
+    debug: ^4.1.1
+    eslint-visitor-keys: ^1.1.0
+    glob: ^7.1.6
+    is-glob: ^4.0.1
+    lodash: ^4.17.15
+    semver: ^6.3.0
+    tsutils: ^3.17.1
+  peerDependencies:
+    typescript: "*"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 2/ddf9a2b1365ff73c0c8429eac40bda8c1e8e53aaf4f413589eb1fce259a3f9ca819cd372390ccbc96db929035a44588fc70fc2866557b53ba46f4982047d08b7
   languageName: node
   linkType: hard
 
@@ -4801,7 +4835,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import@npm:^2.14.0, eslint-plugin-import@npm:^2.19.1":
+"eslint-plugin-import@npm:^2.14.0, eslint-plugin-import@npm:^2.20.1":
   version: 2.20.1
   resolution: "eslint-plugin-import@npm:2.20.1"
   dependencies:
@@ -9911,7 +9945,7 @@ resolve@1.1.7:
     "@types/lodash": ^4.14.149
     "@types/node": "*"
     "@typescript-eslint/eslint-plugin": ^2.7.0
-    "@typescript-eslint/parser": ^2.11.0
+    "@typescript-eslint/parser": ^2.20.0
     "@yarnpkg/pnpify": ^2.0.0-rc.18
     babel-eslint: ^10.0.3
     babel-jest: ^25.1.0
@@ -9920,7 +9954,7 @@ resolve@1.1.7:
     eslint-config-node: ^4.0.0
     eslint-config-prettier: ^6.5.0
     eslint-import-resolver-typescript: ^2.0.0
-    eslint-plugin-import: ^2.19.1
+    eslint-plugin-import: ^2.20.1
     eslint-plugin-jest: ^23.1.1
     eslint-plugin-jest-formatting: ^1.2.0
     eslint-plugin-lodash-fp: ^2.2.0-a1
@@ -9941,6 +9975,9 @@ resolve@1.1.7:
     ts-node: ^8.6.2
     ts-node-dev: ^1.0.0-pre.44
     typescript: ^3.7.5
+  dependenciesMeta:
+    lodash:
+      unplugged: true
   languageName: unknown
   linkType: soft
 

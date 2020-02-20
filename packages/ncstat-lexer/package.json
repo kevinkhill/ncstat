@@ -6,10 +6,13 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "dependencies": {
-    "@ncstat/types": "workspace:*",
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",
     "tokenizr": "^1.5.7"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/tokenizr": "^1.5.1"
   },
   "publishConfig": {
     "access": "public"

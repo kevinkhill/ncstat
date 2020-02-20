@@ -42,8 +42,8 @@ export const COMMANDS = {
 };
 
 //@TODO Fix This
-_.forEach(RAW_G_CODES, (groupName, group) => {
-  _.forEach(groupName, (command, gcode) => {
+_.forEach(RAW_G_CODES, (groupName: any, group: any) => {
+  _.forEach(groupName, (command: any, gcode: string | number) => {
     G_CODES[gcode] = {
       COMMAND: command,
       GROUP: group
@@ -51,7 +51,7 @@ _.forEach(RAW_G_CODES, (groupName, group) => {
   });
 });
 
-_.forEach(RAW_M_CODES, (command, mcode) => {
+_.forEach(RAW_M_CODES, (command: any, mcode: string | number) => {
   M_CODES[mcode] = {
     COMMAND: command,
     GROUP: "MACHINE"

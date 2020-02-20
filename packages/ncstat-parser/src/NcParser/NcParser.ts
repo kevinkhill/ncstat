@@ -1,18 +1,17 @@
 import { Linear } from "doublie";
 import { clone, eq, filter, last } from "lodash/fp";
 
-import { getBlockGenerator } from "NcBlock";
-import { NcBlock, NcBlocks } from "@ncstat/types";
 import { NcLexer, NcTokens } from "@ncstat/lexer";
+
+import { NcBlock, getBlockGenerator } from "NcBlock";
 import { NcMachineState, NcService } from "NcService";
 
-
 import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
+import { NcBlocks } from "../types";
 import {
   ActiveModals,
   AxesLimits,
-  MachinePositions,
-  NcProgram
+  MachinePositions
 } from "../types";
 import { Modals, PositioningMode } from "./codes";
 import { getModals, updatePosition } from "./lib";
@@ -21,6 +20,8 @@ import { NcEventEmitter } from "./NcEventEmitter";
 const isIdle = eq(NcMachineState.IDLE);
 const isToolpathing = eq(NcMachineState.TOOLPATHING);
 const isInCannedCycle = eq(NcMachineState.IN_CANNED_CYCLE);
+
+export type NcProgram = Linear<NcBlock>;
 
 export class NcParser extends NcEventEmitter {
   /**
@@ -37,7 +38,7 @@ export class NcParser extends NcEventEmitter {
   toolpaths: Toolpath[] = [];
 
   /**
-   * Parser Variables
+   * Parser Vars
    */
   blocks: NcBlocks = [];
 

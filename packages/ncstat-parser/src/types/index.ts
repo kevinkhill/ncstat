@@ -1,3 +1,13 @@
+import { NcBlock } from "NcBlock";
+
+export type NcBlocks = NcBlock[] | Generator<NcBlock>;
+
+export interface ActiveModals {
+  GROUP_01: "G00" | "G01";
+  GROUP_02: "G17" | "G18" | "G19";
+  GROUP_03: "G90" | "G91";
+}
+
 export type VmcAxis = "X" | "Y" | "Z";
 export type HmcAxis = VmcAxis | "B";
 
@@ -8,8 +18,6 @@ export interface AxisLimits {
 }
 
 export type AxesLimits = Record<HmcAxis, AxisLimits>;
-
-export type ExtractorFn = (subject: string) => string | undefined;
 
 export interface Position {
   [K: string]: number;
@@ -31,9 +39,3 @@ export interface MachinePositions {
 //   R: number;
 //   Q: number;
 // }
-
-export interface ActiveModals {
-  GROUP_01: "G00" | "G01";
-  GROUP_02: "G17" | "G18" | "G19";
-  GROUP_03: "G90" | "G91";
-}

@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "main": "./dist/index.js",
+  "types": "build/index.d.ts",
   "dependencies": {
     "@ncstat/lexer": "workspace:*",
-    "@ncstat/types": "workspace:*",
     "doublie": "^1.1.0",
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",
     "xstate": "^4.7.8"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149"
   }
 }

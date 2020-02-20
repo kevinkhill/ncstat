@@ -1,9 +1,9 @@
-import { filter, find, intersection, map } from "lodash/fp";
+import { find, intersection, map } from "lodash/fp";
 
-import { addressValue, filterByPrefix, NcToken } from "@ncstat/lexer";
+import { addressValue, prefixFilter, NcToken } from "@ncstat/lexer";
 
 // import { RETRACT_CODES, START_CODES } from "../Toolpath/CannedCycle";
-import { START_CODES } from "../Toolpath/CannedCycle";
+import { START_CODES } from "Toolpath/CannedCycle";
 import { Position } from "../types";
 
 export class NcBlock {
@@ -27,12 +27,12 @@ export class NcBlock {
   }
 
   $has(prefix: string): boolean {
-    return filterByPrefix(prefix, this.tokens).length > 0;
+    return prefixFilter(prefix, this.tokens).length > 0;
   }
 
   $value(prefix: string): number {
     if (this.$has(prefix)) {
-      const token = filterByPrefix(prefix, this.tokens)[0];
+      const token = prefixFilter(prefix, this.tokens)[0];
 
       return addressValue(token);
     }
@@ -119,7 +119,7 @@ export class NcBlock {
   }
 
   get G(): number[] {
-    return map(addressValue, filterByPrefix("G", this.tokens));
+    return map(addressValue, prefixFilter("G", this.tokens));
   }
 
   get H(): number {

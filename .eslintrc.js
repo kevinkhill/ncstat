@@ -1,5 +1,3 @@
-const { resolve } = require("path");
-
 module.exports = {
   root: true,
   parser: "@typescript-eslint/parser",

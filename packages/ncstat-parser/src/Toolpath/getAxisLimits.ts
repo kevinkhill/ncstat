@@ -1,6 +1,6 @@
 import { curry, filter, flow, get, map, max, min } from "lodash/fp";
 
-import { AxisLimits, HmcAxis } from "@ncstat/types";
+import { AxisLimits, HmcAxis } from "../types";
 import { Toolpath } from "./Toolpath";
 
 export function dedupe<T>(arr: T[]): T[] {

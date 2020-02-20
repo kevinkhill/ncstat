@@ -1,4 +1,4 @@
-import { lexer } from "./lexer";
+import { lexer } from "./lib/lexer";
 import { NcTokens, LexerConfig } from "./types";
 
 export class NcLexer {

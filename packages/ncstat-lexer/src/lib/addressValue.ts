@@ -1,4 +1,4 @@
-import { NcToken } from "./types";
+import { NcToken } from "../types";
 
 export function addressValue(token: NcToken): number {
   if (token.type === "ADDR") {

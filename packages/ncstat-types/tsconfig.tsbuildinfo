@@ -113,21 +113,9 @@
         "version": "0c9ea8c2028047f39a3f66752682604f543c08be8806258c3d95c93e75a43255",
         "signature": "0c9ea8c2028047f39a3f66752682604f543c08be8806258c3d95c93e75a43255"
       },
-      "../../.yarn/cache/@types-tokenizr-npm-1.5.1-0ccd9a33de-2.zip/node_modules/@types/tokenizr/index.d.ts": {
-        "version": "b326f94c4cde3d6b741cffc3e98ca2263b2cc26f454d7a2534d6a32b5c40797f",
-        "signature": "b326f94c4cde3d6b741cffc3e98ca2263b2cc26f454d7a2534d6a32b5c40797f"
-      },
-      "./src/lexer.ts": {
-        "version": "43a991572d210853708d7747f4564a38c98ffdcfdd78f2fc02f403de518ffeda",
-        "signature": "da243fe57df3d466706dc1ae9a6c4093dd7a4865d465df24d0e3541a0cea9289"
-      },
-      "./src/parser.ts": {
-        "version": "e9dba4b680ffeb9e87c146291b75b97e0edcd0826e83425a6188d5f253ed5dfe",
-        "signature": "3f85b0d1ab88e1cc53f69464fdae05de14bce51d3285e70f8e0734aee1ff8cd5"
-      },
       "./src/index.ts": {
-        "version": "fdc57b65af031218c31ca311898ab407d96a92f63bfd5174d9dff09398479dfc",
-        "signature": "a7e923e9984ef62424b8279c8750fcf7f79259cf3001c560bace78ec99536ae8"
+        "version": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "signature": "3835f8d92ad0699690cf572ad0da8aa3bfa5cc1c66fbd2609c52a02b9da828dc"
       },
       "../../.yarn/cache/@types-lodash-npm-4.14.149-d92d0adff6-2.zip/node_modules/@types/lodash/ts3.1/common/common.d.ts": {
         "version": "4025cf62742c5bb3d383c8a62342481622c87e3397ea5e7b7baab18b9efd5798",
@@ -364,6 +352,10 @@
       "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/index.d.ts": {
         "version": "e68fd8947e71244a4a60807b94c28284c3f769be19d93c936283e6510955ce8a",
         "signature": "e68fd8947e71244a4a60807b94c28284c3f769be19d93c936283e6510955ce8a"
+      },
+      "../../.yarn/cache/@types-tokenizr-npm-1.5.1-0ccd9a33de-2.zip/node_modules/@types/tokenizr/index.d.ts": {
+        "version": "b326f94c4cde3d6b741cffc3e98ca2263b2cc26f454d7a2534d6a32b5c40797f",
+        "signature": "b326f94c4cde3d6b741cffc3e98ca2263b2cc26f454d7a2534d6a32b5c40797f"
       }
     },
     "options": {
@@ -559,28 +551,7 @@
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts",
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../.yarn/cache/@types-tokenizr-npm-1.5.1-0ccd9a33de-2.zip/node_modules/@types/tokenizr/index.d.ts": [
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/fs.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "./src/lexer.ts": [
-        "../../.yarn/cache/@types-tokenizr-npm-1.5.1-0ccd9a33de-2.zip/node_modules/@types/tokenizr/index.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/fs.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "./src/parser.ts": [
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/fs.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/util.d.ts"
-      ],
       "./src/index.ts": [
-        "./src/lexer.ts",
-        "./src/parser.ts",
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/fs.d.ts",
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/fs.d.ts",
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts",
@@ -1186,6 +1157,12 @@
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/wasi.d.ts",
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/fs.d.ts",
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts"
+      ],
+      "../../.yarn/cache/@types-tokenizr-npm-1.5.1-0ccd9a33de-2.zip/node_modules/@types/tokenizr/index.d.ts": [
+        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/fs.d.ts",
+        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts",
+        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/util.d.ts"
       ]
     },
     "exportedModulesMap": {
@@ -1357,19 +1334,6 @@
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts",
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../.yarn/cache/@types-tokenizr-npm-1.5.1-0ccd9a33de-2.zip/node_modules/@types/tokenizr/index.d.ts": [
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/fs.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts",
-        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "./src/lexer.ts": [
-        "../../.yarn/cache/@types-tokenizr-npm-1.5.1-0ccd9a33de-2.zip/node_modules/@types/tokenizr/index.d.ts"
-      ],
-      "./src/index.ts": [
-        "./src/lexer.ts",
-        "./src/parser.ts"
-      ],
       "../../.yarn/cache/@types-lodash-npm-4.14.149-d92d0adff6-2.zip/node_modules/@types/lodash/ts3.1/common/common.d.ts": [
         "../../.yarn/cache/@types-lodash-npm-4.14.149-d92d0adff6-2.zip/node_modules/@types/lodash/ts3.1/index.d.ts",
         "../../.yarn/cache/@types-lodash-npm-4.14.149-d92d0adff6-2.zip/node_modules/@types/lodash/ts3.1/common/array.d.ts",
@@ -1970,6 +1934,12 @@
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/wasi.d.ts",
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/fs.d.ts",
         "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts"
+      ],
+      "../../.yarn/cache/@types-tokenizr-npm-1.5.1-0ccd9a33de-2.zip/node_modules/@types/tokenizr/index.d.ts": [
+        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/fs.d.ts",
+        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/util.d.ts",
+        "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/util.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -2001,8 +1971,6 @@
       "../../.yarn/cache/typescript-patch-7f9fbec647-2.zip/node_modules/typescript/lib/lib.es2018.regexp.d.ts",
       "../../.yarn/cache/typescript-patch-7f9fbec647-2.zip/node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../../.yarn/cache/typescript-patch-7f9fbec647-2.zip/node_modules/typescript/lib/lib.esnext.bigint.d.ts",
-      "../../.yarn/cache/@types-tokenizr-npm-1.5.1-0ccd9a33de-2.zip/node_modules/@types/tokenizr/index.d.ts",
-      "./src/lexer.ts",
       "../../.yarn/cache/@types-lodash-npm-4.14.149-d92d0adff6-2.zip/node_modules/@types/lodash/ts3.1/common/common.d.ts",
       "../../.yarn/cache/@types-lodash-npm-4.14.149-d92d0adff6-2.zip/node_modules/@types/lodash/ts3.1/common/array.d.ts",
       "../../.yarn/cache/@types-lodash-npm-4.14.149-d92d0adff6-2.zip/node_modules/@types/lodash/ts3.1/common/collection.d.ts",
@@ -2062,7 +2030,7 @@
       "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/globals.d.ts",
       "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/wasi.d.ts",
       "../../.yarn/cache/@types-node-npm-13.7.1-1feb7cb9aa-2.zip/node_modules/@types/node/ts3.5/index.d.ts",
-      "./src/parser.ts",
+      "../../.yarn/cache/@types-tokenizr-npm-1.5.1-0ccd9a33de-2.zip/node_modules/@types/tokenizr/index.d.ts",
       "./src/index.ts"
     ]
   },
