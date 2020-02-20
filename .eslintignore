@@ -1,10 +1,11 @@
 /lib
 /build
 /.git
-/scripts
+# /scripts
 
 package.json
 
 packages/*/dist
+packages/*/build
 packages/*/coverage
 packages/*/node_modules
