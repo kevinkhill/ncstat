@@ -1,4 +1,5 @@
 import { NcBlock } from "../NcBlock";
+
 import { Point } from "./Point";
 
 export const RETRACT_CODES = ["G98", "G99"];

@@ -1,5 +1,5 @@
 import { lexer } from "./lib/lexer";
-import { NcTokens, LexerConfig } from "./types";
+import { LexerConfig, NcTokens } from "./types";
 
 export class NcLexer {
   debug: boolean;

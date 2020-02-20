@@ -1,6 +1,5 @@
-import { forEach } from "lodash/fp";
-
 import { NcBlock } from "../NcBlock";
+
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
 
@@ -11,22 +10,14 @@ export class Toolpath {
     return toolpath.setTool(tool);
   }
 
-  static parse(multiline: string): Toolpath {
-    const toolpath = new Toolpath();
-
-    forEach(
-      line => toolpath.parseLine(line),
-      multiline.split(/\r?\n/g)
-    );
-
-    return toolpath;
-  }
-
   tool?: Tool;
   hasCoolant = false;
-  blocks: NcBlock[] = [];
   description?: string;
   cannedCycles: CannedCycle[] = [];
+
+  constructor(readonly blocks: NcBlock[] = []) {
+    this.blocks = blocks;
+  }
 
   get hasTool(): boolean {
     return this.tool !== undefined;
@@ -38,14 +29,8 @@ export class Toolpath {
     return this;
   }
 
-  pushBlock(block: NcBlock): this {
+  addBlock(block: NcBlock): this {
     this.blocks.push(block);
-
-    return this;
-  }
-
-  parseLine(line: string): this {
-    this.pushBlock(NcBlock.parse(line));
 
     return this;
   }
@@ -64,6 +49,7 @@ export class Toolpath {
 
   addCannedCycle(cycle: CannedCycle): this {
     this.cannedCycles.push(cycle);
+
     return this;
   }
 

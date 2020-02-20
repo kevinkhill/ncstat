@@ -1,4 +1,4 @@
-import { NcTokens, LexerConfig } from "./types";
+import { LexerConfig, NcTokens } from "./types";
 export declare class NcLexer {
     debug: boolean;
     private lexer;

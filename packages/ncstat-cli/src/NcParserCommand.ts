@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Command } from "clipanion";
 
-import { NcParser } from "@ncstat/parser";
+import { NcParser, NcProgram, NcBlock } from "@ncstat/parser";
 
 import { readFile } from "./readFile";
 
@@ -31,7 +30,7 @@ export class NcParserCommand extends Command {
   writeOut(program: NcProgram) {
     let blockCount = 1;
 
-    program.forEach(block => {
+    program.forEach((block: NcBlock) => {
       this.context.stdout.write(
         "N" + ("0000" + blockCount).slice(-4) + ": "
       );

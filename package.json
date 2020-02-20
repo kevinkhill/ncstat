@@ -1,18 +1,20 @@
 {
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "ncstat": "node ./packages/ncstat-cli/build/index.js",
+    "ncstat": "node ./packages/ncstat-cli/bin/ncstat.js",
     "build-clean": "rimraf ./packages/*/build ./packages/*/build-es5 ./packages/*/tsconfig.tsbuildinfo",
     "prebuild": "yarn build:ts",
-    "build": "node ./scripts/build.js",
-    "build:ts": "node ./scripts/buildTs.js",
+    "build": "yarn node ./scripts/build.js",
+    "build:ts": "yarn node ./scripts/buildTs.js",
     "clean-all": "rimraf ./node_modules && rimraf ./packages/*/node_modules && yarn clean-e2e && yarn build-clean",
-    "clean-e2e": "node ./scripts/cleanE2e.js",
+    "clean-e2e": "yarn node ./scripts/cleanE2e.js",
     "jest-coverage": "yarn jest --coverage",
     "lint": "eslint ./packages/**/src/*.ts --cache",
     "lint:prettier": "yarn --silent lint:prettier:ci --fix",
     "publish": "yarn build-clean && yarn build && lerna publish --silent",
     "test": "yarn lint && yarn jest",
+    "test:pkg": "yarn jest --testPathPattern",
     "watch": "yarn build && node ./scripts/watch.js",
     "watch:ts": "yarn build:ts --watch"
   },
@@ -24,12 +26,10 @@
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
+    "@babel/types": "^7.8.3",
     "@types/jest": "^25.1.1",
-    "@types/lodash": "^4.14.149",
-    "@types/node": "*",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.20.0",
-    "@yarnpkg/pnpify": "^2.0.0-rc.18",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^25.1.0",
     "chalk": "^3.0.0",
@@ -52,11 +52,9 @@
     "lint-staged": ">=10",
     "make-dir": "^3.0.2",
     "micromatch": "^4.0.2",
+    "oao": "^1.8.0",
     "prettier": "^1.19.1",
     "string-length": "^3.1.0",
-    "ts-jest": "^25.1.0",
-    "ts-node": "^8.6.2",
-    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.5"
   },
   "workspaces": [
@@ -68,14 +66,6 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
-    }
-  },
-  "dependenciesMeta": {
-    "lodash": {
-      "unplugged": true
-    },
-    "xstate": {
-      "unplugged": true
     }
   }
 }

@@ -3,16 +3,17 @@ import { clone, eq, filter, last } from "lodash/fp";
 
 import { NcLexer, NcTokens } from "@ncstat/lexer";
 
-import { NcBlock, getBlockGenerator } from "NcBlock";
-import { NcMachineState, NcService, NcMachineStateType } from "NcService";
-
+import { NcBlock, getBlockGenerator } from "../NcBlock";
+import { NcMachineState, NcService, NcMachineStateType } from "../NcService";
 import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
-import { NcBlocks } from "../types";
 import {
   ActiveModals,
   AxesLimits,
-  MachinePositions
+  MachinePositions,
+  NcBlocks,
+  NcProgram
 } from "../types";
+
 import { Modals, PositioningMode } from "./codes";
 import { getModals, updatePosition } from "./lib";
 import { NcEventEmitter } from "./NcEventEmitter";
@@ -20,8 +21,6 @@ import { NcEventEmitter } from "./NcEventEmitter";
 const isIdle = eq(NcMachineState.IDLE);
 const isToolpathing = eq(NcMachineState.TOOLPATHING);
 const isInCannedCycle = eq(NcMachineState.IN_CANNED_CYCLE);
-
-export type NcProgram = Linear<NcBlock>;
 
 export class NcParser extends NcEventEmitter {
   /**
@@ -83,9 +82,9 @@ export class NcParser extends NcEventEmitter {
 
   getLimits(): Partial<AxesLimits> {
     return {
-      X: getLimits("X", this.toolpaths),
-      Y: getLimits("Y", this.toolpaths),
-      Z: getLimits("Z", this.toolpaths)
+      X: getLimits("X")(this.toolpaths),
+      Y: getLimits("Y")(this.toolpaths),
+      Z: getLimits("Z")(this.toolpaths)
     };
   }
 
@@ -217,7 +216,7 @@ export class NcParser extends NcEventEmitter {
           }
         }
 
-        toolpath.pushBlock(block);
+        toolpath.addBlock(block);
       }
     });
 

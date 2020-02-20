@@ -1,6 +1,10 @@
-import { NcBlock } from "NcBlock";
+import { Linear } from "doublie";
+
+import { NcBlock } from "../NcBlock";
 
 export type NcBlocks = NcBlock[] | Generator<NcBlock>;
+
+export type NcProgram = Linear<NcBlock>;
 
 export interface ActiveModals {
   GROUP_01: "G00" | "G01";

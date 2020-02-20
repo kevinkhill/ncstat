@@ -3,6 +3,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "build",
+    "esModuleInterop": true,
     "experimentalDecorators": true
   },
   "references": [
@@ -11,9 +12,6 @@
     },
     {
       "path": "../ncstat-parser"
-    },
-    {
-      "path": "../ncstat-types"
     }
   ]
 }

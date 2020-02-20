@@ -14,13 +14,10 @@
     }
   ],
   "settings": {
-    "eslint.nodePath": ".vscode/pnpify",
-    "eslint.debug": true,
+    "eslint.format.enable": true,
+    "eslint.packageManager": "yarn",
     "eslint.workingDirectories": [
       { "pattern": "./packages/*/src" }
-    ],
-    // "eslint.trace.server": "verbose",
-    // "prettier.prettierPath": ".vscode/pnspify/prettier/index.js",
-    "typescript.tsdk": "@ncstat/.vscode/pnpify/typescript/lib"
+    ]
   }
 }
