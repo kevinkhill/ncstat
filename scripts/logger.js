@@ -1,6 +1,7 @@
 const chalk = require("chalk");
 
-const logger = {
+module.exports = {
+  OK: chalk.reset.inverse.bold.green(" DONE "),
   $n() {
     process.stdout.write("\n");
   },
@@ -16,8 +17,4 @@ const logger = {
   error(msg) {
     console.error(chalk.inverse.red(` ${msg} `));
   }
-};
-
-module.exports = {
-  logger
 };

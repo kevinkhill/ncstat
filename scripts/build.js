@@ -30,12 +30,8 @@ const babel = require("@babel/core");
 const chalk = require("chalk");
 const micromatch = require("micromatch");
 const prettier = require("prettier");
-const {
-  getPackages,
-  adjustToTerminalWidth,
-  OK
-} = require("./buildUtils");
-const { logger } = require("./logger");
+const { getPackages, adjustToTerminalWidth } = require("./buildUtils");
+const logger = require("./logger");
 // const browserBuild = require('./browserBuild');
 
 const SRC_DIR = "src";
@@ -77,7 +73,7 @@ function buildNodePackage(p) {
 
   files.forEach(file => buildFile(file, true));
 
-  process.stdout.write(`${OK}\n`);
+  process.stdout.write(`${logger.OK}\n`);
 }
 
 function buildBrowserPackage(p) {
@@ -110,10 +106,11 @@ function buildBrowserPackage(p) {
         process.stdout.write(
           adjustToTerminalWidth(`${path.basename(p)}\n`)
         );
-        process.stdout.write(`${OK}\n`);
+        process.stdout.write(`${logger.OK}\n`);
       })
       .catch(e => {
         console.error(e);
+
         process.exit(1);
       });
   }

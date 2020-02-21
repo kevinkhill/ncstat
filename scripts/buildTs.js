@@ -13,7 +13,7 @@ const path = require("path");
 
 const execa = require("execa");
 const { getPackages } = require("./buildUtils");
-const { logger } = require("./logger");
+const logger = require("./logger");
 
 const packagesWithTs = getPackages().filter(p =>
   fs.existsSync(path.resolve(p, "tsconfig.json"))

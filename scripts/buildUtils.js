@@ -1,4 +1,5 @@
 /* eslint-disable no-sync */
+
 /**
  * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
  *
@@ -11,11 +12,17 @@ const path = require("path");
 const chalk = require("chalk");
 const stringLength = require("string-length");
 
-const PACKAGES_DIR = path.resolve(__dirname, "../packages");
+const logger = require("./logger");
 
-const OK = chalk.reset.inverse.bold.green(" DONE ");
+const MONO_ROOT = path.resolve(__dirname, "..");
 
-// Get absolute paths of all directories under packages/*
+const PACKAGES_DIR = path.join(MONO_ROOT, "packages");
+
+const OK = logger.OK;
+
+/**+
+ * Get absolute paths of all directories under "<roorDir>/packages/*"
+ */
 module.exports.getPackages = function getPackages() {
   return fs
     .readdirSync(PACKAGES_DIR)
@@ -27,7 +34,7 @@ module.exports.adjustToTerminalWidth = function adjustToTerminalWidth(
   str
 ) {
   const columns = process.stdout.columns || 80;
-  const WIDTH = columns - stringLength(OK) + 1;
+  const WIDTH = columns - stringLength(logger.OK) + 1;
   const strs = str.match(new RegExp(`(.{1,${WIDTH}})`, "g"));
 
   let lastString = strs[strs.length - 1];
@@ -43,4 +50,5 @@ module.exports.adjustToTerminalWidth = function adjustToTerminalWidth(
 };
 
 module.exports.OK = OK;
+module.exports.MONO_ROOT = MONO_ROOT;
 module.exports.PACKAGES_DIR = PACKAGES_DIR;
