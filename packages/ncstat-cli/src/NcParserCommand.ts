@@ -1,6 +1,5 @@
+import { NcBlock, NcParser, NcProgram } from "@ncstat/parser";
 import { Command } from "clipanion";
-
-import { NcParser, NcProgram, NcBlock } from "@ncstat/parser";
 
 import { readFile } from "./readFile";
 
@@ -27,7 +26,7 @@ export class NcParserCommand extends Command {
   /**
    * Print the program to stdout, line by line.
    */
-  writeOut(program: NcProgram) {
+  writeOut(program: NcProgram): void {
     let blockCount = 1;
 
     program.forEach((block: NcBlock) => {

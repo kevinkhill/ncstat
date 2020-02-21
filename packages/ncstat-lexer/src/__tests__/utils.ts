@@ -19,6 +19,7 @@ export function testProp(
     return expect(get(prop, token)).toBe(value);
   });
 }
+
 export function testToken(
   token: NcToken,
   type: string,

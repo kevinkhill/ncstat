@@ -1,4 +1,5 @@
 import { Cli } from "clipanion";
+
 import { NcLexerCommand } from "./NcLexerCommand";
 import { NcParserCommand } from "./NcParserCommand";
 

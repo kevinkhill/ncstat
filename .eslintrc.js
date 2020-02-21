@@ -172,7 +172,7 @@ module.exports = {
       }
     },
     {
-      files: ["tests/*/*.test.ts"],
+      files: ["packages/**/*.test.ts"],
       env: {
         "jest/globals": true
       },

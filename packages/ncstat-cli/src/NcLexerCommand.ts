@@ -1,6 +1,5 @@
-import { Command } from "clipanion";
-
 import { NcParser } from "@ncstat/parser";
+import { Command } from "clipanion";
 
 import { readFile } from "./readFile";
 

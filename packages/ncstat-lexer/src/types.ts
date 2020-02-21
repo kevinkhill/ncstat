@@ -1,10 +1,21 @@
 import { IToken } from "tokenizr";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type NcToken = IToken<any>;
-export type NcTokens = NcToken[] | Generator<NcToken>;
+
+export type TokenType =
+  | "NEWLINE"
+  | "PRG_DELIM"
+  | "OPEN_BRACKET"
+  | "CLOSE_BRACKET"
+  | "PRG_NUMBER"
+  | "ADDR"
+  | "BLK_SKIP"
+  | "COMMENT";
 
 export interface LexerConfig {
-  debug: boolean
+  debug: boolean;
+  newlineTokens: boolean;
 }
 
 export interface Address {

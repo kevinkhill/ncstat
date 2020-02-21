@@ -1,4 +1,4 @@
-import { NcLexer } from "@ncstat/lexer";
+import { NcLexer } from "../NcLexer";
 
 import { testAddrTokenPrefixAndValue, testToken } from "./utils";
 
@@ -16,12 +16,11 @@ G80
 M30
 %`;
 
-const lexer = new NcLexer();
+const lexer = new NcLexer({
+  newlineTokens: false
+});
 
-// We don't need to test NEWLINE tokens here
-const tokens = lexer.tokenize(input).filter(
-  token => token.type !== "NEWLINE"
-);
+const tokens = lexer.tokenArray(input);
 
 describe("lexer", () => {
   it("identified all the tokens", () => {
