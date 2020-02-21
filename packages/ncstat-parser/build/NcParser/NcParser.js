@@ -5,11 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.NcParser = void 0;
 
+var _lexer = require("@ncstat/lexer");
+
 var _doublie = require("doublie");
 
 var _fp = require("lodash/fp");
-
-var _lexer = require("@ncstat/lexer");
 
 var _NcBlock = require("../NcBlock");
 
@@ -105,18 +105,8 @@ class NcParser extends _NcEventEmitter.NcEventEmitter {
   //   );
   // }
 
-  tokenize(input) {
-    try {
-      return this.lexer.tokenize(input);
-    } catch (error) {
-      this.$emitError(error);
-    }
-
-    return [];
-  }
-
   parse(source) {
-    this.tokens = this.tokenize(source);
+    this.tokens = this.lexer.tokenArray(source);
     this.blocks = (0, _NcBlock.getBlockGenerator)(this.tokens); //@TODO move this to the end?
 
     this.program.append(...this.blocks);

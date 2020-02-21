@@ -5,9 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.NcLexerCommand = void 0;
 
-var _clipanion = require("clipanion");
-
 var _parser = require("@ncstat/parser");
+
+var _clipanion = require("clipanion");
 
 var _readFile = require("./readFile");
 

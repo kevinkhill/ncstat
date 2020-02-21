@@ -1,4 +1,4 @@
-import { NcLexer, NcTokens } from "@ncstat/lexer";
+import { NcLexer } from "@ncstat/lexer";
 import { Toolpath } from "../Toolpath";
 import { AxesLimits, NcBlocks, NcProgram } from "../types";
 import { NcEventEmitter } from "./NcEventEmitter";
@@ -13,7 +13,7 @@ export declare class NcParser extends NcEventEmitter {
     programNumber: number;
     programTitle: string;
     program: NcProgram;
-    toolpaths: Toolpath[];
+    toolpaths: Array<Toolpath>;
     /**
      * Parser Vars
      */
@@ -32,8 +32,7 @@ export declare class NcParser extends NcEventEmitter {
     getLexer(): NcLexer;
     getLimits(): Partial<AxesLimits>;
     get toolpathCount(): number;
-    getToolPathsWithTools(): Toolpath[];
-    tokenize(input: string): NcTokens;
+    getToolPathsWithTools(): Array<Toolpath>;
     parse(source: string): NcProgram;
 }
 //# sourceMappingURL=NcParser.d.ts.map

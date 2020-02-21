@@ -113,6 +113,126 @@
         "version": "0c9ea8c2028047f39a3f66752682604f543c08be8806258c3d95c93e75a43255",
         "signature": "0c9ea8c2028047f39a3f66752682604f543c08be8806258c3d95c93e75a43255"
       },
+      "../../node_modules/doublie/types/doublie.d.ts": {
+        "version": "64285cf6abf84c8dcc62f4043d615bae217b12af83c6e360c11cedcb09b56a34",
+        "signature": "64285cf6abf84c8dcc62f4043d615bae217b12af83c6e360c11cedcb09b56a34"
+      },
+      "../../node_modules/eventemitter3/index.d.ts": {
+        "version": "8a267673e524aa0b7b76b32cf015d1c63183be6576e5d25958db5e1253a55e46",
+        "signature": "8a267673e524aa0b7b76b32cf015d1c63183be6576e5d25958db5e1253a55e46"
+      },
+      "../../node_modules/@types/tokenizr/index.d.ts": {
+        "version": "b326f94c4cde3d6b741cffc3e98ca2263b2cc26f454d7a2534d6a32b5c40797f",
+        "signature": "b326f94c4cde3d6b741cffc3e98ca2263b2cc26f454d7a2534d6a32b5c40797f"
+      },
+      "../ncstat-lexer/build/types.d.ts": {
+        "version": "0a223a532adbc01edc12615bd2bcd596cc32bc35cae76b71bd9ebdfb5130aa9f",
+        "signature": "0a223a532adbc01edc12615bd2bcd596cc32bc35cae76b71bd9ebdfb5130aa9f"
+      },
+      "../ncstat-lexer/build/NcLexer.d.ts": {
+        "version": "ed3b53ddbecf870f596aa7a0be2248a47b1043a8664cd1585dfde54158a316a1",
+        "signature": "ed3b53ddbecf870f596aa7a0be2248a47b1043a8664cd1585dfde54158a316a1"
+      },
+      "../ncstat-lexer/build/lib/addressValue.d.ts": {
+        "version": "1dd417cac5dbda665d88cccdea6634e46b06011ecd2ac427bc7659e785f366a3",
+        "signature": "1dd417cac5dbda665d88cccdea6634e46b06011ecd2ac427bc7659e785f366a3"
+      },
+      "../ncstat-lexer/build/lib/getValue.d.ts": {
+        "version": "0f7215342016f8cadf476e372934a879e7ca65f53983d70af02c62c17127f74d",
+        "signature": "0f7215342016f8cadf476e372934a879e7ca65f53983d70af02c62c17127f74d"
+      },
+      "../ncstat-lexer/build/lib/isType.d.ts": {
+        "version": "9598669506ceaa57016878f564a2cee1a584fd92ab02e341b612467e4f7ba39a",
+        "signature": "9598669506ceaa57016878f564a2cee1a584fd92ab02e341b612467e4f7ba39a"
+      },
+      "../ncstat-lexer/build/lib/lexer.d.ts": {
+        "version": "636732fc79acd69af0494a4e6661c41971bbc6ff17ef8e35c9b1002e5854ada9",
+        "signature": "636732fc79acd69af0494a4e6661c41971bbc6ff17ef8e35c9b1002e5854ada9"
+      },
+      "../ncstat-lexer/build/lib/prefixFilter.d.ts": {
+        "version": "da5e1d274b1b5e2c08c5a184a4bf6ed49907372f66bcaa7961063ea4f0bbe697",
+        "signature": "da5e1d274b1b5e2c08c5a184a4bf6ed49907372f66bcaa7961063ea4f0bbe697"
+      },
+      "../ncstat-lexer/build/lib/index.d.ts": {
+        "version": "1223b200ef47315e39bcf8111eb1cff22877b0f386b588e7d8ddab1669353d0e",
+        "signature": "1223b200ef47315e39bcf8111eb1cff22877b0f386b588e7d8ddab1669353d0e"
+      },
+      "../ncstat-lexer/build/index.d.ts": {
+        "version": "627769ed41277c5977c0421cabcfcba260799167b433de4f2319c7382f09b0ea",
+        "signature": "627769ed41277c5977c0421cabcfcba260799167b433de4f2319c7382f09b0ea"
+      },
+      "../ncstat-parser/build/NcBlock/NcBlock.d.ts": {
+        "version": "d01f9e4ee3b8a96711e85de0f4744e75c83a9b1bb0f47ea80014e4c75d6ea685",
+        "signature": "d01f9e4ee3b8a96711e85de0f4744e75c83a9b1bb0f47ea80014e4c75d6ea685"
+      },
+      "../ncstat-parser/build/NcBlock/lib/blockGenerator.d.ts": {
+        "version": "976dde7ed426dad384a8c38f3ccfa6f512bd2028e5319e05825c48cb402b8fe9",
+        "signature": "976dde7ed426dad384a8c38f3ccfa6f512bd2028e5319e05825c48cb402b8fe9"
+      },
+      "../ncstat-parser/build/NcBlock/lib/getBlocks.d.ts": {
+        "version": "8204a6ef35affcffb7367e9e55c0e902bbe9bc3e36fd9e07a8f5e98961255cf8",
+        "signature": "8204a6ef35affcffb7367e9e55c0e902bbe9bc3e36fd9e07a8f5e98961255cf8"
+      },
+      "../ncstat-parser/build/NcBlock/lib/index.d.ts": {
+        "version": "3da20deb868c0e23be796fa8a976e728f923f1edd01e0d6ced018286a56171c9",
+        "signature": "3da20deb868c0e23be796fa8a976e728f923f1edd01e0d6ced018286a56171c9"
+      },
+      "../ncstat-parser/build/NcBlock/index.d.ts": {
+        "version": "c731c4d7a8bf0a384a93533b255ce2a1eee89821a9a4a6c70bbdfce8fc41ff6b",
+        "signature": "c731c4d7a8bf0a384a93533b255ce2a1eee89821a9a4a6c70bbdfce8fc41ff6b"
+      },
+      "../ncstat-parser/build/types/index.d.ts": {
+        "version": "2b55eda0c8233712452036cfd6ad86919821d72225e29dce2f094ba409e5a7de",
+        "signature": "2b55eda0c8233712452036cfd6ad86919821d72225e29dce2f094ba409e5a7de"
+      },
+      "../ncstat-parser/build/Toolpath/Point.d.ts": {
+        "version": "1e686ec3bd482fa697c4f4e2d82564f6da69700b5cf11bc08efbb3e69e9d1a2f",
+        "signature": "1e686ec3bd482fa697c4f4e2d82564f6da69700b5cf11bc08efbb3e69e9d1a2f"
+      },
+      "../ncstat-parser/build/Toolpath/CannedCycle.d.ts": {
+        "version": "ff16f494cf437195482b258885bbb53525e9d1c5e2ea4d1931f72ec07df36681",
+        "signature": "ff16f494cf437195482b258885bbb53525e9d1c5e2ea4d1931f72ec07df36681"
+      },
+      "../ncstat-parser/build/Toolpath/Tool.d.ts": {
+        "version": "63b93ad57fa13a48a119d62a386648ff543f142bce4227eb08879f1db19df659",
+        "signature": "63b93ad57fa13a48a119d62a386648ff543f142bce4227eb08879f1db19df659"
+      },
+      "../ncstat-parser/build/Toolpath/Toolpath.d.ts": {
+        "version": "28dd0c21ab4e2eaad4431c1746a3aaea17f9e72d455112b610a54569a994b38c",
+        "signature": "28dd0c21ab4e2eaad4431c1746a3aaea17f9e72d455112b610a54569a994b38c"
+      },
+      "../ncstat-parser/build/Toolpath/lib/getLimits.d.ts": {
+        "version": "0b1a4ff3c9b253af2962cbf00a734691b408027588c99e9a4c621d07200eea76",
+        "signature": "0b1a4ff3c9b253af2962cbf00a734691b408027588c99e9a4c621d07200eea76"
+      },
+      "../ncstat-parser/build/Toolpath/lib/getAxisLimits.d.ts": {
+        "version": "61e6f716f973d5718f1eb563d27e1505976beecf3bd0b565fb9d4a11289fc5cf",
+        "signature": "61e6f716f973d5718f1eb563d27e1505976beecf3bd0b565fb9d4a11289fc5cf"
+      },
+      "../ncstat-parser/build/Toolpath/lib/index.d.ts": {
+        "version": "933d03cb3eac9bb12b197f30085394b4fd152f227286bf3fbf102423c0d9880a",
+        "signature": "933d03cb3eac9bb12b197f30085394b4fd152f227286bf3fbf102423c0d9880a"
+      },
+      "../ncstat-parser/build/Toolpath/index.d.ts": {
+        "version": "7962b069118ce9418f1d4b09adfd418154d20a9926520bf44bbe4d1c918e5b5a",
+        "signature": "7962b069118ce9418f1d4b09adfd418154d20a9926520bf44bbe4d1c918e5b5a"
+      },
+      "../ncstat-parser/build/NcParser/NcEventEmitter.d.ts": {
+        "version": "066422a249d5259196f519834f9184d9b5e62c32c40e203e193fde321669e822",
+        "signature": "066422a249d5259196f519834f9184d9b5e62c32c40e203e193fde321669e822"
+      },
+      "../ncstat-parser/build/NcParser/NcParser.d.ts": {
+        "version": "021894d3e57f41b096a8ea27101f691d9bcf16ef382479c5d795cd2bdb0f931c",
+        "signature": "021894d3e57f41b096a8ea27101f691d9bcf16ef382479c5d795cd2bdb0f931c"
+      },
+      "../ncstat-parser/build/NcParser/index.d.ts": {
+        "version": "f90384c1c729cc7d321fab6a38fc69f034c48fafdfcf6b1306eb46cee81b848b",
+        "signature": "f90384c1c729cc7d321fab6a38fc69f034c48fafdfcf6b1306eb46cee81b848b"
+      },
+      "../ncstat-parser/build/index.d.ts": {
+        "version": "f14f18bd9b20aa970d7b1a369d1da653dd137abb64f0d7647d9591c553962ea5",
+        "signature": "f14f18bd9b20aa970d7b1a369d1da653dd137abb64f0d7647d9591c553962ea5"
+      },
       "../../node_modules/@types/node/globals.d.ts": {
         "version": "9a9a22159b64df8f4e5a6317cef7aa8348fb409aab0dbbff4c19f189ba416609",
         "signature": "9a9a22159b64df8f4e5a6317cef7aa8348fb409aab0dbbff4c19f189ba416609"
@@ -305,11 +425,11 @@
         "version": "5997cd4a2784c8383f1e2a02bf4562820ce2459edfc903fefd848258a6543ea1",
         "signature": "5997cd4a2784c8383f1e2a02bf4562820ce2459edfc903fefd848258a6543ea1"
       },
-      "../../node_modules/clipanion/lib/advanced/command.d.ts": {
+      "../../node_modules/clipanion/lib/advanced/Command.d.ts": {
         "version": "5af204c44bc61cba630cb9a373c593dfb6aff2cf124cda82769dcdec104d2f2b",
         "signature": "5af204c44bc61cba630cb9a373c593dfb6aff2cf124cda82769dcdec104d2f2b"
       },
-      "../../node_modules/clipanion/lib/advanced/cli.d.ts": {
+      "../../node_modules/clipanion/lib/advanced/Cli.d.ts": {
         "version": "f238652c31dec8df80c1dcbf845f0c1b7fc386cedcd09c1c8c259e7e388188ab",
         "signature": "f238652c31dec8df80c1dcbf845f0c1b7fc386cedcd09c1c8c259e7e388188ab"
       },
@@ -321,141 +441,25 @@
         "version": "8e4c42a37d54d3846c35fa172d666715d75ffb44d6297c7a4f7fe84d6cf9a1ed",
         "signature": "8e4c42a37d54d3846c35fa172d666715d75ffb44d6297c7a4f7fe84d6cf9a1ed"
       },
-      "../../node_modules/doublie/types/doublie.d.ts": {
-        "version": "64285cf6abf84c8dcc62f4043d615bae217b12af83c6e360c11cedcb09b56a34",
-        "signature": "64285cf6abf84c8dcc62f4043d615bae217b12af83c6e360c11cedcb09b56a34"
-      },
-      "../../node_modules/@types/tokenizr/index.d.ts": {
-        "version": "b326f94c4cde3d6b741cffc3e98ca2263b2cc26f454d7a2534d6a32b5c40797f",
-        "signature": "b326f94c4cde3d6b741cffc3e98ca2263b2cc26f454d7a2534d6a32b5c40797f"
-      },
-      "../ncstat-lexer/build/types.d.ts": {
-        "version": "cc035e6cb56228eda52197a6bdbc754ba14c8c2dd388b95e6f8198d9742b0956",
-        "signature": "cc035e6cb56228eda52197a6bdbc754ba14c8c2dd388b95e6f8198d9742b0956"
-      },
-      "../ncstat-lexer/build/nclexer.d.ts": {
-        "version": "524ed7c965e5c2b462252b47559ad52373fd06bf69a67c089f1d235cb10563ad",
-        "signature": "524ed7c965e5c2b462252b47559ad52373fd06bf69a67c089f1d235cb10563ad"
-      },
-      "../ncstat-lexer/build/lib/addressvalue.d.ts": {
-        "version": "ebfd13db8220339136e9429c3245dd6f8e8eb2c1decf32dddf38b400451ba5fb",
-        "signature": "ebfd13db8220339136e9429c3245dd6f8e8eb2c1decf32dddf38b400451ba5fb"
-      },
-      "../ncstat-lexer/build/lib/getvalue.d.ts": {
-        "version": "12239e03971de3c05410b9fe47a8ea0cccbe4f1d2529559e58288eba3092374b",
-        "signature": "12239e03971de3c05410b9fe47a8ea0cccbe4f1d2529559e58288eba3092374b"
-      },
-      "../ncstat-lexer/build/lib/lexer.d.ts": {
-        "version": "35f80f66a1f82cb96f7d6aaa1d0c40068d69e0469a6af6fee352c1aba6a50422",
-        "signature": "35f80f66a1f82cb96f7d6aaa1d0c40068d69e0469a6af6fee352c1aba6a50422"
-      },
-      "../ncstat-lexer/build/lib/prefixfilter.d.ts": {
-        "version": "a0df281de48372dc43e8f22ec7048e0f6c37223c776fffea7e49cf25a2afb517",
-        "signature": "a0df281de48372dc43e8f22ec7048e0f6c37223c776fffea7e49cf25a2afb517"
-      },
-      "../ncstat-lexer/build/lib/index.d.ts": {
-        "version": "c56f70679d3cae3a5fc77404ba735d29fe85f50c11b8d42cd1d7e72c2f49ad8a",
-        "signature": "c56f70679d3cae3a5fc77404ba735d29fe85f50c11b8d42cd1d7e72c2f49ad8a"
-      },
-      "../ncstat-lexer/build/index.d.ts": {
-        "version": "f64afe2ef09d60289ea8c87f4b51fa39a20e47bba496e14d4be4676218bb6984",
-        "signature": "f64afe2ef09d60289ea8c87f4b51fa39a20e47bba496e14d4be4676218bb6984"
-      },
-      "../ncstat-parser/build/ncblock/ncblock.d.ts": {
-        "version": "ee002a5689fe94fc67f0388fe253fee9d7e60fe154ab334c085b3ddce1de8000",
-        "signature": "ee002a5689fe94fc67f0388fe253fee9d7e60fe154ab334c085b3ddce1de8000"
-      },
-      "../ncstat-parser/build/ncblock/lib/blockgenerator.d.ts": {
-        "version": "56bfcf622d7fe033e44b0b1587d19fc8a5416d084c91a01beacb4f18524a7594",
-        "signature": "56bfcf622d7fe033e44b0b1587d19fc8a5416d084c91a01beacb4f18524a7594"
-      },
-      "../ncstat-parser/build/ncblock/lib/getblocks.d.ts": {
-        "version": "881817e0ccbcd0ed640b71de665238259a142d80a578ffb59ad32b02db82c80a",
-        "signature": "881817e0ccbcd0ed640b71de665238259a142d80a578ffb59ad32b02db82c80a"
-      },
-      "../ncstat-parser/build/ncblock/lib/index.d.ts": {
-        "version": "47483ed8af6a1ebcffd039b18a27ad8ddeba316f55dfa43bfaa336146df53ea6",
-        "signature": "47483ed8af6a1ebcffd039b18a27ad8ddeba316f55dfa43bfaa336146df53ea6"
-      },
-      "../ncstat-parser/build/ncblock/index.d.ts": {
-        "version": "713855183dc76ece2f9e282e58cef635bbb7d779dd1306f31b21e03cd4752526",
-        "signature": "713855183dc76ece2f9e282e58cef635bbb7d779dd1306f31b21e03cd4752526"
-      },
-      "../ncstat-parser/build/types/index.d.ts": {
-        "version": "38934841f173dfb3e89289e2c2639c8b19a915dfddcc2e1e9fc919d8bb4fc907",
-        "signature": "38934841f173dfb3e89289e2c2639c8b19a915dfddcc2e1e9fc919d8bb4fc907"
-      },
-      "../ncstat-parser/build/toolpath/point.d.ts": {
-        "version": "1e686ec3bd482fa697c4f4e2d82564f6da69700b5cf11bc08efbb3e69e9d1a2f",
-        "signature": "1e686ec3bd482fa697c4f4e2d82564f6da69700b5cf11bc08efbb3e69e9d1a2f"
-      },
-      "../ncstat-parser/build/toolpath/cannedcycle.d.ts": {
-        "version": "69d93a499236fef49fa2879dc6e979a7a99941cd10d6bf36b27577d885568051",
-        "signature": "69d93a499236fef49fa2879dc6e979a7a99941cd10d6bf36b27577d885568051"
-      },
-      "../ncstat-parser/build/toolpath/tool.d.ts": {
-        "version": "9a471433dbcf08e76f996b6cfa9a243a0a4bd9bfa1e1065e7243d27b85cadc86",
-        "signature": "9a471433dbcf08e76f996b6cfa9a243a0a4bd9bfa1e1065e7243d27b85cadc86"
-      },
-      "../ncstat-parser/build/toolpath/toolpath.d.ts": {
-        "version": "4483a45ea3ff040108ccef66d047d1790eb9f747f0417fcdeb9aeeee19df148e",
-        "signature": "4483a45ea3ff040108ccef66d047d1790eb9f747f0417fcdeb9aeeee19df148e"
-      },
-      "../ncstat-parser/build/toolpath/lib/getlimits.d.ts": {
-        "version": "7b63422cc4fc669dce562ef096518958808c373a44d256d1aa2aee37b9c48a96",
-        "signature": "7b63422cc4fc669dce562ef096518958808c373a44d256d1aa2aee37b9c48a96"
-      },
-      "../ncstat-parser/build/toolpath/lib/getaxislimits.d.ts": {
-        "version": "5175d438cba28bbc9e1bd974fa26cb7c35e1dbf4994427bca2e9c5aafb19e4f9",
-        "signature": "5175d438cba28bbc9e1bd974fa26cb7c35e1dbf4994427bca2e9c5aafb19e4f9"
-      },
-      "../ncstat-parser/build/toolpath/lib/index.d.ts": {
-        "version": "0f01501f9ab9fde69c8e6717a8f1415c7dc632c74cc67b1e5899d9a41bcd210d",
-        "signature": "0f01501f9ab9fde69c8e6717a8f1415c7dc632c74cc67b1e5899d9a41bcd210d"
-      },
-      "../ncstat-parser/build/toolpath/index.d.ts": {
-        "version": "80f4a51b732415f41a90aa89e544c453804d5db90612180191be31b878643964",
-        "signature": "80f4a51b732415f41a90aa89e544c453804d5db90612180191be31b878643964"
-      },
-      "../../node_modules/eventemitter3/index.d.ts": {
-        "version": "8a267673e524aa0b7b76b32cf015d1c63183be6576e5d25958db5e1253a55e46",
-        "signature": "8a267673e524aa0b7b76b32cf015d1c63183be6576e5d25958db5e1253a55e46"
-      },
-      "../ncstat-parser/build/ncparser/nceventemitter.d.ts": {
-        "version": "806c5a9208cd8fafbc8756cbd5ed9fd3743b5461b352721954ee1c9a00491ca8",
-        "signature": "806c5a9208cd8fafbc8756cbd5ed9fd3743b5461b352721954ee1c9a00491ca8"
-      },
-      "../ncstat-parser/build/ncparser/ncparser.d.ts": {
-        "version": "92f1c813dbe90b26b46206e9c412b1589c9f52c2a4cb4fe8f5f10bf836879120",
-        "signature": "92f1c813dbe90b26b46206e9c412b1589c9f52c2a4cb4fe8f5f10bf836879120"
-      },
-      "../ncstat-parser/build/ncparser/index.d.ts": {
-        "version": "a280e37971b82c5ea0eeb8b71102db087fbdcc112a9233325e2285f473c21d68",
-        "signature": "a280e37971b82c5ea0eeb8b71102db087fbdcc112a9233325e2285f473c21d68"
-      },
-      "../ncstat-parser/build/index.d.ts": {
-        "version": "872d837e9821d138fe1016ee0526ef89b009a9bde0a93fac3374f2d970162713",
-        "signature": "872d837e9821d138fe1016ee0526ef89b009a9bde0a93fac3374f2d970162713"
-      },
-      "./src/readfile.ts": {
+      "./src/readFile.ts": {
         "version": "df3f47095de0f6e94facbb38444a4aa94f01a7fd10dc5d5373a5bde7b66a3b57",
-        "signature": "7d621cc8561aa3b4c7afa133b7561eb5f17723ba7ffe79762216329b762f43b9"
+        "signature": "7f8e36a17a404a4ea050347889f5a4d866eb54c1d653fe1d18944a00d1b6fd53"
       },
-      "./src/nclexercommand.ts": {
-        "version": "5509dcbda6fa578bd86a984fffddaba9ae62b2e574e4ca0cdaf96becbad321ef",
-        "signature": "356722bcc4cf5fc03dba611a1b7320f01e36918f240d6917cf4760e8397d6bcf"
+      "./src/NcLexerCommand.ts": {
+        "version": "438a420f3a79f25d1640a63f10c6f4edd117b36db39465a309c1aee61823eca9",
+        "signature": "4935fa639187606c3481c3c2a8a9d40c88d97644991daea65c12463408f707bb"
       },
-      "./src/ncparsercommand.ts": {
-        "version": "686a54ad2745ae69f63de7141a627bc66d7c56bf21a9d3145c5ca8b20845414f",
-        "signature": "0640ba8e929fb8edb535f652707a92846392e481e1cd7f72b740b7b3685325b6"
+      "./src/NcParserCommand.ts": {
+        "version": "a9f8b4a0f0d8728d90758740722bf566cd0337aa2af210da7dda757de6c85769",
+        "signature": "ac786619af1ccc7080d760d338e038d4ae44e37b874ca1af68b7dc1c7126b73d"
       },
-      "./src/ncstatcli.ts": {
-        "version": "bdf0857a13220ae81578217664d12d97cc64977bda72be84a1101c9e71453aa2",
-        "signature": "6b2bd3c9c5d827170a69cf4f8be214e116de014399eaf7df259a9281edcf0174"
+      "./src/NcStatCli.ts": {
+        "version": "357fa4b05050ff6e31fedee22fc6174c950d7a04a98b00412be9c25a36ae4120",
+        "signature": "b49b0534d2f70396fbbe1b47390ceca247332f9970e400729312e83e2220c3ba"
       },
       "./src/index.ts": {
         "version": "4b9f1e007d31473a40c9544eccfd1169f68a7c510f37ee39b4c4340f370f7675",
-        "signature": "f1a177fceb25e05c4cdb5a3106c323986671c30b0bd5a2677c638cd60ac61ad6"
+        "signature": "d032b0a09f8c6d91f05424ee4f367672d6f351f10c5ab2ef17c38cc63a545cfb"
       },
       "../../node_modules/@babel/types/lib/index.d.ts": {
         "version": "b05f0003bcf151be87491c83a4ba37b561798f1282b92cedb3a4e75a0224eb85",
@@ -509,7 +513,7 @@
         "version": "93b59bc67329d5add033e3198583c39aa939cef891e6a2b763e0bea2b514ea9b",
         "signature": "93b59bc67329d5add033e3198583c39aa939cef891e6a2b763e0bea2b514ea9b"
       },
-      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts": {
+      "../../node_modules/jest-diff/build/cleanupSemantic.d.ts": {
         "version": "9a605b7e5de905b5e67ef1dfc7fb6956275ee3f1744ded5fd314ee8b8befe7d0",
         "signature": "9a605b7e5de905b5e67ef1dfc7fb6956275ee3f1744ded5fd314ee8b8befe7d0"
       },
@@ -517,11 +521,11 @@
         "version": "f343673792be9436af98016a143ee1eb3dfdac69b19a128721d92f468934f449",
         "signature": "f343673792be9436af98016a143ee1eb3dfdac69b19a128721d92f468934f449"
       },
-      "../../node_modules/jest-diff/build/difflines.d.ts": {
+      "../../node_modules/jest-diff/build/diffLines.d.ts": {
         "version": "8c7776698b78f177cfdead7414cac977c6d84f134e89bbedfea4caecd04b0491",
         "signature": "8c7776698b78f177cfdead7414cac977c6d84f134e89bbedfea4caecd04b0491"
       },
-      "../../node_modules/jest-diff/build/printdiffs.d.ts": {
+      "../../node_modules/jest-diff/build/printDiffs.d.ts": {
         "version": "4f71cbe0899e77e2e0b471ae3191bf3dc443585b69f97e0a01a5d1755c9669cd",
         "signature": "4f71cbe0899e77e2e0b471ae3191bf3dc443585b69f97e0a01a5d1755c9669cd"
       },
@@ -807,6 +811,241 @@
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "../../node_modules/typescript/lib/lib.esnext.bigint.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/doublie/types/doublie.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/eventemitter3/index.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/@types/tokenizr/index.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/types.d.ts": [
+        "../../node_modules/@types/tokenizr/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/NcLexer.d.ts": [
+        "../../node_modules/eventemitter3/index.d.ts",
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/addressValue.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/getValue.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/isType.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/lexer.d.ts": [
+        "../../node_modules/@types/tokenizr/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/prefixFilter.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/index.d.ts": [
+        "../ncstat-lexer/build/lib/addressValue.d.ts",
+        "../ncstat-lexer/build/lib/getValue.d.ts",
+        "../ncstat-lexer/build/lib/isType.d.ts",
+        "../ncstat-lexer/build/lib/lexer.d.ts",
+        "../ncstat-lexer/build/lib/prefixFilter.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/index.d.ts": [
+        "../ncstat-lexer/build/NcLexer.d.ts",
+        "../ncstat-lexer/build/lib/index.d.ts",
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcBlock/NcBlock.d.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "../ncstat-parser/build/types/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcBlock/lib/blockGenerator.d.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "../ncstat-parser/build/NcBlock/NcBlock.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcBlock/lib/getBlocks.d.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "../ncstat-parser/build/NcBlock/NcBlock.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcBlock/lib/index.d.ts": [
+        "../ncstat-parser/build/NcBlock/lib/blockGenerator.d.ts",
+        "../ncstat-parser/build/NcBlock/lib/getBlocks.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcBlock/index.d.ts": [
+        "../ncstat-parser/build/NcBlock/NcBlock.d.ts",
+        "../ncstat-parser/build/NcBlock/lib/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/types/index.d.ts": [
+        "../../node_modules/doublie/types/doublie.d.ts",
+        "../ncstat-parser/build/NcBlock/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/Point.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/CannedCycle.d.ts": [
+        "../ncstat-parser/build/NcBlock/index.d.ts",
+        "../ncstat-parser/build/Toolpath/Point.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/Tool.d.ts": [
+        "../ncstat-parser/build/Toolpath/Toolpath.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/Toolpath.d.ts": [
+        "../ncstat-parser/build/NcBlock/index.d.ts",
+        "../ncstat-parser/build/Toolpath/CannedCycle.d.ts",
+        "../ncstat-parser/build/Toolpath/Tool.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/lib/getLimits.d.ts": [
+        "../ncstat-parser/build/types/index.d.ts",
+        "../ncstat-parser/build/Toolpath/Toolpath.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/lib/getAxisLimits.d.ts": [
+        "../ncstat-parser/build/types/index.d.ts",
+        "../ncstat-parser/build/Toolpath/Toolpath.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/lib/index.d.ts": [
+        "../ncstat-parser/build/Toolpath/lib/getLimits.d.ts",
+        "../ncstat-parser/build/Toolpath/lib/getAxisLimits.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/index.d.ts": [
+        "../ncstat-parser/build/Toolpath/lib/index.d.ts",
+        "../ncstat-parser/build/Toolpath/Toolpath.d.ts",
+        "../ncstat-parser/build/Toolpath/Tool.d.ts",
+        "../ncstat-parser/build/Toolpath/CannedCycle.d.ts",
+        "../ncstat-parser/build/Toolpath/Point.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcParser/NcEventEmitter.d.ts": [
+        "../../node_modules/eventemitter3/index.d.ts",
+        "../ncstat-lexer/build/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcParser/NcParser.d.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "../ncstat-parser/build/Toolpath/index.d.ts",
+        "../ncstat-parser/build/types/index.d.ts",
+        "../ncstat-parser/build/NcParser/NcEventEmitter.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcParser/index.d.ts": [
+        "../ncstat-parser/build/NcParser/NcParser.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/index.d.ts": [
+        "../ncstat-parser/build/types/index.d.ts",
+        "../ncstat-parser/build/NcBlock/index.d.ts",
+        "../ncstat-parser/build/NcParser/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -1191,17 +1430,17 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/clipanion/lib/advanced/command.d.ts": [
+      "../../node_modules/clipanion/lib/advanced/Command.d.ts": [
         "../../node_modules/clipanion/lib/core.d.ts",
-        "../../node_modules/clipanion/lib/advanced/cli.d.ts",
+        "../../node_modules/clipanion/lib/advanced/Cli.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/clipanion/lib/advanced/cli.d.ts": [
+      "../../node_modules/clipanion/lib/advanced/Cli.d.ts": [
         "../../node_modules/@types/node/stream.d.ts",
-        "../../node_modules/clipanion/lib/advanced/command.d.ts",
+        "../../node_modules/clipanion/lib/advanced/Command.d.ts",
         "../../node_modules/@types/node/ts3.5/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -1215,275 +1454,49 @@
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "../../node_modules/clipanion/lib/advanced/index.d.ts": [
-        "../../node_modules/clipanion/lib/advanced/cli.d.ts",
-        "../../node_modules/clipanion/lib/advanced/command.d.ts",
+        "../../node_modules/clipanion/lib/advanced/Cli.d.ts",
+        "../../node_modules/clipanion/lib/advanced/Command.d.ts",
         "../../node_modules/clipanion/lib/errors.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/doublie/types/doublie.d.ts": [
+      "./src/readFile.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/@types/tokenizr/index.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/types.d.ts": [
-        "../../node_modules/@types/tokenizr/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/nclexer.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/addressvalue.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/getvalue.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/lexer.d.ts": [
-        "../../node_modules/@types/tokenizr/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/prefixfilter.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/index.d.ts": [
-        "../ncstat-lexer/build/lib/addressvalue.d.ts",
-        "../ncstat-lexer/build/lib/getvalue.d.ts",
-        "../ncstat-lexer/build/lib/lexer.d.ts",
-        "../ncstat-lexer/build/lib/prefixfilter.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/index.d.ts": [
-        "../ncstat-lexer/build/nclexer.d.ts",
-        "../ncstat-lexer/build/lib/index.d.ts",
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncblock/ncblock.d.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "../ncstat-parser/build/types/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncblock/lib/blockgenerator.d.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "../ncstat-parser/build/ncblock/ncblock.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncblock/lib/getblocks.d.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "../ncstat-parser/build/ncblock/ncblock.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncblock/lib/index.d.ts": [
-        "../ncstat-parser/build/ncblock/lib/blockgenerator.d.ts",
-        "../ncstat-parser/build/ncblock/lib/getblocks.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncblock/index.d.ts": [
-        "../ncstat-parser/build/ncblock/ncblock.d.ts",
-        "../ncstat-parser/build/ncblock/lib/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/types/index.d.ts": [
-        "../../node_modules/doublie/types/doublie.d.ts",
-        "../ncstat-parser/build/ncblock/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/point.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/cannedcycle.d.ts": [
-        "../ncstat-parser/build/ncblock/index.d.ts",
-        "../ncstat-parser/build/toolpath/point.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/tool.d.ts": [
-        "../ncstat-parser/build/toolpath/toolpath.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/toolpath.d.ts": [
-        "../ncstat-parser/build/ncblock/index.d.ts",
-        "../ncstat-parser/build/toolpath/cannedcycle.d.ts",
-        "../ncstat-parser/build/toolpath/tool.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/lib/getlimits.d.ts": [
-        "../ncstat-parser/build/types/index.d.ts",
-        "../ncstat-parser/build/toolpath/toolpath.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/lib/getaxislimits.d.ts": [
-        "../ncstat-parser/build/types/index.d.ts",
-        "../ncstat-parser/build/toolpath/toolpath.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/lib/index.d.ts": [
-        "../ncstat-parser/build/toolpath/lib/getlimits.d.ts",
-        "../ncstat-parser/build/toolpath/lib/getaxislimits.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/index.d.ts": [
-        "../ncstat-parser/build/toolpath/lib/index.d.ts",
-        "../ncstat-parser/build/toolpath/toolpath.d.ts",
-        "../ncstat-parser/build/toolpath/tool.d.ts",
-        "../ncstat-parser/build/toolpath/cannedcycle.d.ts",
-        "../ncstat-parser/build/toolpath/point.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/eventemitter3/index.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncparser/nceventemitter.d.ts": [
-        "../../node_modules/eventemitter3/index.d.ts",
-        "../ncstat-lexer/build/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncparser/ncparser.d.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "../ncstat-parser/build/toolpath/index.d.ts",
-        "../ncstat-parser/build/types/index.d.ts",
-        "../ncstat-parser/build/ncparser/nceventemitter.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncparser/index.d.ts": [
-        "../ncstat-parser/build/ncparser/ncparser.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/index.d.ts": [
-        "../ncstat-parser/build/types/index.d.ts",
-        "../ncstat-parser/build/ncblock/index.d.ts",
-        "../ncstat-parser/build/ncparser/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "./src/readfile.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "./src/nclexercommand.ts": [
-        "../../node_modules/clipanion/lib/advanced/index.d.ts",
+      "./src/NcLexerCommand.ts": [
         "../ncstat-parser/build/index.d.ts",
-        "./src/readfile.ts",
+        "../../node_modules/clipanion/lib/advanced/index.d.ts",
+        "./src/readFile.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncparsercommand.ts": [
-        "../../node_modules/clipanion/lib/advanced/index.d.ts",
+      "./src/NcParserCommand.ts": [
         "../ncstat-parser/build/index.d.ts",
-        "./src/readfile.ts",
+        "../../node_modules/clipanion/lib/advanced/index.d.ts",
+        "./src/readFile.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncstatcli.ts": [
+      "./src/NcStatCli.ts": [
         "../../node_modules/clipanion/lib/advanced/index.d.ts",
-        "./src/nclexercommand.ts",
-        "./src/ncparsercommand.ts",
+        "./src/NcLexerCommand.ts",
+        "./src/NcParserCommand.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "./src/index.ts": [
-        "./src/ncstatcli.ts",
+        "./src/NcStatCli.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -1583,7 +1596,7 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts": [
+      "../../node_modules/jest-diff/build/cleanupSemantic.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -1595,16 +1608,16 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/jest-diff/build/difflines.d.ts": [
-        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+      "../../node_modules/jest-diff/build/diffLines.d.ts": [
+        "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
         "../../node_modules/jest-diff/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/jest-diff/build/printdiffs.d.ts": [
-        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+      "../../node_modules/jest-diff/build/printDiffs.d.ts": [
+        "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
         "../../node_modules/jest-diff/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -1612,9 +1625,9 @@
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "../../node_modules/jest-diff/build/index.d.ts": [
-        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/jest-diff/build/difflines.d.ts",
-        "../../node_modules/jest-diff/build/printdiffs.d.ts",
+        "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
+        "../../node_modules/jest-diff/build/diffLines.d.ts",
+        "../../node_modules/jest-diff/build/printDiffs.d.ts",
         "../../node_modules/jest-diff/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -2083,6 +2096,75 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
+      "../../node_modules/doublie/types/doublie.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/eventemitter3/index.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/@types/tokenizr/index.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/types.d.ts": [
+        "../../node_modules/@types/tokenizr/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/lexer.d.ts": [
+        "../../node_modules/@types/tokenizr/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/index.d.ts": [
+        "../ncstat-lexer/build/lib/addressValue.d.ts",
+        "../ncstat-lexer/build/lib/getValue.d.ts",
+        "../ncstat-lexer/build/lib/isType.d.ts",
+        "../ncstat-lexer/build/lib/lexer.d.ts",
+        "../ncstat-lexer/build/lib/prefixFilter.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/index.d.ts": [
+        "../ncstat-lexer/build/NcLexer.d.ts",
+        "../ncstat-lexer/build/lib/index.d.ts",
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/types/index.d.ts": [
+        "../../node_modules/doublie/types/doublie.d.ts",
+        "../ncstat-parser/build/NcBlock/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/index.d.ts": [
+        "../ncstat-parser/build/types/index.d.ts",
+        "../ncstat-parser/build/NcBlock/index.d.ts",
+        "../ncstat-parser/build/NcParser/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
       "../../node_modules/@types/node/globals.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -2462,23 +2544,6 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/clipanion/lib/advanced/command.d.ts": [
-        "../../node_modules/clipanion/lib/core.d.ts",
-        "../../node_modules/clipanion/lib/advanced/cli.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/clipanion/lib/advanced/cli.d.ts": [
-        "../../node_modules/@types/node/stream.d.ts",
-        "../../node_modules/clipanion/lib/advanced/command.d.ts",
-        "../../node_modules/@types/node/ts3.5/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
       "../../node_modules/clipanion/lib/errors.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -2494,244 +2559,8 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/doublie/types/doublie.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/@types/tokenizr/index.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/types.d.ts": [
-        "../../node_modules/@types/tokenizr/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/nclexer.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/addressvalue.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/getvalue.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/lexer.d.ts": [
-        "../../node_modules/@types/tokenizr/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/prefixfilter.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/index.d.ts": [
-        "../ncstat-lexer/build/lib/addressvalue.d.ts",
-        "../ncstat-lexer/build/lib/getvalue.d.ts",
-        "../ncstat-lexer/build/lib/lexer.d.ts",
-        "../ncstat-lexer/build/lib/prefixfilter.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/index.d.ts": [
-        "../ncstat-lexer/build/nclexer.d.ts",
-        "../ncstat-lexer/build/lib/index.d.ts",
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncblock/ncblock.d.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "../ncstat-parser/build/types/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncblock/lib/blockgenerator.d.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "../ncstat-parser/build/ncblock/ncblock.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncblock/lib/getblocks.d.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "../ncstat-parser/build/ncblock/ncblock.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncblock/lib/index.d.ts": [
-        "../ncstat-parser/build/ncblock/lib/blockgenerator.d.ts",
-        "../ncstat-parser/build/ncblock/lib/getblocks.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncblock/index.d.ts": [
-        "../ncstat-parser/build/ncblock/ncblock.d.ts",
-        "../ncstat-parser/build/ncblock/lib/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/types/index.d.ts": [
-        "../../node_modules/doublie/types/doublie.d.ts",
-        "../ncstat-parser/build/ncblock/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/point.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/cannedcycle.d.ts": [
-        "../ncstat-parser/build/ncblock/index.d.ts",
-        "../ncstat-parser/build/toolpath/point.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/tool.d.ts": [
-        "../ncstat-parser/build/toolpath/toolpath.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/toolpath.d.ts": [
-        "../ncstat-parser/build/ncblock/index.d.ts",
-        "../ncstat-parser/build/toolpath/cannedcycle.d.ts",
-        "../ncstat-parser/build/toolpath/tool.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/lib/getlimits.d.ts": [
-        "../ncstat-parser/build/types/index.d.ts",
-        "../ncstat-parser/build/toolpath/toolpath.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/lib/getaxislimits.d.ts": [
-        "../ncstat-parser/build/types/index.d.ts",
-        "../ncstat-parser/build/toolpath/toolpath.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/lib/index.d.ts": [
-        "../ncstat-parser/build/toolpath/lib/getlimits.d.ts",
-        "../ncstat-parser/build/toolpath/lib/getaxislimits.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/toolpath/index.d.ts": [
-        "../ncstat-parser/build/toolpath/lib/index.d.ts",
-        "../ncstat-parser/build/toolpath/toolpath.d.ts",
-        "../ncstat-parser/build/toolpath/tool.d.ts",
-        "../ncstat-parser/build/toolpath/cannedcycle.d.ts",
-        "../ncstat-parser/build/toolpath/point.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/eventemitter3/index.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncparser/nceventemitter.d.ts": [
-        "../../node_modules/eventemitter3/index.d.ts",
-        "../ncstat-lexer/build/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncparser/ncparser.d.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "../ncstat-parser/build/toolpath/index.d.ts",
-        "../ncstat-parser/build/types/index.d.ts",
-        "../ncstat-parser/build/ncparser/nceventemitter.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/ncparser/index.d.ts": [
-        "../ncstat-parser/build/ncparser/ncparser.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-parser/build/index.d.ts": [
-        "../ncstat-parser/build/types/index.d.ts",
-        "../ncstat-parser/build/ncblock/index.d.ts",
-        "../ncstat-parser/build/ncparser/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "./src/nclexercommand.ts": [
-        "../../node_modules/clipanion/lib/advanced/index.d.ts"
-      ],
-      "./src/ncparsercommand.ts": [
-        "../ncstat-parser/build/index.d.ts",
-        "../../node_modules/clipanion/lib/advanced/index.d.ts"
-      ],
-      "./src/ncstatcli.ts": [
-        "../../node_modules/clipanion/lib/advanced/index.d.ts"
-      ],
       "./src/index.ts": [
-        "./src/ncstatcli.ts"
+        "./src/NcStatCli.ts"
       ],
       "../../node_modules/@babel/types/lib/index.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
@@ -2827,29 +2656,7 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
       "../../node_modules/jest-diff/build/types.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/jest-diff/build/difflines.d.ts": [
-        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/jest-diff/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/jest-diff/build/printdiffs.d.ts": [
-        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/jest-diff/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -3156,6 +2963,221 @@
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcParser/NcParser.d.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "../ncstat-parser/build/Toolpath/index.d.ts",
+        "../ncstat-parser/build/types/index.d.ts",
+        "../ncstat-parser/build/NcParser/NcEventEmitter.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcParser/index.d.ts": [
+        "../ncstat-parser/build/NcParser/NcParser.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "./src/NcParserCommand.ts": [
+        "../ncstat-parser/build/index.d.ts",
+        "../../node_modules/clipanion/lib/advanced/index.d.ts"
+      ],
+      "./src/NcStatCli.ts": [
+        "../../node_modules/clipanion/lib/advanced/index.d.ts"
+      ],
+      "./src/NcLexerCommand.ts": [
+        "../../node_modules/clipanion/lib/advanced/index.d.ts"
+      ],
+      "../ncstat-parser/build/NcParser/NcEventEmitter.d.ts": [
+        "../../node_modules/eventemitter3/index.d.ts",
+        "../ncstat-lexer/build/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcBlock/lib/getBlocks.d.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "../ncstat-parser/build/NcBlock/NcBlock.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcBlock/lib/index.d.ts": [
+        "../ncstat-parser/build/NcBlock/lib/blockGenerator.d.ts",
+        "../ncstat-parser/build/NcBlock/lib/getBlocks.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcBlock/index.d.ts": [
+        "../ncstat-parser/build/NcBlock/NcBlock.d.ts",
+        "../ncstat-parser/build/NcBlock/lib/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/Toolpath.d.ts": [
+        "../ncstat-parser/build/NcBlock/index.d.ts",
+        "../ncstat-parser/build/Toolpath/CannedCycle.d.ts",
+        "../ncstat-parser/build/Toolpath/Tool.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/index.d.ts": [
+        "../ncstat-parser/build/Toolpath/lib/index.d.ts",
+        "../ncstat-parser/build/Toolpath/Toolpath.d.ts",
+        "../ncstat-parser/build/Toolpath/Tool.d.ts",
+        "../ncstat-parser/build/Toolpath/CannedCycle.d.ts",
+        "../ncstat-parser/build/Toolpath/Point.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/lib/getAxisLimits.d.ts": [
+        "../ncstat-parser/build/types/index.d.ts",
+        "../ncstat-parser/build/Toolpath/Toolpath.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/lib/index.d.ts": [
+        "../ncstat-parser/build/Toolpath/lib/getLimits.d.ts",
+        "../ncstat-parser/build/Toolpath/lib/getAxisLimits.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/lib/getLimits.d.ts": [
+        "../ncstat-parser/build/types/index.d.ts",
+        "../ncstat-parser/build/Toolpath/Toolpath.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/Tool.d.ts": [
+        "../ncstat-parser/build/Toolpath/Toolpath.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/CannedCycle.d.ts": [
+        "../ncstat-parser/build/NcBlock/index.d.ts",
+        "../ncstat-parser/build/Toolpath/Point.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcBlock/NcBlock.d.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "../ncstat-parser/build/types/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/NcBlock/lib/blockGenerator.d.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "../ncstat-parser/build/NcBlock/NcBlock.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/prefixFilter.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/isType.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/getValue.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/addressValue.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/NcLexer.d.ts": [
+        "../../node_modules/eventemitter3/index.d.ts",
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-parser/build/Toolpath/Point.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/clipanion/lib/advanced/Command.d.ts": [
+        "../../node_modules/clipanion/lib/core.d.ts",
+        "../../node_modules/clipanion/lib/advanced/Cli.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/clipanion/lib/advanced/Cli.d.ts": [
+        "../../node_modules/@types/node/stream.d.ts",
+        "../../node_modules/clipanion/lib/advanced/Command.d.ts",
+        "../../node_modules/@types/node/ts3.5/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/cleanupSemantic.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/printDiffs.d.ts": [
+        "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
+        "../../node_modules/jest-diff/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/diffLines.d.ts": [
+        "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
+        "../../node_modules/jest-diff/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -3187,6 +3209,9 @@
       "../../node_modules/typescript/lib/lib.es2018.regexp.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.bigint.d.ts",
+      "../../node_modules/doublie/types/doublie.d.ts",
+      "../../node_modules/eventemitter3/index.d.ts",
+      "../../node_modules/@types/tokenizr/index.d.ts",
       "../../node_modules/@types/node/globals.d.ts",
       "../../node_modules/@types/node/assert.d.ts",
       "../../node_modules/@types/node/async_hooks.d.ts",
@@ -3235,21 +3260,7 @@
       "../../node_modules/@types/node/ts3.5/wasi.d.ts",
       "../../node_modules/@types/node/ts3.5/index.d.ts",
       "../../node_modules/clipanion/lib/core.d.ts",
-      "../../node_modules/clipanion/lib/advanced/command.d.ts",
-      "../../node_modules/clipanion/lib/advanced/cli.d.ts",
       "../../node_modules/clipanion/lib/errors.d.ts",
-      "../../node_modules/clipanion/lib/advanced/index.d.ts",
-      "../../node_modules/doublie/types/doublie.d.ts",
-      "../../node_modules/@types/tokenizr/index.d.ts",
-      "../ncstat-lexer/build/types.d.ts",
-      "../ncstat-lexer/build/lib/addressvalue.d.ts",
-      "../ncstat-lexer/build/lib/getvalue.d.ts",
-      "../ncstat-lexer/build/lib/lexer.d.ts",
-      "../ncstat-lexer/build/lib/prefixfilter.d.ts",
-      "../ncstat-lexer/build/lib/index.d.ts",
-      "../../node_modules/eventemitter3/index.d.ts",
-      "./src/readfile.ts",
-      "./src/index.ts",
       "../../node_modules/@babel/types/lib/index.d.ts",
       "../../node_modules/@types/babel__generator/index.d.ts",
       "../../node_modules/@types/babel__traverse/index.d.ts",
@@ -3263,14 +3274,9 @@
       "../../node_modules/@types/istanbul-lib-coverage/index.d.ts",
       "../../node_modules/@types/istanbul-lib-report/index.d.ts",
       "../../node_modules/@types/istanbul-reports/index.d.ts",
-      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
       "../../node_modules/jest-diff/build/types.d.ts",
-      "../../node_modules/jest-diff/build/difflines.d.ts",
-      "../../node_modules/jest-diff/build/printdiffs.d.ts",
-      "../../node_modules/jest-diff/build/index.d.ts",
       "../../node_modules/pretty-format/build/types.d.ts",
       "../../node_modules/pretty-format/build/index.d.ts",
-      "../../node_modules/@types/jest/index.d.ts",
       "../../node_modules/@types/json-schema/index.d.ts",
       "../../node_modules/@types/json5/index.d.ts",
       "../../node_modules/@types/lodash/ts3.1/common/common.d.ts",
@@ -3290,29 +3296,46 @@
       "../../node_modules/@types/stack-utils/index.d.ts",
       "../../node_modules/@types/yargs-parser/index.d.ts",
       "../../node_modules/@types/yargs/index.d.ts",
-      "../ncstat-lexer/build/nclexer.d.ts",
+      "../ncstat-lexer/build/types.d.ts",
+      "../ncstat-lexer/build/lib/prefixFilter.d.ts",
+      "../ncstat-lexer/build/lib/index.d.ts",
+      "../ncstat-lexer/build/lib/isType.d.ts",
+      "../ncstat-lexer/build/lib/getValue.d.ts",
+      "../ncstat-lexer/build/lib/addressValue.d.ts",
+      "../ncstat-lexer/build/NcLexer.d.ts",
+      "../ncstat-lexer/build/lib/lexer.d.ts",
+      "../ncstat-parser/build/Toolpath/Point.d.ts",
+      "../../node_modules/clipanion/lib/advanced/Cli.d.ts",
+      "./src/readFile.ts",
+      "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
+      "../../node_modules/jest-diff/build/index.d.ts",
+      "../../node_modules/jest-diff/build/printDiffs.d.ts",
+      "../../node_modules/jest-diff/build/diffLines.d.ts",
       "../ncstat-lexer/build/index.d.ts",
-      "../ncstat-parser/build/toolpath/point.d.ts",
-      "../ncstat-parser/build/toolpath/index.d.ts",
-      "../ncstat-parser/build/toolpath/cannedcycle.d.ts",
-      "../ncstat-parser/build/ncblock/ncblock.d.ts",
-      "../ncstat-parser/build/ncblock/lib/blockgenerator.d.ts",
-      "../ncstat-parser/build/ncblock/lib/getblocks.d.ts",
-      "../ncstat-parser/build/ncblock/lib/index.d.ts",
-      "../ncstat-parser/build/ncblock/index.d.ts",
+      "../ncstat-parser/build/NcBlock/NcBlock.d.ts",
+      "../ncstat-parser/build/NcBlock/lib/blockGenerator.d.ts",
+      "../ncstat-parser/build/NcBlock/lib/getBlocks.d.ts",
+      "../ncstat-parser/build/NcBlock/lib/index.d.ts",
+      "../ncstat-parser/build/NcBlock/index.d.ts",
       "../ncstat-parser/build/types/index.d.ts",
-      "../ncstat-parser/build/toolpath/tool.d.ts",
-      "../ncstat-parser/build/toolpath/toolpath.d.ts",
-      "../ncstat-parser/build/toolpath/lib/getlimits.d.ts",
-      "../ncstat-parser/build/toolpath/lib/getaxislimits.d.ts",
-      "../ncstat-parser/build/toolpath/lib/index.d.ts",
-      "../ncstat-parser/build/ncparser/nceventemitter.d.ts",
-      "../ncstat-parser/build/ncparser/ncparser.d.ts",
-      "../ncstat-parser/build/ncparser/index.d.ts",
+      "../ncstat-parser/build/Toolpath/CannedCycle.d.ts",
+      "../ncstat-parser/build/Toolpath/Tool.d.ts",
+      "../ncstat-parser/build/Toolpath/Toolpath.d.ts",
+      "../ncstat-parser/build/Toolpath/lib/getLimits.d.ts",
+      "../ncstat-parser/build/Toolpath/lib/getAxisLimits.d.ts",
+      "../ncstat-parser/build/Toolpath/lib/index.d.ts",
+      "../ncstat-parser/build/Toolpath/index.d.ts",
+      "../ncstat-parser/build/NcParser/NcEventEmitter.d.ts",
+      "../ncstat-parser/build/NcParser/NcParser.d.ts",
+      "../ncstat-parser/build/NcParser/index.d.ts",
       "../ncstat-parser/build/index.d.ts",
-      "./src/nclexercommand.ts",
-      "./src/ncparsercommand.ts",
-      "./src/ncstatcli.ts"
+      "../../node_modules/clipanion/lib/advanced/Command.d.ts",
+      "../../node_modules/clipanion/lib/advanced/index.d.ts",
+      "./src/NcLexerCommand.ts",
+      "./src/NcParserCommand.ts",
+      "./src/NcStatCli.ts",
+      "./src/index.ts",
+      "../../node_modules/@types/jest/index.d.ts"
     ]
   },
   "version": "3.7.5"

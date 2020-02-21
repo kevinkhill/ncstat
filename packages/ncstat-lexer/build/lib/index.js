@@ -28,6 +28,18 @@ Object.keys(_getValue).forEach(function(key) {
   });
 });
 
+var _isType = require("./isType");
+
+Object.keys(_isType).forEach(function(key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function() {
+      return _isType[key];
+    }
+  });
+});
+
 var _lexer = require("./lexer");
 
 Object.keys(_lexer).forEach(function(key) {

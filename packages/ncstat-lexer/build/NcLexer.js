@@ -5,13 +5,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.NcLexer = void 0;
 
-var _lexer = require("./lib/lexer");
+var _eventemitter = require("eventemitter3");
 
-class NcLexer {
-  constructor({ debug = false }) {
+var _lib = require("./lib");
+
+class NcLexer extends _eventemitter.EventEmitter {
+  constructor(
+    config = {
+      debug: false,
+      newlineTokens: true
+    }
+  ) {
+    super();
     this.debug = void 0;
-    this.lexer = _lexer.lexer;
-    this.debug = debug;
+    this.newlineTokens = void 0;
+    this.lexer = _lib.lexer;
+    this.debug = Boolean(config.debug);
+    this.newlineTokens = Boolean(config.newlineTokens);
   }
 
   *tokenize(input) {
@@ -20,8 +30,18 @@ class NcLexer {
     let token;
 
     while ((token = this.lexer.token()) !== null) {
+      if (
+        (0, _lib.isType)("NEWLINE", token) &&
+        this.newlineTokens === false
+      )
+        continue;
       yield token;
+      this.emit("token", token);
     }
+  }
+
+  tokenArray(input) {
+    return Array.from(this.tokenize(input));
   }
 }
 

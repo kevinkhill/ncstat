@@ -1,10 +1,13 @@
+import { NcLexer, NcToken } from "@ncstat/lexer";
 import { Linear } from "doublie";
 import { clone, eq, filter, last } from "lodash/fp";
 
-import { NcLexer, NcTokens } from "@ncstat/lexer";
-
-import { NcBlock, getBlockGenerator } from "../NcBlock";
-import { NcMachineState, NcService, NcMachineStateType } from "../NcService";
+import { getBlockGenerator, NcBlock } from "../NcBlock";
+import {
+  NcMachineState,
+  NcMachineStateType,
+  NcService
+} from "../NcService";
 import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
 import {
   ActiveModals,
@@ -13,7 +16,6 @@ import {
   NcBlocks,
   NcProgram
 } from "../types";
-
 import { Modals, PositioningMode } from "./codes";
 import { getModals, updatePosition } from "./lib";
 import { NcEventEmitter } from "./NcEventEmitter";
@@ -34,7 +36,7 @@ export class NcParser extends NcEventEmitter {
   programNumber = NaN;
   programTitle = "";
   program: NcProgram = new Linear<NcBlock>();
-  toolpaths: Toolpath[] = [];
+  toolpaths: Array<Toolpath> = [];
 
   /**
    * Parser Vars
@@ -48,7 +50,7 @@ export class NcParser extends NcEventEmitter {
   private nc: any;
   private state = NcMachineState.IDLE;
   private lexer: NcLexer;
-  private tokens: NcTokens = [];
+  private tokens: Array<NcToken> = [];
 
   constructor({ debug }: { debug?: boolean }) {
     super();
@@ -92,7 +94,7 @@ export class NcParser extends NcEventEmitter {
     return this.toolpaths.length;
   }
 
-  getToolPathsWithTools(): Toolpath[] {
+  getToolPathsWithTools(): Array<Toolpath> {
     return filter("hasTool", this.toolpaths);
   }
 
@@ -103,18 +105,8 @@ export class NcParser extends NcEventEmitter {
   //   );
   // }
 
-  tokenize(input: string): NcTokens {
-    try {
-      return this.lexer.tokenize(input);
-    } catch (error) {
-      this.$emitError(error);
-    }
-
-    return [];
-  }
-
   parse(source: string): NcProgram {
-    this.tokens = this.tokenize(source);
+    this.tokens = this.lexer.tokenArray(source);
     this.blocks = getBlockGenerator(this.tokens);
 
     //@TODO move this to the end?

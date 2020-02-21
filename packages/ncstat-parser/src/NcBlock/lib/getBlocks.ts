@@ -1,11 +1,13 @@
-import { NcTokens } from "@ncstat/lexer";
+import { NcToken } from "@ncstat/lexer";
 
 import { NcBlock } from "../NcBlock";
 
-export function getBlocks(tokens: NcTokens): NcBlock[] {
-  const blocks: NcBlock[] = [];
+export function getBlocks(
+  tokens: Array<NcToken> | Generator<NcToken>
+): Array<NcBlock> {
+  const blocks: Array<NcBlock> = [];
 
-  let line: NcTokens = [];
+  let line: Array<NcToken> = [];
 
   for (const token of tokens) {
     if (token.type === "NEWLINE") {

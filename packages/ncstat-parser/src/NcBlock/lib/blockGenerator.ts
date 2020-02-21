@@ -1,11 +1,11 @@
-import { NcToken, NcTokens } from "@ncstat/lexer";
+import { NcToken } from "@ncstat/lexer";
 
 import { NcBlock } from "../NcBlock";
 
 export function* getBlockGenerator(
-  tokens: NcTokens
+  tokens: Array<NcToken> | Generator<NcToken>
 ): Generator<NcBlock> {
-  let lineTokens: NcToken[] = [];
+  let lineTokens: Array<NcToken> = [];
 
   for (const token of tokens) {
     if (token.type === "NEWLINE") {

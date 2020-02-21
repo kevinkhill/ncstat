@@ -173,83 +173,91 @@
         "version": "7ff5fb5156de1cc3188592cac07295e1e0336517cc0f769b38834a236a6c4c29",
         "signature": "7ff5fb5156de1cc3188592cac07295e1e0336517cc0f769b38834a236a6c4c29"
       },
+      "../../node_modules/eventemitter3/index.d.ts": {
+        "version": "8a267673e524aa0b7b76b32cf015d1c63183be6576e5d25958db5e1253a55e46",
+        "signature": "8a267673e524aa0b7b76b32cf015d1c63183be6576e5d25958db5e1253a55e46"
+      },
       "../../node_modules/@types/tokenizr/index.d.ts": {
         "version": "b326f94c4cde3d6b741cffc3e98ca2263b2cc26f454d7a2534d6a32b5c40797f",
         "signature": "b326f94c4cde3d6b741cffc3e98ca2263b2cc26f454d7a2534d6a32b5c40797f"
       },
       "../ncstat-lexer/build/types.d.ts": {
-        "version": "cc035e6cb56228eda52197a6bdbc754ba14c8c2dd388b95e6f8198d9742b0956",
-        "signature": "cc035e6cb56228eda52197a6bdbc754ba14c8c2dd388b95e6f8198d9742b0956"
+        "version": "0a223a532adbc01edc12615bd2bcd596cc32bc35cae76b71bd9ebdfb5130aa9f",
+        "signature": "0a223a532adbc01edc12615bd2bcd596cc32bc35cae76b71bd9ebdfb5130aa9f"
       },
-      "../ncstat-lexer/build/nclexer.d.ts": {
-        "version": "524ed7c965e5c2b462252b47559ad52373fd06bf69a67c089f1d235cb10563ad",
-        "signature": "524ed7c965e5c2b462252b47559ad52373fd06bf69a67c089f1d235cb10563ad"
+      "../ncstat-lexer/build/NcLexer.d.ts": {
+        "version": "ed3b53ddbecf870f596aa7a0be2248a47b1043a8664cd1585dfde54158a316a1",
+        "signature": "ed3b53ddbecf870f596aa7a0be2248a47b1043a8664cd1585dfde54158a316a1"
       },
-      "../ncstat-lexer/build/lib/addressvalue.d.ts": {
-        "version": "ebfd13db8220339136e9429c3245dd6f8e8eb2c1decf32dddf38b400451ba5fb",
-        "signature": "ebfd13db8220339136e9429c3245dd6f8e8eb2c1decf32dddf38b400451ba5fb"
+      "../ncstat-lexer/build/lib/addressValue.d.ts": {
+        "version": "1dd417cac5dbda665d88cccdea6634e46b06011ecd2ac427bc7659e785f366a3",
+        "signature": "1dd417cac5dbda665d88cccdea6634e46b06011ecd2ac427bc7659e785f366a3"
       },
-      "../ncstat-lexer/build/lib/getvalue.d.ts": {
-        "version": "12239e03971de3c05410b9fe47a8ea0cccbe4f1d2529559e58288eba3092374b",
-        "signature": "12239e03971de3c05410b9fe47a8ea0cccbe4f1d2529559e58288eba3092374b"
+      "../ncstat-lexer/build/lib/getValue.d.ts": {
+        "version": "0f7215342016f8cadf476e372934a879e7ca65f53983d70af02c62c17127f74d",
+        "signature": "0f7215342016f8cadf476e372934a879e7ca65f53983d70af02c62c17127f74d"
+      },
+      "../ncstat-lexer/build/lib/isType.d.ts": {
+        "version": "9598669506ceaa57016878f564a2cee1a584fd92ab02e341b612467e4f7ba39a",
+        "signature": "9598669506ceaa57016878f564a2cee1a584fd92ab02e341b612467e4f7ba39a"
       },
       "../ncstat-lexer/build/lib/lexer.d.ts": {
-        "version": "35f80f66a1f82cb96f7d6aaa1d0c40068d69e0469a6af6fee352c1aba6a50422",
-        "signature": "35f80f66a1f82cb96f7d6aaa1d0c40068d69e0469a6af6fee352c1aba6a50422"
+        "version": "636732fc79acd69af0494a4e6661c41971bbc6ff17ef8e35c9b1002e5854ada9",
+        "signature": "636732fc79acd69af0494a4e6661c41971bbc6ff17ef8e35c9b1002e5854ada9"
       },
-      "../ncstat-lexer/build/lib/prefixfilter.d.ts": {
-        "version": "a0df281de48372dc43e8f22ec7048e0f6c37223c776fffea7e49cf25a2afb517",
-        "signature": "a0df281de48372dc43e8f22ec7048e0f6c37223c776fffea7e49cf25a2afb517"
+      "../ncstat-lexer/build/lib/prefixFilter.d.ts": {
+        "version": "da5e1d274b1b5e2c08c5a184a4bf6ed49907372f66bcaa7961063ea4f0bbe697",
+        "signature": "da5e1d274b1b5e2c08c5a184a4bf6ed49907372f66bcaa7961063ea4f0bbe697"
       },
       "../ncstat-lexer/build/lib/index.d.ts": {
-        "version": "c56f70679d3cae3a5fc77404ba735d29fe85f50c11b8d42cd1d7e72c2f49ad8a",
-        "signature": "c56f70679d3cae3a5fc77404ba735d29fe85f50c11b8d42cd1d7e72c2f49ad8a"
+        "version": "1223b200ef47315e39bcf8111eb1cff22877b0f386b588e7d8ddab1669353d0e",
+        "signature": "1223b200ef47315e39bcf8111eb1cff22877b0f386b588e7d8ddab1669353d0e"
       },
       "../ncstat-lexer/build/index.d.ts": {
-        "version": "f64afe2ef09d60289ea8c87f4b51fa39a20e47bba496e14d4be4676218bb6984",
-        "signature": "f64afe2ef09d60289ea8c87f4b51fa39a20e47bba496e14d4be4676218bb6984"
+        "version": "627769ed41277c5977c0421cabcfcba260799167b433de4f2319c7382f09b0ea",
+        "signature": "627769ed41277c5977c0421cabcfcba260799167b433de4f2319c7382f09b0ea"
       },
-      "./src/toolpath/point.ts": {
+      "./src/Toolpath/Point.ts": {
         "version": "849ce816fd5059fc0288192315da59c7b797b9af9fa4b4ca87fe988bb0a861b6",
-        "signature": "3dc0967a8f829f8a8e16d756b0110a132b074566f0d6e0dd53d8679f7293010c"
+        "signature": "1e686ec3bd482fa697c4f4e2d82564f6da69700b5cf11bc08efbb3e69e9d1a2f"
       },
-      "./src/toolpath/cannedcycle.ts": {
+      "./src/Toolpath/CannedCycle.ts": {
         "version": "71560c6f5518bb6ec71fa3faa83eed27bef882b79a102d37220d333fbbd8e40f",
-        "signature": "69d93a499236fef49fa2879dc6e979a7a99941cd10d6bf36b27577d885568051"
+        "signature": "ff16f494cf437195482b258885bbb53525e9d1c5e2ea4d1931f72ec07df36681"
       },
-      "./src/ncblock/ncblock.ts": {
+      "./src/NcBlock/NcBlock.ts": {
         "version": "4c53902d87161318329980ff87392c0c4501d01818edff231fd2b53f47f55e02",
-        "signature": "ee002a5689fe94fc67f0388fe253fee9d7e60fe154ab334c085b3ddce1de8000"
+        "signature": "d01f9e4ee3b8a96711e85de0f4744e75c83a9b1bb0f47ea80014e4c75d6ea685"
       },
-      "./src/ncblock/lib/blockgenerator.ts": {
-        "version": "3bbfb7d954d3de8e86eb1ab8a009d6a751a05d0f9cf7248fde65ab3618b6ab15",
-        "signature": "56bfcf622d7fe033e44b0b1587d19fc8a5416d084c91a01beacb4f18524a7594"
+      "./src/NcBlock/lib/blockGenerator.ts": {
+        "version": "874fa373fcb165d359679af681dd5d2950904199534823b65b8a6fa47ed1d9a6",
+        "signature": "976dde7ed426dad384a8c38f3ccfa6f512bd2028e5319e05825c48cb402b8fe9"
       },
-      "./src/ncblock/lib/getblocks.ts": {
-        "version": "c660b8597122c1a1f889255ca8fa0cad527692377a90eccae3fc4de63560e196",
-        "signature": "881817e0ccbcd0ed640b71de665238259a142d80a578ffb59ad32b02db82c80a"
+      "./src/NcBlock/lib/getBlocks.ts": {
+        "version": "c21d7309716a4c7073d0865647c1bd748088fe652a120badfab1b3217b54939d",
+        "signature": "8204a6ef35affcffb7367e9e55c0e902bbe9bc3e36fd9e07a8f5e98961255cf8"
       },
-      "./src/ncblock/lib/index.ts": {
+      "./src/NcBlock/lib/index.ts": {
         "version": "915d744d887e294858fc0608b84bbb8455e7d1bf578f2a76b62d4ef8e90e2e18",
-        "signature": "47483ed8af6a1ebcffd039b18a27ad8ddeba316f55dfa43bfaa336146df53ea6"
+        "signature": "3da20deb868c0e23be796fa8a976e728f923f1edd01e0d6ced018286a56171c9"
       },
-      "./src/ncblock/index.ts": {
+      "./src/NcBlock/index.ts": {
         "version": "9f8090fb9969a5bc1381fa3effc88e5bfced5490aad7da797e233afbaa560ff3",
-        "signature": "713855183dc76ece2f9e282e58cef635bbb7d779dd1306f31b21e03cd4752526"
+        "signature": "c731c4d7a8bf0a384a93533b255ce2a1eee89821a9a4a6c70bbdfce8fc41ff6b"
       },
       "./src/types/index.ts": {
         "version": "78a866fe84daa7351c3bea517639417a9b91a9fbe3d643e9ede14056a4836d62",
-        "signature": "38934841f173dfb3e89289e2c2639c8b19a915dfddcc2e1e9fc919d8bb4fc907"
+        "signature": "2b55eda0c8233712452036cfd6ad86919821d72225e29dce2f094ba409e5a7de"
       },
-      "../../node_modules/xstate/lib/actor.d.ts": {
+      "../../node_modules/xstate/lib/Actor.d.ts": {
         "version": "b2ae6f88f88e1dd82e4a25d593b473c96c3fa91bc89d310ef851d0903d8b93d6",
         "signature": "b2ae6f88f88e1dd82e4a25d593b473c96c3fa91bc89d310ef851d0903d8b93d6"
       },
-      "../../node_modules/xstate/lib/state.d.ts": {
+      "../../node_modules/xstate/lib/State.d.ts": {
         "version": "42266672fc29fc5bd34d9ba814ffe8163137810440062fc1e5b3786793787616",
         "signature": "42266672fc29fc5bd34d9ba814ffe8163137810440062fc1e5b3786793787616"
       },
-      "../../node_modules/xstate/lib/statenode.d.ts": {
+      "../../node_modules/xstate/lib/StateNode.d.ts": {
         "version": "52b37d8031672b91e77a33dcd7621d0dc4c6345af7e6b0a802cd9c08ab1774fe",
         "signature": "52b37d8031672b91e77a33dcd7621d0dc4c6345af7e6b0a802cd9c08ab1774fe"
       },
@@ -265,15 +273,15 @@
         "version": "3d04386b61cea711a7bcdd3c862c9c4c7b3010b344bf9172e1da4446f5bc01f5",
         "signature": "3d04386b61cea711a7bcdd3c862c9c4c7b3010b344bf9172e1da4446f5bc01f5"
       },
-      "../../node_modules/xstate/lib/mapstate.d.ts": {
+      "../../node_modules/xstate/lib/mapState.d.ts": {
         "version": "f45b3ee7d0b6d68ee59d89e973ff31502ee3ecc4712ff5ea36ae6e9a4544dc43",
         "signature": "f45b3ee7d0b6d68ee59d89e973ff31502ee3ecc4712ff5ea36ae6e9a4544dc43"
       },
-      "../../node_modules/xstate/lib/machine.d.ts": {
+      "../../node_modules/xstate/lib/Machine.d.ts": {
         "version": "e5999a4641954d18720101c1cb48f4678fabb11db2937dceadb5c0d8cf423b6e",
         "signature": "e5999a4641954d18720101c1cb48f4678fabb11db2937dceadb5c0d8cf423b6e"
       },
-      "../../node_modules/xstate/lib/actiontypes.d.ts": {
+      "../../node_modules/xstate/lib/actionTypes.d.ts": {
         "version": "703f198eda279553bfbd0402fab8edb4acc8aad0cf865116e3c4c506bf75bfd2",
         "signature": "703f198eda279553bfbd0402fab8edb4acc8aad0cf865116e3c4c506bf75bfd2"
       },
@@ -289,91 +297,87 @@
         "version": "6bed87368c5fbf1b54cca46a9151479d14f6a900bbc23cde97ebe7dd6cab2d5c",
         "signature": "6bed87368c5fbf1b54cca46a9151479d14f6a900bbc23cde97ebe7dd6cab2d5c"
       },
-      "./src/ncservice/ncstatemachine.ts": {
+      "./src/NcService/NcStateMachine.ts": {
         "version": "8526cb443beed16e09bb635bf94bea1dd16a45fc47db92cc96e8f0b7a3cd3bd8",
-        "signature": "2ec888e9b2345213ff47a5e08439b2f41cc0206032a8e6d6aff8acea2f2d55e6"
+        "signature": "e6fadb15eede96c1d9b38a2a0390d9f12fadd04d183f1d0fcc7baf29f1a3fa9f"
       },
-      "./src/ncservice/ncservice.ts": {
+      "./src/NcService/NcService.ts": {
         "version": "41f854557ace9bae74446c07d8261c207ebe0f90465d8928136a8d2eb973b084",
-        "signature": "6a88c8eb4b3dd5e317b6894301835afcf5065732e96a23a1761f6bc47212e61d"
+        "signature": "f018937376d9e0c6a47ab08f9da4c09ed836c998e48b2413e4eca3b640991686"
       },
-      "./src/ncservice/index.ts": {
+      "./src/NcService/index.ts": {
         "version": "6e07516b89215485cf78db4e73ec92eaada788c71e8a8f06ae0fe3ed561a350b",
-        "signature": "707be3886f7cd50e62d888db09d9edf8ab3f7899d4342772c9a84176b91b6f20"
+        "signature": "7582481816f37e5fad6c7b36f8e511f08836c3b3bddfe8f9ace70a7a02c4fd33"
       },
-      "./src/toolpath/tool.ts": {
+      "./src/Toolpath/Tool.ts": {
         "version": "8cab8ca694361d2282a02d040247b6d41f134b133f6af3bf2a5e0d945d1ca297",
-        "signature": "9a471433dbcf08e76f996b6cfa9a243a0a4bd9bfa1e1065e7243d27b85cadc86"
+        "signature": "63b93ad57fa13a48a119d62a386648ff543f142bce4227eb08879f1db19df659"
       },
-      "./src/toolpath/toolpath.ts": {
+      "./src/Toolpath/Toolpath.ts": {
         "version": "76215bb7abc5fc510f5ae089dacb70dc200aad4fadddd92f29b5cc70f59ba2b4",
-        "signature": "4483a45ea3ff040108ccef66d047d1790eb9f747f0417fcdeb9aeeee19df148e"
+        "signature": "28dd0c21ab4e2eaad4431c1746a3aaea17f9e72d455112b610a54569a994b38c"
       },
-      "./src/toolpath/lib/getaxislimits.ts": {
+      "./src/Toolpath/lib/getAxisLimits.ts": {
         "version": "3dd6989d958bce1448e73c42f84965b28dd147895a8ec2f4758f86485b1f4224",
-        "signature": "5175d438cba28bbc9e1bd974fa26cb7c35e1dbf4994427bca2e9c5aafb19e4f9"
+        "signature": "61e6f716f973d5718f1eb563d27e1505976beecf3bd0b565fb9d4a11289fc5cf"
       },
-      "./src/toolpath/lib/getlimits.ts": {
+      "./src/Toolpath/lib/getLimits.ts": {
         "version": "5cc5d192d1fdc18a6a79ac8faec6bf75f2d8687131656dfb7a2d673e72c18d23",
-        "signature": "7b63422cc4fc669dce562ef096518958808c373a44d256d1aa2aee37b9c48a96"
+        "signature": "0b1a4ff3c9b253af2962cbf00a734691b408027588c99e9a4c621d07200eea76"
       },
-      "./src/toolpath/lib/index.ts": {
+      "./src/Toolpath/lib/index.ts": {
         "version": "cd1d71eeb61dee1cbec0924057a302ee4916dadba2a5497beb0e8198a8ec6399",
-        "signature": "0f01501f9ab9fde69c8e6717a8f1415c7dc632c74cc67b1e5899d9a41bcd210d"
+        "signature": "933d03cb3eac9bb12b197f30085394b4fd152f227286bf3fbf102423c0d9880a"
       },
-      "./src/toolpath/index.ts": {
+      "./src/Toolpath/index.ts": {
         "version": "7b2de8851dd5db1032cd3f97d65ddbb7b4451a07aa9361085255053c255207e9",
-        "signature": "80f4a51b732415f41a90aa89e544c453804d5db90612180191be31b878643964"
+        "signature": "7962b069118ce9418f1d4b09adfd418154d20a9926520bf44bbe4d1c918e5b5a"
       },
-      "./src/ncparser/gcodes.ts": {
+      "./src/NcParser/gcodes.ts": {
         "version": "72388a57dee52848cd527456c1cfc54381c690768f2c1e2a110ed82033c37e39",
-        "signature": "5b139dce8e81a2e04ebeed1448664cd87f00bc5e16049ddf589c9aaf37a41986"
+        "signature": "c23d0cce6195c49b1a875b28915a4cdcd71a1808445aa496abc39cfcf5b9ec25"
       },
-      "./src/ncparser/mcodes.ts": {
+      "./src/NcParser/mcodes.ts": {
         "version": "803204d355bc056e644bcd0f16bcbc0c36be958db4b6f628670e2ad89a160b5f",
-        "signature": "e4600496a172879207b26d2f269d412f20a52ba03e5746e8a97ff2af0057cfe0"
+        "signature": "89793b45630ba71d60cc19b3d26457b765c78b10ac079b2419af672c0cad981f"
       },
-      "./src/ncparser/address.ts": {
+      "./src/NcParser/Address.ts": {
         "version": "d3ffbe7a30242c26f107ef8a9208650a57c5b17d25f722ca3cdcdcb219528846",
-        "signature": "77ed54f210fffb34cf359bced4044e21e543eca4f40f84f54208ab662c7bd9a6"
+        "signature": "8f834f42a8aeb6cbc0c5b293cd4a0ad3e87b6cf85920e714e8a16df15a35707c"
       },
-      "./src/ncparser/codes.ts": {
+      "./src/NcParser/codes.ts": {
         "version": "e9b6553f0386c3013db13539d8a00b28631f5828d03fc8f27f5c0d90475e587c",
-        "signature": "095ede7659b38ce02b2b8ebc9052004d97380bd614704b7cbb2c1b3604e88ad2"
+        "signature": "840e5f524c5d33df4cba804735c0c6765877ec118714cb05f4c336519d6d0741"
       },
-      "./src/ncparser/lib/getmodals.ts": {
+      "./src/NcParser/lib/getModals.ts": {
         "version": "ceba0a7a5c854dae84ae058b231bca1f2b53f682ebe6cc2c6b6d1d9892877598",
-        "signature": "deba00a9f08fefb6acff8d6324e6cf3bd066a37f4e7ae1c21a98a3924a5fd17f"
+        "signature": "bfba2588ff71cb484ccd8ef5a0cec5419dde2dcc12bd487851438b42e972d092"
       },
-      "./src/ncparser/lib/updateposition.ts": {
+      "./src/NcParser/lib/updatePosition.ts": {
         "version": "f6411a7c0faaeb8cbda80f90f1a8546924099818a76a86023c4bac7cc3e392a6",
-        "signature": "ccb4722018e83d76140fabe2e663d178e956b42c7ca7ce45e53057cbe573e0a0"
+        "signature": "61e0df4d485dc6c1101e18b2dc30962e34d57e140376ce5cd844cf0fdf4bdb25"
       },
-      "./src/ncparser/lib/index.ts": {
+      "./src/NcParser/lib/index.ts": {
         "version": "7cc50122428bf142752f76ddc7618ed8a2f6a6a2e3378c6e8de4046a439470d6",
-        "signature": "4b4729efdac677a34741afaa51e2cadf78f0fe6c67cea200194ccc6792e9c319"
+        "signature": "faf7fb57bc2154ad192f526e5b4b3e2f8f1130fb940f66094fb2a2d425997481"
       },
-      "../../node_modules/eventemitter3/index.d.ts": {
-        "version": "8a267673e524aa0b7b76b32cf015d1c63183be6576e5d25958db5e1253a55e46",
-        "signature": "8a267673e524aa0b7b76b32cf015d1c63183be6576e5d25958db5e1253a55e46"
-      },
-      "./src/ncparser/nceventemitter.ts": {
+      "./src/NcParser/NcEventEmitter.ts": {
         "version": "e19d731dde367906215a89c9dc23a71fcc2a864a26750562a8b4b8a8c16a0c81",
-        "signature": "806c5a9208cd8fafbc8756cbd5ed9fd3743b5461b352721954ee1c9a00491ca8"
+        "signature": "066422a249d5259196f519834f9184d9b5e62c32c40e203e193fde321669e822"
       },
-      "./src/ncparser/ncparser.ts": {
-        "version": "78d14f371b3d9ba1030841a5ae0ef4d6fa8862bd43d3541060bf0ca7e0c9822e",
-        "signature": "92f1c813dbe90b26b46206e9c412b1589c9f52c2a4cb4fe8f5f10bf836879120"
+      "./src/NcParser/NcParser.ts": {
+        "version": "72e26a1eb80b2ad6da57ca1f16c83cda59d11ef1f8814e2e1870fa144371758d",
+        "signature": "021894d3e57f41b096a8ea27101f691d9bcf16ef382479c5d795cd2bdb0f931c"
       },
-      "./src/ncparser/index.ts": {
+      "./src/NcParser/index.ts": {
         "version": "089c9b8da8788a8d5c5245e9b598e7b0afe8a93fbb0e3c7de080178d5379167f",
-        "signature": "a280e37971b82c5ea0eeb8b71102db087fbdcc112a9233325e2285f473c21d68"
+        "signature": "f90384c1c729cc7d321fab6a38fc69f034c48fafdfcf6b1306eb46cee81b848b"
       },
       "./src/index.ts": {
         "version": "5972431ba7f6028d5009ff773769e2aa4b8b6f38f542c6f2bd8ab475994222de",
-        "signature": "872d837e9821d138fe1016ee0526ef89b009a9bde0a93fac3374f2d970162713"
+        "signature": "f14f18bd9b20aa970d7b1a369d1da653dd137abb64f0d7647d9591c553962ea5"
       },
-      "./src/toolpath/cannedpoint.ts": {
+      "./src/Toolpath/CannedPoint.ts": {
         "version": "79436e3843adb605585ec7c327c01c9ef9744386d9be2560494d44218aa729d5",
         "signature": "e706d49c13336cea9558f591006581fa9413646e24b9d53aa621f559991bb321"
       },
@@ -617,7 +621,7 @@
         "version": "93b59bc67329d5add033e3198583c39aa939cef891e6a2b763e0bea2b514ea9b",
         "signature": "93b59bc67329d5add033e3198583c39aa939cef891e6a2b763e0bea2b514ea9b"
       },
-      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts": {
+      "../../node_modules/jest-diff/build/cleanupSemantic.d.ts": {
         "version": "9a605b7e5de905b5e67ef1dfc7fb6956275ee3f1744ded5fd314ee8b8befe7d0",
         "signature": "9a605b7e5de905b5e67ef1dfc7fb6956275ee3f1744ded5fd314ee8b8befe7d0"
       },
@@ -625,11 +629,11 @@
         "version": "f343673792be9436af98016a143ee1eb3dfdac69b19a128721d92f468934f449",
         "signature": "f343673792be9436af98016a143ee1eb3dfdac69b19a128721d92f468934f449"
       },
-      "../../node_modules/jest-diff/build/difflines.d.ts": {
+      "../../node_modules/jest-diff/build/diffLines.d.ts": {
         "version": "8c7776698b78f177cfdead7414cac977c6d84f134e89bbedfea4caecd04b0491",
         "signature": "8c7776698b78f177cfdead7414cac977c6d84f134e89bbedfea4caecd04b0491"
       },
-      "../../node_modules/jest-diff/build/printdiffs.d.ts": {
+      "../../node_modules/jest-diff/build/printDiffs.d.ts": {
         "version": "4f71cbe0899e77e2e0b471ae3191bf3dc443585b69f97e0a01a5d1755c9669cd",
         "signature": "4f71cbe0899e77e2e0b471ae3191bf3dc443585b69f97e0a01a5d1755c9669cd"
       },
@@ -1129,6 +1133,12 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
+      "../../node_modules/eventemitter3/index.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
       "../../node_modules/@types/tokenizr/index.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -1142,21 +1152,29 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../ncstat-lexer/build/nclexer.d.ts": [
+      "../ncstat-lexer/build/NcLexer.d.ts": [
+        "../../node_modules/eventemitter3/index.d.ts",
         "../ncstat-lexer/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../ncstat-lexer/build/lib/addressvalue.d.ts": [
+      "../ncstat-lexer/build/lib/addressValue.d.ts": [
         "../ncstat-lexer/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../ncstat-lexer/build/lib/getvalue.d.ts": [
+      "../ncstat-lexer/build/lib/getValue.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/isType.d.ts": [
         "../ncstat-lexer/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -1170,7 +1188,7 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../ncstat-lexer/build/lib/prefixfilter.d.ts": [
+      "../ncstat-lexer/build/lib/prefixFilter.d.ts": [
         "../ncstat-lexer/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -1178,17 +1196,18 @@
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "../ncstat-lexer/build/lib/index.d.ts": [
-        "../ncstat-lexer/build/lib/addressvalue.d.ts",
-        "../ncstat-lexer/build/lib/getvalue.d.ts",
+        "../ncstat-lexer/build/lib/addressValue.d.ts",
+        "../ncstat-lexer/build/lib/getValue.d.ts",
+        "../ncstat-lexer/build/lib/isType.d.ts",
         "../ncstat-lexer/build/lib/lexer.d.ts",
-        "../ncstat-lexer/build/lib/prefixfilter.d.ts",
+        "../ncstat-lexer/build/lib/prefixFilter.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "../ncstat-lexer/build/index.d.ts": [
-        "../ncstat-lexer/build/nclexer.d.ts",
+        "../ncstat-lexer/build/NcLexer.d.ts",
         "../ncstat-lexer/build/lib/index.d.ts",
         "../ncstat-lexer/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -1196,57 +1215,57 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/toolpath/point.ts": [
+      "./src/Toolpath/Point.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/toolpath/cannedcycle.ts": [
-        "./src/ncblock/index.ts",
-        "./src/toolpath/point.ts",
+      "./src/Toolpath/CannedCycle.ts": [
+        "./src/NcBlock/index.ts",
+        "./src/Toolpath/Point.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncblock/ncblock.ts": [
+      "./src/NcBlock/NcBlock.ts": [
         "../../node_modules/@types/lodash/ts3.1/fp.d.ts",
         "../ncstat-lexer/build/index.d.ts",
-        "./src/toolpath/cannedcycle.ts",
+        "./src/Toolpath/CannedCycle.ts",
         "./src/types/index.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncblock/lib/blockgenerator.ts": [
+      "./src/NcBlock/lib/blockGenerator.ts": [
         "../ncstat-lexer/build/index.d.ts",
-        "./src/ncblock/ncblock.ts",
+        "./src/NcBlock/NcBlock.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncblock/lib/getblocks.ts": [
+      "./src/NcBlock/lib/getBlocks.ts": [
         "../ncstat-lexer/build/index.d.ts",
-        "./src/ncblock/ncblock.ts",
+        "./src/NcBlock/NcBlock.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncblock/lib/index.ts": [
-        "./src/ncblock/lib/blockgenerator.ts",
-        "./src/ncblock/lib/getblocks.ts",
+      "./src/NcBlock/lib/index.ts": [
+        "./src/NcBlock/lib/blockGenerator.ts",
+        "./src/NcBlock/lib/getBlocks.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncblock/index.ts": [
-        "./src/ncblock/ncblock.ts",
-        "./src/ncblock/lib/index.ts",
+      "./src/NcBlock/index.ts": [
+        "./src/NcBlock/NcBlock.ts",
+        "./src/NcBlock/lib/index.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -1254,31 +1273,31 @@
       ],
       "./src/types/index.ts": [
         "../../node_modules/doublie/types/doublie.d.ts",
-        "./src/ncblock/index.ts",
+        "./src/NcBlock/index.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/xstate/lib/actor.d.ts": [
+      "../../node_modules/xstate/lib/Actor.d.ts": [
         "../../node_modules/xstate/lib/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/xstate/lib/state.d.ts": [
+      "../../node_modules/xstate/lib/State.d.ts": [
         "../../node_modules/xstate/lib/types.d.ts",
-        "../../node_modules/xstate/lib/statenode.d.ts",
-        "../../node_modules/xstate/lib/actor.d.ts",
+        "../../node_modules/xstate/lib/StateNode.d.ts",
+        "../../node_modules/xstate/lib/Actor.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/xstate/lib/statenode.d.ts": [
+      "../../node_modules/xstate/lib/StateNode.d.ts": [
         "../../node_modules/xstate/lib/types.d.ts",
-        "../../node_modules/xstate/lib/state.d.ts",
+        "../../node_modules/xstate/lib/State.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -1286,18 +1305,18 @@
       ],
       "../../node_modules/xstate/lib/interpreter.d.ts": [
         "../../node_modules/xstate/lib/types.d.ts",
-        "../../node_modules/xstate/lib/state.d.ts",
-        "../../node_modules/xstate/lib/actor.d.ts",
+        "../../node_modules/xstate/lib/State.d.ts",
+        "../../node_modules/xstate/lib/Actor.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "../../node_modules/xstate/lib/types.d.ts": [
-        "../../node_modules/xstate/lib/statenode.d.ts",
-        "../../node_modules/xstate/lib/state.d.ts",
+        "../../node_modules/xstate/lib/StateNode.d.ts",
+        "../../node_modules/xstate/lib/State.d.ts",
         "../../node_modules/xstate/lib/interpreter.d.ts",
-        "../../node_modules/xstate/lib/actor.d.ts",
+        "../../node_modules/xstate/lib/Actor.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -1305,28 +1324,28 @@
       ],
       "../../node_modules/xstate/lib/utils.d.ts": [
         "../../node_modules/xstate/lib/types.d.ts",
-        "../../node_modules/xstate/lib/statenode.d.ts",
+        "../../node_modules/xstate/lib/StateNode.d.ts",
         "../../node_modules/xstate/lib/index.d.ts",
-        "../../node_modules/xstate/lib/actor.d.ts",
+        "../../node_modules/xstate/lib/Actor.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/xstate/lib/mapstate.d.ts": [
+      "../../node_modules/xstate/lib/mapState.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/xstate/lib/machine.d.ts": [
+      "../../node_modules/xstate/lib/Machine.d.ts": [
         "../../node_modules/xstate/lib/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/xstate/lib/actiontypes.d.ts": [
+      "../../node_modules/xstate/lib/actionTypes.d.ts": [
         "../../node_modules/xstate/lib/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -1335,14 +1354,14 @@
       ],
       "../../node_modules/xstate/lib/actions.d.ts": [
         "../../node_modules/xstate/lib/types.d.ts",
-        "../../node_modules/xstate/lib/actiontypes.d.ts",
+        "../../node_modules/xstate/lib/actionTypes.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "../../node_modules/xstate/lib/match.d.ts": [
-        "../../node_modules/xstate/lib/state.d.ts",
+        "../../node_modules/xstate/lib/State.d.ts",
         "../../node_modules/xstate/lib/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -1351,11 +1370,11 @@
       ],
       "../../node_modules/xstate/lib/index.d.ts": [
         "../../node_modules/xstate/lib/utils.d.ts",
-        "../../node_modules/xstate/lib/mapstate.d.ts",
-        "../../node_modules/xstate/lib/statenode.d.ts",
-        "../../node_modules/xstate/lib/state.d.ts",
-        "../../node_modules/xstate/lib/machine.d.ts",
-        "../../node_modules/xstate/lib/actor.d.ts",
+        "../../node_modules/xstate/lib/mapState.d.ts",
+        "../../node_modules/xstate/lib/StateNode.d.ts",
+        "../../node_modules/xstate/lib/State.d.ts",
+        "../../node_modules/xstate/lib/Machine.d.ts",
+        "../../node_modules/xstate/lib/Actor.d.ts",
         "../../node_modules/xstate/lib/actions.d.ts",
         "../../node_modules/xstate/lib/interpreter.d.ts",
         "../../node_modules/xstate/lib/match.d.ts",
@@ -1365,148 +1384,142 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncservice/ncstatemachine.ts": [
+      "./src/NcService/NcStateMachine.ts": [
         "../../node_modules/xstate/lib/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncservice/ncservice.ts": [
+      "./src/NcService/NcService.ts": [
         "../../node_modules/xstate/lib/index.d.ts",
-        "./src/ncservice/ncstatemachine.ts",
+        "./src/NcService/NcStateMachine.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncservice/index.ts": [
-        "./src/ncservice/ncservice.ts",
-        "./src/ncservice/ncstatemachine.ts",
+      "./src/NcService/index.ts": [
+        "./src/NcService/NcService.ts",
+        "./src/NcService/NcStateMachine.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/toolpath/tool.ts": [
-        "./src/toolpath/toolpath.ts",
+      "./src/Toolpath/Tool.ts": [
+        "./src/Toolpath/Toolpath.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/toolpath/toolpath.ts": [
-        "./src/ncblock/index.ts",
-        "./src/toolpath/cannedcycle.ts",
-        "./src/toolpath/tool.ts",
+      "./src/Toolpath/Toolpath.ts": [
+        "./src/NcBlock/index.ts",
+        "./src/Toolpath/CannedCycle.ts",
+        "./src/Toolpath/Tool.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/toolpath/lib/getaxislimits.ts": [
+      "./src/Toolpath/lib/getAxisLimits.ts": [
         "../../node_modules/@types/lodash/ts3.1/fp.d.ts",
         "./src/types/index.ts",
-        "./src/toolpath/toolpath.ts",
+        "./src/Toolpath/Toolpath.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/toolpath/lib/getlimits.ts": [
+      "./src/Toolpath/lib/getLimits.ts": [
         "../../node_modules/@types/lodash/ts3.1/fp.d.ts",
         "./src/types/index.ts",
-        "./src/toolpath/toolpath.ts",
-        "./src/toolpath/lib/getaxislimits.ts",
+        "./src/Toolpath/Toolpath.ts",
+        "./src/Toolpath/lib/getAxisLimits.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/toolpath/lib/index.ts": [
-        "./src/toolpath/lib/getlimits.ts",
-        "./src/toolpath/lib/getaxislimits.ts",
+      "./src/Toolpath/lib/index.ts": [
+        "./src/Toolpath/lib/getLimits.ts",
+        "./src/Toolpath/lib/getAxisLimits.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/toolpath/index.ts": [
-        "./src/toolpath/lib/index.ts",
-        "./src/toolpath/toolpath.ts",
-        "./src/toolpath/tool.ts",
-        "./src/toolpath/cannedcycle.ts",
-        "./src/toolpath/point.ts",
+      "./src/Toolpath/index.ts": [
+        "./src/Toolpath/lib/index.ts",
+        "./src/Toolpath/Toolpath.ts",
+        "./src/Toolpath/Tool.ts",
+        "./src/Toolpath/CannedCycle.ts",
+        "./src/Toolpath/Point.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncparser/gcodes.ts": [
+      "./src/NcParser/gcodes.ts": [
         "../../node_modules/@types/lodash/ts3.1/index.d.ts",
-        "./src/ncparser/codes.ts",
+        "./src/NcParser/codes.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncparser/mcodes.ts": [
+      "./src/NcParser/mcodes.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncparser/address.ts": [
+      "./src/NcParser/Address.ts": [
         "../ncstat-lexer/build/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncparser/codes.ts": [
+      "./src/NcParser/codes.ts": [
         "../../node_modules/@types/lodash/ts3.1/index.d.ts",
-        "./src/ncparser/gcodes.ts",
-        "./src/ncparser/mcodes.ts",
-        "./src/ncparser/address.ts",
+        "./src/NcParser/gcodes.ts",
+        "./src/NcParser/mcodes.ts",
+        "./src/NcParser/Address.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncparser/lib/getmodals.ts": [
-        "./src/ncblock/index.ts",
+      "./src/NcParser/lib/getModals.ts": [
+        "./src/NcBlock/index.ts",
         "./src/types/index.ts",
-        "./src/ncparser/codes.ts",
+        "./src/NcParser/codes.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncparser/lib/updateposition.ts": [
+      "./src/NcParser/lib/updatePosition.ts": [
         "../../node_modules/@types/lodash/ts3.1/fp.d.ts",
         "./src/types/index.ts",
-        "./src/ncblock/index.ts",
-        "./src/ncparser/codes.ts",
+        "./src/NcBlock/index.ts",
+        "./src/NcParser/codes.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncparser/lib/index.ts": [
-        "./src/ncparser/lib/getmodals.ts",
-        "./src/ncparser/lib/updateposition.ts",
+      "./src/NcParser/lib/index.ts": [
+        "./src/NcParser/lib/getModals.ts",
+        "./src/NcParser/lib/updatePosition.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/eventemitter3/index.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "./src/ncparser/nceventemitter.ts": [
+      "./src/NcParser/NcEventEmitter.ts": [
         "../../node_modules/eventemitter3/index.d.ts",
         "../ncstat-lexer/build/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -1514,24 +1527,24 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncparser/ncparser.ts": [
+      "./src/NcParser/NcParser.ts": [
+        "../ncstat-lexer/build/index.d.ts",
         "../../node_modules/doublie/types/doublie.d.ts",
         "../../node_modules/@types/lodash/ts3.1/fp.d.ts",
-        "../ncstat-lexer/build/index.d.ts",
-        "./src/ncblock/index.ts",
-        "./src/ncservice/index.ts",
-        "./src/toolpath/index.ts",
+        "./src/NcBlock/index.ts",
+        "./src/NcService/index.ts",
+        "./src/Toolpath/index.ts",
         "./src/types/index.ts",
-        "./src/ncparser/codes.ts",
-        "./src/ncparser/lib/index.ts",
-        "./src/ncparser/nceventemitter.ts",
+        "./src/NcParser/codes.ts",
+        "./src/NcParser/lib/index.ts",
+        "./src/NcParser/NcEventEmitter.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncparser/index.ts": [
-        "./src/ncparser/ncparser.ts",
+      "./src/NcParser/index.ts": [
+        "./src/NcParser/NcParser.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -1539,14 +1552,14 @@
       ],
       "./src/index.ts": [
         "./src/types/index.ts",
-        "./src/ncblock/index.ts",
-        "./src/ncparser/index.ts",
+        "./src/NcBlock/index.ts",
+        "./src/NcParser/index.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/toolpath/cannedpoint.ts": [
+      "./src/Toolpath/CannedPoint.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -2019,7 +2032,7 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts": [
+      "../../node_modules/jest-diff/build/cleanupSemantic.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -2031,16 +2044,16 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/jest-diff/build/difflines.d.ts": [
-        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+      "../../node_modules/jest-diff/build/diffLines.d.ts": [
+        "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
         "../../node_modules/jest-diff/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/jest-diff/build/printdiffs.d.ts": [
-        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
+      "../../node_modules/jest-diff/build/printDiffs.d.ts": [
+        "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
         "../../node_modules/jest-diff/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -2048,9 +2061,9 @@
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "../../node_modules/jest-diff/build/index.d.ts": [
-        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/jest-diff/build/difflines.d.ts",
-        "../../node_modules/jest-diff/build/printdiffs.d.ts",
+        "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
+        "../../node_modules/jest-diff/build/diffLines.d.ts",
+        "../../node_modules/jest-diff/build/printDiffs.d.ts",
         "../../node_modules/jest-diff/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -2532,6 +2545,12 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
+      "../../node_modules/eventemitter3/index.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
       "../../node_modules/@types/tokenizr/index.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
@@ -2545,27 +2564,6 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../ncstat-lexer/build/nclexer.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/addressvalue.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../ncstat-lexer/build/lib/getvalue.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
       "../ncstat-lexer/build/lib/lexer.d.ts": [
         "../../node_modules/@types/tokenizr/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -2573,25 +2571,19 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../ncstat-lexer/build/lib/prefixfilter.d.ts": [
-        "../ncstat-lexer/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
       "../ncstat-lexer/build/lib/index.d.ts": [
-        "../ncstat-lexer/build/lib/addressvalue.d.ts",
-        "../ncstat-lexer/build/lib/getvalue.d.ts",
+        "../ncstat-lexer/build/lib/addressValue.d.ts",
+        "../ncstat-lexer/build/lib/getValue.d.ts",
+        "../ncstat-lexer/build/lib/isType.d.ts",
         "../ncstat-lexer/build/lib/lexer.d.ts",
-        "../ncstat-lexer/build/lib/prefixfilter.d.ts",
+        "../ncstat-lexer/build/lib/prefixFilter.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "../ncstat-lexer/build/index.d.ts": [
-        "../ncstat-lexer/build/nclexer.d.ts",
+        "../ncstat-lexer/build/NcLexer.d.ts",
         "../ncstat-lexer/build/lib/index.d.ts",
         "../ncstat-lexer/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -2599,57 +2591,9 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/toolpath/cannedcycle.ts": [
-        "./src/ncblock/index.ts",
-        "./src/toolpath/point.ts"
-      ],
-      "./src/ncblock/ncblock.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "./src/types/index.ts"
-      ],
-      "./src/ncblock/lib/blockgenerator.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "./src/ncblock/ncblock.ts"
-      ],
-      "./src/ncblock/lib/getblocks.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "./src/ncblock/ncblock.ts"
-      ],
-      "./src/ncblock/lib/index.ts": [
-        "./src/ncblock/lib/blockgenerator.ts",
-        "./src/ncblock/lib/getblocks.ts"
-      ],
-      "./src/ncblock/index.ts": [
-        "./src/ncblock/ncblock.ts",
-        "./src/ncblock/lib/index.ts"
-      ],
       "./src/types/index.ts": [
-        "./src/ncblock/index.ts",
+        "./src/NcBlock/index.ts",
         "../../node_modules/doublie/types/doublie.d.ts"
-      ],
-      "../../node_modules/xstate/lib/actor.d.ts": [
-        "../../node_modules/xstate/lib/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/xstate/lib/state.d.ts": [
-        "../../node_modules/xstate/lib/types.d.ts",
-        "../../node_modules/xstate/lib/statenode.d.ts",
-        "../../node_modules/xstate/lib/actor.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/xstate/lib/statenode.d.ts": [
-        "../../node_modules/xstate/lib/types.d.ts",
-        "../../node_modules/xstate/lib/state.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
       "../../node_modules/xstate/lib/interpreter.d.ts": [
         "../../node_modules/xstate/lib/types.d.ts",
@@ -2675,26 +2619,6 @@
         "../../node_modules/xstate/lib/statenode.d.ts",
         "../../node_modules/xstate/lib/index.d.ts",
         "../../node_modules/xstate/lib/actor.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/xstate/lib/mapstate.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/xstate/lib/machine.d.ts": [
-        "../../node_modules/xstate/lib/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/xstate/lib/actiontypes.d.ts": [
-        "../../node_modules/xstate/lib/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -2732,89 +2656,10 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "./src/ncservice/ncstatemachine.ts": [
-        "../../node_modules/xstate/lib/index.d.ts"
-      ],
-      "./src/ncservice/ncservice.ts": [
-        "./src/ncservice/ncstatemachine.ts",
-        "../../node_modules/xstate/lib/index.d.ts"
-      ],
-      "./src/ncservice/index.ts": [
-        "./src/ncservice/ncservice.ts",
-        "./src/ncservice/ncstatemachine.ts"
-      ],
-      "./src/toolpath/tool.ts": [
-        "./src/toolpath/toolpath.ts"
-      ],
-      "./src/toolpath/toolpath.ts": [
-        "./src/ncblock/index.ts",
-        "./src/toolpath/tool.ts",
-        "./src/toolpath/cannedcycle.ts"
-      ],
-      "./src/toolpath/lib/getaxislimits.ts": [
-        "./src/types/index.ts",
-        "./src/toolpath/toolpath.ts"
-      ],
-      "./src/toolpath/lib/getlimits.ts": [
-        "./src/types/index.ts",
-        "./src/toolpath/toolpath.ts"
-      ],
-      "./src/toolpath/lib/index.ts": [
-        "./src/toolpath/lib/getlimits.ts",
-        "./src/toolpath/lib/getaxislimits.ts"
-      ],
-      "./src/toolpath/index.ts": [
-        "./src/toolpath/lib/index.ts",
-        "./src/toolpath/toolpath.ts",
-        "./src/toolpath/tool.ts",
-        "./src/toolpath/cannedcycle.ts",
-        "./src/toolpath/point.ts"
-      ],
-      "./src/ncparser/gcodes.ts": [
-        "./src/ncparser/codes.ts"
-      ],
-      "./src/ncparser/address.ts": [
-        "../ncstat-lexer/build/index.d.ts"
-      ],
-      "./src/ncparser/codes.ts": [
-        "./src/ncparser/address.ts"
-      ],
-      "./src/ncparser/lib/getmodals.ts": [
-        "./src/ncblock/index.ts",
-        "./src/types/index.ts"
-      ],
-      "./src/ncparser/lib/updateposition.ts": [
-        "./src/types/index.ts",
-        "./src/ncparser/codes.ts",
-        "./src/ncblock/index.ts"
-      ],
-      "./src/ncparser/lib/index.ts": [
-        "./src/ncparser/lib/getmodals.ts",
-        "./src/ncparser/lib/updateposition.ts"
-      ],
-      "../../node_modules/eventemitter3/index.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "./src/ncparser/nceventemitter.ts": [
-        "../ncstat-lexer/build/index.d.ts",
-        "../../node_modules/eventemitter3/index.d.ts"
-      ],
-      "./src/ncparser/ncparser.ts": [
-        "./src/types/index.ts",
-        "./src/toolpath/index.ts",
-        "../ncstat-lexer/build/index.d.ts",
-        "./src/ncparser/nceventemitter.ts"
-      ],
-      "./src/ncparser/index.ts": [
-        "./src/ncparser/ncparser.ts"
-      ],
       "./src/index.ts": [
         "./src/types/index.ts",
-        "./src/ncblock/index.ts",
-        "./src/ncparser/index.ts"
+        "./src/NcBlock/index.ts",
+        "./src/NcParser/index.ts"
       ],
       "../../node_modules/@babel/types/lib/index.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
@@ -3283,29 +3128,7 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
       ],
-      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
       "../../node_modules/jest-diff/build/types.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/jest-diff/build/difflines.d.ts": [
-        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/jest-diff/build/types.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.5/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.5/util.d.ts"
-      ],
-      "../../node_modules/jest-diff/build/printdiffs.d.ts": [
-        "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
-        "../../node_modules/jest-diff/build/types.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -3378,6 +3201,205 @@
         "../../node_modules/@types/node/ts3.5/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "./src/NcParser/NcParser.ts": [
+        "./src/types/index.ts",
+        "./src/Toolpath/index.ts",
+        "../ncstat-lexer/build/index.d.ts",
+        "./src/NcParser/NcEventEmitter.ts"
+      ],
+      "./src/NcParser/index.ts": [
+        "./src/NcParser/NcParser.ts"
+      ],
+      "./src/NcParser/NcEventEmitter.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "../../node_modules/eventemitter3/index.d.ts"
+      ],
+      "./src/NcParser/Address.ts": [
+        "../ncstat-lexer/build/index.d.ts"
+      ],
+      "./src/NcParser/codes.ts": [
+        "./src/NcParser/Address.ts"
+      ],
+      "./src/NcParser/lib/updatePosition.ts": [
+        "./src/types/index.ts",
+        "./src/NcParser/codes.ts",
+        "./src/NcBlock/index.ts"
+      ],
+      "./src/NcParser/lib/index.ts": [
+        "./src/NcParser/lib/getModals.ts",
+        "./src/NcParser/lib/updatePosition.ts"
+      ],
+      "./src/NcParser/lib/getModals.ts": [
+        "./src/NcBlock/index.ts",
+        "./src/types/index.ts"
+      ],
+      "./src/NcParser/gcodes.ts": [
+        "./src/NcParser/codes.ts"
+      ],
+      "./src/NcBlock/lib/getBlocks.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "./src/NcBlock/NcBlock.ts"
+      ],
+      "./src/NcBlock/lib/index.ts": [
+        "./src/NcBlock/lib/blockGenerator.ts",
+        "./src/NcBlock/lib/getBlocks.ts"
+      ],
+      "./src/NcBlock/index.ts": [
+        "./src/NcBlock/NcBlock.ts",
+        "./src/NcBlock/lib/index.ts"
+      ],
+      "./src/Toolpath/Toolpath.ts": [
+        "./src/NcBlock/index.ts",
+        "./src/Toolpath/Tool.ts",
+        "./src/Toolpath/CannedCycle.ts"
+      ],
+      "./src/Toolpath/index.ts": [
+        "./src/Toolpath/lib/index.ts",
+        "./src/Toolpath/Toolpath.ts",
+        "./src/Toolpath/Tool.ts",
+        "./src/Toolpath/CannedCycle.ts",
+        "./src/Toolpath/Point.ts"
+      ],
+      "./src/Toolpath/lib/getLimits.ts": [
+        "./src/types/index.ts",
+        "./src/Toolpath/Toolpath.ts"
+      ],
+      "./src/Toolpath/lib/index.ts": [
+        "./src/Toolpath/lib/getLimits.ts",
+        "./src/Toolpath/lib/getAxisLimits.ts"
+      ],
+      "./src/Toolpath/lib/getAxisLimits.ts": [
+        "./src/types/index.ts",
+        "./src/Toolpath/Toolpath.ts"
+      ],
+      "./src/Toolpath/Tool.ts": [
+        "./src/Toolpath/Toolpath.ts"
+      ],
+      "./src/NcBlock/NcBlock.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "./src/types/index.ts"
+      ],
+      "./src/NcBlock/lib/blockGenerator.ts": [
+        "../ncstat-lexer/build/index.d.ts",
+        "./src/NcBlock/NcBlock.ts"
+      ],
+      "./src/Toolpath/CannedCycle.ts": [
+        "./src/NcBlock/index.ts",
+        "./src/Toolpath/Point.ts"
+      ],
+      "../ncstat-lexer/build/lib/prefixFilter.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/isType.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/getValue.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/lib/addressValue.d.ts": [
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../ncstat-lexer/build/NcLexer.d.ts": [
+        "../../node_modules/eventemitter3/index.d.ts",
+        "../ncstat-lexer/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/xstate/lib/Actor.d.ts": [
+        "../../node_modules/xstate/lib/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/xstate/lib/State.d.ts": [
+        "../../node_modules/xstate/lib/types.d.ts",
+        "../../node_modules/xstate/lib/StateNode.d.ts",
+        "../../node_modules/xstate/lib/Actor.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/xstate/lib/StateNode.d.ts": [
+        "../../node_modules/xstate/lib/types.d.ts",
+        "../../node_modules/xstate/lib/State.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/xstate/lib/mapState.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/xstate/lib/Machine.d.ts": [
+        "../../node_modules/xstate/lib/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/xstate/lib/actionTypes.d.ts": [
+        "../../node_modules/xstate/lib/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "./src/NcService/NcStateMachine.ts": [
+        "../../node_modules/xstate/lib/index.d.ts"
+      ],
+      "./src/NcService/index.ts": [
+        "./src/NcService/NcService.ts",
+        "./src/NcService/NcStateMachine.ts"
+      ],
+      "./src/NcService/NcService.ts": [
+        "./src/NcService/NcStateMachine.ts",
+        "../../node_modules/xstate/lib/index.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/cleanupSemantic.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/printDiffs.d.ts": [
+        "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
+        "../../node_modules/jest-diff/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
+      ],
+      "../../node_modules/jest-diff/build/diffLines.d.ts": [
+        "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
+        "../../node_modules/jest-diff/build/types.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.5/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.5/util.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -3424,32 +3446,8 @@
       "../../node_modules/@types/lodash/ts3.1/common/util.d.ts",
       "../../node_modules/@types/lodash/ts3.1/index.d.ts",
       "../../node_modules/@types/lodash/ts3.1/fp.d.ts",
-      "../../node_modules/@types/tokenizr/index.d.ts",
-      "../ncstat-lexer/build/types.d.ts",
-      "../ncstat-lexer/build/lib/addressvalue.d.ts",
-      "../ncstat-lexer/build/lib/getvalue.d.ts",
-      "../ncstat-lexer/build/lib/lexer.d.ts",
-      "../ncstat-lexer/build/lib/prefixfilter.d.ts",
-      "../ncstat-lexer/build/lib/index.d.ts",
-      "./src/toolpath/point.ts",
-      "../../node_modules/xstate/lib/actor.d.ts",
-      "../../node_modules/xstate/lib/state.d.ts",
-      "../../node_modules/xstate/lib/statenode.d.ts",
-      "../../node_modules/xstate/lib/interpreter.d.ts",
-      "../../node_modules/xstate/lib/types.d.ts",
-      "../../node_modules/xstate/lib/utils.d.ts",
-      "../../node_modules/xstate/lib/mapstate.d.ts",
-      "../../node_modules/xstate/lib/machine.d.ts",
-      "../../node_modules/xstate/lib/actiontypes.d.ts",
-      "../../node_modules/xstate/lib/actions.d.ts",
-      "../../node_modules/xstate/lib/match.d.ts",
-      "../../node_modules/xstate/lib/index.d.ts",
-      "./src/ncservice/ncstatemachine.ts",
-      "./src/ncservice/ncservice.ts",
-      "./src/ncservice/index.ts",
-      "./src/ncparser/mcodes.ts",
       "../../node_modules/eventemitter3/index.d.ts",
-      "./src/toolpath/cannedpoint.ts",
+      "../../node_modules/@types/tokenizr/index.d.ts",
       "../../node_modules/@babel/types/lib/index.d.ts",
       "../../node_modules/@types/babel__generator/index.d.ts",
       "../../node_modules/@types/babel__traverse/index.d.ts",
@@ -3510,45 +3508,70 @@
       "../../node_modules/@types/istanbul-lib-coverage/index.d.ts",
       "../../node_modules/@types/istanbul-lib-report/index.d.ts",
       "../../node_modules/@types/istanbul-reports/index.d.ts",
-      "../../node_modules/jest-diff/build/cleanupsemantic.d.ts",
       "../../node_modules/jest-diff/build/types.d.ts",
-      "../../node_modules/jest-diff/build/difflines.d.ts",
-      "../../node_modules/jest-diff/build/printdiffs.d.ts",
-      "../../node_modules/jest-diff/build/index.d.ts",
       "../../node_modules/pretty-format/build/types.d.ts",
       "../../node_modules/pretty-format/build/index.d.ts",
-      "../../node_modules/@types/jest/index.d.ts",
       "../../node_modules/@types/json-schema/index.d.ts",
       "../../node_modules/@types/json5/index.d.ts",
       "../../node_modules/@types/parse-json/index.d.ts",
       "../../node_modules/@types/stack-utils/index.d.ts",
       "../../node_modules/@types/yargs-parser/index.d.ts",
       "../../node_modules/@types/yargs/index.d.ts",
-      "../ncstat-lexer/build/nclexer.d.ts",
+      "../ncstat-lexer/build/types.d.ts",
+      "../ncstat-lexer/build/lib/prefixFilter.d.ts",
+      "../ncstat-lexer/build/lib/index.d.ts",
+      "../ncstat-lexer/build/lib/isType.d.ts",
+      "../ncstat-lexer/build/lib/getValue.d.ts",
+      "../ncstat-lexer/build/lib/addressValue.d.ts",
+      "../ncstat-lexer/build/NcLexer.d.ts",
+      "../ncstat-lexer/build/lib/lexer.d.ts",
+      "./src/Toolpath/Point.ts",
+      "../../node_modules/xstate/lib/StateNode.d.ts",
+      "../../node_modules/xstate/lib/mapState.d.ts",
+      "../../node_modules/xstate/lib/Machine.d.ts",
+      "../../node_modules/xstate/lib/actionTypes.d.ts",
+      "../../node_modules/xstate/lib/actions.d.ts",
+      "./src/NcService/NcStateMachine.ts",
+      "./src/NcService/index.ts",
+      "./src/NcService/NcService.ts",
+      "./src/NcParser/mcodes.ts",
+      "./src/Toolpath/CannedPoint.ts",
+      "../../node_modules/jest-diff/build/cleanupSemantic.d.ts",
+      "../../node_modules/jest-diff/build/index.d.ts",
+      "../../node_modules/jest-diff/build/printDiffs.d.ts",
+      "../../node_modules/jest-diff/build/diffLines.d.ts",
       "../ncstat-lexer/build/index.d.ts",
-      "./src/toolpath/cannedcycle.ts",
-      "./src/ncblock/ncblock.ts",
-      "./src/ncblock/lib/blockgenerator.ts",
-      "./src/ncblock/lib/getblocks.ts",
-      "./src/ncblock/lib/index.ts",
-      "./src/ncblock/index.ts",
+      "./src/Toolpath/CannedCycle.ts",
+      "./src/NcBlock/NcBlock.ts",
+      "./src/NcBlock/lib/blockGenerator.ts",
+      "./src/NcBlock/lib/getBlocks.ts",
+      "./src/NcBlock/lib/index.ts",
+      "./src/NcBlock/index.ts",
       "./src/types/index.ts",
-      "./src/toolpath/tool.ts",
-      "./src/toolpath/toolpath.ts",
-      "./src/toolpath/lib/getaxislimits.ts",
-      "./src/toolpath/lib/getlimits.ts",
-      "./src/toolpath/lib/index.ts",
-      "./src/toolpath/index.ts",
-      "./src/ncparser/gcodes.ts",
-      "./src/ncparser/address.ts",
-      "./src/ncparser/codes.ts",
-      "./src/ncparser/lib/getmodals.ts",
-      "./src/ncparser/lib/updateposition.ts",
-      "./src/ncparser/lib/index.ts",
-      "./src/ncparser/nceventemitter.ts",
-      "./src/ncparser/ncparser.ts",
-      "./src/ncparser/index.ts",
-      "./src/index.ts"
+      "../../node_modules/xstate/lib/Actor.d.ts",
+      "../../node_modules/xstate/lib/State.d.ts",
+      "../../node_modules/xstate/lib/interpreter.d.ts",
+      "../../node_modules/xstate/lib/types.d.ts",
+      "../../node_modules/xstate/lib/utils.d.ts",
+      "../../node_modules/xstate/lib/match.d.ts",
+      "../../node_modules/xstate/lib/index.d.ts",
+      "./src/Toolpath/Tool.ts",
+      "./src/Toolpath/Toolpath.ts",
+      "./src/Toolpath/lib/getAxisLimits.ts",
+      "./src/Toolpath/lib/getLimits.ts",
+      "./src/Toolpath/lib/index.ts",
+      "./src/Toolpath/index.ts",
+      "./src/NcParser/gcodes.ts",
+      "./src/NcParser/Address.ts",
+      "./src/NcParser/codes.ts",
+      "./src/NcParser/lib/getModals.ts",
+      "./src/NcParser/lib/updatePosition.ts",
+      "./src/NcParser/lib/index.ts",
+      "./src/NcParser/NcEventEmitter.ts",
+      "./src/NcParser/NcParser.ts",
+      "./src/NcParser/index.ts",
+      "./src/index.ts",
+      "../../node_modules/@types/jest/index.d.ts"
     ]
   },
   "version": "3.7.5"

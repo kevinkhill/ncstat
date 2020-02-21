@@ -1,5 +1,5 @@
-import { Command } from "clipanion";
 import { NcProgram } from "@ncstat/parser";
+import { Command } from "clipanion";
 export declare class NcParserCommand extends Command {
     filepath: string;
     debug: boolean;
