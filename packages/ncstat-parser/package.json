@@ -1,9 +1,16 @@
 {
   "name": "@ncstat/parser",
   "version": "1.0.0",
+  "description": "NC file parser",
+  "author": "Kevin Hill",
+  "license": "MIT",
   "private": true,
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "scripts": {
+    "test": "cd ../../ && yarn test:pkg ncstat-parser",
+    "build": "node ../../scripts/build.js"
+  },
   "dependencies": {
     "@ncstat/lexer": "*",
     "doublie": "^1.1.0",

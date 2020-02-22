@@ -1,10 +1,16 @@
 {
   "name": "@ncstat/lexer",
-  "description": "NC file lexer / tokenizer",
   "version": "1.0.0",
+  "description": "NC file lexer / tokenizer",
+  "author": "Kevin Hill",
+  "license": "MIT",
   "private": true,
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "scripts": {
+    "test": "cd ../../ && yarn test:pkg ncstat-lexer",
+    "build": "node ../../scripts/build.js"
+  },
   "dependencies": {
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",

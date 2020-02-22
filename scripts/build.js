@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable no-sync, @typescript-eslint/explicit-function-return-type */
 /**
  * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
  *
@@ -34,15 +34,14 @@ const { getPackages, adjustToTerminalWidth } = require("./buildUtils");
 const logger = require("./logger");
 // const browserBuild = require('./browserBuild');
 
+const SILENT = true;
 const SRC_DIR = "src";
 const BUILD_DIR = "build";
-const BUILD_ES5_DIR = "build-es5";
+// const BUILD_ES5_DIR = "build-es5";
 const JS_FILES_PATTERN = "**/*.js";
 const TS_FILES_PATTERN = "**/*.ts";
 const IGNORE_PATTERN = "**/__{tests,mocks}__/**";
 const PACKAGES_DIR = path.resolve(__dirname, "../packages");
-
-const INLINE_REQUIRE_BLACKLIST = /packages\/expect|(jest-(circus|diff|get-type|jasmine2|matcher-utils|message-util|regex-util|snapshot))|pretty-format\//;
 
 const transformOptions = require("../babel.config.js");
 
@@ -59,6 +58,7 @@ function getBuildPath(file, buildFolder) {
   const pkgSrcPath = path.resolve(PACKAGES_DIR, pkgName, SRC_DIR);
   const pkgBuildPath = path.resolve(PACKAGES_DIR, pkgName, buildFolder);
   const relativeToSrcPath = path.relative(pkgSrcPath, file);
+
   return path
     .resolve(pkgBuildPath, relativeToSrcPath)
     .replace(/\.ts$/, ".js");
@@ -71,50 +71,50 @@ function buildNodePackage(p) {
 
   process.stdout.write(adjustToTerminalWidth(`${path.basename(p)}\n`));
 
-  files.forEach(file => buildFile(file, true));
+  files.forEach(file => buildFile(file, SILENT));
 
   process.stdout.write(`${logger.OK}\n`);
 }
 
-function buildBrowserPackage(p) {
-  const srcDir = path.resolve(p, SRC_DIR);
-  const pkgJsonPath = path.resolve(p, "package.json");
+// function buildBrowserPackage(p) {
+//   const srcDir = path.resolve(p, SRC_DIR);
+//   const pkgJsonPath = path.resolve(p, "package.json");
 
-  if (!fs.existsSync(pkgJsonPath)) {
-    return;
-  }
+//   if (!fs.existsSync(pkgJsonPath)) {
+//     return;
+//   }
 
-  const browser = require(pkgJsonPath).browser;
-  if (browser) {
-    if (browser.indexOf(BUILD_ES5_DIR) !== 0) {
-      throw new Error(
-        `browser field for ${pkgJsonPath} should start with "${BUILD_ES5_DIR}"`
-      );
-    }
-    let indexFile = path.resolve(srcDir, "index.js");
+//   const browser = require(pkgJsonPath).browser;
+//   if (browser) {
+//     if (browser.indexOf(BUILD_ES5_DIR) !== 0) {
+//       throw new Error(
+//         `browser field for ${pkgJsonPath} should start with "${BUILD_ES5_DIR}"`
+//       );
+//     }
+//     let indexFile = path.resolve(srcDir, "index.js");
 
-    if (!fs.existsSync(indexFile)) {
-      indexFile = indexFile.replace(/\.js$/, ".ts");
-    }
+//     if (!fs.existsSync(indexFile)) {
+//       indexFile = indexFile.replace(/\.js$/, ".ts");
+//     }
 
-    browserBuild(
-      p.split("/").pop(),
-      indexFile,
-      path.resolve(p, browser)
-    )
-      .then(() => {
-        process.stdout.write(
-          adjustToTerminalWidth(`${path.basename(p)}\n`)
-        );
-        process.stdout.write(`${logger.OK}\n`);
-      })
-      .catch(e => {
-        console.error(e);
+//     browserBuild(
+//       p.split("/").pop(),
+//       indexFile,
+//       path.resolve(p, browser)
+//     )
+//       .then(() => {
+//         process.stdout.write(
+//           adjustToTerminalWidth(`${path.basename(p)}\n`)
+//         );
+//         process.stdout.write(`${logger.OK}\n`);
+//       })
+//       .catch(e => {
+//         console.error(e);
 
-        process.exit(1);
-      });
-  }
-}
+//         process.exit(1);
+//       });
+//   }
+// }
 
 function buildFile(file, silent) {
   const destPath = getBuildPath(file, BUILD_DIR);
@@ -146,33 +146,6 @@ function buildFile(file, silent) {
       );
   } else {
     const options = Object.assign({}, transformOptions);
-    options.plugins = options.plugins.slice();
-
-    if (INLINE_REQUIRE_BLACKLIST.test(file)) {
-      // The modules in the blacklist are injected into the user's sandbox
-      // We need to guard some globals there.
-      options.plugins.push(
-        require.resolve("./babel-plugin-jest-native-globals")
-      );
-    } else {
-      options.plugins = options.plugins.map(plugin => {
-        if (
-          Array.isArray(plugin) &&
-          plugin[0] === "@babel/plugin-transform-modules-commonjs"
-        ) {
-          return [
-            plugin[0],
-            Object.assign({}, plugin[1], {
-              lazy: string =>
-                // we want to lazyload all non-local modules plus `importMjs` - the latter to avoid syntax errors. Set to just `true` when we drop support for node 8
-                !string.startsWith("./") || string === "./importMjs"
-            })
-          ];
-        }
-
-        return plugin;
-      });
-    }
 
     const transformed = babel.transformFileSync(file, options).code;
     const prettyCode = prettier.format(transformed, prettierConfig);

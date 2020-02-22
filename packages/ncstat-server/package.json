@@ -1,12 +1,14 @@
 {
   "name": "@ncstat/server",
   "version": "1.0.0",
-  "main": "./build/index.js",
+  "description": "Simple API server to tokeninze G code",
   "author": "Kevin Hill",
   "license": "MIT",
   "private": true,
+  "main": "build/index.js",
   "scripts": {
     "start": "yarn tsnd ./src/index.ts",
+    "test": "cd ../../ && yarn test:pkg ncstat-server",
     "build": "node ../../scripts/build.js"
   },
   "dependencies": {
