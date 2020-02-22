@@ -3,6 +3,7 @@ import * as Router from "@koa/router";
 import { NcParser } from "@ncstat/parser";
 
 export const router = new Router();
+
 const parser = new NcParser();
 
 router.post("/tokenize", async ctx => {

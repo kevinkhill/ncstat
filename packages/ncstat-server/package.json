@@ -13,13 +13,10 @@
     "@koa/router": "^8.0.8",
     "@ncstat/parser": "*",
     "koa": "^2.11.0",
-    "koa-body": "^4.1.1",
-    "koa-route": "^3.2.0"
+    "koa-body": "^4.1.1"
   },
   "devDependencies": {
     "@types/koa": "^2.11.1",
-    "@types/koa-route": "^3.2.4",
-    "@types/koa-router": "^7.4.0",
     "@types/koa__router": "^8.0.2",
     "ts-node-dev": "^1.0.0-pre.44"
   }
