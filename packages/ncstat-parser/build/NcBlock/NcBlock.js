@@ -5,13 +5,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.NcBlock = void 0;
 
-var _fp = require("lodash/fp");
-
 var _lexer = require("@ncstat/lexer");
 
-var _CannedCycle = require("Toolpath/CannedCycle");
+var _fp = require("lodash/fp");
 
-// import { RETRACT_CODES, START_CODES } from "../Toolpath/CannedCycle";
+var _CannedCycle = require("../Toolpath/CannedCycle");
+
 class NcBlock {
   getPosition() {
     return {

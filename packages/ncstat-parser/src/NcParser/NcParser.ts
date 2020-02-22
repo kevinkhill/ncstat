@@ -52,10 +52,10 @@ export class NcParser extends NcEventEmitter {
   private lexer: NcLexer;
   private tokens: Array<NcToken> = [];
 
-  constructor({ debug }: { debug?: boolean }) {
+  constructor(config: Partial<{ debug: boolean }> = { debug: false }) {
     super();
 
-    this.debug = Boolean(debug);
+    this.debug = Boolean(config?.debug);
 
     this.lexer = new NcLexer({ debug: this.debug });
 

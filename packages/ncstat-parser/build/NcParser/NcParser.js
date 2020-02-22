@@ -48,7 +48,11 @@ class NcParser extends _NcEventEmitter.NcEventEmitter {
    * Internals
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  constructor({ debug }) {
+  constructor(
+    config = {
+      debug: false
+    }
+  ) {
     super();
     this.debug = false;
     this.programNumber = NaN;
@@ -60,7 +64,9 @@ class NcParser extends _NcEventEmitter.NcEventEmitter {
     this.state = _NcService.NcMachineState.IDLE;
     this.lexer = void 0;
     this.tokens = [];
-    this.debug = Boolean(debug);
+    this.debug = Boolean(
+      config === null || config === void 0 ? void 0 : config.debug
+    );
     this.lexer = new _lexer.NcLexer({
       debug: this.debug
     });

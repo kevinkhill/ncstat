@@ -2,7 +2,7 @@
   "name": "@ncstat/parser",
   "version": "1.0.0",
   "private": true,
-  "main": "./dist/index.js",
+  "main": "build/index.js",
   "types": "build/index.d.ts",
   "dependencies": {
     "@ncstat/lexer": "*",

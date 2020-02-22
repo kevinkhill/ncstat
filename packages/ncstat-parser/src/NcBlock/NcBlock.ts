@@ -1,9 +1,7 @@
+import { addressValue, NcToken, prefixFilter } from "@ncstat/lexer";
 import { find, intersection, map } from "lodash/fp";
 
-import { addressValue, prefixFilter, NcToken } from "@ncstat/lexer";
-
-// import { RETRACT_CODES, START_CODES } from "../Toolpath/CannedCycle";
-import { START_CODES } from "Toolpath/CannedCycle";
+import { START_CODES } from "../Toolpath/CannedCycle";
 import { Position } from "../types";
 
 export class NcBlock {
@@ -18,11 +16,11 @@ export class NcBlock {
     };
   }
 
-  static create(tokens: NcToken[]): NcBlock {
+  static create(tokens: Array<NcToken>): NcBlock {
     return new NcBlock(tokens);
   }
 
-  constructor(public tokens: NcToken[]) {
+  constructor(public tokens: Array<NcToken>) {
     this.tokens = tokens;
   }
 
@@ -118,7 +116,7 @@ export class NcBlock {
     return this.$value("F");
   }
 
-  get G(): number[] {
+  get G(): Array<number> {
     return map(addressValue, prefixFilter("G", this.tokens));
   }
 
