@@ -1,50 +1,82 @@
 <template>
   <multipane class="custom-resizer" layout="vertical">
-    <div class="pane" :style="{ width: '25%', maxWidth: '50%' }">
-      <div>
-        <h6 class="title is-6">Pane 1</h6>
-        <textarea v-model="input"></textarea>
-      </div>
+    <div class="pane" :style="{ width: '50%' }">
+      <p class="display-1">G CODE</p>
+
+      <v-textarea
+        solo
+        autofocus
+        full-width
+        class="fill-height"
+        name="input"
+        label="NC INPUT"
+        :value="input"
+        @input="update"
+      ></v-textarea>
     </div>
     <multipane-resizer></multipane-resizer>
     <div class="pane" :style="{ flexGrow: 1 }">
-      <div>
-        <h6 class="title is-6">Pane 2</h6>
-        <div>
-          {{ output }}
-        </div>
+      <p class="display-1">Tokens</p>
+      <div class="output">
+        <span
+          v-for="(token, idx) in tokens"
+          :key="idx"
+          class="token"
+          :class="[`${token.value.prefix}_CODE`, token.type]"
+        >
+          {{ token.text }}
+        </span>
       </div>
     </div>
   </multipane>
 </template>
 
 <script>
+import Vue from "vue";
+import debounce from "lodash-es/debounce";
 import { NcParser } from "@ncstat/parser";
 import { Multipane, MultipaneResizer } from "vue-multipane";
 
-export default {
+export default Vue.extend({
   components: {
     Multipane,
     MultipaneResizer
   },
   data() {
     return {
-      input: ""
+      input: "G0 G90 G53 X-15. Y0."
     };
+  },
+  computed: {
+    tokens() {
+      const tokens = this.lexer.tokenArray(this.input);
+
+      tokens.pop();
+
+      return tokens;
+    }
   },
   created() {
     this.parser = new NcParser();
     this.lexer = this.parser.getLexer();
   },
-  computed: {
-    output() {
-      return this.lexer.tokenArray(this.input).join("<br />");
-    }
+  methods: {
+    update: debounce(function(e) {
+      this.input = e.target.value;
+    }, 300)
   }
-};
+});
 </script>
 
 <style lang="scss">
+.token {
+  font-size: 16pt;
+}
+
+.output {
+  font-family: "Fira Code", "Courier New", Courier, monospace;
+}
+
 .pane {
   height: 100%;
 }

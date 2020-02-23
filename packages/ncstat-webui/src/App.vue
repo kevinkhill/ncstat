@@ -1,81 +1,62 @@
 <template>
-  <div id="app">
-    <nav class="navbar has-shadow">
-      <div class="container">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="../">
-            <img
-              src="http://bulma.io/images/bulma-logo.png"
-              alt="Bulma: a modern CSS framework based on Flexbox"
-            />
-          </a>
+  <v-app id="inspire">
+    <v-navigation-drawer v-model="drawer" app clipped>
+      <v-list dense>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-view-dashboard</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Dashboard</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-settings</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Settings</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-          <div class="navbar-burger burger" data-target="navMenu">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-        <div class="navbar-end">
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
-              Account
-            </a>
-            <div class="navbar-dropdown">
-              <a class="navbar-item">
-                Dashboard
-              </a>
-              <a class="navbar-item">
-                Profile
-              </a>
-              <a class="navbar-item">
-                Settings
-              </a>
-              <hr class="navbar-divider" />
-              <a class="navbar-item">
-                Logout
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <v-app-bar app clipped-left>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title>NcStat</v-toolbar-title>
+    </v-app-bar>
 
-    <Welcome />
-  </div>
+    <v-content>
+      <Lexer />
+    </v-content>
+
+    <v-footer app>
+      <span>&copy; 2019</span>
+    </v-footer>
+  </v-app>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import Welcome from "./components/Welcome.vue";
+import Vue from "vue";
+import Lexer from "./components/Lexer.vue";
 
-@Component({
+export default Vue.extend({
+  name: "App",
+
   components: {
-    Welcome
+    Lexer
+  },
+
+  props: {
+    source: String
+  },
+
+  data: () => ({
+    drawer: null
+  }),
+
+  created() {
+    this.$vuetify.theme.dark = true;
   }
-})
-export default class App extends Vue {}
+});
 </script>
-
-<style>
-html,
-body {
-  height: 100%;
-  background-color: #2c3e50 !important;
-}
-
-nav {
-  background-color: #2c3e50;
-}
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-
-  height: 100%;
-  /* margin-top: 60px; */
-}
-</style>
