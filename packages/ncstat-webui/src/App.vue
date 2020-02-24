@@ -24,10 +24,20 @@
     <v-app-bar app clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>NcStat</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
     </v-app-bar>
 
     <v-content>
-      <Lexer />
+      <Lexer @token="handleTokens" />
     </v-content>
 
     <v-footer app>
@@ -57,6 +67,12 @@ export default Vue.extend({
 
   created() {
     this.$vuetify.theme.dark = true;
+  },
+
+  methods: {
+    handleTokens({ tokens }) {
+      console.log(tokens);
+    }
   }
 });
 </script>

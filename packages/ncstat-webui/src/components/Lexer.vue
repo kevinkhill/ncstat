@@ -2,7 +2,6 @@
   <multipane class="custom-resizer" layout="vertical">
     <div class="pane" :style="{ width: '50%' }">
       <p class="display-1">G CODE</p>
-
       <v-textarea
         solo
         autofocus
@@ -18,14 +17,13 @@
     <div class="pane" :style="{ flexGrow: 1 }">
       <p class="display-1">Tokens</p>
       <div class="output">
+        <template v-for="(token, idx) in tokens">
         <span
-          v-for="(token, idx) in tokens"
           :key="idx"
           class="token"
           :class="[`${token.value.prefix}_CODE`, token.type]"
-        >
-          {{ token.text }}
-        </span>
+        >{{ token.type === 'EOB' ? ';' : token.text }}</span>
+        </template>
       </div>
     </div>
   </multipane>
@@ -44,34 +42,48 @@ export default Vue.extend({
   },
   data() {
     return {
-      input: "G0 G90 G53 X-15. Y0."
+      rawTokens: [],
+      input: "G91 G28 Z0."
     };
+  },
+  watch: {
+    input(newVal) {
+      this.$emit("input", { input: newVal });
+    },
+    tokens(newVal) {
+      this.$emit("token", { tokens: newVal });
+    }
   },
   computed: {
     tokens() {
-      const tokens = this.lexer.tokenArray(this.input);
+      const tokens = [...this.rawTokens];
 
       tokens.pop();
 
       return tokens;
     }
   },
-  created() {
+  mounted() {
     this.parser = new NcParser();
     this.lexer = this.parser.getLexer();
+
+    this.tokenizeInput();
   },
   methods: {
-    update: debounce(function(e) {
-      this.input = e.target.value;
+    tokenizeInput() {
+      this.rawTokens = this.lexer.tokenArray(this.input);      
+    },
+    update: debounce(function(input) {
+      this.input = input.toUpperCase();
+      
+      this.tokenizeInput();
     }, 300)
   }
 });
 </script>
 
 <style lang="scss">
-.token {
-  font-size: 16pt;
-}
+@import "@/assets/scss/_tokens";
 
 textarea,
 .pane,
