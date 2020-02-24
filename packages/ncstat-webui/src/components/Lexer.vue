@@ -73,6 +73,8 @@ export default Vue.extend({
   font-size: 16pt;
 }
 
+textarea,
+.pane,
 .output {
   font-family: "Fira Code", "Courier New", Courier, monospace;
 }
@@ -94,8 +96,9 @@ export default Vue.extend({
   text-align: left;
   padding: 15px;
   overflow: hidden;
-  background-color: #1a2f44;
-  border: 1px solid #666;
+  // background-color: #1a2f44;
+  border-left: 1px solid #666;
+  border-right: 1px solid #666;
 }
 
 .custom-resizer > .pane ~ .pane {
