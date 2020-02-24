@@ -1,29 +1,12 @@
-// require('should');
-// const app = require('./app');
-// const server = app.listen();
-// const request = require('supertest').agent(server);
+import request from "supertest";
 
-// describe('Errors', function () {
-//   afterAll(function () {
-//     server.close();
-//   });
+import { app } from "../app";
 
-//   it('should catch the error', function (done) {
-//     request
-//       .get('/')
-//       .expect(500)
-//       .expect('Content-Type', /text\/html/, done);
-//   });
+const api = request(app.callback());
 
-//   it('should emit the error on app', function (done) {
-//     app.once('error', function (err, ctx) {
-//       err.message.should.equal('boom boom');
-//       ctx.should.be.ok;
-//       done();
-//     });
+it("Hello world works", async () => {
+  const response = await api.get("/");
 
-//     request
-//       .get('/')
-//       .end(function () { });
-//   });
-// });
+  expect(response.status).toBe(200);
+  expect(response.text).toBe("UP");
+});

@@ -2,11 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "build"
-  },
-  "references": [
-    {
-      "path": "../ncstat-parser"
-    }
-  ]
+    "outDir": "build",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  }
 }

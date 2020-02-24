@@ -8,7 +8,7 @@
   "main": "build/index.js",
   "scripts": {
     "start": "yarn tsnd ./src/index.ts",
-    "test": "cd ../../ && yarn test:pkg ncstat-server",
+    "test": "yarn jest",
     "build": "node ../../scripts/build.js"
   },
   "dependencies": {
@@ -20,6 +20,8 @@
   "devDependencies": {
     "@types/koa": "^2.11.1",
     "@types/koa__router": "^8.0.2",
+    "@types/supertest": "^2.0.8",
+    "supertest": "^4.0.2",
     "ts-node-dev": "^1.0.0-pre.44"
   }
 }

@@ -1,12 +1,13 @@
 // eslint-disable-next-line import/no-namespace
-import * as Router from "@koa/router";
+import Router from "@koa/router";
 import { NcParser } from "@ncstat/parser";
+import Koa from "koa";
 
 export const router = new Router();
 
 const parser = new NcParser();
 
-router.post("/tokenize", async ctx => {
+router.post("/tokenize", async (ctx: Koa.Context) => {
   const body = ctx.request.body;
 
   if (!body.input) ctx.throw(400, ".input required");
@@ -23,6 +24,6 @@ router.post("/tokenize", async ctx => {
   };
 });
 
-router.get("/*", async ctx => {
+router.get("/*", async (ctx: Koa.Context) => {
   ctx.body = "UP";
 });
