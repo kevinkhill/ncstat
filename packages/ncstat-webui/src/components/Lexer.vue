@@ -1,43 +1,74 @@
 <template>
-  <multipane class="custom-resizer" layout="vertical">
-    <div class="pane" :style="{ width: '50%' }">
-      <p class="display-1">NC Code</p>
+  <Multipane class="custom-resizer" layout="vertical">
+    <!-- Left Pane -->
+    <div class="pane" :style="{ minWidth: '20%', width: '40%' }">
+      <p class="display-1">G Code</p>
       <v-textarea
         solo
         autofocus
         full-width
-        rows="24"
+        spellcheck="false"
+        rows="20"
         name="input"
-        label="NC INPUT"
         :value="input"
         @input="update"
       ></v-textarea>
+      <v-btn color="secondary" block dark @click="reset">Reset</v-btn>
     </div>
-    <multipane-resizer></multipane-resizer>
+
+    <MultipaneResizer></MultipaneResizer>
+
+    <!-- Right Pane -->
     <div class="pane" :style="{ flexGrow: 1 }">
-      <v-badge inline color="deep-purple accent-6" :content="tokenCount"
-        ><p class="display-1">Tokens</p></v-badge
-      >
-      <div class="output">
-        <template v-for="(token, idx) in tokens">
-          <span
-            :key="idx"
-            class="token"
-            :class="[`${token.value.prefix}_CODE`, token.type]"
-            >{{ token.text }}</span
-          >
-          <br v-if="token.type === 'NEWLINE'" />
-        </template>
-      </div>
+      <v-tabs v-model="tab" background-color="transparent" grow>
+        <v-tab>Formatted Output</v-tab>
+        <v-tab>
+          <v-badge color="deep-purple accent-6" :content="tokenCount">
+            Tokens
+          </v-badge>
+        </v-tab>
+      </v-tabs>
+
+      <v-tabs-items v-model="tab">
+        <!-- Formatted Output -->
+        <v-tab-item>
+          <div class="output">
+            <template v-for="(token, idx) in tokens">
+              <span
+                :key="idx"
+                class="token"
+                :class="[`${token.value.prefix}_CODE`, token.type]"
+                >{{ token.text }}</span
+              >
+              <br v-if="token.type === 'NEWLINE'" />
+            </template>
+          </div>
+        </v-tab-item>
+
+        <!-- Tokens -->
+        <v-tab-item>
+          <div class="tokens">
+            <ul>
+              <li :key="idx" v-for="(token, idx) in tokens">
+                {{ JSON.stringify(token) }}
+              </li>
+            </ul>
+          </div>
+        </v-tab-item>
+      </v-tabs-items>
     </div>
-  </multipane>
+  </Multipane>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
 import debounce from "lodash-es/debounce";
 import { NcLexer } from "@ncstat/lexer";
 import { Multipane, MultipaneResizer } from "vue-multipane";
+
+const lexer = new NcLexer({
+  newlineTokens: true
+});
 
 const input = `%
 O1234 (TEST PROGRAM)
@@ -59,12 +90,16 @@ export default Vue.extend({
     Multipane,
     MultipaneResizer
   },
+
   data() {
     return {
+      lexer,
       input,
+      tab: null,
       tokens: []
     };
   },
+
   watch: {
     input(newVal) {
       this.$emit("input", { input: newVal });
@@ -73,21 +108,23 @@ export default Vue.extend({
       this.$emit("token", { tokens: newVal });
     }
   },
+
   computed: {
     tokenCount() {
       return this.tokens.length;
     }
   },
-  created() {
-    this.lexer = new NcLexer({
-      newlineTokens: true
-    });
-  },
+
   mounted() {
     this.tokenizeInput();
   },
+
   methods: {
-    tokenizeInput() {
+    reset() {
+      this.input = "";
+      this.tokens = [];
+    },
+    tokenizeInput(): void {
       const tokens = this.lexer.tokenArray(this.input);
 
       tokens.pop();
@@ -105,12 +142,21 @@ export default Vue.extend({
 
 <style lang="scss">
 @import "@/assets/scss/_tokens";
-
-textarea,
 .pane,
+textarea,
 .output {
   height: 100%;
   font-family: "Fira Code", "Courier New", Courier, monospace;
+}
+
+.tokens {
+  font-size: 9pt;
+  font-weight: 300;
+  padding: 10px;
+}
+
+.output {
+  padding: 10px;
 }
 
 .title {
