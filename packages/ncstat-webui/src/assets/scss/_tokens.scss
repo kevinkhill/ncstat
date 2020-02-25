@@ -3,30 +3,20 @@
     font-size: 16pt;
 }
 
-.COMMENT {
-    color: grey;
-}
+.COMMENT { color: grey; }
+.PRG_DELIM { color: tomato; }
 
-.M_CODE {
-    color: forestgreen;
-}
+.F_CODE { color: lightgreen; }
+.G_CODE { color: teal; }
 
-.G_CODE {
-    color: teal;
-}
+.N_CODE { color: orange; }
+.T_CODE { color: orange; }
+.H_CODE { color: orange; }
 
-.M_CODE {
-    color: green;
-}
-
-.Y_CODE {
-    color: violet;
-}
-
-.X_CODE {
-    color: purple;
-}
-
-.Z_CODE {
-    color: red;
-}
+.M_CODE { color: green; }
+.O_CODE { color: turquoise; }
+.R_CODE { color: lightsalmon; }
+.S_CODE { color: cyan; }
+.Y_CODE { color: violet; }
+.X_CODE { color: purple; }
+.Z_CODE { color: red; }

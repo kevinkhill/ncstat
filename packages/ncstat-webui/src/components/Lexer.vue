@@ -1,12 +1,12 @@
 <template>
   <multipane class="custom-resizer" layout="vertical">
     <div class="pane" :style="{ width: '50%' }">
-      <p class="display-1">G CODE</p>
+      <p class="display-1">NC Code</p>
       <v-textarea
         solo
         autofocus
         full-width
-        class="fill-height"
+        rows="24"
         name="input"
         label="NC INPUT"
         :value="input"
@@ -15,14 +15,18 @@
     </div>
     <multipane-resizer></multipane-resizer>
     <div class="pane" :style="{ flexGrow: 1 }">
-      <p class="display-1">Tokens</p>
+      <v-badge inline color="deep-purple accent-6" :content="tokenCount"
+        ><p class="display-1">Tokens</p></v-badge
+      >
       <div class="output">
         <template v-for="(token, idx) in tokens">
-        <span
-          :key="idx"
-          class="token"
-          :class="[`${token.value.prefix}_CODE`, token.type]"
-        >{{ token.type === 'EOB' ? ';' : token.text }}</span>
+          <span
+            :key="idx"
+            class="token"
+            :class="[`${token.value.prefix}_CODE`, token.type]"
+            >{{ token.text }}</span
+          >
+          <br v-if="token.type === 'NEWLINE'" />
         </template>
       </div>
     </div>
@@ -32,8 +36,23 @@
 <script>
 import Vue from "vue";
 import debounce from "lodash-es/debounce";
-import { NcParser } from "@ncstat/parser";
+import { NcLexer } from "@ncstat/lexer";
 import { Multipane, MultipaneResizer } from "vue-multipane";
+
+const input = `%
+O1234 (TEST PROGRAM)
+
+N43 ( #14 [.182"] DRILL )
+T43 M6
+G0 G90 G54 X.75 Y.19
+S10495 M3
+M50 (TSC COOLANT ON)
+G43 H#518 Z1. T44
+G98 G81 Z-.5631 R.1 F83.96
+X5.
+G80
+M30
+%`;
 
 export default Vue.extend({
   components: {
@@ -42,8 +61,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      rawTokens: [],
-      input: "G91 G28 Z0."
+      input,
+      tokens: []
     };
   },
   watch: {
@@ -55,27 +74,29 @@ export default Vue.extend({
     }
   },
   computed: {
-    tokens() {
-      const tokens = [...this.rawTokens];
-
-      tokens.pop();
-
-      return tokens;
+    tokenCount() {
+      return this.tokens.length;
     }
   },
+  created() {
+    this.lexer = new NcLexer({
+      newlineTokens: true
+    });
+  },
   mounted() {
-    this.parser = new NcParser();
-    this.lexer = this.parser.getLexer();
-
     this.tokenizeInput();
   },
   methods: {
     tokenizeInput() {
-      this.rawTokens = this.lexer.tokenArray(this.input);      
+      const tokens = this.lexer.tokenArray(this.input);
+
+      tokens.pop();
+
+      this.tokens = tokens;
     },
     update: debounce(function(input) {
       this.input = input.toUpperCase();
-      
+
       this.tokenizeInput();
     }, 300)
   }
@@ -88,11 +109,8 @@ export default Vue.extend({
 textarea,
 .pane,
 .output {
-  font-family: "Fira Code", "Courier New", Courier, monospace;
-}
-
-.pane {
   height: 100%;
+  font-family: "Fira Code", "Courier New", Courier, monospace;
 }
 
 .title {
@@ -104,13 +122,15 @@ textarea,
   height: 100%;
 }
 
+$resizer-border: 1px solid #333;
+
 .custom-resizer > .pane {
   text-align: left;
   padding: 15px;
   overflow: hidden;
-  // background-color: #1a2f44;
-  border-left: 1px solid #666;
-  border-right: 1px solid #666;
+  background-color: #1a1a1a;
+  border-left: $resizer-border;
+  border-right: $resizer-border;
 }
 
 .custom-resizer > .pane ~ .pane {
