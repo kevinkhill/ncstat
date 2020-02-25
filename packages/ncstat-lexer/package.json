@@ -8,7 +8,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "test": "cd ../../ && yarn test:pkg ncstat-lexer",
+    "test": "jest -c ../../jest.config.js lexer",
     "build": "node ../../scripts/build.js"
   },
   "dependencies": {

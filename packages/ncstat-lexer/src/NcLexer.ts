@@ -1,31 +1,34 @@
 import { EventEmitter } from "eventemitter3";
 
-import { isType, lexer } from "./lib";
+import { tokenizer } from "./lib";
 import { LexerConfig, NcToken } from "./types";
 
 export class NcLexer extends EventEmitter {
-  debug: boolean;
-  newlineTokens: boolean;
+  defaults = {
+    debug: false,
+    newlineTokens: true
+  };
 
-  private lexer = lexer;
+  config: LexerConfig;
 
-  constructor(
-    config: Partial<LexerConfig> = { debug: false, newlineTokens: true }
-  ) {
+  private tokenizer = tokenizer;
+
+  constructor(config?: Partial<LexerConfig>) {
     super();
-
-    this.debug = Boolean(config.debug);
-    this.newlineTokens = Boolean(config.newlineTokens);
+    this.config = Object.assign(this.defaults, config);
   }
 
   *tokenize(input: string): Generator<NcToken> {
-    this.lexer.debug(this.debug);
-    this.lexer.input(input);
+    this.tokenizer.debug(this.config.debug);
+    this.tokenizer.input(input);
 
     let token;
 
-    while ((token = this.lexer.token()) !== null) {
-      if (isType("NEWLINE", token) && this.newlineTokens === false)
+    while ((token = this.tokenizer.token()) !== null) {
+      if (
+        token.type === "NEWLINE" &&
+        this.config.newlineTokens === false
+      )
         continue;
 
       yield token;

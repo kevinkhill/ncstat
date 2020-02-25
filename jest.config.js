@@ -9,6 +9,7 @@ module.exports = {
     "/packages/.*/src/__tests__/utils.ts"
   ],
   transform: {
-    "^.+\\.[jt]sx?$": "babel-jest"
+    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.jsx?$": "babel-jest"
   }
 };
