@@ -1,6 +1,6 @@
-const config = require("../../jest.config");
+const pkg = require("./package.json");
 
 module.exports = {
-  rootDir: ".",
-  ...config
+  ...require("../../jest.config.js"),
+  displayName: pkg.name.split("@ncstat/").pop()
 };
