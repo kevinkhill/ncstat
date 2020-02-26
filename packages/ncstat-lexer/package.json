@@ -8,7 +8,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "test": "jest -c ../../jest.config.js lexer",
+    "test": "jest",
     "build": "node ../../scripts/build.js"
   },
   "dependencies": {

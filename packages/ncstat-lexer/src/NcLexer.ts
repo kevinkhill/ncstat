@@ -31,9 +31,9 @@ export class NcLexer extends EventEmitter {
       )
         continue;
 
-      yield token;
-
       this.emit("token", token);
+
+      yield token;
     }
   }
 
