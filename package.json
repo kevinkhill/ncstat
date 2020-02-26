@@ -7,6 +7,7 @@
     "prebuild": "yarn build:ts",
     "build": "yarn node ./scripts/build.js",
     "build:ts": "yarn node ./scripts/buildTs.js",
+    "build:webui": "cd ./packages/ncstat-webui && yarn build",
     "clean-all": "rimraf ./node_modules && rimraf ./packages/*/node_modules && yarn clean-e2e && yarn build-clean",
     "clean-e2e": "yarn node ./scripts/cleanE2e.js",
     "jest-coverage": "yarn jest --coverage",
