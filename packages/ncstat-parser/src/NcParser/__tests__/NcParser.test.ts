@@ -1,12 +1,13 @@
 /* eslint-disable no-sync */
 import fs from "fs";
 import path from "path";
+import findUp from "find-up";
 
-import { NcParser } from "../..";
+import { NcParser } from "../../NcParser";
 
 const parser = new NcParser();
 
-const abspath = path.join(__dirname, "..", "ncfiles", "example1.NC");
+const abspath = path.join(findUp.sync("ncfiles"), "example1.NC");
 const contents = fs.readFileSync(abspath).toString();
 const program = parser.parse(contents);
 

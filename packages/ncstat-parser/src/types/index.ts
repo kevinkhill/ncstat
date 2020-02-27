@@ -2,7 +2,7 @@ import { Linear } from "doublie";
 
 import { NcBlock } from "../NcBlock";
 
-export type NcBlocks = NcBlock[] | Generator<NcBlock>;
+export type NcBlocks = Array<NcBlock> | Generator<NcBlock>;
 
 export type NcProgram = Linear<NcBlock>;
 

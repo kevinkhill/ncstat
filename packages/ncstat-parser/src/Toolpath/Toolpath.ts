@@ -1,5 +1,4 @@
 import { NcBlock } from "../NcBlock";
-
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
 
@@ -13,9 +12,9 @@ export class Toolpath {
   tool?: Tool;
   hasCoolant = false;
   description?: string;
-  cannedCycles: CannedCycle[] = [];
+  cannedCycles: Array<CannedCycle> = [];
 
-  constructor(readonly blocks: NcBlock[] = []) {
+  constructor(readonly blocks: Array<NcBlock> = []) {
     this.blocks = blocks;
   }
 

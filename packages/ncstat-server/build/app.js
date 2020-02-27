@@ -5,81 +5,38 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.app = void 0;
 
-var Koa = _interopRequireWildcard(require("koa"));
+var _koa = _interopRequireDefault(require("koa"));
 
-var koaBody = _interopRequireWildcard(require("koa-body"));
+var _koaBody = _interopRequireDefault(require("koa-body"));
 
 var _router = require("./router");
 
-function _getRequireWildcardCache() {
-  if (typeof WeakMap !== "function") return null;
-  var cache = new WeakMap();
-  _getRequireWildcardCache = function() {
-    return cache;
-  };
-  return cache;
-}
-
-function _interopRequireWildcard(obj) {
-  if (obj && obj.__esModule) {
-    return obj;
-  }
-  if (
-    obj === null ||
-    (typeof obj !== "object" && typeof obj !== "function")
-  ) {
-    return { default: obj };
-  }
-  var cache = _getRequireWildcardCache();
-  if (cache && cache.has(obj)) {
-    return cache.get(obj);
-  }
-  var newObj = {};
-  var hasPropertyDescriptor =
-    Object.defineProperty && Object.getOwnPropertyDescriptor;
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor
-        ? Object.getOwnPropertyDescriptor(obj, key)
-        : null;
-      if (desc && (desc.get || desc.set)) {
-        Object.defineProperty(newObj, key, desc);
-      } else {
-        newObj[key] = obj[key];
-      }
-    }
-  }
-  newObj.default = obj;
-  if (cache) {
-    cache.set(obj, newObj);
-  }
-  return newObj;
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
 }
 
 /* eslint-disable import/no-namespace */
-const app = new Koa();
+const app = new _koa.default();
 exports.app = app;
-app.use(koaBody()); // look ma, error propagation!
+app.use((0, _koaBody.default)());
+/**
+ * Route Error Handler
+ */
 
-app.use(async function(ctx, next) {
+app.use(async (ctx, next) => {
   try {
     await next();
   } catch (err) {
-    // some errors will have .status
-    // however this is not a guarantee
     ctx.status = err.status || 500;
-    ctx.type = "html";
-    ctx.body =
-      "<p>Something <em>exploded</em>, please contact Maru.</p>"; // since we handled this manually we'll
-    // want to delegate to the regular app
-    // level error handling as well so that
-    // centralized still functions correctly.
-
+    ctx.type = "json";
+    ctx.body = {
+      err
+    };
     ctx.app.emit("error", err, ctx);
   }
 });
 app.use(_router.router.routes());
-app.on("error", function(err) {
+app.on("error", err => {
   if (process.env.NODE_ENV !== "test") {
     console.log("sent error %s to the cloud", err.message);
     console.log(err);

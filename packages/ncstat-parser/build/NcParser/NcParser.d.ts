@@ -25,9 +25,9 @@ export declare class NcParser extends NcEventEmitter {
     private state;
     private lexer;
     private tokens;
-    constructor({ debug }: {
-        debug?: boolean;
-    });
+    constructor(config?: Partial<{
+        debug: boolean;
+    }>);
     toString(): string;
     getLexer(): NcLexer;
     getLimits(): Partial<AxesLimits>;

@@ -1,11 +1,11 @@
 import { NcToken } from "@ncstat/lexer";
 import { Position } from "../types";
 export declare class NcBlock {
-    tokens: NcToken[];
+    tokens: Array<NcToken>;
     retractCode?: string;
     getPosition(): Position;
-    static create(tokens: NcToken[]): NcBlock;
-    constructor(tokens: NcToken[]);
+    static create(tokens: Array<NcToken>): NcBlock;
+    constructor(tokens: Array<NcToken>);
     $has(prefix: string): boolean;
     $value(prefix: string): number;
     map(iter: any): ReturnType<typeof iter>;
@@ -25,7 +25,7 @@ export declare class NcBlock {
     get D(): number;
     get E(): number;
     get F(): number;
-    get G(): number[];
+    get G(): Array<number>;
     get H(): number;
     get I(): number;
     get J(): number;

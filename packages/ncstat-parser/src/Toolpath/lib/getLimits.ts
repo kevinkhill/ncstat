@@ -2,14 +2,13 @@ import { get, map, maxBy, minBy } from "lodash/fp";
 
 import { AxisLimits, HmcAxis } from "../../types";
 import { Toolpath } from "../Toolpath";
-
 import { getAxisLimits } from "./getAxisLimits";
 
 export function _getLimits(
   axis: HmcAxis,
-  toolp: Toolpath | Toolpath[]
+  toolp: Toolpath | Array<Toolpath>
 ): AxisLimits {
-  const toolpaths: Toolpath[] = [];
+  const toolpaths: Array<Toolpath> = [];
 
   if (toolp instanceof Toolpath) {
     // eslint-disable-next-line no-param-reassign
@@ -27,4 +26,6 @@ export function _getLimits(
   };
 }
 
-export const getLimits = (axis: HmcAxis) => (toolp: Toolpath | Toolpath[]) => _getLimits(axis, toolp);
+export const getLimits = (axis: HmcAxis) => (
+  toolp: Toolpath | Array<Toolpath>
+) => _getLimits(axis, toolp);

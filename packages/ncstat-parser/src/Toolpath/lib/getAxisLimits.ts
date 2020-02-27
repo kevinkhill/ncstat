@@ -1,9 +1,9 @@
-import { filter, flow, path, map, max, min } from "lodash/fp";
+import { filter, flow, map, max, min, path } from "lodash/fp";
 
 import { AxisLimits, HmcAxis } from "../../types";
 import { Toolpath } from "../Toolpath";
 
-export function dedupe<T>(arr: T[]): T[] {
+export function dedupe<T>(arr: Array<T>): Array<T> {
   return Array.from(new Set(arr));
 }
 
@@ -25,4 +25,5 @@ export function _getAxisLimits(
   };
 }
 
-export const getAxisLimits = (axis: HmcAxis) => (toolpaths: Toolpath) => _getAxisLimits(axis, toolpaths);
+export const getAxisLimits = (axis: HmcAxis) => (toolpaths: Toolpath) =>
+  _getAxisLimits(axis, toolpaths);

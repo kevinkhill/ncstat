@@ -1,15 +1,15 @@
 import { Machine } from "xstate";
 
 export type NcMachineStateType =
-  "IDLE" |
-  "TOOLPATHING" |
-  "IN_CANNED_CYCLE";
+  | "IDLE"
+  | "TOOLPATHING"
+  | "IN_CANNED_CYCLE";
 
 export const NcMachineState = {
   IDLE: "IDLE",
   TOOLPATHING: "TOOLPATHING",
   IN_CANNED_CYCLE: "IN_CANNED_CYCLE"
-}
+};
 
 // export enum NcMachineEvent {
 //   START_TOOLPATH = "START_TOOLPATH",
@@ -19,31 +19,31 @@ export const NcMachineState = {
 // }
 
 export type NcMachineEventType =
-  "START_TOOLPATH" |
-  "END_TOOLPATH" |
-  "START_CANNED_CYCLE" |
-  "END_CANNED_CYCLE";
+  | "START_TOOLPATH"
+  | "END_TOOLPATH"
+  | "START_CANNED_CYCLE"
+  | "END_CANNED_CYCLE";
 
 export type NcMachineEvent =
-  { type : "START_TOOLPATH"} |
-  { type : "END_TOOLPATH"} |
-  { type : "START_CANNED_CYCLE"} |
-  { type : "END_CANNED_CYCLE"}
+  | { type: "START_TOOLPATH" }
+  | { type: "END_TOOLPATH" }
+  | { type: "START_CANNED_CYCLE" }
+  | { type: "END_CANNED_CYCLE" };
 
 export interface NcMachineStateSchema {
   states: {
-    IDLE: {},
-    TOOLPATHING: {},
-    IN_CANNED_CYCLE: {}
-  }
+    IDLE: {};
+    TOOLPATHING: {};
+    IN_CANNED_CYCLE: {};
+  };
 }
 
 export interface NcMachineContext {
   position: {
-    curr: { X: number, Y: number, Z: number, B: number },
-    prev: { X: number, Y: number, Z: number, B: number }
-  }
-};
+    curr: { X: number; Y: number; Z: number; B: number };
+    prev: { X: number; Y: number; Z: number; B: number };
+  };
+}
 
 export const NcStateMachine = Machine<
   NcMachineContext,

@@ -8,7 +8,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "test": "cd ../../ && yarn test:pkg ncstat-parser",
+    "test": "yarn jest --testPathPattern ncstat-parser",
     "build": "node ../../scripts/build.js"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "xstate": "^4.7.8"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149"
+    "@types/lodash": "^4.14.149",
+    "find-up": "^4.1.0"
   }
 }

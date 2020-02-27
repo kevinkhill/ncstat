@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { NcToken } from "@ncstat/lexer";
 import { EventEmitter } from "eventemitter3";
 
-import { NcToken } from "@ncstat/lexer";
-
-export type NcEvents = "eob" | "eof" | "token" | "error" | "stateChange";
+export type NcEvents =
+  | "eob"
+  | "eof"
+  | "token"
+  | "error"
+  | "stateChange";
 
 // export interface StateChange {
 //   prev: NcMachineContext;

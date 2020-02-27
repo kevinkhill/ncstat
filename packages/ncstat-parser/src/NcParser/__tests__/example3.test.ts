@@ -1,9 +1,9 @@
-import { analyzeCode, getLimits } from "../..";
-import { getTestFileContents } from "./readFile";
+import { getNcFileContents } from "./utils";
+import { getLimits } from "../../Toolpath";
 
 const testFile = "example3.NC";
 
-const contents = getTestFileContents(testFile);
+const contents = getNcFileContents(testFile);
 const program = analyzeCode(contents);
 const zLimits = getLimits("Z", program.toolpaths);
 

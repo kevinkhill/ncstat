@@ -40,14 +40,14 @@ Object.keys(_isType).forEach(function(key) {
   });
 });
 
-var _lexer = require("./lexer");
+var _tokenizer = require("./tokenizer");
 
-Object.keys(_lexer).forEach(function(key) {
+Object.keys(_tokenizer).forEach(function(key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function() {
-      return _lexer[key];
+      return _tokenizer[key];
     }
   });
 });

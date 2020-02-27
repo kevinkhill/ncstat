@@ -1,11 +1,11 @@
 import { NcParser } from "NcParser";
 
-import { getTestFileContents } from "./readFile";
 import { getLimits } from "../../Toolpath";
+import { getNcFileContents } from "./utils";
 
 const testFile = "example1.NC";
 
-const contents = getTestFileContents(testFile);
+const contents = getNcFileContents(testFile);
 const program = NcParser.parse(contents);
 const zLimits = getLimits("Z", program.toolpaths);
 

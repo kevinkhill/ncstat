@@ -23,7 +23,9 @@
     "eslint.format.enable": true,
     "eslint.packageManager": "yarn",
     "eslint.workingDirectories": [
-      { "pattern": "./packages/*/src" }
+      {
+        "pattern": "./packages/*/src"
+      }
     ],
     "jest.autoEnable": false
   }

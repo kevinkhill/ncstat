@@ -1,5 +1,4 @@
 import { NcBlock } from "../NcBlock";
-
 import { Point } from "./Point";
 
 export const RETRACT_CODES = ["G98", "G99"];
@@ -57,7 +56,7 @@ export class CannedCycle {
   J?: number;
   K?: number;
 
-  private points: Point[] = [];
+  private points: Array<Point> = [];
 
   constructor(config: CannedCycleConfig) {
     this.Z = config.Z;
@@ -89,7 +88,7 @@ export class CannedCycle {
     this.points.push(obj);
   }
 
-  getPoints(): Point[] {
+  getPoints(): Array<Point> {
     return this.points;
   }
 

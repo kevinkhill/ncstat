@@ -3,8 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isType = isType;
+exports.isType = void 0;
 
-function isType(type, token) {
+const isType = type => token => {
   return token.type === type;
-}
+};
+
+exports.isType = isType;

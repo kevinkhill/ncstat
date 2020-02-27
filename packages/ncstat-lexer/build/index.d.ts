@@ -1,4 +1,4 @@
 export * from "./NcLexer";
-export * from "./lib";
 export * from "./types";
+export * from "./fp";
 //# sourceMappingURL=index.d.ts.map

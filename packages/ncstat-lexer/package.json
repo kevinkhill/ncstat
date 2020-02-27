@@ -18,7 +18,8 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.149",
-    "@types/tokenizr": "^1.5.1"
+    "@types/tokenizr": "^1.5.1",
+    "ts-node": "^8.6.2"
   },
   "publishConfig": {
     "access": "public"

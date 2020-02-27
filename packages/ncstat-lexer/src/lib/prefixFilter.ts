@@ -4,8 +4,8 @@ import { NcToken } from "../types";
 
 export function prefixFilter(
   prefix: string,
-  tokens: NcToken[]
-): NcToken[] {
+  tokens: Array<NcToken>
+): Array<NcToken> {
   return filter((token: NcToken) => {
     return token.value?.prefix === prefix;
   }, tokens);

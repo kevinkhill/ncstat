@@ -1,7 +1,8 @@
-import { NcBlock } from "..";
+import { tokenize } from "@ncstat/lexer";
+import { NcBlock } from "../NcBlock";
 
 const line = "N15 ( M5 X 0.8 ROLL TAP )";
-const block = NcBlock.parse(line);
+const block = new NcBlock(tokenize(line));
 
 it(`parsed "${line}" into a NcBlock`, () => {
   expect(block).toBeInstanceOf(NcBlock);
