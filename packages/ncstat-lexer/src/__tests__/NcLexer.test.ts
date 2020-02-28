@@ -15,10 +15,10 @@ M30
 %`;
 
 const lexer = new NcLexer({
-  newlineTokens: false
+  newlines: false
 });
 
-const tokens = lexer.tokenArray(input);
+const tokens = lexer.tokens(input);
 
 describe("the lexer", () => {
   it("identified all the tokens", () => {

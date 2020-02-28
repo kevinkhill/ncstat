@@ -1,11 +1,13 @@
+import { TokenType } from "./tokens";
+
 export * from "./tokens";
 
 export interface LexerConfig {
   debug: boolean;
-  newlines: boolean;
+  tokens: {
+    [K in TokenType]: boolean;
+  } &
+    Partial<Record<TokenType, boolean>>;
 }
 
-export interface Address {
-  value: number;
-  prefix: string;
-}
+// | Partial<Record<TokenType, boolean>>

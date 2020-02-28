@@ -4,6 +4,9 @@
       "path": "."
     },
     {
+      "path": "packages/tokenizr"
+    },
+    {
       "path": "packages/ncstat-lexer"
     },
     {

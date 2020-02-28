@@ -1,3 +1,6 @@
+/**
+ * NcLexer Entry
+ */
 export * from "./NcLexer";
 export * from "./types";
-export * from "./fp";
+export * from "./functions";

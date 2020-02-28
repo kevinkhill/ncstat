@@ -2,13 +2,15 @@ import { EventEmitter } from "eventemitter3";
 import Tokenizr from "tokenizr";
 
 import { tokenizer } from "./lib";
-import { NcToken } from "./NcToken";
-import { LexerConfig } from "./types";
+import { LexerConfig, ValueToken } from "./types";
 
 export class NcLexer extends EventEmitter {
   defaults = {
     debug: false,
-    newlines: true
+    tokens: {
+      NEWLINE: false,
+      EOF: false
+    }
   };
 
   config: LexerConfig;
@@ -29,23 +31,42 @@ export class NcLexer extends EventEmitter {
    *
    * @emits token NcToken
    */
-  *tokenize(input: string): Generator<NcToken> {
+  *tokenize(input: string): Generator<ValueToken> {
+    let token: ValueToken | null;
+
     this.tokenizer.debug(this.config.debug);
     this.tokenizer.input(input);
 
-    let token;
+    while ((token = this.getNextToken()) !== null) {
+      if (this.config.tokens[token.type] === false) continue;
 
-    while ((token = this.tokenizer.token()) !== null) {
-      if (token.type === "NEWLINE" && this.config.newlines === false)
+      if (token.isA("NEWLINE") && this.config.newlines === false)
+        continue;
+
+      if (token.isA("EOF") && this.config.tokens.eof === false)
         continue;
 
       this.emit("token", token);
 
-      yield new NcToken(token);
+      yield token;
     }
   }
 
-  tokenArray(input: string): Array<NcToken> {
+  /**
+   * Sugar method for creating an array from
+   * the tokenize generator method.
+   */
+  tokens(input: string): Array<ValueToken> {
     return Array.from(this.tokenize(input));
+  }
+
+  private getNextToken(): ValueToken | null {
+    const token = this.tokenizer.token();
+
+    if (token !== null) {
+      return token as ValueToken;
+    }
+
+    return null;
   }
 }

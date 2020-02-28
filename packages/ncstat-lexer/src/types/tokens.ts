@@ -35,7 +35,7 @@ export type TokenType =
   | "BLK_SKIP"
   | "COMMENT";
 
-export type TokenValue =
+export type TokenizedValue =
   | NumericToken
   | StringToken
   | AddressToken
@@ -43,4 +43,4 @@ export type TokenValue =
   | CloseBracketToken
   | ProgramDelimeterToken;
 
-export type ValueToken = IToken<TokenValue>;
+export type ValueToken = IToken<TokenizedValue>;
