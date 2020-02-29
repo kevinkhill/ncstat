@@ -2,7 +2,7 @@ import { EventEmitter } from "eventemitter3";
 import Tokenizr from "tokenizr";
 
 import { tokenizer } from "./lib";
-import { LexerConfig, ValueToken } from "./types";
+import { LexerConfig, TokenType, ValueToken } from "./types";
 
 export class NcLexer extends EventEmitter {
   defaults = {
@@ -38,12 +38,10 @@ export class NcLexer extends EventEmitter {
     this.tokenizer.input(input);
 
     while ((token = this.getNextToken()) !== null) {
-      if (this.config.tokens[token.type] === false) continue;
-
-      if (token.isA("NEWLINE") && this.config.newlines === false)
+      if (token.isA("NEWLINE") && this.config.tokens.NEWLINE === false)
         continue;
 
-      if (token.isA("EOF") && this.config.tokens.eof === false)
+      if (token.isA("EOF") && this.config.tokens.EOF === false)
         continue;
 
       this.emit("token", token);
