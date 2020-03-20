@@ -23,6 +23,14 @@
     }
   ],
   "settings": {
+    "jest.disabledWorkspaceFolders": [
+      "ncstat",
+      "ncstat-lexer",
+      "ncstat-parser",
+      "ncstat-cli",
+      "ncstat-server",
+      "ncstat-webui"
+    ],
     "eslint.format.enable": true,
     "eslint.packageManager": "yarn",
     "eslint.workingDirectories": [
