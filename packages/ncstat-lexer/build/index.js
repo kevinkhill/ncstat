@@ -28,14 +28,14 @@ Object.keys(_types).forEach(function(key) {
   });
 });
 
-var _fp = require("./fp");
+var _functions = require("./functions");
 
-Object.keys(_fp).forEach(function(key) {
+Object.keys(_functions).forEach(function(key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function() {
-      return _fp[key];
+      return _functions[key];
     }
   });
 });

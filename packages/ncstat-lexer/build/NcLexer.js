@@ -14,31 +14,55 @@ class NcLexer extends _eventemitter.EventEmitter {
     super();
     this.defaults = {
       debug: false,
-      newlineTokens: true
+      tokens: {
+        NEWLINE: false,
+        EOF: false
+      }
     };
     this.config = void 0;
     this.tokenizer = _lib.tokenizer;
-    this.config = Object.assign(this.defaults, config);
+    this.config = { ...this.defaults, ...config };
   }
 
+  getTokenizer() {
+    return this.tokenizer;
+  }
+  /**
+   *
+   * @emits token NcToken
+   */
+
   *tokenize(input) {
+    let token;
     this.tokenizer.debug(this.config.debug);
     this.tokenizer.input(input);
-    let token;
 
-    while ((token = this.tokenizer.token()) !== null) {
-      if (
-        token.type === "NEWLINE" &&
-        this.config.newlineTokens === false
-      )
+    while ((token = this.getNextToken()) !== null) {
+      if (token.isA("NEWLINE") && this.config.tokens.NEWLINE === false)
+        continue;
+      if (token.isA("EOF") && this.config.tokens.EOF === false)
         continue;
       this.emit("token", token);
       yield token;
     }
   }
+  /**
+   * Sugar method for creating an array from
+   * the tokenize generator method.
+   */
 
-  tokenArray(input) {
+  tokens(input) {
     return Array.from(this.tokenize(input));
+  }
+
+  getNextToken() {
+    const token = this.tokenizer.token();
+
+    if (token !== null) {
+      return token;
+    }
+
+    return null;
   }
 }
 
