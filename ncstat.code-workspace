@@ -1,16 +1,11 @@
 {
   "folders": [
     {
-      "path": "."
+      "path": ".",
+      "name": "<root>"
     },
     {
-      "path": "packages/tokenizr"
-    },
-    {
-      "path": "packages/ncstat-lexer"
-    },
-    {
-      "path": "packages/ncstat-parser"
+      "path": "packages/ts-tokenizr"
     },
     {
       "path": "packages/ncstat-cli"
@@ -20,12 +15,15 @@
     },
     {
       "path": "packages/ncstat-webui"
+    },
+    {
+      "path": "packages/ncstat-parser"
     }
   ],
   "settings": {
     "jest.disabledWorkspaceFolders": [
+      "<root>",
       "ncstat",
-      "ncstat-lexer",
       "ncstat-parser",
       "ncstat-cli",
       "ncstat-server",
