@@ -1,6 +1,8 @@
-import { NcLexer, NcToken } from "@/NcLexer";
 import { Linear } from "doublie";
 import { clone, eq, filter, last } from "lodash/fp";
+
+import { NcLexer, NcToken } from "@/NcLexer";
+import { NcProgram } from "@/NcProgram";
 
 import { getBlockGenerator, NcBlock } from "../NcBlock";
 import {
@@ -14,9 +16,10 @@ import {
   AxesLimits,
   MachinePositions,
   NcBlocks,
-  NcParserConfig,
-  NcProgram
+  NcParserConfig
+  // NcProgram
 } from "../types";
+// import { ValueToken } from "../types/tokens";
 import { Modals, PositioningMode } from "./codes";
 import { getModals, updatePosition } from "./lib";
 import { NcEventEmitter } from "./NcEventEmitter";
@@ -36,7 +39,7 @@ export class NcParser extends NcEventEmitter {
     */
   programNumber = NaN;
   programTitle = "";
-  program: NcProgram = new Linear<NcBlock>();
+  // program: Linear<NcBlock> = new Linear<NcBlock>();
   toolpaths: Array<Toolpath> = [];
 
   /**
@@ -48,21 +51,21 @@ export class NcParser extends NcEventEmitter {
    * Internals
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private nc: any;
+  private machine: any; // @TODO get this to work with `typeof NcService`;
   private state = NcMachineState.IDLE;
   private lexer: NcLexer;
   private tokens: Array<NcToken> = [];
 
-  constructor(config: Partial<NcParserConfig> = { debug: false }) {
+  constructor(config: Partial<NcParserConfig>) {
     super();
 
     this.debug = Boolean(config?.debug);
 
     this.lexer = new NcLexer(config?.lexerConfig ?? {});
 
-    this.nc = NcService;
+    this.machine = NcService;
 
-    this.nc.subscribe((state: { value: NcMachineStateType }) => {
+    this.machine.subscribe((state: { value: NcMachineStateType }) => {
       this.$emitStateChange({
         prev: this.state,
         curr: state.value
@@ -72,16 +75,21 @@ export class NcParser extends NcEventEmitter {
     });
   }
 
-  toString(): string {
-    return `%\n${this.program.join("\n")}%`;
-  }
+  // toString(): string {
+  //   return `%\n${this.program.join("\n")}%`;
+  // }
 
   // get lines(): string[] {
   //   return map(Object.toString, this.blocks);
   // }
+
   getLexer(): NcLexer {
     return this.lexer;
   }
+
+  // getTokens(): Array<Token> {
+  //   return this.lexer.tokens(this.input);
+  // }
 
   getLimits(): Partial<AxesLimits> {
     return {
@@ -107,13 +115,11 @@ export class NcParser extends NcEventEmitter {
   // }
 
   parse(source: string): NcProgram {
-    this.tokens = this.lexer.tokenArray(source);
-    this.blocks = getBlockGenerator(this.tokens);
+    const program = new NcProgram();
 
-    //@TODO move this to the end?
-    this.program.append(...this.blocks);
+    this.tokens = this.lexer.tokens(source);
 
-    let toolpath = new Toolpath();
+    program.loadTokens(this.tokens);
 
     let modals: ActiveModals = {
       [Modals.MOTION_CODES]: Modals.RAPID,
@@ -126,12 +132,17 @@ export class NcParser extends NcEventEmitter {
       prev: { X: 0, Y: 0, Z: 0, B: 0 }
     };
 
-    this.nc.start();
+    let currToolpath = new Toolpath();
+
+    /**
+     * Start the state machine service
+     */
+    this.machine.start();
 
     /**
      * Run the program
      */
-    this.program.forEach((block: NcBlock) => {
+    program.withBlocks((block: NcBlock) => {
       modals = Object.assign(modals, getModals(block));
 
       this.programNumber = block.O;
@@ -148,21 +159,21 @@ export class NcParser extends NcEventEmitter {
       }
 
       if (block.isStartOfCannedCycle && isToolpathing(this.state)) {
-        this.nc.send("START_CANNED_CYCLE");
+        this.machine.send("START_CANNED_CYCLE");
 
         const cannedCycle = CannedCycle.fromBlock(block);
 
-        toolpath.addCannedCycle(cannedCycle);
+        currToolpath.addCannedCycle(cannedCycle);
       }
 
       if (isInCannedCycle(this.state)) {
         if (block.G.includes(80)) {
-          this.nc.send("END_CANNED_CYCLE");
+          this.machine.send("END_CANNED_CYCLE");
         }
 
         if (block.hasMovement) {
           const point = clone(position.curr);
-          const lastCC = last(toolpath.cannedCycles) as CannedCycle;
+          const lastCC = last(currToolpath.cannedCycles) as CannedCycle;
 
           lastCC.addPoint(point);
         }
@@ -172,52 +183,52 @@ export class NcParser extends NcEventEmitter {
       // This has been defined in the custom H&B posts
       if (block.toString().startsWith("N")) {
         if (isToolpathing(this.state)) {
-          this.nc.send("END_TOOLPATH");
-          this.toolpaths.push(toolpath);
+          this.machine.send("END_TOOLPATH");
+          this.toolpaths.push(currToolpath);
         }
 
         if (isIdle(this.state)) {
-          toolpath = new Toolpath();
+          currToolpath = new Toolpath();
 
           const tool = Tool.create({
             number: block.N,
             desc: block.comment
           });
 
-          toolpath.setTool(tool);
+          currToolpath.setTool(tool);
 
-          this.nc.send("START_TOOLPATH");
+          this.machine.send("START_TOOLPATH");
         }
       }
 
       if (isToolpathing(this.state) || isInCannedCycle(this.state)) {
         if ([8, 50].includes(block.M)) {
-          toolpath.hasCoolant = true;
+          currToolpath.hasCoolant = true;
         }
 
         /**
          * Override N line tool description with Txx Mxx ()
-         * Move the N line desc to toolpath.desc
+         * Move the N line desc to currToolpath.desc
          */
         if (block.hasToolChange) {
-          if (toolpath.tool) {
-            toolpath.tool.number = block.T;
+          if (currToolpath.tool) {
+            currToolpath.tool.number = block.T;
           }
 
           if (block.comment) {
-            toolpath.description = toolpath?.tool?.desc;
+            currToolpath.description = currToolpath?.tool?.desc;
           }
         }
 
-        toolpath.addBlock(block);
+        currToolpath.addBlock(block);
       }
     });
 
-    this.nc.send("END_TOOLPATH");
-    this.nc.stop();
+    this.machine.send("END_TOOLPATH");
+    this.machine.stop();
 
-    this.toolpaths.push(toolpath);
+    program.toolpaths.push(currToolpath);
 
-    return this.program;
+    return program;
   }
 }

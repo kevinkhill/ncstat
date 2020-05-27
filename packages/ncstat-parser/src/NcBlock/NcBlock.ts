@@ -1,8 +1,11 @@
-import { addressValue, NcToken, prefixFilter } from "@/NcLexer";
-import { find, intersection, map } from "lodash/fp";
+import { filter, find, intersection, map } from "lodash/fp";
 
-import { START_CODES } from "../Toolpath/CannedCycle";
-import { Position } from "../types";
+import { addressValue, NcToken } from "@/NcLexer";
+import { START_CODES } from "@/Toolpath/CannedCycle";
+import { Position } from "@/types";
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const prefixFilter = (prefix: string) => filter(prefix);
 
 export class NcBlock {
   retractCode?: string;
@@ -25,12 +28,12 @@ export class NcBlock {
   }
 
   $has(prefix: string): boolean {
-    return prefixFilter(prefix, this.tokens).length > 0;
+    return filter(prefix, this.tokens).length > 0;
   }
 
   $value(prefix: string): number {
     if (this.$has(prefix)) {
-      const token = prefixFilter(prefix, this.tokens)[0];
+      const token = find(prefix, this.tokens);
 
       return addressValue(token);
     }
@@ -60,6 +63,7 @@ export class NcBlock {
   }
 
   get hasMovement(): boolean {
+    // @TODO Manage this conflict with G code groups
     if (intersection([4, 10, 65], this.G).length > 0) {
       return false;
     }

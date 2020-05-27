@@ -1,7 +1,7 @@
 {
   "name": "@ncstat/parser",
   "version": "1.0.0",
-  "description": "NC file parser",
+  "description": "Static NC file parser and analyzer",
   "author": "Kevin Hill",
   "license": "MIT",
   "private": true,
@@ -16,9 +16,12 @@
     "doublie": "^1.1.0",
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",
+    "tokenizr": "^1.5.7",
+    "ts-tokenizr": "*",
     "xstate": "^4.7.8"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149"
+    "@types/lodash": "^4.14.149",
+    "eslint-import-resolver-alias": "^1.1.2"
   }
 }

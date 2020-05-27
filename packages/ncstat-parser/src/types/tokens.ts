@@ -1,4 +1,13 @@
-import { IToken } from "tokenizr";
+export type TokenType =
+  | "EOF"
+  | "NEWLINE"
+  | "PRG_DELIM"
+  | "OPEN_BRACKET"
+  | "CLOSE_BRACKET"
+  | "PRG_NUMBER"
+  | "ADDR"
+  | "BLK_SKIP"
+  | "COMMENT";
 
 export interface NumericToken {
   value: number;
@@ -25,17 +34,6 @@ export interface CloseBracketToken {
   value: "]";
 }
 
-export type TokenType =
-  | "EOF"
-  | "NEWLINE"
-  | "PRG_DELIM"
-  | "OPEN_BRACKET"
-  | "CLOSE_BRACKET"
-  | "PRG_NUMBER"
-  | "ADDR"
-  | "BLK_SKIP"
-  | "COMMENT";
-
 export type TokenizedValue =
   | NumericToken
   | StringToken
@@ -43,5 +41,3 @@ export type TokenizedValue =
   | OpenBracketToken
   | CloseBracketToken
   | ProgramDelimeterToken;
-
-export type ValueToken = IToken<TokenizedValue>;

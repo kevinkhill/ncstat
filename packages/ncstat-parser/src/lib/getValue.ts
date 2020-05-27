@@ -1,4 +1,4 @@
-import { Address, NcToken } from "@/types";
+import { Address, NcToken } from "../types";
 
 /**
  * @TODO Class this?

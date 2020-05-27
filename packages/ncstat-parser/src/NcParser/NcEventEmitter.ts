@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { NcToken } from "@/NcLexer";
 import { EventEmitter } from "eventemitter3";
+
+import { NcToken } from "@/NcLexer";
 
 export type NcEvents =
   | "eob"

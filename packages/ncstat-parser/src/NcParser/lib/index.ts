@@ -1,2 +1,2 @@
-export { getModals } from "./getModals";
-export { updatePosition } from "./updatePosition";
+export * from "./getModals";
+export * from "./updatePosition";

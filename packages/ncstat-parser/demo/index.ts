@@ -1,27 +1,28 @@
 import fs from "fs";
+import path from "path";
 
-import { NcParserConfig } from "@/types";
+import { NcParser } from "@/NcParser";
+import { NcParserConfig, NcProgram } from "@/types";
 
-import { NcParser } from "../src/NcParser";
-
-const config: NcParserConfig = {
-  debug: true,
-  lexerConfig: {
-    tokens: {
-      EOF: false
-    }
-  }
-};
-
-const parser = new NcParser(config);
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const readFile = (file: string) =>
+  fs.promises.readFile(path.join(__dirname, file), "utf8");
 
 (async () => {
-  const contents = await fs.promises.readFile(
-    "../../ncfiles/A.NC",
-    "utf8"
-  );
+  const config: NcParserConfig = {
+    debug: true,
+    lexerConfig: {
+      tokens: {
+        EOF: false
+      }
+    }
+  };
 
-  const tokens = parser.getLexer().tokens(contents);
+  const parser = new NcParser(config);
 
-  console.log(tokens);
+  parser.on("token", token => console.log(token));
+
+  const program: NcProgram = parser.parse(await readFile("./A.NC"));
+
+  console.log(program.toString());
 })();

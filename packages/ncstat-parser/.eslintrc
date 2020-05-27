@@ -1,0 +1,15 @@
+{
+  "extends": "../../.eslintrc.js",
+  "plugins": ["import"],
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [["@/*", "./src"]],
+        "extensions": [".ts", ".js", ".jsx", ".json"]
+      }
+    }
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": "off"
+  }
+}

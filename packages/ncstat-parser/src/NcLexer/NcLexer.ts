@@ -1,11 +1,11 @@
 import { EventEmitter } from "eventemitter3";
-import Tokenizr from "tokenizr";
+import { Tokenizr } from "ts-tokenizr";
 
-import { tokenizer } from "./lib";
-import { LexerConfig, TokenType, ValueToken } from "./types";
+import { tokenizr } from "@/lib";
+import { NcLexerConfig, ValueToken } from "@/types";
 
 export class NcLexer extends EventEmitter {
-  defaults = {
+  static readonly defaults = {
     debug: false,
     tokens: {
       NEWLINE: false,
@@ -13,29 +13,32 @@ export class NcLexer extends EventEmitter {
     }
   };
 
-  config: LexerConfig;
+  config: NcLexerConfig;
 
-  private tokenizer = tokenizer;
+  private readonly lexer: Tokenizr;
 
-  constructor(config?: Partial<LexerConfig>) {
+  constructor(config?: Partial<NcLexerConfig>) {
     super();
-
-    this.config = { ...this.defaults, ...config };
-  }
-
-  getTokenizer(): Tokenizr {
-    return this.tokenizer;
+    this.lexer = tokenizr;
+    this.config = { ...NcLexer.defaults, ...config };
   }
 
   /**
-   *
+   * Sugar method for creating an array from
+   * the tokenize generator method.
+   */
+  tokens(input: string): Array<ValueToken> {
+    return Array.from(this.tokenize(input));
+  }
+
+  /**
    * @emits token NcToken
    */
   *tokenize(input: string): Generator<ValueToken> {
     let token: ValueToken | null;
 
-    this.tokenizer.debug(this.config.debug);
-    this.tokenizer.input(input);
+    this.lexer.debug(this.config.debug);
+    this.lexer.input(input);
 
     while ((token = this.getNextToken()) !== null) {
       if (token.isA("NEWLINE") && this.config.tokens.NEWLINE === false)
@@ -50,19 +53,11 @@ export class NcLexer extends EventEmitter {
     }
   }
 
-  /**
-   * Sugar method for creating an array from
-   * the tokenize generator method.
-   */
-  tokens(input: string): Array<ValueToken> {
-    return Array.from(this.tokenize(input));
-  }
-
   private getNextToken(): ValueToken | null {
-    const token = this.tokenizer.token();
+    const token = this.lexer.token();
 
     if (token !== null) {
-      return token as ValueToken;
+      return token;
     }
 
     return null;
