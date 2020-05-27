@@ -1,9 +1,14 @@
-import { IToken } from "tokenizr";
+import Tokenizer, { IToken } from "tokenizr";
 
-const Token = Itoken<any>
-
-export class NcToken extends Token {
-  constructor(token: Token) {
-    super(...token);
+export class NcToken extends Tokenizer.Token {
+  constructor(token: IToken<unknown>) {
+    super(
+      token.type,
+      token.value,
+      token.text,
+      token?.pos,
+      token?.line,
+      token?.column
+    );
   }
 }

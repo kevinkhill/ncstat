@@ -39,6 +39,6 @@ tokenizer.rule(/\/([0-9]?)/, (ctx, match) => {
 
 tokenizer.rule(/\(\s*(.+?)\s*\)/, (ctx, match) => {
   ctx.accept("COMMENT", match[1]);
-}); // Ignore " " and "<tab>"
+}); // Ignore " ", <TAB>, <CR>
 
-tokenizer.rule(/[ \t]+/, ctx => ctx.ignore()); // tokenizer.rule(/\/\/[^\r\n]*\r?\n/, ctx => ctx.ignore());
+tokenizer.rule(/[ \t\r]+/, ctx => ctx.ignore()); // tokenizer.rule(/\/\/[^\r\n]*\r?\n/, ctx => ctx.ignore());
