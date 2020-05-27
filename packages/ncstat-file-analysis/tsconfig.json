@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "build",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "types": ["node"]
+  },
+  "references": [
+    {
+      "path": "../ncstat-parser"
+    }
+  ]
+}

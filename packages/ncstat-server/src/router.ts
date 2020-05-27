@@ -1,11 +1,20 @@
 // eslint-disable-next-line import/no-namespace
 import Router from "@koa/router";
-import { NcParser } from "@ncstat/parser";
+import { NcParser, NcParserConfig } from "@ncstat/parser";
 import Koa from "koa";
 
 export const router = new Router();
 
-const parser = new NcParser();
+const config: NcParserConfig = {
+  debug: true,
+  lexerConfig: {
+    tokens: {
+      EOF: false
+    }
+  }
+};
+
+const parser = new NcParser(config);
 
 router.post("/tokenize", async (ctx: Koa.Context) => {
   const body = ctx.request.body;
@@ -14,9 +23,6 @@ router.post("/tokenize", async (ctx: Koa.Context) => {
 
   const lexer = parser.getLexer();
   const tokens = lexer.tokenArray(body.input);
-
-  // Chuck the EOF token
-  tokens.pop();
 
   ctx.body = {
     input: body.input,

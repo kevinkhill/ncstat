@@ -1,0 +1,72 @@
+{
+  "name": "ts-tokenizr",
+  "main": "src/index.ts",
+  "description": "String Tokenization Library written in Typescript",
+  "version": "1.0.0",
+  "scripts": {
+    "demo": "tsnd ./demo/sample.ts",
+    "demo:dev": "tsnd --respawn ./demo/sample.ts",
+    "dev": "yarn test --watch --runInBand",
+    "docs": "typedoc --out ./docs ./src",
+    "lint": "eslint \"./src/**/*.ts\"",
+    "test": "jest"
+  },
+  "authors": [
+    {
+      "name": "Kevin Hill",
+      "email": "kevinkhill@gmail.com",
+      "url": "http://github.com/kevinkhill"
+    },
+    {
+      "name": "Dr. Ralf S. Engelschall",
+      "email": "rse@engelschall.com",
+      "url": "http://engelschall.com"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/kevinkhill/ts-tokenizr/issues"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.1.1",
+    "@types/node": "^13.9.2",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.20.0",
+    "eslint": "^6.8.0",
+    "eslint-config-node": "^4.0.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-jest-formatting": "^1.2.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "eslint-plugin-tsdoc": "^0.2.3",
+    "husky": "^4.2.1",
+    "jest": "^25.1.0",
+    "lint-staged": "^10.0.8",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^25.2.1",
+    "ts-node": "^8.7.0",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typedoc": "^0.16.11",
+    "typescript": "^3.8.3"
+  },
+  "homepage": "https://github.com/kevinkhill/ts-tokenizr",
+  "keywords": [
+    "string",
+    "token",
+    "scanner",
+    "lexer",
+    "tokenizer"
+  ],
+  "license": "MIT",
+  "lint-staged": {
+    "./src/**/*.ts": "eslint --cache --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinkhill/ts-tokenizr.git"
+  }
+}
