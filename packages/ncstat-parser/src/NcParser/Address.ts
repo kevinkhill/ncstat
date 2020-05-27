@@ -1,4 +1,4 @@
-import { NcToken } from "@ncstat/lexer";
+import { NcToken } from "@/NcLexer/NcToken";
 
 /**
  * Pad a single digit address into a two digit

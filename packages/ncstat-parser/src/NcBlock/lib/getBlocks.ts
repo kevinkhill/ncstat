@@ -1,4 +1,4 @@
-import { NcToken } from "@ncstat/lexer";
+import { NcToken } from "@/NcLexer";
 
 import { NcBlock } from "../NcBlock";
 

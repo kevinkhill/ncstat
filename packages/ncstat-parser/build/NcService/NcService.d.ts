@@ -1,2 +1,0 @@
-export declare const NcService: import("xstate").Interpreter<import("./NcStateMachine").NcMachineContext, import("./NcStateMachine").NcMachineStateSchema, import("./NcStateMachine").NcMachineEvent, any>;
-//# sourceMappingURL=NcService.d.ts.map

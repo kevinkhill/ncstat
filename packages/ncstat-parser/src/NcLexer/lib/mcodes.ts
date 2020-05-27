@@ -25,8 +25,8 @@ export const M_CODES: Record<string, string> = {
  * Return an M codes' description by string or number
  *
  * @example ```
- *  M(30)    // "PROGRAM_END"
- *  M("M6")  // "TOOL_CHANGE"
+ *  M(30)             // => "PROGRAM_END"
+ *  M("M6")           // => "TOOL_CHANGE"
  * ```
  */
 export function M(input: number | string): string {
@@ -36,5 +36,5 @@ export function M(input: number | string): string {
     return M_CODES[input];
   }
 
-  return "DESCRIPTION_NOT_FOUND";
+  return "";
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { NcToken } from "@ncstat/lexer";
+import { NcToken } from "@/NcLexer";
 import { EventEmitter } from "eventemitter3";
 
 export type NcEvents =

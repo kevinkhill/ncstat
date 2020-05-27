@@ -1,4 +1,4 @@
-import { addressValue, NcToken, prefixFilter } from "@ncstat/lexer";
+import { addressValue, NcToken, prefixFilter } from "@/NcLexer";
 import { find, intersection, map } from "lodash/fp";
 
 import { START_CODES } from "../Toolpath/CannedCycle";

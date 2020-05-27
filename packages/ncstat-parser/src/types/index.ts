@@ -1,8 +1,14 @@
 import { Linear } from "doublie";
 
 import { NcBlock } from "../NcBlock";
+import type { LexerConfig } from "@/NcLexer";
 
-export type NcBlocks = Array<NcBlock> | Generator<NcBlock>;
+export interface NcParserConfig {
+  debug: boolean;
+  lexerConfig: Partial<LexerConfig>
+}
+
+export type NcBlocks = NcBlock[] | Generator<NcBlock>;
 
 export type NcProgram = Linear<NcBlock>;
 

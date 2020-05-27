@@ -8,18 +8,17 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
+    "dev": "tsnd -r tsconfig-paths/register --respawn ./demo",
     "test": "yarn jest --testPathPattern ncstat-parser",
     "build": "node ../../scripts/build.js"
   },
   "dependencies": {
-    "@ncstat/lexer": "*",
     "doublie": "^1.1.0",
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",
     "xstate": "^4.7.8"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149",
-    "find-up": "^4.1.0"
+    "@types/lodash": "^4.14.149"
   }
 }

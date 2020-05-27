@@ -1,4 +1,4 @@
-import { tokenize } from "@ncstat/lexer";
+import { tokenize } from "@/NcLexer";
 import { NcBlock } from "../NcBlock";
 
 const line = "N15 ( M5 X 0.8 ROLL TAP )";

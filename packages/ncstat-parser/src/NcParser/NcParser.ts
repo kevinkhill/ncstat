@@ -1,4 +1,4 @@
-import { NcLexer, NcToken } from "@ncstat/lexer";
+import { NcLexer, NcToken } from "@/NcLexer";
 import { Linear } from "doublie";
 import { clone, eq, filter, last } from "lodash/fp";
 
@@ -14,6 +14,7 @@ import {
   AxesLimits,
   MachinePositions,
   NcBlocks,
+  NcParserConfig,
   NcProgram
 } from "../types";
 import { Modals, PositioningMode } from "./codes";
@@ -52,12 +53,12 @@ export class NcParser extends NcEventEmitter {
   private lexer: NcLexer;
   private tokens: Array<NcToken> = [];
 
-  constructor(config: Partial<{ debug: boolean }> = { debug: false }) {
+  constructor(config: Partial<NcParserConfig> = { debug: false }) {
     super();
 
     this.debug = Boolean(config?.debug);
 
-    this.lexer = new NcLexer({ debug: this.debug });
+    this.lexer = new NcLexer(config?.lexerConfig ?? {});
 
     this.nc = NcService;
 

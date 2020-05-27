@@ -1,1 +1,0 @@
-{"version":3,"file":"getLimits.d.ts","sourceRoot":"","sources":["../../../src/Toolpath/lib/getLimits.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,UAAU,EAAE,OAAO,EAAE,MAAM,aAAa,CAAC;AAClD,OAAO,EAAE,QAAQ,EAAE,MAAM,aAAa,CAAC;AAIvC,wBAAgB,UAAU,CACxB,IAAI,EAAE,OAAO,EACb,KAAK,EAAE,QAAQ,GAAG,QAAQ,EAAE,GAC3B,UAAU,CAiBZ;AAED,eAAO,MAAM,SAAS,iEAA+E,CAAC"}
