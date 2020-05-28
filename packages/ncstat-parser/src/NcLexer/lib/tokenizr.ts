@@ -1,6 +1,6 @@
 import { Tokenizr } from "ts-tokenizr";
 
-const tokenizr = new Tokenizr();
+export const tokenizr = new Tokenizr();
 
 // Match "%", required for proper NC files
 tokenizr.rule(/%/, ctx => ctx.accept("PRG_DELIM"));
@@ -41,5 +41,3 @@ tokenizr.rule(/\(\s*(.+?)\s*\)/, (ctx, match) => {
 tokenizr.rule(/[ \t\r]+/, ctx => ctx.ignore());
 
 // tokenizr.rule(/\/\/[^\r\n]*\r?\n/, ctx => ctx.ignore());
-
-export default tokenizr;

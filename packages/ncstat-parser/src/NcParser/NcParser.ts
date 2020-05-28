@@ -1,10 +1,9 @@
-import { Linear } from "doublie";
 import { clone, eq, filter, last } from "lodash/fp";
 
 import { NcLexer, NcToken } from "@/NcLexer";
 import { NcProgram } from "@/NcProgram";
 
-import { getBlockGenerator, NcBlock } from "../NcBlock";
+import { NcBlock } from "../NcBlock";
 import {
   NcMachineState,
   NcMachineStateType,
@@ -56,12 +55,15 @@ export class NcParser extends NcEventEmitter {
   private lexer: NcLexer;
   private tokens: Array<NcToken> = [];
 
-  constructor(config: Partial<NcParserConfig>) {
+  constructor(config: Partial<NcParserConfig> = { debug: false }) {
     super();
 
     this.debug = Boolean(config?.debug);
 
     this.lexer = new NcLexer(config?.lexerConfig ?? {});
+
+    // Bubble?
+    // this.lexer.on("token", token => this.$emitToken(token));
 
     this.machine = NcService;
 

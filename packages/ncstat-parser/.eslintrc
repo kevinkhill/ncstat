@@ -10,6 +10,7 @@
     }
   },
   "rules": {
+    "no-restricted-globals": ["globalThis"],
     "import/no-extraneous-dependencies": "off"
   }
 }

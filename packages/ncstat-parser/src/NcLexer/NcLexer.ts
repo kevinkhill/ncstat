@@ -1,25 +1,26 @@
 import { EventEmitter } from "eventemitter3";
-import { Tokenizr } from "ts-tokenizr";
+import { Token, Tokenizr } from "ts-tokenizr";
 
-import { tokenizr } from "@/lib";
-import { NcLexerConfig, ValueToken } from "@/types";
+import { NcToken } from "@/NcLexer";
+import { tokenizr } from "@/NcLexer";
+import { NcLexerConfig } from "@/types";
 
 export class NcLexer extends EventEmitter {
   static readonly defaults = {
     debug: false,
     tokens: {
-      NEWLINE: false,
+      NEWLINE: true,
       EOF: false
     }
   };
 
   config: NcLexerConfig;
 
-  private readonly lexer: Tokenizr;
+  private readonly tokenizr: Tokenizr;
 
   constructor(config?: Partial<NcLexerConfig>) {
     super();
-    this.lexer = tokenizr;
+    this.tokenizr = tokenizr;
     this.config = { ...NcLexer.defaults, ...config };
   }
 
@@ -27,18 +28,18 @@ export class NcLexer extends EventEmitter {
    * Sugar method for creating an array from
    * the tokenize generator method.
    */
-  tokens(input: string): Array<ValueToken> {
+  tokens(input: string): Array<Token> {
     return Array.from(this.tokenize(input));
   }
 
   /**
    * @emits token NcToken
    */
-  *tokenize(input: string): Generator<ValueToken> {
-    let token: ValueToken | null;
+  *tokenize(input: string): Generator<Token> {
+    let token: Token | null;
 
-    this.lexer.debug(this.config.debug);
-    this.lexer.input(input);
+    this.tokenizr.debug(this.config.debug);
+    this.tokenizr.input(input);
 
     while ((token = this.getNextToken()) !== null) {
       if (token.isA("NEWLINE") && this.config.tokens.NEWLINE === false)
@@ -53,13 +54,20 @@ export class NcLexer extends EventEmitter {
     }
   }
 
-  private getNextToken(): ValueToken | null {
-    const token = this.lexer.token();
-
-    if (token !== null) {
-      return token;
-    }
-
-    return null;
+  private getNextToken(): Token | null {
+    return this.tokenizr.token();
   }
+
+  /**
+   * Wrap the generic Tokenizr token
+   */
+  // private getNextToken(): Token | null {
+  //   const token = this.tokenizr.token();
+
+  //   if (token) {
+  //     return NcToken.from(token);
+  //   }
+
+  //   return null;
+  // }
 }

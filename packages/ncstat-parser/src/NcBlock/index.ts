@@ -1,3 +1,2 @@
 export * from "./NcBlock";
-
-export * from "./lib";
+export * from "./getBlockGenerator";

@@ -9,7 +9,7 @@ export function getModals(block: NcBlock): ActiveModals {
     [Modals.POSITIONING_MODE]: Modals.ABSOLUTE
   };
 
-  const textTokens = block.map("text");
+  const textTokens = block.map(token => token.text);
 
   if (textTokens.includes(Modals.RAPID)) {
     modals[Modals.MOTION_CODES] = Modals.RAPID;

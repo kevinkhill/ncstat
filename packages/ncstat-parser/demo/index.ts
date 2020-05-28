@@ -2,7 +2,9 @@ import fs from "fs";
 import path from "path";
 
 import { NcParser } from "@/NcParser";
-import { NcParserConfig, NcProgram } from "@/types";
+import { NcParserConfig } from "@/types";
+import { NcProgram } from "@/NcProgram";
+import { _getLimits } from "../src/Toolpath/lib/getLimits";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const readFile = (file: string) =>
@@ -20,9 +22,11 @@ const readFile = (file: string) =>
 
   const parser = new NcParser(config);
 
-  parser.on("token", token => console.log(token));
+  // parser.getLexer().on("token", token => console.log(token));
 
   const program: NcProgram = parser.parse(await readFile("./A.NC"));
 
-  console.log(program.toString());
+  // console.log(program.toString());
+  // console.log(program.getStats());
+  program.withBlocks((block: NcBlock) => console.log(block._getLimits));
 })();

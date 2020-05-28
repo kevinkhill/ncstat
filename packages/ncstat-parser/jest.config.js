@@ -1,6 +1,17 @@
-const pkg = require("./package.json");
-
 module.exports = {
-  ...require("../../jest.config.js"),
-  displayName: pkg.name.split("@ncstat/").pop()
+  rootDir: ".",
+  // projects: ["<rootDir>/packages/*/jest.config.js"],
+  coverageDirectory: "<rootDir>/coverage/",
+  collectCoverageFrom: ["<rootDir>/src/**/*.ts"],
+  modulePathIgnorePatterns: ["/build"],
+  testPathIgnorePatterns: [
+    "/demo/",
+    "/build/",
+    "/node_modules/",
+    "__tests__/utils.ts$"
+  ],
+  transform: {
+    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.jsx?$": "babel-jest"
+  }
 };

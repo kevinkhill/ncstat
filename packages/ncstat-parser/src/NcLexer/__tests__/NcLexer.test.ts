@@ -15,7 +15,9 @@ M30
 %`;
 
 const lexer = new NcLexer({
-  newlines: false
+  tokens: {
+    NEWLINE: false
+  }
 });
 
 const tokens = lexer.tokens(input);

@@ -1,9 +1,12 @@
-import { NcBlock } from "../NcBlock";
+import { NcBlock } from "@/NcBlock";
+import { NcToken } from "@/NcLexer";
 
 export * from "./tokens";
 export * from "./configs";
+export * from "./NcProgramStats";
 
 export type NcBlocks = Array<NcBlock> | Generator<NcBlock>;
+export type Tokens = Array<NcToken> | Generator<NcToken>;
 
 export interface ActiveModals {
   GROUP_01: "G00" | "G01";

@@ -1,4 +1,5 @@
 import { filter, find, intersection, map } from "lodash/fp";
+import { Token } from "ts-tokenizr";
 
 import { addressValue, NcToken } from "@/NcLexer";
 import { START_CODES } from "@/Toolpath/CannedCycle";
@@ -10,6 +11,11 @@ const prefixFilter = (prefix: string) => filter(prefix);
 export class NcBlock {
   retractCode?: string;
 
+  static create(tokens: Array<NcToken>): NcBlock {
+    return new NcBlock(tokens);
+  }
+
+  // @TODO convert this to a getter
   getPosition(): Position {
     return {
       B: this.B,
@@ -17,10 +23,6 @@ export class NcBlock {
       Y: this.Y,
       Z: this.Z
     };
-  }
-
-  static create(tokens: Array<NcToken>): NcBlock {
-    return new NcBlock(tokens);
   }
 
   constructor(public tokens: Array<NcToken>) {
@@ -41,13 +43,20 @@ export class NcBlock {
     return NaN;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  map(iter: any): ReturnType<typeof iter> {
-    return map(iter, this.tokens);
+  map<U>(
+    fn: (value: Token, index: number, array: Array<Token>) => U,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    thisArg?: any
+  ): Array<U> {
+    return this.tokens.map(fn, thisArg);
   }
 
   toString(): string {
-    return this.map("text").join(" ");
+    return this.map(token => token.text).join(" ");
+  }
+
+  get tokenCount(): number {
+    return this.tokens.length;
   }
 
   get lineNumber(): number {
@@ -77,7 +86,10 @@ export class NcBlock {
   }
 
   get cannedCycleStartCode(): string | undefined {
-    return intersection(START_CODES, this.map("text"))[0];
+    return intersection(
+      START_CODES,
+      this.map(token => token.text)
+    )[0];
   }
 
   get isNline(): boolean {
