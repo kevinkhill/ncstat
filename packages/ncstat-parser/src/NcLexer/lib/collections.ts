@@ -1,8 +1,5 @@
-import { } from "lodash/fp";
-
-import { AxisLimits } from "@/types";
-
 import { NcToken } from "../NcToken";
+import { TokenTypes } from "@/types";
 
 export function filterByPrefix(
   prefix: string,
@@ -19,7 +16,7 @@ export function findByPrefix(
 }
 
 export function findByType(
-  type: TokenType,
+  type: TokenTypes,
   tokens: NcToken[]
 ): NcToken | undefined {
   return tokens.find(token => token.type === type);

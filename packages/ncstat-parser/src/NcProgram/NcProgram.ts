@@ -1,9 +1,9 @@
-import {  max, min, map, uniq, reject, get } from "lodash/fp";
+import { get, map, max, min, reject, uniq } from "lodash/fp";
 
 import { getBlockGenerator, NcBlock } from "@/NcBlock";
-import { minMax, NcToken } from "@/NcLexer";
+import { NcToken } from "@/NcLexer";
 import { Toolpath } from "@/Toolpath";
-import { AxesLimits, ProgramStats, HmcAxis, AxisLimits } from "@/types";
+import { AxesLimits, AxisLimits, HmcAxis, ProgramStats } from "@/types";
 
 export class NcProgram {
   // blocks: Linear<NcBlock> = new Linear<NcBlock>();
@@ -60,7 +60,6 @@ export class NcProgram {
     const values: number[] = uniq(map(get(axis), this.blocks));
 
     return reject(isNaN, values);
-
   }
 
   getAxisLimits(axis: HmcAxis): AxisLimits {
@@ -69,7 +68,7 @@ export class NcProgram {
     return {
       min: min(values) ?? NaN,
       max: max(values) ?? NaN
-    }
+    };
   }
 
   getLimits(): AxesLimits {

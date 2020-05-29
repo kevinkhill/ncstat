@@ -1,13 +1,13 @@
 import fs from "fs";
 import path from "path";
 
-import { NcBlock } from "@/NcBlock";
 import { NcParser } from "@/NcParser";
 import { NcProgram } from "@/NcProgram";
 import { NcParserConfig } from "@/types";
 
-const DEMO_FILE = "./small.NC";
-// const DEMO_FILE = "./A.NC";
+// const DEMO_FILE = "./TRM.NC"; // Small
+const DEMO_FILE = "./405.NC"; // Medium
+// const DEMO_FILE = "./VF10.NC"; // Huge
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const readFile = (file: string) =>
