@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "rootDir": "src",
     "outDir": "build",
+    "keyofStringsOnly": true,
     "paths": {
       "@/*": ["./src/*"]
     }

@@ -52,7 +52,7 @@ module.exports = {
     "@typescript-eslint/explicit-member-accessibility": "off",
     "@typescript-eslint/no-object-literal-type-assertion": "off",
     "@typescript-eslint/no-explicit-any": "warn",
-    '@typescript-eslint/ban-types': 'error',
+    "@typescript-eslint/ban-types": "error",
     "@typescript-eslint/ban-ts-ignore": "error",
     "@typescript-eslint/prefer-includes": "error",
     "@typescript-eslint/prefer-regexp-exec": "error",
@@ -61,7 +61,10 @@ module.exports = {
     "@typescript-eslint/consistent-type-definitions": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
-    '@typescript-eslint/array-type': ['error', { default: 'generic' }],
+    "@typescript-eslint/array-type": [
+      "error",
+      { default: "array-simple" }
+    ],
     "@typescript-eslint/explicit-function-return-type": [
       "error",
       {
@@ -69,10 +72,10 @@ module.exports = {
         allowTypedFunctionExpressions: true
       }
     ],
-    '@typescript-eslint/no-unused-vars': [
-        'error',
-        { argsIgnorePattern: '^_' },
-      ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { argsIgnorePattern: "^_" }
+    ],
 
     //
     // eslint-plugin-prettier

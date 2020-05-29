@@ -17,6 +17,7 @@
     "doublie": "^1.1.0",
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",
+    "purify-ts": "^0.15.1",
     "tokenizr": "^1.5.7",
     "ts-tokenizr": "*",
     "xstate": "^4.7.8"

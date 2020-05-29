@@ -1,5 +1,4 @@
-export * from "./addressValue";
 export * from "./codes";
-export * from "./getValue";
+export * from "./collections";
 export * from "./tokenizr";
-export * from "./tokenValue";
+export * from "./type-predicates";

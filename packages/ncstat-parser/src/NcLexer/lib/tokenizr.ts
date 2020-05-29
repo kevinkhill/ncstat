@@ -1,27 +1,29 @@
 import { Tokenizr } from "ts-tokenizr";
 
+import { Tokens } from "@/types/tokens";
+
 export const tokenizr = new Tokenizr();
 
 // Match "%", required for proper NC files
-tokenizr.rule(/%/, ctx => ctx.accept("PRG_DELIM"));
+tokenizr.rule(/%/, ctx => ctx.accept(Tokens.PRG_DELIM));
 
 // Match "["
-tokenizr.rule(/\[/, ctx => ctx.accept("OPEN_BRACKET"));
+tokenizr.rule(/\[/, ctx => ctx.accept(Tokens.BRACKET_OPEN));
 
 // Match "]"
-tokenizr.rule(/\]/, ctx => ctx.accept("CLOSE_BRACKET"));
+tokenizr.rule(/\]/, ctx => ctx.accept(Tokens.BRACKET_CLOSE));
 
 // Match "\n" at end of a line
-tokenizr.rule(/\n/, ctx => ctx.accept("NEWLINE"));
+tokenizr.rule(/\n/, ctx => ctx.accept(Tokens.NEWLINE));
 
 // Match "O1234", "O12345", ":1234"
 tokenizr.rule(/(?:O|:)(\d{4,5})/, (ctx, match) => {
-  ctx.accept("PRG_NUMBER", parseInt(match[1]));
+  ctx.accept(Tokens.PRG_NUMBER, parseInt(match[1]));
 });
 
 // Match "A1", "B2.0", "X41.2142"
 tokenizr.rule(/([A-NP-Z])([#-]*[0-9.]+)(?![^(]*\))/, (ctx, match) => {
-  ctx.accept("ADDR", {
+  ctx.accept(Tokens.ADDRESS, {
     prefix: match[1],
     value: parseFloat(match[2])
   });
@@ -29,12 +31,12 @@ tokenizr.rule(/([A-NP-Z])([#-]*[0-9.]+)(?![^(]*\))/, (ctx, match) => {
 
 // Match "/", "/3"
 tokenizr.rule(/\/([0-9]?)/, (ctx, match) => {
-  ctx.accept("BLK_SKIP", parseInt(match[1]));
+  ctx.accept(Tokens.BLK_SKIP, parseInt(match[1]));
 });
 
 // Match comment text "(note)", "( comment )"
 tokenizr.rule(/\(\s*(.+?)\s*\)/, (ctx, match) => {
-  ctx.accept("COMMENT", match[1]);
+  ctx.accept(Tokens.COMMENT, match[1]);
 });
 
 // Ignore " ", "<TAB>", "<CR>"

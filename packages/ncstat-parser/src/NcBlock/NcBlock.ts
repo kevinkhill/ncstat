@@ -1,18 +1,23 @@
-import { filter, find, intersection, map } from "lodash/fp";
+import { intersection } from "lodash/fp";
+import { Maybe } from "purify-ts/Maybe";
 import { Token } from "ts-tokenizr";
 
-import { addressValue, NcToken } from "@/NcLexer";
+import {
+  filterByPrefix,
+  findByPrefix,
+  findByType,
+  NcToken
+} from "@/NcLexer";
+import { isStringToken } from "@/NcLexer/lib";
 import { START_CODES } from "@/Toolpath/CannedCycle";
 import { Position } from "@/types";
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const prefixFilter = (prefix: string) => filter(prefix);
+import { Tokens } from "@/types/tokens";
 
 export class NcBlock {
   retractCode?: string;
-  tokens: Array<NcToken>;
+  tokens: NcToken[];
 
-  static create(tokens: Array<NcToken>): NcBlock {
+  static create(tokens: NcToken[]): NcBlock {
     return new NcBlock(tokens);
   }
 
@@ -26,29 +31,24 @@ export class NcBlock {
     };
   }
 
-  constructor(tokens: Array<NcToken>) {
+  constructor(tokens: NcToken[]) {
     this.tokens = tokens;
   }
 
   $has(prefix: string): boolean {
-    return filter(prefix, this.tokens).length > 0;
+    return filterByPrefix(prefix, this.tokens).length > 0;
   }
 
   $value(prefix: string): number {
-    if (this.$has(prefix)) {
-      const token = find(["prefix", prefix], this.tokens);
-
-      return token.value;
-    }
-
-    return NaN;
+    return Maybe.fromFalsy(findByPrefix(prefix, this.tokens))
+      .map(token => token.value as number)
+      .orDefault(NaN);
   }
 
   map<U>(
-    fn: (value: Token, index: number, array: Array<Token>) => U,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    thisArg?: any
-  ): Array<U> {
+    fn: (value: Token, index: number, array: Token[]) => U,
+    thisArg?: unknown
+  ): U[] {
     return this.tokens.map(fn, thisArg);
   }
 
@@ -103,11 +103,15 @@ export class NcBlock {
   }
 
   get skipLevel(): number {
-    return find(["type", "BLK_SKIP"], this.tokens)?.value;
+    return Maybe.fromFalsy(findByType("BLK_SKIP", this.tokens))
+      .map(token => token.value as number)
+      .orDefault(NaN);
   }
 
-  get comment(): string {
-    return find(["type", "COMMENT"], this.tokens)?.value;
+  get comment(): string | undefined {
+    const token = findByType(Tokens.COMMENT, this.tokens);
+
+    return isStringToken(token) ? token.value : undefined;
   }
 
   get A(): number {
@@ -134,8 +138,10 @@ export class NcBlock {
     return this.$value("F");
   }
 
-  get G(): Array<number> {
-    return map(addressValue, prefixFilter("G", this.tokens));
+  get G(): number[] {
+    return filterByPrefix("G", this.tokens).map(
+      token => token.value
+    ) as number[];
   }
 
   get H(): number {
