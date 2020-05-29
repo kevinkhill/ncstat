@@ -18,7 +18,7 @@ export type VmcAxis = "X" | "Y" | "Z";
 export type HmcAxis = VmcAxis | "B";
 
 export interface AxisLimits {
-  axis: HmcAxis;
+  // axis: HmcAxis;
   min: number;
   max: number;
 }

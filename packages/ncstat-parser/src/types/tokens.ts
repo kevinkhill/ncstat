@@ -9,6 +9,11 @@ export type TokenType =
   | "BLK_SKIP"
   | "COMMENT";
 
+export interface TokenPayload {
+  value: string;
+  prefix: string;
+}
+
 export interface NumericToken {
   value: number;
 }

@@ -1,17 +1,17 @@
 import { Linear } from "doublie";
+import { filter, flow, map, max, min } from "lodash";
+import { path } from "lodash/fp";
 import { Token } from "ts-tokenizr";
 
 import { getBlockGenerator, NcBlock } from "@/NcBlock";
-import { Toolpath, getLimits } from "@/Toolpath";
-import {
-  ProgramLimits,
-  ProgramStats,
-  HmcAxis,
-  AxisLimits
-} from "@/types";
-import { path } from "lodash/fp";
-import { map, filter, flow, min, max } from "lodash";
+import { getLimits, Toolpath } from "@/Toolpath";
 import { dedupe } from "@/Toolpath/lib/getAxisLimits";
+import {
+  AxisLimits,
+  HmcAxis,
+  ProgramLimits,
+  ProgramStats
+} from "@/types";
 
 export class NcProgram {
   blocks: Linear<NcBlock> = new Linear<NcBlock>();
@@ -72,27 +72,27 @@ export class NcProgram {
     return this.blocks.forEach(fn);
   }
 
-  getAxisLimits(axis: HmcAxis): AxisLimits {
-    const getAxisValue = path(`values.${axis}`);
-    const axisValueMap = map(getAxisValue);
-    const onlyNumbers = filter(Boolean);
-    const getUniqAxisValues = flow([onlyNumbers, dedupe, axisValueMap]);
+  // getAxisLimits(axis: HmcAxis): AxisLimits {
+  //   const getAxisValue = path(`values.${axis}`);
+  //   const axisValueMap = map(getAxisValue);
+  //   const onlyNumbers = filter(Boolean);
+  //   const getUniqAxisValues = flow([onlyNumbers, dedupe, axisValueMap]);
 
-    const axisValues = getUniqAxisValues(this.blocks);
+  //   const axisValues = getUniqAxisValues(this.blocks);
 
-    return {
-      axis,
-      min: min(axisValues) as number,
-      max: max(axisValues) as number
-    };
-  }
+  //   return {
+  //     axis,
+  //     min: min(axisValues) as number,
+  //     max: max(axisValues) as number
+  //   };
+  // }
 
   getLimits(): ProgramLimits {
-    const Z = this.blocks.map(block => block.Z).toArray();
+    const X = this.blocks.map(block => block.X).toArray();
 
     // this.blocks.forEach(block => console.log(block));
 
-    return { Z: Z };
+    return { X };
   }
 
   getStats(): ProgramStats {

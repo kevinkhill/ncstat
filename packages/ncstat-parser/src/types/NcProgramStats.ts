@@ -1,17 +1,18 @@
+import { HmcAxis } from ".";
+
 interface UnitCount {
   count: number;
 }
 
-export interface ProgramLimits {
-  [K: string]: Record<string, AxisLimits>;
-}
+export type ProgramLimits = Record<HmcAxis, AxisLimits>;
 
-export interface AxisLimits {
-  [K: string]: {
+export type AxisLimits = Record<
+  HmcAxis,
+  {
     min: number;
     max: number;
-  };
-}
+  }
+>;
 
 export interface ProgramStats {
   tokens: UnitCount;

@@ -1,9 +1,11 @@
 import { Token } from "ts-tokenizr";
 
+import { TokenPayload } from "@/types";
+
 // import { ValueToken } from "@/types";
 
 export class NcToken extends Token {
-  prefix: string = "";
+  prefix = "";
 
   static from(token: Token): NcToken {
     return new NcToken(token);
@@ -20,7 +22,7 @@ export class NcToken extends Token {
     );
 
     if (token.type === "ADDR") {
-      const { value } = token;
+      const value = token.value as TokenPayload;
 
       this.prefix = value.prefix;
       this.value = value.value;

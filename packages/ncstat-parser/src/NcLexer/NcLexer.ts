@@ -1,8 +1,7 @@
 import { EventEmitter } from "eventemitter3";
 import { Token, Tokenizr } from "ts-tokenizr";
 
-import { NcToken } from "@/NcLexer";
-import { tokenizr } from "@/NcLexer";
+import { NcToken, tokenizr } from "@/NcLexer";
 import { NcLexerConfig } from "@/types";
 
 export class NcLexer extends EventEmitter {
@@ -54,20 +53,25 @@ export class NcLexer extends EventEmitter {
     }
   }
 
-  private getNextToken(): Token | null {
-    return this.tokenizr.token();
-  }
+  // private getNextToken(): Token | null {
+  //   return this.tokenizr.token();
+  // }
 
   /**
    * Wrap the generic Tokenizr token
+   *
+   * This is mostly to unpack token.value.value and token.value.prefix
+   * onto the token itself.
+   *
+   * @TODO More methods on the token?
    */
-  // private getNextToken(): Token | null {
-  //   const token = this.tokenizr.token();
+  private getNextToken(): NcToken | null {
+    const token = this.tokenizr.token();
 
-  //   if (token) {
-  //     return NcToken.from(token);
-  //   }
+    if (token) {
+      return NcToken.from(token);
+    }
 
-  //   return null;
-  // }
+    return null;
+  }
 }

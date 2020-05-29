@@ -10,6 +10,7 @@ const prefixFilter = (prefix: string) => filter(prefix);
 
 export class NcBlock {
   retractCode?: string;
+  tokens: Array<NcToken>;
 
   static create(tokens: Array<NcToken>): NcBlock {
     return new NcBlock(tokens);
@@ -25,7 +26,7 @@ export class NcBlock {
     };
   }
 
-  constructor(public tokens: Array<NcToken>) {
+  constructor(tokens: Array<NcToken>) {
     this.tokens = tokens;
   }
 
@@ -35,9 +36,9 @@ export class NcBlock {
 
   $value(prefix: string): number {
     if (this.$has(prefix)) {
-      const token = find(prefix, this.tokens);
+      const token = find(["prefix", prefix], this.tokens);
 
-      return addressValue(token);
+      return token.value;
     }
 
     return NaN;
@@ -67,6 +68,7 @@ export class NcBlock {
     return this.$has("T");
   }
 
+  // @TODO configurable toolchange codes
   get hasToolChange(): boolean {
     return this.M === 6;
   }
