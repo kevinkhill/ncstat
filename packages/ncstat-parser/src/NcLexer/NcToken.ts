@@ -47,6 +47,7 @@ export class NcToken {
     return `<${tokenAttr}>`;
   }
 
+  isA(type: Tokens.ADDRESS, prefix: string): boolean;
   isA(type: TokenType, prefix?: string): boolean {
     if (type !== this.type) {
       return false;

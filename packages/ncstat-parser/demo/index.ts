@@ -5,9 +5,13 @@ import { NcParser } from "@/NcParser";
 import { NcProgram } from "@/NcProgram";
 import { NcParserConfig } from "@/types";
 
-// const DEMO_FILE = "./TRM.NC"; // Small
-const DEMO_FILE = "./405.NC"; // Medium
-// const DEMO_FILE = "./VF10.NC"; // Huge
+/**
+ * Uncomment one of these to give the parser a demo
+ */
+const DEMO_FILE = "SIMPLE.NC"; // Tiny
+// const DEMO_FILE = "TRM.NC";    // Small
+// const DEMO_FILE = "405.NC";    // Medium
+// const DEMO_FILE = "VF10.NC";   // Big
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const readFile = (file: string) =>
@@ -30,6 +34,7 @@ const readFile = (file: string) =>
   const program: NcProgram = parser.parse(await readFile(DEMO_FILE));
 
   // console.log(program.toString());
-  console.log(program.getStats());
+  // console.log(program.getStats());
+  console.log(program.tokens);
   // program.withBlocks((block: NcBlock) => console.log(block));
 })();

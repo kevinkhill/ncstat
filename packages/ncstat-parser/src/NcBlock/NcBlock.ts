@@ -2,13 +2,13 @@ import { intersection } from "lodash/fp";
 import { Maybe } from "purify-ts/Maybe";
 import { Token } from "ts-tokenizr";
 
+import { NcToken } from "@/NcLexer";
 import {
   filterByPrefix,
   findByPrefix,
   findByType,
-  NcToken
-} from "@/NcLexer";
-import { isStringToken } from "@/NcLexer/lib";
+  isStringToken
+} from "@/NcLexer/lib";
 import { START_CODES } from "@/Toolpath/CannedCycle";
 import { Position } from "@/types";
 import { Tokens } from "@/types/tokens";
@@ -40,7 +40,9 @@ export class NcBlock {
   }
 
   $value(prefix: string): number {
-    return Maybe.fromFalsy(findByPrefix(prefix, this.tokens))
+    const token = findByPrefix(prefix, this.tokens);
+
+    return Maybe.fromFalsy(token)
       .map(token => token.value as number)
       .orDefault(NaN);
   }

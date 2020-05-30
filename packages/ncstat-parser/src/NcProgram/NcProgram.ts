@@ -1,7 +1,7 @@
 import { get, map, max, min, reject, uniq } from "lodash/fp";
 
 import { getBlockGenerator, NcBlock } from "@/NcBlock";
-import { NcToken } from "@/NcLexer";
+import { NcToken } from "@/NcLexer/NcToken";
 import { Toolpath } from "@/Toolpath";
 import { AxesLimits, AxisLimits, HmcAxis, ProgramStats } from "@/types";
 
@@ -11,6 +11,12 @@ export class NcProgram {
   toolpaths: Toolpath[] = [];
 
   // constructor() {}
+
+  get tokens(): NcToken[] {
+    return this.blocks.reduce((tokens: NcToken[], block: NcBlock) => {
+      return [...tokens, ...block.tokens];
+    }, []);
+  }
 
   get blockCount(): number {
     return this.blocks.length;
@@ -56,6 +62,10 @@ export class NcProgram {
     return this.blocks.forEach(fn);
   }
 
+  getWorkOffsets(): number[] {
+    return this.blocks.map(block => block.tokens).reduce();
+  }
+
   getAxisValues(axis: HmcAxis): number[] {
     const values: number[] = uniq(map(get(axis), this.blocks));
 
@@ -83,6 +93,7 @@ export class NcProgram {
   getStats(): ProgramStats {
     return {
       limits: this.getLimits(),
+      workOffsets: this.getWorkOffsets(),
       tokens: { count: this.tokenCount },
       blocks: { count: this.blockCount },
       toolpaths: { count: this.toolpathCount },
