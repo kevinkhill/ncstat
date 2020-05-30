@@ -1,6 +1,5 @@
-import { NcBlock } from "../../NcBlock";
-import { ActiveModals } from "../../types";
-import { Modals } from "../codes";
+import { NcBlock } from "@/NcBlock";
+import { ActiveModals, Modals } from "@/types";
 
 export function getModals(block: NcBlock): ActiveModals {
   const modals: ActiveModals = {

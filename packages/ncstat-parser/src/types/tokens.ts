@@ -12,7 +12,7 @@ export const enum Tokens {
   "BRACKET_CLOSE" = "BRACKET_CLOSE"
 }
 
-export type TokenTypes = keyof typeof Tokens
+export type TokenTypes = keyof typeof Tokens;
 
 export interface ParsedTokenizrValue {
   value: string;

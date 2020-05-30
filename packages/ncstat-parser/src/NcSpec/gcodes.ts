@@ -1,6 +1,6 @@
 import { forEach } from "lodash";
 
-import { NcCodeDef } from "./codes";
+import { NcCodeDef } from "../NcParser/codes";
 
 const MOTION: Record<string, string> = {
   G00: "RAPID",

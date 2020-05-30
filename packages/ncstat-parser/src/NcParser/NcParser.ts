@@ -14,12 +14,11 @@ import {
   ActiveModals,
   AxesLimits,
   MachinePositions,
-  NcBlocks,
+  Modals,
   NcParserConfig
   // NcProgram
 } from "../types";
 // import { ValueToken } from "../types/tokens";
-import { Modals, PositioningMode } from "./codes";
 import { getModals, updatePosition } from "./lib";
 import { NcEventEmitter } from "./NcEventEmitter";
 
@@ -39,12 +38,12 @@ export class NcParser extends NcEventEmitter {
   programNumber = NaN;
   programTitle = "";
   // program: Linear<NcBlock> = new Linear<NcBlock>();
-  toolpaths: Array<Toolpath> = [];
+  toolpaths: Toolpath[] = [];
 
   /**
    * Parser Vars
    */
-  blocks: NcBlocks = [];
+  blocks: NcBlock[] = [];
 
   /**
    * Internals
@@ -53,7 +52,7 @@ export class NcParser extends NcEventEmitter {
   private machine: any; // @TODO get this to work with `typeof NcService`;
   private state = NcMachineState.IDLE;
   private lexer: NcLexer;
-  private tokens: Array<NcToken> = [];
+  private tokens: NcToken[] = [];
 
   constructor(config: Partial<NcParserConfig> = { debug: false }) {
     super();
@@ -105,7 +104,7 @@ export class NcParser extends NcEventEmitter {
     return this.toolpaths.length;
   }
 
-  getToolPathsWithTools(): Array<Toolpath> {
+  getToolPathsWithTools(): Toolpath[] {
     return filter("hasTool", this.toolpaths);
   }
 
@@ -126,7 +125,7 @@ export class NcParser extends NcEventEmitter {
     let modals: ActiveModals = {
       [Modals.MOTION_CODES]: Modals.RAPID,
       [Modals.PLANE_SELECTION]: "G17",
-      [Modals.POSITIONING_MODE]: Modals.ABSOLUTE as PositioningMode
+      [Modals.POSITIONING_MODE]: Modals.ABSOLUTE
     };
 
     let position: MachinePositions = {

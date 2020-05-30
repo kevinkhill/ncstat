@@ -1,7 +1,11 @@
 import { Token } from "ts-tokenizr";
 
-import { ParsedTokenizrValue, TokenPayload, TokenType } from "@/types";
-import { Tokens, TokenValue } from "@/types/tokens";
+import {
+  ParsedTokenizrValue,
+  Tokens,
+  TokenTypes,
+  TokenValue
+} from "@/types";
 
 // import { ValueToken } from "@/types";
 
