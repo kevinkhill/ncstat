@@ -1,40 +1,24 @@
-export const M_CODES: Record<string, string> = {
-  M00: "PROGRAM_STOP",
-  M01: "OPTIONAL_STOP",
-  M03: "SPINDLE_FORWARD",
-  M04: "SPINDLE_REVERSE",
-  M05: "SPINDLE_STOP",
-  M06: "TOOL_CHANGE",
-  M07: "MIST_COOLANT_ON",
-  M08: "FLOOD_COOLANT_ON",
-  M09: "COOLANT_OFF",
-  M21: "B_AXIS_LOCK",
-  M22: "B_AXIS_UNLOCK",
-  M29: "RIGID_TAPPING",
-  M30: "PROGRAM_END",
-  M50: "TSC_COOLANT_ON",
-  M52: "THRU_TOOL_AIR_ON",
-  M53: "THRU_TOOL_AIR_OFF",
-  M80: "SYNCHRONIZED_TAPPING",
-  M98: "SUBPROGRAM_CALL",
-  M99: "RETURN_FROM_SUB_OR_LOOP",
-  M107: "SAFE_START"
+import { CodeTable } from "@/types";
+
+export const M_CODE_TABLE: CodeTable = {
+  0: { desc: "PROGRAM_STOP" },
+  1: { desc: "OPTIONAL_STOP" },
+  3: { desc: "SPINDLE_FORWARD" },
+  4: { desc: "SPINDLE_REVERSE" },
+  5: { desc: "SPINDLE_STOP" },
+  6: { desc: "TOOL_CHANGE" },
+  7: { desc: "MIST_COOLANT_ON" },
+  8: { desc: "FLOOD_COOLANT_ON" },
+  9: { desc: "COOLANT_OFF" },
+  21: { desc: "B_AXIS_LOCK" },
+  22: { desc: "B_AXIS_UNLOCK" },
+  29: { desc: "RIGID_TAPPING" },
+  30: { desc: "PROGRAM_END" },
+  50: { desc: "TSC_COOLANT_ON" },
+  52: { desc: "THRU_TOOL_AIR_ON" },
+  53: { desc: "THRU_TOOL_AIR_OFF" },
+  80: { desc: "SYNCHRONIZED_TAPPING" },
+  98: { desc: "SUBPROGRAM_CALL" },
+  99: { desc: "RETURN_FROM_SUB_OR_LOOP" },
+  107: { desc: "SAFE_START" }
 };
-
-/**
- * Return an M codes' description by string or number
- *
- * @example ```
- *  M(30)    // "PROGRAM_END"
- *  M("M6")  // "TOOL_CHANGE"
- * ```
- */
-export function M(input: number | string): string {
-  if (typeof input === "number") {
-    return M_CODES[`M${input}`];
-  } else if (typeof input === "string") {
-    return M_CODES[input];
-  }
-
-  return "DESCRIPTION_NOT_FOUND";
-}

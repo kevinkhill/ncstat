@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "debug": "^4.1.1",
-    "doublie": "^1.1.0",
     "eventemitter3": "^4.0.0",
     "lodash": "^4.17.15",
     "purify-ts": "^0.15.1",
@@ -25,6 +24,8 @@
   "devDependencies": {
     "@types/debug": "^4.1.5",
     "@types/lodash": "^4.14.149",
-    "eslint-import-resolver-alias": "^1.1.2"
+    "eslint-import-resolver-alias": "^1.1.2",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tsconfig-paths": "^3.9.0"
   }
 }

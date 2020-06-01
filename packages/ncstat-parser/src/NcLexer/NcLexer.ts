@@ -27,14 +27,14 @@ export class NcLexer extends EventEmitter {
    * Sugar method for creating an array from
    * the tokenize generator method.
    */
-  tokens(input: string): Array<Token> {
+  tokens(input: string): NcToken[] {
     return Array.from(this.tokenize(input));
   }
 
   /**
    * @emits token NcToken
    */
-  *tokenize(input: string): Generator<Token> {
+  *tokenize(input: string): Generator<NcToken> {
     let token: Token | null;
 
     this.tokenizr.debug(this.config.debug);

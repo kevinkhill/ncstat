@@ -1,4 +1,4 @@
-import { NcBlock } from "../NcBlock";
+import { NcBlock } from "../../NcParser/NcBlock";
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
 
@@ -12,9 +12,9 @@ export class Toolpath {
   tool?: Tool;
   hasCoolant = false;
   description?: string;
-  cannedCycles: Array<CannedCycle> = [];
+  cannedCycles: CannedCycle[] = [];
 
-  constructor(readonly blocks: Array<NcBlock> = []) {
+  constructor(readonly blocks: NcBlock[] = []) {
     this.blocks = blocks;
   }
 

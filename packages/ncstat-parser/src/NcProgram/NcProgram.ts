@@ -1,8 +1,8 @@
 import { get, map, max, min, reject, uniq } from "lodash/fp";
 
-import { getBlockGenerator, NcBlock } from "@/NcBlock";
 import { NcToken } from "@/NcLexer/NcToken";
-import { Toolpath } from "@/Toolpath";
+import { getBlockGenerator, NcBlock } from "@/NcParser/NcBlock";
+import { Toolpath } from "@/NcProgram/Toolpath";
 import { AxesLimits, AxisLimits, HmcAxis, ProgramStats } from "@/types";
 
 export class NcProgram {

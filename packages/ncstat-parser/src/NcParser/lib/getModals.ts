@@ -1,4 +1,4 @@
-import { NcBlock } from "@/NcBlock";
+import { NcBlock } from "@/NcParser/NcBlock";
 import { ActiveModals, Modals } from "@/types";
 
 export function getModals(block: NcBlock): ActiveModals {

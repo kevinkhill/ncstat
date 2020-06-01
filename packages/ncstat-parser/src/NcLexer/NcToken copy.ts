@@ -1,27 +1,16 @@
 import { Token } from "ts-tokenizr";
 
-import { Address } from "@/NcParser";
-import { define, gCode, mCode } from "@/NcSpec";
-import { Addresses } from "@/NcSpec/addresses";
-import {
-  CodeDefinition,
-  ParsedTokenizrValue,
-  Tokens,
-  TokenTypes,
-  TokenValue
-} from "@/types";
-
-// import { ValueToken } from "@/types";
+import { ParsedTokenizrValue, TokenTypes } from "@/types";
+import { Tokens, TokenValue } from "@/types/tokens";
 
 export class NcToken {
   type: TokenTypes;
+  value: TokenValue;
   text: string;
   pos: number;
   line: number;
   column: number;
-  value: TokenValue;
   prefix?: string;
-  // definition?: CodeDefinition;
 
   static from(token: Token): NcToken {
     return new NcToken(token);
@@ -39,29 +28,7 @@ export class NcToken {
       const value = token.value as ParsedTokenizrValue;
 
       this.prefix = value.prefix;
-      this.value = parseFloat(value.value);
-
-      // switch (this.prefix) {
-      //   case "M":
-      //     this.definition = mCode(this.value);
-      //     break;
-
-      //   case "G":
-      //     this.definition = gCode(this.value);
-      //     break;
-
-      //   case "R":
-      //     this.definition = define(Addresses.R);
-      //     break;
-
-      //   case "Q":
-      //     this.definition = define(Addresses.Q);
-      //     break;
-
-      //   default:
-      //     this.definition = define("");
-      //     break;
-      // }
+      this.value = value.value;
     }
   }
 
@@ -78,11 +45,6 @@ export class NcToken {
     return `<${tokenAttr}>`;
   }
 
-  // hasPrefix(prefix: string): boolean {
-  //   return this.prefix === prefix;
-  // }
-
-  isA(type: Tokens.ADDRESS, prefix: string): boolean;
   isA(type: TokenTypes, prefix?: string): boolean {
     if (type !== this.type) {
       return false;

@@ -1,6 +1,6 @@
 import { clone, each, get, has } from "lodash/fp";
 
-import { NcBlock } from "@/NcBlock";
+import { NcBlock } from "@/NcParser/NcBlock";
 import { MachinePositions, Modals, PositioningMode } from "@/types";
 
 export const VMC_AXES = ["X", "Y", "Z"];

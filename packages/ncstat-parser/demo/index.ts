@@ -1,4 +1,5 @@
 import fs from "fs";
+import map from "lodash/fp/map";
 import path from "path";
 
 import { NcParser } from "@/NcParser";
@@ -9,12 +10,12 @@ import { NcParserConfig } from "@/types";
  * Uncomment one of these to give the parser a demo
  */
 const DEMO_FILE = "SIMPLE.NC"; // Tiny
-// const DEMO_FILE = "TRM.NC";    // Small
-// const DEMO_FILE = "405.NC";    // Medium
-// const DEMO_FILE = "VF10.NC";   // Big
+// const DEMO_FILE = "TRM.NC"; // Small
+// const DEMO_FILE = "405.NC"; // Medium
+// const DEMO_FILE = "VF10.NC"; // Big
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const readFile = (file: string) =>
+const readFile = (file: string): Promise<string> =>
   fs.promises.readFile(path.join(__dirname, file), "utf8");
 
 (async () => {
@@ -35,6 +36,15 @@ const readFile = (file: string) =>
 
   // console.log(program.toString());
   // console.log(program.getStats());
-  console.log(program.tokens);
+  // console.log(
+  //   program.tokens.map(token => ({
+  //     text: token.text,
+  //     definition: token.definition
+  //   }))
+  // );
+  program.blocks.map(block => {
+    console.log(block);
+  });
+
   // program.withBlocks((block: NcBlock) => console.log(block));
 })();

@@ -1,25 +1,21 @@
 import { clone, eq, filter, last } from "lodash/fp";
 
 import { NcLexer, NcToken } from "@/NcLexer";
-import { NcProgram } from "@/NcProgram";
-
-import { NcBlock } from "../NcBlock";
+import { CannedCycle, NcProgram, Tool, Toolpath } from "@/NcProgram";
 import {
   NcMachineState,
   NcMachineStateType,
   NcService
-} from "../NcService";
-import { CannedCycle, getLimits, Tool, Toolpath } from "../Toolpath";
+} from "@/NcService";
 import {
   ActiveModals,
-  AxesLimits,
   MachinePositions,
   Modals,
   NcParserConfig
-  // NcProgram
-} from "../types";
-// import { ValueToken } from "../types/tokens";
+} from "@/types";
+
 import { getModals, updatePosition } from "./lib";
+import { NcBlock } from "./NcBlock";
 import { NcEventEmitter } from "./NcEventEmitter";
 
 const isIdle = eq(NcMachineState.IDLE);
@@ -92,19 +88,19 @@ export class NcParser extends NcEventEmitter {
   //   return this.lexer.tokens(this.input);
   // }
 
-  getLimits(): Partial<AxesLimits> {
-    return {
-      X: getLimits("X")(this.toolpaths),
-      Y: getLimits("Y")(this.toolpaths),
-      Z: getLimits("Z")(this.toolpaths)
-    };
-  }
+  // getLimits(): Partial<AxesLimits> {
+  //   return {
+  //     X: getLimits("X")(this.toolpaths),
+  //     Y: getLimits("Y")(this.toolpaths),
+  //     Z: getLimits("Z")(this.toolpaths)
+  //   };
+  // }
 
   get toolpathCount(): number {
     return this.toolpaths.length;
   }
 
-  getToolPathsWithTools(): Toolpath[] {
+  getToolpathsWithTools(): Toolpath[] {
     return filter("hasTool", this.toolpaths);
   }
 

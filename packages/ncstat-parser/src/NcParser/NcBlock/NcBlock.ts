@@ -9,7 +9,7 @@ import {
   findByType,
   isStringToken
 } from "@/NcLexer/lib";
-import { START_CODES } from "@/Toolpath/CannedCycle";
+import { START_CODES } from "@/NcProgram/Toolpath/CannedCycle";
 import { Position } from "@/types";
 import { Tokens } from "@/types/tokens";
 
