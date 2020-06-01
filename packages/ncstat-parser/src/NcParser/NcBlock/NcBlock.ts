@@ -1,28 +1,32 @@
 import { intersection } from "lodash/fp";
-import { Maybe } from "purify-ts/Maybe";
+// import { List } from "purify-ts/List";
+// import { Maybe } from "purify-ts/Maybe";
 import { Token } from "ts-tokenizr";
 
 import { NcToken } from "@/NcLexer";
 import {
   filterByPrefix,
   findByPrefix,
-  findByType,
-  isStringToken
+  findByType
 } from "@/NcLexer/lib";
 import { START_CODES } from "@/NcProgram/Toolpath/CannedCycle";
-import { Position } from "@/types";
+import { NcPosition } from "@/types";
 import { Tokens } from "@/types/tokens";
 
 export class NcBlock {
-  retractCode?: string;
-  tokens: NcToken[];
+  readonly tags: string[] = [];
+  readonly tokens: NcToken[] = [];
 
   static create(tokens: NcToken[]): NcBlock {
     return new NcBlock(tokens);
   }
 
+  get length(): number {
+    return this.tokens.length;
+  }
+
   // @TODO convert this to a getter
-  getPosition(): Position {
+  get position(): NcPosition {
     return {
       B: this.B,
       X: this.X,
@@ -36,15 +40,23 @@ export class NcBlock {
   }
 
   $has(prefix: string): boolean {
-    return filterByPrefix(prefix, this.tokens).length > 0;
+    // console.log("has", this.tokens);
+    return (
+      this.tokens.filter(token => token.prefix === prefix).length > 0
+    );
+    // return filterByPrefix(prefix, this.tokens).length > 0;
   }
 
   $value(prefix: string): number {
     const token = findByPrefix(prefix, this.tokens);
 
-    return Maybe.fromFalsy(token)
-      .map(token => token.value as number)
-      .orDefault(NaN);
+    return token.map(token => token.value as number).orDefault(NaN);
+
+    // console.log(token.toJSON());
+
+    // return Maybe.fromFalsy(token)
+    //   .map(token => token.value as number)
+    //   .orDefault(NaN);
   }
 
   map<U>(
@@ -64,6 +76,12 @@ export class NcBlock {
 
   get lineNumber(): number {
     return this.N;
+  }
+
+  get hasComment(): boolean {
+    return (
+      this.tokens.find(token => token.isA(Tokens.COMMENT)) !== undefined
+    );
   }
 
   get hasToolCall(): boolean {
@@ -105,15 +123,23 @@ export class NcBlock {
   }
 
   get skipLevel(): number {
-    return Maybe.fromFalsy(findByType("BLK_SKIP", this.tokens))
+    return findByType("BLK_SKIP", this.tokens)
       .map(token => token.value as number)
       .orDefault(NaN);
   }
 
-  get comment(): string | undefined {
-    const token = findByType(Tokens.COMMENT, this.tokens);
+  get comment(): string {
+    const token = this.tokens.find(token => token.isA(Tokens.COMMENT));
 
-    return isStringToken(token) ? token.value : undefined;
+    if (token) {
+      return token.value as string;
+    }
+
+    return "";
+
+    // return findByType(Tokens.COMMENT, this.tokens)
+    //   .map(token => token.value as string)
+    //   .orDefault("");
   }
 
   get A(): number {

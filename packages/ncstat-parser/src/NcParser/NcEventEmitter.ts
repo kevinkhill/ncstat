@@ -3,10 +3,13 @@ import { EventEmitter } from "eventemitter3";
 
 import { NcToken } from "@/NcLexer";
 
+import { NcBlock } from "./NcBlock";
+
 export type NcEvents =
   | "eob"
   | "eof"
   | "token"
+  | "block"
   | "error"
   | "stateChange";
 
@@ -22,6 +25,10 @@ export class NcEventEmitter extends EventEmitter {
 
   protected $emitEndOfFile() {
     this.emit<NcEvents>("eof");
+  }
+
+  protected $emitBlock(block: NcBlock) {
+    this.emit<NcEvents>("block", block);
   }
 
   protected $emitToken(token: NcToken) {

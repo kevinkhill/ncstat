@@ -35,33 +35,14 @@ export class NcToken {
     this.line = token.line;
     this.column = token.column;
 
-    if (token.type === Tokens.ADDRESS) {
+    if (
+      token.type === Tokens.ADDRESS ||
+      token.type === Tokens.PRG_NUMBER
+    ) {
       const value = token.value as ParsedTokenizrValue;
 
       this.prefix = value.prefix;
       this.value = parseFloat(value.value);
-
-      // switch (this.prefix) {
-      //   case "M":
-      //     this.definition = mCode(this.value);
-      //     break;
-
-      //   case "G":
-      //     this.definition = gCode(this.value);
-      //     break;
-
-      //   case "R":
-      //     this.definition = define(Addresses.R);
-      //     break;
-
-      //   case "Q":
-      //     this.definition = define(Addresses.Q);
-      //     break;
-
-      //   default:
-      //     this.definition = define("");
-      //     break;
-      // }
     }
   }
 
@@ -82,8 +63,8 @@ export class NcToken {
   //   return this.prefix === prefix;
   // }
 
-  isA(type: Tokens.ADDRESS, prefix: string): boolean;
-  isA(type: TokenTypes, prefix?: string): boolean {
+  isA(type: TokenTypes, prefix?: string): boolean;
+  isA(type: Tokens.ADDRESS, prefix: string): boolean {
     if (type !== this.type) {
       return false;
     }

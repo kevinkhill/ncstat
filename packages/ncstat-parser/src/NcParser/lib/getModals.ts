@@ -1,34 +1,39 @@
 import { NcBlock } from "@/NcParser/NcBlock";
-import { ActiveModals, Modals } from "@/types";
+import { ActiveModals, Modals, Planes } from "@/types";
 
-export function getModals(block: NcBlock): ActiveModals {
-  const modals: ActiveModals = {
-    [Modals.MOTION_CODES]: Modals.RAPID,
-    [Modals.PLANE_SELECTION]: "G17",
-    [Modals.POSITIONING_MODE]: Modals.ABSOLUTE
-  };
-
+export function getModals(
+  activeModals: ActiveModals,
+  block: NcBlock
+): ActiveModals {
   const textTokens = block.map(token => token.text);
 
   if (textTokens.includes(Modals.RAPID)) {
-    modals[Modals.MOTION_CODES] = Modals.RAPID;
+    activeModals[Modals.MOTION_CODES] = Modals.RAPID;
   }
 
   if (textTokens.includes(Modals.FEED)) {
-    modals[Modals.MOTION_CODES] = Modals.FEED;
+    activeModals[Modals.MOTION_CODES] = Modals.FEED;
   }
 
-  // if (textTokens.includes(Modals.ABSOLUTE)) {
-  //   modals[Modals.PLANE_SELECTION] = "G17";
-  // }
+  if (textTokens.includes(Planes.XY)) {
+    activeModals[Modals.PLANE_SELECTION] = Planes.XY;
+  }
+
+  if (textTokens.includes(Planes.XZ)) {
+    activeModals[Modals.PLANE_SELECTION] = Planes.XZ;
+  }
+
+  if (textTokens.includes(Planes.YZ)) {
+    activeModals[Modals.PLANE_SELECTION] = Planes.YZ;
+  }
 
   if (textTokens.includes(Modals.ABSOLUTE)) {
-    modals[Modals.POSITIONING_MODE] = Modals.ABSOLUTE;
+    activeModals[Modals.POSITIONING_MODE] = Modals.ABSOLUTE;
   }
 
   if (textTokens.includes(Modals.INCREMENTAL)) {
-    modals[Modals.POSITIONING_MODE] = Modals.INCREMENTAL;
+    activeModals[Modals.POSITIONING_MODE] = Modals.INCREMENTAL;
   }
 
-  return modals;
+  return activeModals;
 }

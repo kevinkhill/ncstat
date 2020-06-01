@@ -8,7 +8,7 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "dev": "tsnd -r tsconfig-paths/register --respawn ./demo",
+    "dev": "cross-env DEBUG=ncstat:parser:* tsnd -r tsconfig-paths/register --clear --respawn ./demo",
     "test": "jest",
     "build": "node ../../scripts/build.js"
   },
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@types/debug": "^4.1.5",
     "@types/lodash": "^4.14.149",
+    "cross-env": "^7.0.2",
     "eslint-import-resolver-alias": "^1.1.2",
     "ts-node-dev": "^1.0.0-pre.44",
     "tsconfig-paths": "^3.9.0"

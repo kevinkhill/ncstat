@@ -17,8 +17,11 @@ tokenizr.rule(/\]/, ctx => ctx.accept(Tokens.BRACKET_CLOSE));
 tokenizr.rule(/\n/, ctx => ctx.accept(Tokens.NEWLINE));
 
 // Match "O1234", "O12345", ":1234"
-tokenizr.rule(/(?:O|:)(\d{4,5})/, (ctx, match) => {
-  ctx.accept(Tokens.PRG_NUMBER, parseInt(match[1]));
+tokenizr.rule(/(O|:)(\d{4,5})/, (ctx, match) => {
+  ctx.accept(Tokens.PRG_NUMBER, {
+    prefix: "O",
+    value: parseInt(match[2])
+  });
 });
 
 // Match "A1", "B2.0", "X41.2142"

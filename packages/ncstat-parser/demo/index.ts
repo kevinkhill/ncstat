@@ -31,8 +31,8 @@ const readFile = (file: string): Promise<string> =>
   const parser = new NcParser(config);
 
   // parser.getLexer().on("token", token => console.log(token));
-
-  const program: NcProgram = parser.parse(await readFile(DEMO_FILE));
+  const contents = await readFile(DEMO_FILE);
+  const program: NcProgram = await parser.parse(contents);
 
   // console.log(program.toString());
   // console.log(program.getStats());
@@ -42,8 +42,8 @@ const readFile = (file: string): Promise<string> =>
   //     definition: token.definition
   //   }))
   // );
-  program.blocks.map(block => {
-    console.log(block);
+  program.blocks.forEach(block => {
+    // console.log(block);
   });
 
   // program.withBlocks((block: NcBlock) => console.log(block));

@@ -1,16 +1,16 @@
-import { get, map, max, min, reject, uniq } from "lodash/fp";
+import { filter, get, map, max, min, reject, uniq } from "lodash/fp";
 
 import { NcToken } from "@/NcLexer/NcToken";
-import { getBlockGenerator, NcBlock } from "@/NcParser/NcBlock";
+import { NcBlock } from "@/NcParser";
 import { Toolpath } from "@/NcProgram/Toolpath";
 import { AxesLimits, AxisLimits, HmcAxis, ProgramStats } from "@/types";
 
 export class NcProgram {
-  name!: string;
+  readonly blocks: NcBlock[] = [];
+  readonly toolpaths: Toolpath[] = [];
+
+  name: string | null = null;
   number!: number;
-  // blocks: Linear<NcBlock> = new Linear<NcBlock>();
-  blocks: NcBlock[] = [];
-  toolpaths: Toolpath[] = [];
 
   // constructor() {}
 
@@ -30,6 +30,13 @@ export class NcProgram {
     }, 0);
   }
 
+  // get toollist(): any[] {
+  //   return map(
+  //     (path: Toolpath) => path.tool,
+  //     this.getToolPathsWithTools()
+  //   );
+  // }
+
   get toolpathCount(): number {
     return this.toolpaths.length;
   }
@@ -44,8 +51,28 @@ export class NcProgram {
     }, 0);
   }
 
+  // get workOffsets(): number[] {
+  //   return this.blocks.map(block => block.tokens).reduce();
+  // }
+
+  // get toolpathsWithTools(): Toolpath[] {
+  //   return filter("hasTool", this.toolpaths);
+  // }
+
   toString(): string {
     return this.blocks.join("\n");
+  }
+
+  appendBlock(block: NcBlock): this {
+    this.blocks.push(block);
+
+    return this;
+  }
+
+  prependBlock(block: NcBlock): this {
+    this.blocks.unshift(block);
+
+    return this;
   }
 
   loadBlocks(blocks: Iterable<NcBlock>): this {
@@ -54,18 +81,8 @@ export class NcProgram {
     return this;
   }
 
-  loadTokens(tokens: Iterable<NcToken>): this {
-    const blocks = getBlockGenerator(tokens);
-
-    return this.loadBlocks(blocks);
-  }
-
   withBlocks(fn: (block: NcBlock) => void): void {
     return this.blocks.forEach(fn);
-  }
-
-  getWorkOffsets(): number[] {
-    return this.blocks.map(block => block.tokens).reduce();
   }
 
   getAxisValues(axis: HmcAxis): number[] {
@@ -95,7 +112,7 @@ export class NcProgram {
   getStats(): ProgramStats {
     return {
       limits: this.getLimits(),
-      workOffsets: this.getWorkOffsets(),
+      // workOffsets: this.getWorkOffsets(),
       tokens: { count: this.tokenCount },
       blocks: { count: this.blockCount },
       toolpaths: { count: this.toolpathCount },

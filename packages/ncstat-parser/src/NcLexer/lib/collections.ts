@@ -1,5 +1,8 @@
-import { NcToken } from "../NcToken";
+import { List, Maybe } from "purify-ts";
+
 import { TokenTypes } from "@/types";
+
+import { NcToken } from "../NcToken";
 
 export function filterByPrefix(
   prefix: string,
@@ -11,13 +14,13 @@ export function filterByPrefix(
 export function findByPrefix(
   prefix: string,
   tokens: NcToken[]
-): NcToken | undefined {
-  return tokens.find(token => token.prefix === prefix);
+): Maybe<NcToken> {
+  return List.find(token => token.prefix === prefix, tokens);
 }
 
 export function findByType(
   type: TokenTypes,
   tokens: NcToken[]
-): NcToken | undefined {
-  return tokens.find(token => token.type === type);
+): Maybe<NcToken> {
+  return List.find(token => token.type === type, tokens);
 }

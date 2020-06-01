@@ -19,7 +19,13 @@ export type MOTION_CODES = "GROUP_01";
 export type PLANE_SELECTION = "GROUP_02";
 export type POSITIONING_MODE = "GROUP_03";
 
-export enum Modals {
+export const enum Planes {
+  XY = "G17",
+  XZ = "G18",
+  YZ = "G19"
+}
+
+export const enum Modals {
   RAPID = "G00",
   FEED = "G01",
   ABSOLUTE = "G90",

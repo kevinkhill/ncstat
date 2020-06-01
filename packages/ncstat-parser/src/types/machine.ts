@@ -10,7 +10,7 @@ export interface ActiveModals {
   GROUP_03: "G90" | "G91";
 }
 
-export interface Position {
+export interface NcPosition {
   [K: string]: number;
   X: number;
   Y: number;
