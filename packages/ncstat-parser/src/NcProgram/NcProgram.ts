@@ -6,6 +6,8 @@ import { Toolpath } from "@/NcProgram/Toolpath";
 import { AxesLimits, AxisLimits, HmcAxis, ProgramStats } from "@/types";
 
 export class NcProgram {
+  name!: string;
+  number!: number;
   // blocks: Linear<NcBlock> = new Linear<NcBlock>();
   blocks: NcBlock[] = [];
   toolpaths: Toolpath[] = [];

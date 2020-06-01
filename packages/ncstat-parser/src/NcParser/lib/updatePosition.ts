@@ -10,7 +10,7 @@ export function updatePosition(
   position: MachinePositions,
   positionType: PositioningMode,
   block: NcBlock
-): void {
+): MachinePositions {
   const blockPosition = block.getPosition();
   const newPosition = clone(position);
 
@@ -27,4 +27,6 @@ export function updatePosition(
       }
     }
   }, HMC_AXES);
+
+  return newPosition;
 }
