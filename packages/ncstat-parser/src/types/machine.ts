@@ -11,7 +11,7 @@ export interface ActiveModals {
 }
 
 export interface NcPosition {
-  // [K: string]: number;
+  [K: string]: number;
   X: number;
   Y: number;
   Z: number;

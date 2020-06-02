@@ -20,6 +20,7 @@ import {
 } from "@/types";
 
 import { isNotNaN } from "../lib/index";
+import { NcPosition } from "../types/machine";
 import { getModals } from "./lib";
 import { NcBlock } from "./NcBlock";
 import { blockGenerator } from "./NcBlock/blockGenerator";
@@ -252,24 +253,39 @@ export class NcParser extends NcEventEmitter {
 
   private updatePosition(newPosition: NcPosition): void {
     this.prevPosition = clone(this.currPosition);
-    Object.keys(newPosition)
-      .filter(Boolean)
-      // console.log(this.prevPosition);
-      // @TODO replace this; hard code bad!
-      .forEach(axis => {
-        const blockAxisPosition = get(axis, newPosition);
 
-        console.log("==============", axis, blockAxisPosition);
-        if (
-          this.modals[Modals.POSITIONING_MODE] === Modals.INCREMENTAL
-        ) {
-          newPosition[axis] += blockAxisPosition;
-        }
+    const axes = Object.keys(newPosition).filter(
+      axis => newPosition[axis] !== undefined
+    );
 
-        if (this.modals[Modals.POSITIONING_MODE] === Modals.ABSOLUTE) {
-          newPosition[axis] = blockAxisPosition;
-        }
-      });
+    // console.log(axes);
+
+    const positioningMode = {
+      [Modals.INCREMENTAL]: (from: number, to: number) => from + to,
+      [Modals.ABSOLUTE]: (_from: number, to: number) => to
+    };
+
+    /**
+     * Iterate over each axis that has a value from the newPosition
+     * using the positioning mode to either increment or set the value
+     */
+    axes.forEach(axis => {
+      const blockAxisPosition = get(axis, newPosition);
+
+      console.log(
+        "==============>",
+        axis,
+        blockAxisPosition,
+        this.modals[Modals.POSITIONING_MODE]
+      );
+      if (this.modals[Modals.POSITIONING_MODE] === Modals.INCREMENTAL) {
+        this.currPosition[axis] += newPosition[axis];
+      }
+
+      if (this.modals[Modals.POSITIONING_MODE] === Modals.ABSOLUTE) {
+        this.currPosition[axis] = newPosition[axis];
+      }
+    });
 
     this.currPosition = {
       ...this.currPosition,

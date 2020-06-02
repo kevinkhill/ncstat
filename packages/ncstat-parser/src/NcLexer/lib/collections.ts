@@ -1,5 +1,4 @@
 import { prop } from "lodash/fp";
-import { List } from "purify-ts";
 
 import { TokenTypes } from "@/types";
 
@@ -22,20 +21,12 @@ export function findByPrefix(
   prefix: string,
   tokens: NcToken[]
 ): NcToken | undefined {
-  return List.find(token => getPrefix(token) === prefix, tokens).caseOf(
-    {
-      Just: token => token,
-      Nothing: () => undefined
-    }
-  );
+  return tokens.find(token => getPrefix(token) === prefix);
 }
 
 export function findByType(
   type: TokenTypes,
   tokens: NcToken[]
 ): NcToken | undefined {
-  return List.find(token => getType(token) === type, tokens).caseOf({
-    Just: token => token,
-    Nothing: () => undefined
-  });
+  return tokens.find(token => getType(token) === type);
 }
