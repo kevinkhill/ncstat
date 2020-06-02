@@ -15,13 +15,13 @@ import {
   CodeDefinition,
   Modals,
   NcParserConfig,
-  Planes,
-  Position
+  NcPosition,
+  Planes
 } from "@/types";
 
-import { getModals, updatePosition } from "./lib";
-import { HMC_AXES } from "./lib/updatePosition";
-import { blockGenerator, NcBlock } from "./NcBlock";
+import { getModals } from "./lib";
+import { NcBlock } from "./NcBlock";
+import { blockGenerator } from "./NcBlock/blockGenerator";
 import { NcEventEmitter } from "./NcEventEmitter";
 
 const isIdle = eq(NcMachineState.IDLE);
@@ -48,8 +48,8 @@ export class NcParser extends NcEventEmitter {
   private currBlock: NcBlock | null = null;
   private prevBlock: NcBlock | null = null;
 
-  private currPosition: Position | null = { X: 0, Y: 0, Z: 0, B: 0 };
-  private prevPosition: Position | null = null;
+  private currPosition: NcPosition | null = { X: 0, Y: 0, Z: 0, B: 0 };
+  private prevPosition: NcPosition | null = null;
 
   private modals: ActiveModals = {
     [Modals.MOTION_CODES]: Modals.RAPID,
@@ -238,9 +238,11 @@ export class NcParser extends NcEventEmitter {
 
   private updatePosition(): void {
     this.prevPosition = clone(this.currPosition);
+
     const newPosition = clone(this.currBlock?.position);
 
-    HMC_AXES.forEach(axis => {
+    // @TODO replace this; hard code bad!
+    ["X", "Y", "Z", "B"].forEach(axis => {
       if (has(axis, newPosition)) {
         const blockAxisPosition = get(axis, newPosition);
 
