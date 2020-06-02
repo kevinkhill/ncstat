@@ -19,6 +19,7 @@ import {
   Planes
 } from "@/types";
 
+import { isNotNaN } from "../lib/index";
 import { getModals } from "./lib";
 import { NcBlock } from "./NcBlock";
 import { blockGenerator } from "./NcBlock/blockGenerator";
@@ -48,8 +49,8 @@ export class NcParser extends NcEventEmitter {
   private currBlock: NcBlock | null = null;
   private prevBlock: NcBlock | null = null;
 
-  private currPosition: NcPosition | null = { X: 0, Y: 0, Z: 0, B: 0 };
-  private prevPosition: NcPosition | null = null;
+  private currPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
+  private prevPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
 
   private modals: ActiveModals = {
     [Modals.MOTION_CODES]: Modals.RAPID,
@@ -98,41 +99,51 @@ export class NcParser extends NcEventEmitter {
         this.currBlock.length
       );
 
-      this.modals = getModals(this.modals, block);
+      this.modals = getModals(this.modals, this.currBlock);
 
       // Example: O2134 ( NAME )
-      if (block.$has("O")) {
-        this.debug("[FOUND] Program Number: %d", block.O);
-        this.program.number = block.O;
+      if (this.currBlock.$has("O")) {
+        this.debug("[FOUND] Program Number: %d", this.currBlock.O);
+        this.program.number = this.currBlock.O;
 
-        if (block.hasComment) {
-          this.setProgramName(block.comment);
+        if (this.currBlock.hasComment) {
+          this.setProgramName(this.currBlock.comment);
         }
       }
 
       // Example: ( NAME )
-      if (this.program.name === null && block.hasComment) {
-        this.setProgramName(block.comment);
+      if (this.program.name === null && this.currBlock.hasComment) {
+        this.setProgramName(this.currBlock.comment);
       }
 
-      if (block.hasMovement) {
-        this.updatePosition();
+      if (this.currBlock.$has("S")) {
+        this.debug(
+          "[FOUND] Spindle speed command: %d",
+          this.currBlock.S
+        );
+      }
 
+      if (this.currBlock.hasMovement) {
+        this.updatePosition(this.currBlock.position);
         this.debug("[ MOVE] Block contains axis positions");
         this.debug("[ FROM] %o", this.prevPosition);
         this.debug("[   TO] %o", this.currPosition);
       }
 
-      if (block.isStartOfCannedCycle && isToolpathing(this.state)) {
-        this.startCannedCycle(block);
+      if (
+        this.currBlock.isStartOfCannedCycle &&
+        isToolpathing(this.state)
+      ) {
+        this.startCannedCycle(this.currBlock);
       }
 
       if (isInCannedCycle(this.state)) {
-        if (block.G.includes(80)) {
+        if (this.currBlock.G.includes(80)) {
+          this.debug("[ STOP] End of canned cycle");
           this.machine.send("END_CANNED_CYCLE");
         }
 
-        if (block.hasMovement) {
+        if (this.currBlock.hasMovement) {
           const point = clone(this.currPosition);
           const lastCC = last(
             this.currToolpath.cannedCycles
@@ -144,28 +155,31 @@ export class NcParser extends NcEventEmitter {
 
       // Tracking toolpaths (tools) via Nxxx lines with a comment
       // This has been defined in the custom H&B posts
-      if (block.toString().startsWith("N")) {
+      if (this.currBlock.toString().startsWith("N")) {
         if (isToolpathing(this.state)) {
+          this.debug("[ STOP] End of toolpath");
           this.machine.send("END_TOOLPATH");
           this.program.toolpaths.push(this.currToolpath);
         }
 
         if (isIdle(this.state)) {
+          this.machine.send("START_TOOLPATH");
+          this.debug("[START] Starting toolpath tracking");
+
           this.currToolpath = new Toolpath();
 
+          this.debug("[FOUND] Tool definition found");
           const tool = Tool.create({
-            number: block.N,
-            desc: block.comment
+            number: this.currBlock.N,
+            desc: this.currBlock.comment
           });
 
           this.currToolpath.setTool(tool);
-
-          this.machine.send("START_TOOLPATH");
         }
       }
 
       if (isToolpathing(this.state) || isInCannedCycle(this.state)) {
-        if ([8, 50].includes(block.M)) {
+        if ([8, 50].includes(this.currBlock.M)) {
           this.currToolpath.hasCoolant = true;
         }
 
@@ -173,20 +187,20 @@ export class NcParser extends NcEventEmitter {
          * Override N line tool description with Txx Mxx ()
          * Move the N line desc to this.currToolpath.desc
          */
-        if (block.hasToolChange) {
+        if (this.currBlock.hasToolChange) {
           if (this.currToolpath.tool) {
-            this.currToolpath.tool.number = block.T;
+            this.currToolpath.tool.number = this.currBlock.T;
           }
 
-          if (block.comment) {
+          if (this.currBlock.comment) {
             this.currToolpath.description = this.currToolpath?.tool?.desc;
           }
         }
 
-        this.currToolpath.addBlock(block);
+        this.currToolpath.addBlock(this.currBlock);
       }
 
-      this.program.appendBlock(block);
+      this.program.appendBlock(this.currBlock);
 
       this.prevBlock = this.currBlock;
       // this.$emitBlock(block);
@@ -208,7 +222,7 @@ export class NcParser extends NcEventEmitter {
   }
 
   private setProgramName(name: string): void {
-    this.debug("Program name found: %s", name);
+    this.debug("[FOUND] Program name found: %s", name);
     this.program.name = name;
   }
 
@@ -236,26 +250,30 @@ export class NcParser extends NcEventEmitter {
     }
   }
 
-  private updatePosition(): void {
+  private updatePosition(newPosition: NcPosition): void {
     this.prevPosition = clone(this.currPosition);
-
-    const newPosition = clone(this.currBlock?.position);
-
-    // @TODO replace this; hard code bad!
-    ["X", "Y", "Z", "B"].forEach(axis => {
-      if (has(axis, newPosition)) {
+    Object.keys(newPosition)
+      .filter(Boolean)
+      // console.log(this.prevPosition);
+      // @TODO replace this; hard code bad!
+      .forEach(axis => {
         const blockAxisPosition = get(axis, newPosition);
 
+        console.log("==============", axis, blockAxisPosition);
         if (
           this.modals[Modals.POSITIONING_MODE] === Modals.INCREMENTAL
         ) {
-          newPosition[axis] += parseFloat(blockAxisPosition);
+          newPosition[axis] += blockAxisPosition;
         }
 
         if (this.modals[Modals.POSITIONING_MODE] === Modals.ABSOLUTE) {
-          newPosition[axis] = parseFloat(blockAxisPosition);
+          newPosition[axis] = blockAxisPosition;
         }
-      }
-    });
+      });
+
+    this.currPosition = {
+      ...this.currPosition,
+      ...newPosition
+    };
   }
 }

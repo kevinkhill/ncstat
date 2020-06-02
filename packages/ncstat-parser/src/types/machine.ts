@@ -11,16 +11,11 @@ export interface ActiveModals {
 }
 
 export interface NcPosition {
-  [K: string]: number;
+  // [K: string]: number;
   X: number;
   Y: number;
   Z: number;
   B: number;
-}
-
-export interface MachinePositions {
-  curr: Position;
-  prev: Position;
 }
 
 // export interface CannedPoint extends Point {

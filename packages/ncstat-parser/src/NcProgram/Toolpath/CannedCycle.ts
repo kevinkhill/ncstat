@@ -1,19 +1,6 @@
 import { NcBlock } from "../../NcParser/NcBlock";
 import { Point } from "./Point";
 
-export const RETRACT_CODES = ["G98", "G99"];
-export const START_CODES = [
-  "G73",
-  "G74",
-  "G81",
-  "G82",
-  "G83",
-  "G84",
-  "G85",
-  "G86",
-  "G87"
-];
-
 interface CannedCycleConfig {
   Z: number;
   R: number;
@@ -25,8 +12,8 @@ interface CannedCycleConfig {
 }
 
 export class CannedCycle {
-  static START_CODES = START_CODES;
-  static RETRACT_CODES = RETRACT_CODES;
+  static START_CODES = [73, 74, 81, 82, 83, 84, 85, 86, 87];
+  static RETRACT_CODES = [98, 99];
 
   static fromBlock(block: NcBlock): CannedCycle {
     if (!block.isStartOfCannedCycle) {

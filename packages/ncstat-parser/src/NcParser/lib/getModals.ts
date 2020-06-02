@@ -5,7 +5,7 @@ export function getModals(
   activeModals: ActiveModals,
   block: NcBlock
 ): ActiveModals {
-  const textTokens = block.map(token => token.text);
+  const textTokens = block.tokens.map(token => token.text);
 
   if (textTokens.includes(Modals.RAPID)) {
     activeModals[Modals.MOTION_CODES] = Modals.RAPID;

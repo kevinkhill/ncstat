@@ -1,17 +1,14 @@
 import { intersection } from "lodash/fp";
-// import { List } from "purify-ts/List";
-// import { Maybe } from "purify-ts/Maybe";
-import { Token } from "ts-tokenizr";
 
-import { NcToken } from "@/NcLexer";
 import {
   filterByPrefix,
   findByPrefix,
-  findByType
-} from "@/NcLexer/lib";
-import { START_CODES } from "@/NcProgram/Toolpath/CannedCycle";
-import { NcPosition } from "@/types";
-import { Tokens } from "@/types/tokens";
+  findByType,
+  NcToken,
+  prefixWith
+} from "@/NcLexer";
+import { CannedCycle } from "@/NcProgram";
+import { NcPosition, Tokens } from "@/types";
 
 export class NcBlock {
   readonly tags: string[] = [];
@@ -19,20 +16,6 @@ export class NcBlock {
 
   static create(tokens: NcToken[]): NcBlock {
     return new NcBlock(tokens);
-  }
-
-  get length(): number {
-    return this.tokens.length;
-  }
-
-  // @TODO convert this to a getter
-  get position(): NcPosition {
-    return {
-      B: this.B,
-      X: this.X,
-      Y: this.Y,
-      Z: this.Z
-    };
   }
 
   constructor(tokens: NcToken[]) {
@@ -47,34 +30,38 @@ export class NcBlock {
     // return filterByPrefix(prefix, this.tokens).length > 0;
   }
 
-  $value(prefix: string): number {
+  $value(prefix: string): number | undefined {
     const token = findByPrefix(prefix, this.tokens);
 
-    return token.map(token => token.value as number).orDefault(NaN);
+    if (token) {
+      return token.value as number;
+    }
 
-    // console.log(token.toJSON());
-
-    // return Maybe.fromFalsy(token)
-    //   .map(token => token.value as number)
-    //   .orDefault(NaN);
-  }
-
-  map<U>(
-    fn: (value: Token, index: number, array: Token[]) => U,
-    thisArg?: unknown
-  ): U[] {
-    return this.tokens.map(fn, thisArg);
+    return undefined;
   }
 
   toString(): string {
-    return this.map(token => token.text).join(" ");
+    return this.tokens.map(token => token.text).join(" ");
   }
 
-  get tokenCount(): number {
+  get length(): number {
     return this.tokens.length;
   }
 
-  get lineNumber(): number {
+  get position(): Partial<NcPosition> {
+    return {
+      X: this.X,
+      Y: this.Y,
+      Z: this.Z,
+      B: this.B
+    };
+  }
+
+  get tokenCount(): number | undefined {
+    return this.tokens.length;
+  }
+
+  get lineNumber(): number | undefined {
     return this.N;
   }
 
@@ -99,18 +86,22 @@ export class NcBlock {
       return false;
     }
 
+    if (intersection(CannedCycle.START_CODES, this.G).length > 0) {
+      return false;
+    }
+
     return (
-      typeof this.B === "number" ||
-      typeof this.X === "number" ||
-      typeof this.Y === "number" ||
-      typeof this.Z === "number"
+      typeof this.B !== "undefined" ||
+      typeof this.X !== "undefined" ||
+      typeof this.Y !== "undefined" ||
+      typeof this.Z !== "undefined"
     );
   }
 
   get cannedCycleStartCode(): string | undefined {
     return intersection(
-      START_CODES,
-      this.map(token => token.text)
+      CannedCycle.START_CODES.map(prefixWith("G")),
+      this.tokens.map(token => token.text)
     )[0];
   }
 
@@ -122,10 +113,11 @@ export class NcBlock {
     return Boolean(this.cannedCycleStartCode);
   }
 
-  get skipLevel(): number {
-    return findByType("BLK_SKIP", this.tokens)
-      .map(token => token.value as number)
-      .orDefault(NaN);
+  get skipLevel(): number | undefined {
+    return findByType(Tokens.BLK_SKIP, this.tokens).caseOf({
+      Just: token => token.value as number,
+      Nothing: () => undefined
+    });
   }
 
   get comment(): string {
@@ -142,27 +134,27 @@ export class NcBlock {
     //   .orDefault("");
   }
 
-  get A(): number {
+  get A(): number | undefined {
     return this.$value("A");
   }
 
-  get B(): number {
+  get B(): number | undefined {
     return this.$value("B");
   }
 
-  get C(): number {
+  get C(): number | undefined {
     return this.$value("C");
   }
 
-  get D(): number {
+  get D(): number | undefined {
     return this.$value("D");
   }
 
-  get E(): number {
+  get E(): number | undefined {
     return this.$value("E");
   }
 
-  get F(): number {
+  get F(): number | undefined {
     return this.$value("F");
   }
 
@@ -172,79 +164,79 @@ export class NcBlock {
     ) as number[];
   }
 
-  get H(): number {
+  get H(): number | undefined {
     return this.$value("H");
   }
 
-  get I(): number {
+  get I(): number | undefined {
     return this.$value("I");
   }
 
-  get J(): number {
+  get J(): number | undefined {
     return this.$value("J");
   }
 
-  get K(): number {
+  get K(): number | undefined {
     return this.$value("K");
   }
 
-  get L(): number {
+  get L(): number | undefined {
     return this.$value("L");
   }
 
-  get M(): number {
+  get M(): number | undefined {
     return this.$value("M");
   }
 
-  get N(): number {
+  get N(): number | undefined {
     return this.$value("N");
   }
 
-  get O(): number {
+  get O(): number | undefined {
     return this.$value("O");
   }
 
-  get P(): number {
+  get P(): number | undefined {
     return this.$value("P");
   }
 
-  get Q(): number {
+  get Q(): number | undefined {
     return this.$value("Q");
   }
 
-  get R(): number {
+  get R(): number | undefined {
     return this.$value("R");
   }
 
-  get S(): number {
+  get S(): number | undefined {
     return this.$value("S");
   }
 
-  get T(): number {
+  get T(): number | undefined {
     return this.$value("T");
   }
 
-  get U(): number {
+  get U(): number | undefined {
     return this.$value("U");
   }
 
-  get V(): number {
+  get V(): number | undefined {
     return this.$value("V");
   }
 
-  get W(): number {
+  get W(): number | undefined {
     return this.$value("W");
   }
 
-  get X(): number {
+  get X(): number | undefined {
     return this.$value("X");
   }
 
-  get Y(): number {
+  get Y(): number | undefined {
     return this.$value("Y");
   }
 
-  get Z(): number {
+  get Z(): number | undefined {
     return this.$value("Z");
   }
 }

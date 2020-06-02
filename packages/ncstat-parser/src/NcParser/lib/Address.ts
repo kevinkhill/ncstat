@@ -1,4 +1,5 @@
-import { NcToken } from "@/NcLexer/lib";
+import { NcToken } from "@/NcLexer";
+import { Tokens } from "@/types";
 
 /**
  * Pad a single digit address into a two digit
@@ -14,7 +15,7 @@ export class Address {
   value: number;
 
   constructor(token: NcToken) {
-    if (token.type !== "ADDR") {
+    if (token.type !== Tokens.ADDRESS) {
       throw Error(`Token must be of type "ADDR"`);
     }
 

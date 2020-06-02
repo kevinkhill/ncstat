@@ -15,19 +15,17 @@ export class NcProgram {
   // constructor() {}
 
   get tokens(): NcToken[] {
-    return this.blocks.reduce((tokens: NcToken[], block: NcBlock) => {
+    return this.blocks.reduce((tokens, block) => {
       return [...tokens, ...block.tokens];
-    }, []);
+    }, [] as NcToken[]);
+  }
+
+  get tokenCount(): number {
+    return this.tokens.length;
   }
 
   get blockCount(): number {
     return this.blocks.length;
-  }
-
-  get tokenCount(): number {
-    return this.blocks.reduce((total: number, block: NcBlock) => {
-      return total + block.tokenCount;
-    }, 0);
   }
 
   // get toollist(): any[] {
