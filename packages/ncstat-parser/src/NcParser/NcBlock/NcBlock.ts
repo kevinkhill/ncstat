@@ -8,7 +8,7 @@ import {
   prefixWith
 } from "@/NcLexer";
 import { CannedCycle } from "@/NcProgram";
-import { NcPosition, Tokens } from "@/types";
+import { CommentToken, NcPosition, Tokens } from "@/types";
 
 export class NcBlock {
   readonly tags: string[] = [];
@@ -71,6 +71,15 @@ export class NcBlock {
     );
   }
 
+  get comment(): string | undefined {
+    const token: CommentToken | undefined = findByType(
+      Tokens.COMMENT,
+      this.tokens
+    );
+
+    return token?.value;
+  }
+
   get hasToolCall(): boolean {
     return this.$has("T");
   }
@@ -118,20 +127,6 @@ export class NcBlock {
       Just: token => token.value as number,
       Nothing: () => undefined
     });
-  }
-
-  get comment(): string {
-    const token = this.tokens.find(token => token.isA(Tokens.COMMENT));
-
-    if (token) {
-      return token.value as string;
-    }
-
-    return "";
-
-    // return findByType(Tokens.COMMENT, this.tokens)
-    //   .map(token => token.value as string)
-    //   .orDefault("");
   }
 
   get A(): number | undefined {

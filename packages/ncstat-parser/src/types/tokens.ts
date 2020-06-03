@@ -25,10 +25,25 @@ export type TokenValue =
   | string
   | undefined;
 
+// export interface
+
+export interface GenericToken<T extends TokenTypes> extends NcToken {
+  type: T;
+}
+
 export interface NumericToken extends NcToken {
   value: number;
 }
 
 export interface StringToken extends NcToken {
   value: string;
+}
+
+export interface CommentToken extends StringToken {
+  type: Tokens.COMMENT;
+}
+
+export interface AddressToken extends NumericToken {
+  type: Tokens.ADDRESS;
+  prefix: string;
 }

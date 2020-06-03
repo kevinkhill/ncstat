@@ -1,17 +1,11 @@
 import { Token } from "ts-tokenizr";
 
-import { Address } from "@/NcParser";
-import { define, gCode, mCode } from "@/NcSpec";
-import { Addresses } from "@/NcSpec/addresses";
 import {
-  CodeDefinition,
   ParsedTokenizrValue,
   Tokens,
   TokenTypes,
   TokenValue
 } from "@/types";
-
-// import { ValueToken } from "@/types";
 
 export class NcToken {
   type: TokenTypes;
@@ -21,7 +15,6 @@ export class NcToken {
   column: number;
   value: TokenValue;
   prefix?: string;
-  // definition?: CodeDefinition;
 
   static from(token: Token): NcToken {
     return new NcToken(token);
@@ -58,10 +51,6 @@ export class NcToken {
 
     return `<${tokenAttr}>`;
   }
-
-  // hasPrefix(prefix: string): boolean {
-  //   return this.prefix === prefix;
-  // }
 
   isA(type: TokenTypes, prefix?: string): boolean;
   isA(type: Tokens.ADDRESS, prefix: string): boolean {

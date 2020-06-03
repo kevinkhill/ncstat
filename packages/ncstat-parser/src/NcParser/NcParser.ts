@@ -251,7 +251,7 @@ export class NcParser extends NcEventEmitter {
     }
   }
 
-  private updatePosition(newPosition: NcPosition): void {
+  private updatePosition(newPosition: Partial<NcPosition>): void {
     this.prevPosition = clone(this.currPosition);
 
     const axes = Object.keys(newPosition).filter(
@@ -260,6 +260,7 @@ export class NcParser extends NcEventEmitter {
 
     // console.log(axes);
 
+    // Use the positioning modes as function names for their operations
     const positioningMode = {
       [Modals.INCREMENTAL]: (from: number, to: number) => from + to,
       [Modals.ABSOLUTE]: (_from: number, to: number) => to
@@ -278,18 +279,10 @@ export class NcParser extends NcEventEmitter {
         blockAxisPosition,
         this.modals[Modals.POSITIONING_MODE]
       );
-      if (this.modals[Modals.POSITIONING_MODE] === Modals.INCREMENTAL) {
-        this.currPosition[axis] += newPosition[axis];
-      }
 
-      if (this.modals[Modals.POSITIONING_MODE] === Modals.ABSOLUTE) {
-        this.currPosition[axis] = newPosition[axis];
-      }
+      this.currPosition[axis] = positioningMode[
+        this.modals[Modals.POSITIONING_MODE]
+      ](this.currPosition[axis], newPosition[axis]);
     });
-
-    this.currPosition = {
-      ...this.currPosition,
-      ...newPosition
-    };
   }
 }

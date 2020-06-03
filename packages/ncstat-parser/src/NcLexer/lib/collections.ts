@@ -1,6 +1,12 @@
 import { prop } from "lodash/fp";
 
-import { TokenTypes } from "@/types";
+import {
+  AddressToken,
+  CommentToken,
+  GenericToken,
+  Tokens,
+  TokenTypes
+} from "@/types";
 
 import { NcToken } from "../NcToken";
 
@@ -24,9 +30,19 @@ export function findByPrefix(
   return tokens.find(token => getPrefix(token) === prefix);
 }
 
-export function findByType(
-  type: TokenTypes,
+export function findByType<T extends TokenTypes>(
+  type: T,
   tokens: NcToken[]
-): NcToken | undefined {
-  return tokens.find(token => getType(token) === type);
+): GenericToken<T> | undefined {
+  const token = tokens.find(token => token.isA(type));
+
+  if (token?.isA(Tokens.ADDRESS)) {
+    return token as AddressToken;
+  }
+
+  if (token?.isA(Tokens.COMMENT)) {
+    return token as CommentToken;
+  }
+
+  return token;
 }
