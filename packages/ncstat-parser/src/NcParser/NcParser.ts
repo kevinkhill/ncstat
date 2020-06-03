@@ -8,15 +8,16 @@ import {
   NcMachineStateType,
   NcService
 } from "@/NcService";
-import { define, defineGCode, defineMCode, Modals } from "@/NcSpec";
+import {
+  define,
+  defineGCode,
+  defineMCode,
+  G_CODE_TABLE,
+  Modals
+} from "@/NcSpec";
 import { Addresses } from "@/NcSpec/addresses";
 import { CodeDefinition, NcParserConfig, NcPosition } from "@/types";
-import {
-  ActiveModals,
-  GROUP_01,
-  GROUP_02,
-  GROUP_03
-} from "@/types/modals";
+import { ActiveModals } from "@/types/modals";
 
 import { NcBlock } from "./NcBlock";
 import { blockGenerator } from "./NcBlock/blockGenerator";
@@ -25,12 +26,6 @@ import { NcEventEmitter } from "./NcEventEmitter";
 const isIdle = eq(NcMachineState.IDLE);
 const isToolpathing = eq(NcMachineState.TOOLPATHING);
 const isInCannedCycle = eq(NcMachineState.IN_CANNED_CYCLE);
-
-const MODAL_DEFAULTS = {
-  [Modals.MOTION_CODES]: "G00",
-  [Modals.PLANE_SELECTION]: "G17",
-  [Modals.POSITIONING_MODE]: "G90"
-} as ActiveModals;
 
 export class NcParser extends NcEventEmitter {
   static readonly namespace = "ncstat:parser";
@@ -55,34 +50,11 @@ export class NcParser extends NcEventEmitter {
   private currPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
   private prevPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
 
-  private modals: ActiveModals = MODAL_DEFAULTS;
-
-  /**
-   * Motion Style
-   *
-   * `Modals.MOTION_CODES`
-   */
-  get GROUP_01(): GROUP_01 {
-    return this.modals.GROUP_01;
-  }
-
-  /**
-   * Plane Combination
-   *
-   * `Modals.PLANE_SELECTION`
-   */
-  get GROUP_02(): GROUP_02 {
-    return this.modals.GROUP_02;
-  }
-
-  /**
-   * Positioning Mode
-   *
-   * `Modals.POSITIONING_MODE`
-   */
-  get GROUP_03(): GROUP_03 {
-    return this.modals.GROUP_03;
-  }
+  private modals: ActiveModals = {
+    GROUP_01: Modals.RAPID,
+    GROUP_02: Modals.XY,
+    GROUP_03: Modals.ABSOLUTE
+  };
 
   constructor(config?: Partial<NcParserConfig>) {
     super();
@@ -125,15 +97,38 @@ export class NcParser extends NcEventEmitter {
         this.currBlock.length
       );
 
-      this.modals[Modals.MOTION_CODES] = this.currBlock[
-        Modals.MOTION_CODES
-      ];
-      this.modals[Modals.PLANE_SELECTION] = this.currBlock[
-        Modals.PLANE_SELECTION
-      ];
-      this.modals[Modals.POSITIONING_MODE] = this.currBlock[
-        Modals.POSITIONING_MODE
-      ];
+      if (this.currBlock[Modals.MOTION_CODES]) {
+        this.modals[Modals.MOTION_CODES] = this.currBlock[
+          Modals.MOTION_CODES
+        ];
+        this.debug(
+          `[MODAL] Setting %s to %s`,
+          Modals.MOTION_CODES,
+          this.modals[Modals.MOTION_CODES]
+        );
+      }
+
+      if (this.currBlock[Modals.PLANE_SELECTION]) {
+        this.modals[Modals.PLANE_SELECTION] = this.currBlock[
+          Modals.PLANE_SELECTION
+        ];
+        this.debug(
+          `[MODAL] Setting %s to %s`,
+          Modals.PLANE_SELECTION,
+          this.modals[Modals.PLANE_SELECTION]
+        );
+      }
+
+      if (this.currBlock[Modals.POSITIONING_MODE]) {
+        this.modals[Modals.POSITIONING_MODE] = this.currBlock[
+          Modals.POSITIONING_MODE
+        ];
+        this.debug(
+          `[MODAL] Setting %s to %s`,
+          Modals.POSITIONING_MODE,
+          this.modals[Modals.POSITIONING_MODE]
+        );
+      }
 
       // Example: O2134 ( NAME )
       if (this.currBlock.O) {
@@ -289,18 +284,15 @@ export class NcParser extends NcEventEmitter {
   }
 
   private updatePosition(newPosition: Partial<NcPosition>): void {
+    const motionCode = this.modals.GROUP_03;
+
     this.prevPosition = clone(this.currPosition);
 
-    console.log("------------->", this.modals);
-
-    this.debug("[ FROM] %o", this.prevPosition);
-    this.debug("[ MOVE] %s", this.modals.GROUP_03);
-    this.debug("[   TO] %o", this.currPosition);
-
-    // Use the positioning modes as function names for their operations
-    const positionFns = {
-      [Modals.INCREMENTAL]: (from: number, to: number) => from + to,
-      [Modals.ABSOLUTE]: (_from: number, to: number) => to
+    // Helper function to use the positioning modes as function names
+    // for their operations in updating positions
+    const move = {
+      [Modals.ABSOLUTE]: (_from: number, to: number) => to,
+      [Modals.INCREMENTAL]: (from: number, to: number) => from + to
     };
 
     /**
@@ -309,10 +301,15 @@ export class NcParser extends NcEventEmitter {
      */
     for (const [axis, value] of Object.entries(newPosition)) {
       if (value) {
-        const move = positionFns[this.modals[Modals.POSITIONING_MODE]];
-
-        this.currPosition[axis] = move(this.currPosition[axis], value);
+        this.currPosition[axis] = move[motionCode](
+          this.currPosition[axis],
+          value
+        );
       }
     }
+
+    this.debug("[ MOVE] %s", motionCode, G_CODE_TABLE[motionCode]);
+    this.debug("[ FROM] %o", this.prevPosition);
+    this.debug("[   TO] %o", this.currPosition);
   }
 }

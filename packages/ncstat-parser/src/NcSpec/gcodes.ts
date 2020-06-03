@@ -56,4 +56,7 @@ export const G_CODE = {
   GROUP_12
 };
 
-export const gCodeArray = (group: ModalCodeGroups): string[] => G_CODE[group];
+export const gCodeStrings = (group: ModalCodeGroups): string[] => G_CODE[group];
+export const gCodeNumbers = (group: ModalCodeGroups): number[] => G_CODE[group].map(
+  code => parseInt(code.substring(1))
+  );

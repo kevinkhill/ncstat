@@ -26,6 +26,15 @@ export const enum Modals {
   INCREMENTAL = "G91"
 }
 
+export const MODAL_GROUPS = {
+  GROUP_01: "MOTION_CODES",
+  GROUP_02: "PLANE_SELECTION",
+  GROUP_03: "POSITIONING_MODE",
+  MOTION_CODES: "GROUP_01",
+  PLANE_SELECTION: "GROUP_02",
+  POSITIONING_MODE: "GROUP_03"
+};
+
 export const MODALS = {
   MOTION: {
     FEED: Modals.FEED,

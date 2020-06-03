@@ -1,6 +1,6 @@
 import { Modals } from "@/NcSpec";
 
-export type MOTION_CODES =  keyof typeof Modals;
+export type MOTION_CODES = Modals.RAPID | Modals.FEED;
 export type GROUP_01 = MOTION_CODES;
 
 export type PLANE_SELECTION = Modals.XY | Modals.XZ | Modals.YZ;
@@ -11,9 +11,18 @@ export type GROUP_03 = POSITIONING_MODE;
 
 export interface ActiveModals {
   // GROUP_00?: any;
-  GROUP_01: MOTION_CODES;
-  GROUP_02: PLANE_SELECTION;
-  GROUP_03: POSITIONING_MODE;
-};
+  GROUP_01: Modals.RAPID | Modals.FEED;
+  GROUP_02: Modals.XY | Modals.XZ | Modals.YZ;
+  GROUP_03: Modals.ABSOLUTE | Modals.INCREMENTAL;
+}
 
-// export type ModalCodeGroups = "GROUP_01"  | "GROUP_02"  | "GROUP_03"  | "GROUP_05"  | "GROUP_06"  | "GROUP_07"  | "GROUP_08"  | "GROUP_10"  | "GROUP_12";
+export type ModalCodeGroups =
+  | "GROUP_01"
+  | "GROUP_02"
+  | "GROUP_03"
+  | "GROUP_05"
+  | "GROUP_06"
+  | "GROUP_07"
+  | "GROUP_08"
+  | "GROUP_10"
+  | "GROUP_12";
