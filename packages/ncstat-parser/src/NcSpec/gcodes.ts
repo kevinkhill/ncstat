@@ -1,3 +1,5 @@
+import { ModalCodeGroups } from "@/types";
+
 // motion
 const GROUP_01 = [
   "G00",
@@ -42,7 +44,7 @@ const GROUP_12 = ["G54", "G55", "G56", "G57", "G58", "G59"];
 /**
  * Arrays of G codes, grouped by their respective GROUP_nn
  */
-export const G_CODES = {
+export const G_CODE = {
   GROUP_01,
   GROUP_02,
   GROUP_03,
@@ -53,3 +55,5 @@ export const G_CODES = {
   GROUP_10,
   GROUP_12
 };
+
+export const gCodeArray = (group: ModalCodeGroups): string[] => G_CODE[group];

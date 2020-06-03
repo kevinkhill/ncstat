@@ -1,9 +1,5 @@
 import Debug from "debug";
-import {
-  clone,
-  eq,
-  last
-} from "lodash/fp";
+import { clone, eq, last } from "lodash/fp";
 
 import { NcLexer, NcToken } from "@/NcLexer";
 import { CannedCycle, NcProgram, Tool, Toolpath } from "@/NcProgram";
@@ -12,28 +8,29 @@ import {
   NcMachineStateType,
   NcService
 } from "@/NcService";
-import { define, gCode, mCode } from "@/NcSpec";
+import { define, defineGCode, defineMCode, Modals } from "@/NcSpec";
 import { Addresses } from "@/NcSpec/addresses";
+import { CodeDefinition, NcParserConfig, NcPosition } from "@/types";
 import {
   ActiveModals,
-  CodeDefinition,
-  Modals,
-  NcParserConfig,
-  NcPosition,
-  PlaneCombinations,
-  GROUP_03,
   GROUP_01,
-  GROUP_02
-} from "@/types";
+  GROUP_02,
+  GROUP_03
+} from "@/types/modals";
 
 import { NcBlock } from "./NcBlock";
 import { blockGenerator } from "./NcBlock/blockGenerator";
 import { NcEventEmitter } from "./NcEventEmitter";
-import { PositioningModes, MotionStyles } from '@/types';
 
 const isIdle = eq(NcMachineState.IDLE);
 const isToolpathing = eq(NcMachineState.TOOLPATHING);
 const isInCannedCycle = eq(NcMachineState.IN_CANNED_CYCLE);
+
+const MODAL_DEFAULTS = {
+  [Modals.MOTION_CODES]: "G00",
+  [Modals.PLANE_SELECTION]: "G17",
+  [Modals.POSITIONING_MODE]: "G90"
+} as ActiveModals;
 
 export class NcParser extends NcEventEmitter {
   static readonly namespace = "ncstat:parser";
@@ -48,7 +45,7 @@ export class NcParser extends NcEventEmitter {
   private program: NcProgram;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private machine: any; // @TODO get this to work with `typeof NcService`;
-  private state: NcMachineStateType = NcMachineState.IDLE;
+  private state: NcMachineStateType = "IDLE";
   private currToolpath!: Toolpath;
   private readonly debug = Debug(NcParser.namespace);
 
@@ -58,11 +55,7 @@ export class NcParser extends NcEventEmitter {
   private currPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
   private prevPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
 
-  private modals: ActiveModals = {
-    [Modals.MOTION_CODES]: MotionStyles.RAPID,
-    [Modals.PLANE_SELECTION]: PlaneCombinations.XY,
-    [Modals.POSITIONING_MODE]: PositioningModes.ABSOLUTE
-  };
+  private modals: ActiveModals = MODAL_DEFAULTS;
 
   /**
    * Motion Style
@@ -70,7 +63,7 @@ export class NcParser extends NcEventEmitter {
    * `Modals.MOTION_CODES`
    */
   get GROUP_01(): GROUP_01 {
-    return this.modals["GROUP_01"];
+    return this.modals.GROUP_01;
   }
 
   /**
@@ -79,7 +72,7 @@ export class NcParser extends NcEventEmitter {
    * `Modals.PLANE_SELECTION`
    */
   get GROUP_02(): GROUP_02 {
-    return this.modals["GROUP_02"];
+    return this.modals.GROUP_02;
   }
 
   /**
@@ -88,7 +81,7 @@ export class NcParser extends NcEventEmitter {
    * `Modals.POSITIONING_MODE`
    */
   get GROUP_03(): GROUP_03 {
-    return this.modals["GROUP_03"];
+    return this.modals.GROUP_03;
   }
 
   constructor(config?: Partial<NcParserConfig>) {
@@ -127,14 +120,20 @@ export class NcParser extends NcEventEmitter {
     for (const block of this.yieldBlocks(source)) {
       this.currBlock = block;
 
-      // this.debug(
-      //   `[PARSE] %d tokens <${this.currBlock}>`,
-      //   this.currBlock.length
-      // );
+      this.debug(
+        `[PARSE] %d tokens <${this.currBlock}>`,
+        this.currBlock.length
+      );
 
-      this.modals[Modals.MOTION_CODES] = block[Modals.MOTION_CODES];
-      this.modals[Modals.PLANE_SELECTION] = block[Modals.PLANE_SELECTION];
-      this.modals[Modals.POSITIONING_MODE] = block[Modals.POSITIONING_MODE];
+      this.modals[Modals.MOTION_CODES] = this.currBlock[
+        Modals.MOTION_CODES
+      ];
+      this.modals[Modals.PLANE_SELECTION] = this.currBlock[
+        Modals.PLANE_SELECTION
+      ];
+      this.modals[Modals.POSITIONING_MODE] = this.currBlock[
+        Modals.POSITIONING_MODE
+      ];
 
       // Example: O2134 ( NAME )
       if (this.currBlock.O) {
@@ -207,17 +206,17 @@ export class NcParser extends NcEventEmitter {
           this.currToolpath = new Toolpath();
 
           this.debug("[ TOOL] Tool definition found");
-          const tool = Tool.create({
-            number: this.currBlock.N,
-            desc: this.currBlock.comment
-          });
+          // const tool = Tool.create({
+          //   number: this.currBlock.N,
+          //   desc: this.currBlock.comment
+          // });
 
-          this.currToolpath.setTool(tool);
+          // this.currToolpath.setTool(tool);
         }
       }
 
       if (isToolpathing(this.state) || isInCannedCycle(this.state)) {
-        if ([8, 50].includes(this.currBlock.M)) {
+        if ([8, 50].includes(this.currBlock.M as number)) {
           this.currToolpath.hasCoolant = true;
         }
 
@@ -226,9 +225,10 @@ export class NcParser extends NcEventEmitter {
          * Move the N line desc to this.currToolpath.desc
          */
         if (this.currBlock.hasToolChange) {
-          if (this.currToolpath.tool) {
-            this.currToolpath.tool.number = this.currBlock.T;
-          }
+          // if (this.currToolpath.tool) {
+          // if (this.currBlock.T) {
+          //   this.currToolpath.tool.number = this.currBlock.T;
+          // }
 
           if (this.currBlock.comment) {
             this.currToolpath.description = this.currToolpath?.tool?.desc;
@@ -255,7 +255,7 @@ export class NcParser extends NcEventEmitter {
     return this.program;
   }
 
-  *yieldBlocks(input: string): Generator<NcBlock> {
+  private *yieldBlocks(input: string): Generator<NcBlock> {
     yield* blockGenerator(this.lexer.tokenize(input));
   }
 
@@ -276,9 +276,9 @@ export class NcParser extends NcEventEmitter {
   private defineToken(token: NcToken): CodeDefinition {
     switch (token.prefix) {
       case "M":
-        return mCode(token.value as number);
+        return defineMCode(token.value as number);
       case "G":
-        return gCode(token.value as number);
+        return defineGCode(token.value as number);
       case "R":
         return define(Addresses.R);
       case "Q":
@@ -291,14 +291,16 @@ export class NcParser extends NcEventEmitter {
   private updatePosition(newPosition: Partial<NcPosition>): void {
     this.prevPosition = clone(this.currPosition);
 
+    console.log("------------->", this.modals);
+
     this.debug("[ FROM] %o", this.prevPosition);
-    this.debug("[ MOVE] %s", this.modals["GROUP_03"]);
+    this.debug("[ MOVE] %s", this.modals.GROUP_03);
     this.debug("[   TO] %o", this.currPosition);
 
     // Use the positioning modes as function names for their operations
     const positionFns = {
-      [PositioningModes.INCREMENTAL]: (from: number, to: number) => from + to,
-      [PositioningModes.ABSOLUTE]: (_from: number, to: number) => to
+      [Modals.INCREMENTAL]: (from: number, to: number) => from + to,
+      [Modals.ABSOLUTE]: (_from: number, to: number) => to
     };
 
     /**
@@ -307,7 +309,7 @@ export class NcParser extends NcEventEmitter {
      */
     for (const [axis, value] of Object.entries(newPosition)) {
       if (value) {
-        const move = positionFns[this.modals["GROUP_03"]];
+        const move = positionFns[this.modals[Modals.POSITIONING_MODE]];
 
         this.currPosition[axis] = move(this.currPosition[axis], value);
       }

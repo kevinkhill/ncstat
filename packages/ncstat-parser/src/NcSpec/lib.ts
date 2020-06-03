@@ -25,7 +25,7 @@ export function define(desc: string, group?: string): CodeDefinition {
  *  gCode(10)  // "PROGRAMMABLE_OFFSET_INPUT"
  * ```
  */
-export function gCode(input: number): CodeDefinition {
+export function defineGCode(input: number): CodeDefinition {
   return Maybe.fromFalsy(G_CODE_TABLE[input]).orDefault(
     define("M_CODE_NOT_FOUND")
   );
@@ -36,7 +36,7 @@ export function gCode(input: number): CodeDefinition {
  *
  * @example ```mCode(30) // "PROGRAM_END"```
  */
-export function mCode(input: number): CodeDefinition {
+export function defineMCode(input: number): CodeDefinition {
   return Maybe.fromFalsy(M_CODE_TABLE[input]).orDefault(
     define("G_CODE_NOT_FOUND")
   );
