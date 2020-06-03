@@ -36,13 +36,5 @@ export function findByType<T extends TokenTypes>(
 ): GenericToken<T> | undefined {
   const token = tokens.find(token => token.isA(type));
 
-  if (token?.isA(Tokens.ADDRESS)) {
-    return token as AddressToken;
-  }
-
-  if (token?.isA(Tokens.COMMENT)) {
-    return token as CommentToken;
-  }
-
   return token;
 }

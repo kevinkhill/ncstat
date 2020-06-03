@@ -8,10 +8,11 @@ import {
   prefixWith
 } from "@/NcLexer";
 import { CannedCycle } from "@/NcProgram";
-import { CommentToken, NcPosition, Tokens } from "@/types";
+import { CommentToken, NcPosition, Tags, Tokens, GROUP_01, GROUP_02, GROUP_03 } from "@/types";
+import { G_CODES } from "@/NcSpec";
 
 export class NcBlock {
-  readonly tags: string[] = [];
+  readonly tags: Tags = new Set<string>();
   readonly tokens: NcToken[] = [];
 
   static create(tokens: NcToken[]): NcBlock {
@@ -20,6 +21,22 @@ export class NcBlock {
 
   constructor(tokens: NcToken[]) {
     this.tokens = tokens;
+  }
+
+  toString(): string {
+    return this.stringTokens.join(" ");
+  }
+
+  $tag(tag: string): Tags {
+    return this.tags.add(tag);
+  }
+
+  $unTag(tag: string): boolean {
+    return this.tags.delete(tag);
+  }
+
+  $tagged(tag: string): boolean {
+    return this.tags.has(tag);
   }
 
   $has(prefix: string): boolean {
@@ -40,8 +57,30 @@ export class NcBlock {
     return undefined;
   }
 
-  toString(): string {
-    return this.tokens.map(token => token.text).join(" ");
+  get GROUP_01(): GROUP_01 {
+    const res = intersection(this.stringTokens, G_CODES.GROUP_01);
+    const code = res[0] as GROUP_01;
+
+    return code;
+  }
+
+  get GROUP_02(): GROUP_02 {
+    const res = intersection(this.stringTokens, G_CODES.GROUP_02);
+    const code = res[0] as GROUP_02;
+
+    return code;
+  }
+
+  get GROUP_03(): GROUP_03 {
+    const res = intersection(this.stringTokens, G_CODES.GROUP_03);
+    const code = res[0] as GROUP_03;
+
+    return code;
+  }
+
+
+  get stringTokens(): string[] {
+    return this.tokens.map(token => token.text);
   }
 
   get length(): number {
@@ -49,12 +88,16 @@ export class NcBlock {
   }
 
   get position(): Partial<NcPosition> {
-    return {
-      X: this.X,
-      Y: this.Y,
-      Z: this.Z,
-      B: this.B
-    };
+    const axes = ["X", "Y", "Z", "B"];
+    const position: Partial<NcPosition> = {};
+
+    return axes.reduce((accum, axis) => {
+      if (this.$has(axis)) {
+        accum[axis] = this.$value(axis);
+      }
+
+      return accum;
+    }, position);
   }
 
   get tokenCount(): number | undefined {
@@ -123,10 +166,7 @@ export class NcBlock {
   }
 
   get skipLevel(): number | undefined {
-    return findByType(Tokens.BLK_SKIP, this.tokens).caseOf({
-      Just: token => token.value as number,
-      Nothing: () => undefined
-    });
+    return findByType(Tokens.BLK_SKIP, this.tokens)?.value;
   }
 
   get A(): number | undefined {

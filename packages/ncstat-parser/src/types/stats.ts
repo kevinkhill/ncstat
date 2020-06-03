@@ -1,4 +1,4 @@
-import { AxesLimits } from "./axes-limits";
+import { AxesLimits } from "./axes";
 
 interface UnitCount {
   count: number;

@@ -1,5 +1,9 @@
 import Debug from "debug";
-import { clone, eq, filter, get, has, last } from "lodash/fp";
+import {
+  clone,
+  eq,
+  last
+} from "lodash/fp";
 
 import { NcLexer, NcToken } from "@/NcLexer";
 import { CannedCycle, NcProgram, Tool, Toolpath } from "@/NcProgram";
@@ -16,15 +20,16 @@ import {
   Modals,
   NcParserConfig,
   NcPosition,
-  Planes
+  PlaneCombinations,
+  GROUP_03,
+  GROUP_01,
+  GROUP_02
 } from "@/types";
 
-import { isNotNaN } from "../lib/index";
-import { NcPosition } from "../types/machine";
-import { getModals } from "./lib";
 import { NcBlock } from "./NcBlock";
 import { blockGenerator } from "./NcBlock/blockGenerator";
 import { NcEventEmitter } from "./NcEventEmitter";
+import { PositioningModes, MotionStyles } from '@/types';
 
 const isIdle = eq(NcMachineState.IDLE);
 const isToolpathing = eq(NcMachineState.TOOLPATHING);
@@ -54,10 +59,37 @@ export class NcParser extends NcEventEmitter {
   private prevPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
 
   private modals: ActiveModals = {
-    [Modals.MOTION_CODES]: Modals.RAPID,
-    [Modals.PLANE_SELECTION]: Planes.XY,
-    [Modals.POSITIONING_MODE]: Modals.ABSOLUTE
+    [Modals.MOTION_CODES]: MotionStyles.RAPID,
+    [Modals.PLANE_SELECTION]: PlaneCombinations.XY,
+    [Modals.POSITIONING_MODE]: PositioningModes.ABSOLUTE
   };
+
+  /**
+   * Motion Style
+   *
+   * `Modals.MOTION_CODES`
+   */
+  get GROUP_01(): GROUP_01 {
+    return this.modals["GROUP_01"];
+  }
+
+  /**
+   * Plane Combination
+   *
+   * `Modals.PLANE_SELECTION`
+   */
+  get GROUP_02(): GROUP_02 {
+    return this.modals["GROUP_02"];
+  }
+
+  /**
+   * Positioning Mode
+   *
+   * `Modals.POSITIONING_MODE`
+   */
+  get GROUP_03(): GROUP_03 {
+    return this.modals["GROUP_03"];
+  }
 
   constructor(config?: Partial<NcParserConfig>) {
     super();
@@ -95,40 +127,45 @@ export class NcParser extends NcEventEmitter {
     for (const block of this.yieldBlocks(source)) {
       this.currBlock = block;
 
-      this.debug(
-        `[PARSE] %d tokens <${this.currBlock}>`,
-        this.currBlock.length
-      );
+      // this.debug(
+      //   `[PARSE] %d tokens <${this.currBlock}>`,
+      //   this.currBlock.length
+      // );
 
-      this.modals = getModals(this.modals, this.currBlock);
+      this.modals[Modals.MOTION_CODES] = block[Modals.MOTION_CODES];
+      this.modals[Modals.PLANE_SELECTION] = block[Modals.PLANE_SELECTION];
+      this.modals[Modals.POSITIONING_MODE] = block[Modals.POSITIONING_MODE];
 
       // Example: O2134 ( NAME )
-      if (this.currBlock.$has("O")) {
-        this.debug("[FOUND] Program Number: %d", this.currBlock.O);
+      if (this.currBlock.O) {
+        this.debug("[ PRG ] Number: %d", this.currBlock.O);
         this.program.number = this.currBlock.O;
 
-        if (this.currBlock.hasComment) {
+        if (this.currBlock.comment) {
           this.setProgramName(this.currBlock.comment);
         }
       }
 
       // Example: ( NAME )
-      if (this.program.name === null && this.currBlock.hasComment) {
+      if (
+        this.prevBlock?.O === this.program.number &&
+        this.program.name === null &&
+        this.currBlock.comment
+      ) {
         this.setProgramName(this.currBlock.comment);
       }
 
       if (this.currBlock.$has("S")) {
-        this.debug(
-          "[FOUND] Spindle speed command: %d",
-          this.currBlock.S
-        );
+        this.debug("[ ADDR] Spindle speed = %d", this.currBlock.S);
+        // this.currToolpath.spindleSpeed;
+      }
+
+      if (this.currBlock.$has("F")) {
+        this.debug("[ ADDR] Feedrate = %d", this.currBlock.F);
       }
 
       if (this.currBlock.hasMovement) {
         this.updatePosition(this.currBlock.position);
-        this.debug("[ MOVE] Block contains axis positions");
-        this.debug("[ FROM] %o", this.prevPosition);
-        this.debug("[   TO] %o", this.currPosition);
       }
 
       if (
@@ -169,7 +206,7 @@ export class NcParser extends NcEventEmitter {
 
           this.currToolpath = new Toolpath();
 
-          this.debug("[FOUND] Tool definition found");
+          this.debug("[ TOOL] Tool definition found");
           const tool = Tool.create({
             number: this.currBlock.N,
             desc: this.currBlock.comment
@@ -223,7 +260,7 @@ export class NcParser extends NcEventEmitter {
   }
 
   private setProgramName(name: string): void {
-    this.debug("[FOUND] Program name found: %s", name);
+    this.debug(`[ PRG ] Name: %s`, name);
     this.program.name = name;
   }
 
@@ -254,35 +291,26 @@ export class NcParser extends NcEventEmitter {
   private updatePosition(newPosition: Partial<NcPosition>): void {
     this.prevPosition = clone(this.currPosition);
 
-    const axes = Object.keys(newPosition).filter(
-      axis => newPosition[axis] !== undefined
-    );
-
-    // console.log(axes);
+    this.debug("[ FROM] %o", this.prevPosition);
+    this.debug("[ MOVE] %s", this.modals["GROUP_03"]);
+    this.debug("[   TO] %o", this.currPosition);
 
     // Use the positioning modes as function names for their operations
-    const positioningMode = {
-      [Modals.INCREMENTAL]: (from: number, to: number) => from + to,
-      [Modals.ABSOLUTE]: (_from: number, to: number) => to
+    const positionFns = {
+      [PositioningModes.INCREMENTAL]: (from: number, to: number) => from + to,
+      [PositioningModes.ABSOLUTE]: (_from: number, to: number) => to
     };
 
     /**
      * Iterate over each axis that has a value from the newPosition
      * using the positioning mode to either increment or set the value
      */
-    axes.forEach(axis => {
-      const blockAxisPosition = get(axis, newPosition);
+    for (const [axis, value] of Object.entries(newPosition)) {
+      if (value) {
+        const move = positionFns[this.modals["GROUP_03"]];
 
-      console.log(
-        "==============>",
-        axis,
-        blockAxisPosition,
-        this.modals[Modals.POSITIONING_MODE]
-      );
-
-      this.currPosition[axis] = positioningMode[
-        this.modals[Modals.POSITIONING_MODE]
-      ](this.currPosition[axis], newPosition[axis]);
-    });
+        this.currPosition[axis] = move(this.currPosition[axis], value);
+      }
+    }
   }
 }

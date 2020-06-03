@@ -7,3 +7,11 @@ export interface AxisLimits {
 }
 
 export type AxesLimits = Record<HmcAxis, AxisLimits>;
+
+export interface NcPosition {
+  [K: string]: number;
+  X: number;
+  Y: number;
+  Z: number;
+  B: number;
+}
