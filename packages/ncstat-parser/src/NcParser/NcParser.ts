@@ -17,7 +17,8 @@ import {
 } from "@/NcSpec";
 import { Addresses } from "@/NcSpec/addresses";
 import { CodeDefinition, NcParserConfig, NcPosition } from "@/types";
-import { ActiveModals } from "@/types/modals";
+import { MovementEvent } from "@/types/machine";
+import { ActiveModals, ModalCodeGroups } from "@/types/modals";
 
 import { NcBlock } from "./NcBlock";
 import { blockGenerator } from "./NcBlock/blockGenerator";
@@ -27,6 +28,9 @@ const isIdle = eq(NcMachineState.IDLE);
 const isToolpathing = eq(NcMachineState.TOOLPATHING);
 const isInCannedCycle = eq(NcMachineState.IN_CANNED_CYCLE);
 
+/**
+ * NcParser Class
+ */
 export class NcParser extends NcEventEmitter {
   static readonly namespace = "ncstat:parser";
   static readonly defaults = {
@@ -97,16 +101,7 @@ export class NcParser extends NcEventEmitter {
         this.currBlock.length
       );
 
-      if (this.currBlock[Modals.MOTION_CODES]) {
-        this.modals[Modals.MOTION_CODES] = this.currBlock[
-          Modals.MOTION_CODES
-        ];
-        this.debug(
-          `[MODAL] Setting %s to %s`,
-          Modals.MOTION_CODES,
-          this.modals[Modals.MOTION_CODES]
-        );
-      }
+      this.updateModals();
 
       if (this.currBlock[Modals.PLANE_SELECTION]) {
         this.modals[Modals.PLANE_SELECTION] = this.currBlock[
@@ -250,6 +245,26 @@ export class NcParser extends NcEventEmitter {
     return this.program;
   }
 
+  private updateModals(): void {
+    const groups = [
+      Modals.MOTION_CODES,
+      Modals.PLANE_SELECTION,
+      Modals.POSITIONING_MODE
+    ];
+
+    groups.forEach(group => {
+      if (this.currBlock[group]) {
+        this.modals[group] = this.currBlock[group];
+
+        this.debug(
+          `[MODAL] Setting %s to %s`,
+          group,
+          this.modals[group]
+        );
+      }
+    });
+  }
+
   private *yieldBlocks(input: string): Generator<NcBlock> {
     yield* blockGenerator(this.lexer.tokenize(input));
   }
@@ -308,8 +323,15 @@ export class NcParser extends NcEventEmitter {
       }
     }
 
+    const movement: MovementEvent = {
+      from: this.prevPosition,
+      to: this.currPosition
+    };
+
+    this.$emitMovement(movement);
+
     this.debug("[ MOVE] %s", motionCode, G_CODE_TABLE[motionCode]);
-    this.debug("[ FROM] %o", this.prevPosition);
-    this.debug("[   TO] %o", this.currPosition);
+    this.debug("[ FROM] %o", movement.from);
+    this.debug("[   TO] %o", movement.to);
   }
 }

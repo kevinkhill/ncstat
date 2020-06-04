@@ -35,18 +35,18 @@ export const MODAL_GROUPS = {
   POSITIONING_MODE: "GROUP_03"
 };
 
-export const MODALS = {
-  MOTION: {
-    FEED: Modals.FEED,
-    RAPID: Modals.RAPID
-  },
-  PLANE_SELECTION: {
-    XY: Modals.XY,
-    XZ: Modals.XZ,
-    YZ: Modals.YZ
-  },
-  POSITIONING_MODE: {
-    ABSOLUTE: Modals.ABSOLUTE,
-    INCREMENTAL: Modals.INCREMENTAL
-  }
-};
+// export const MODALS = {
+//   MOTION: {
+//     FEED: Modals.FEED,
+//     RAPID: Modals.RAPID
+//   },
+//   PLANE_SELECTION: {
+//     XY: Modals.XY,
+//     XZ: Modals.XZ,
+//     YZ: Modals.YZ
+//   },
+//   POSITIONING_MODE: {
+//     ABSOLUTE: Modals.ABSOLUTE,
+//     INCREMENTAL: Modals.INCREMENTAL
+//   }
+// };

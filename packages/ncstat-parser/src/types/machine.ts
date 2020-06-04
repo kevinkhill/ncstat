@@ -1,6 +1,8 @@
 // import { NcBlock } from "@/NcBlock";
 // import { NcToken } from "@/NcLexer";
 
+import { NcPosition } from "./axes";
+
 // export type NcBlocks = NcBlock[] | Generator<NcBlock>;
 // export type Tokens = NcToken[] | Generator<NcToken>;
 
@@ -11,3 +13,8 @@
 //   R: number;
 //   Q: number;
 // }
+
+export interface MovementEvent {
+  from: NcPosition;
+  to: NcPosition;
+}

@@ -2,6 +2,7 @@
 import { EventEmitter } from "eventemitter3";
 
 import { NcToken } from "@/NcLexer";
+import { MovementEvent } from "@/types/machine";
 
 import { NcBlock } from "./NcBlock";
 
@@ -11,6 +12,7 @@ export type NcEvents =
   | "token"
   | "block"
   | "error"
+  | "movement"
   | "stateChange";
 
 // export interface StateChange {
@@ -21,6 +23,10 @@ export type NcEvents =
 export class NcEventEmitter extends EventEmitter {
   protected $emitEndOfBlock() {
     this.emit<NcEvents>("eob");
+  }
+
+  protected $emitMovement(movement: MovementEvent) {
+    this.emit<NcEvents>("movement", movement);
   }
 
   protected $emitEndOfFile() {
