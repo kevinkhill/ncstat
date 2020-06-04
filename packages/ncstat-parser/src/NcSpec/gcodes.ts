@@ -56,7 +56,10 @@ export const G_CODE = {
   GROUP_12
 };
 
-export const gCodeStrings = (group: ModalCodeGroups): string[] => G_CODE[group];
-export const gCodeNumbers = (group: ModalCodeGroups): number[] => G_CODE[group].map(
-  code => parseInt(code.substring(1))
-  );
+export function gCodeStrings (group: ModalCodeGroups): string[] {
+  return G_CODE[group];
+}
+
+export function gCodeNumbers(group: ModalCodeGroups): number[] {
+  return G_CODE[group].map(code => parseInt(code.substring(1)));
+}

@@ -1,5 +1,6 @@
 import { intersection } from "lodash/fp";
 
+import { zeroPadAddress } from "@/lib";
 import {
   filterByPrefix,
   findByPrefix,
@@ -8,10 +9,8 @@ import {
   prefixWith
 } from "@/NcLexer";
 import { CannedCycle } from "@/NcProgram";
-import { CommentToken, NcPosition, Tags, Tokens } from "@/types";
-import { MOTION_CODES, PLANE_SELECTION, POSITIONING_MODE, ActiveModals } from "@/types/modals";
-import { gCodeNumbers, gCodeStrings } from "@/NcSpec";
-import { zeroPadAddress } from "../lib";
+import { gCodeStrings } from "@/NcSpec";
+import { CommentToken, ModalGroups,NcPosition, Tags, Tokens } from "@/types";"@/types";
 
 export class NcBlock {
   readonly tags: Tags = new Set<string>();
@@ -60,36 +59,36 @@ export class NcBlock {
   }
 
   get gCodes(): string[] {
-    return filterByPrefix("G", this.tokens).map(
-      token => zeroPadAddress(token.text)
+    return filterByPrefix("G", this.tokens).map(token =>
+      zeroPadAddress(token.text)
     );
   }
 
-  get modals(): ActiveModals {
+  get modals(): ModalGroups {
     return {
       GROUP_01: this.GROUP_01,
       GROUP_02: this.GROUP_02,
       GROUP_03: this.GROUP_03
-    }
+    };
   }
 
-  get GROUP_01(): MOTION_CODES {
+  get GROUP_01(): ModalGroups["GROUP_01"] {
     const res = intersection(this.gCodes, gCodeStrings("GROUP_01"));
-    const code = res[0] as MOTION_CODES;
+    const code = res[0] as ModalGroups["GROUP_01"];
 
     return code;
   }
 
-  get GROUP_02(): PLANE_SELECTION {
+  get GROUP_02(): ModalGroups["GROUP_02"] {
     const res = intersection(this.gCodes, gCodeStrings("GROUP_02"));
-    const code = res[0] as PLANE_SELECTION;
+    const code = res[0] as ModalGroups["GROUP_02"];
 
     return code;
   }
 
-  get GROUP_03(): POSITIONING_MODE {
+  get GROUP_03(): ModalGroups["GROUP_03"] {
     const res = intersection(this.gCodes, gCodeStrings("GROUP_03"));
-    const code = res[0] as POSITIONING_MODE;
+    const code = res[0] as ModalGroups["GROUP_03"];
 
     return code;
   }
@@ -212,10 +211,14 @@ export class NcBlock {
     return this.$value("F");
   }
 
-  get G(): number[] {
-    return filterByPrefix("G", this.tokens).map(
-      token => token.value
-    ) as number[];
+  // get G(): number[] {
+  //   return filterByPrefix("G", this.tokens).map(
+  //     token => token.value
+  //   ) as number[];
+  // }
+
+  get G(): NcToken[] {
+    return filterByPrefix("G", this.tokens);
   }
 
   get H(): number | undefined {

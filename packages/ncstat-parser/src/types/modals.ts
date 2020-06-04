@@ -1,19 +1,9 @@
 import { Modals } from "@/NcSpec";
 
-export type MOTION_CODES = Modals.RAPID | Modals.FEED;
-export type GROUP_01 = MOTION_CODES;
-
-export type PLANE_SELECTION = Modals.XY | Modals.XZ | Modals.YZ;
-export type GROUP_02 = PLANE_SELECTION;
-
-export type POSITIONING_MODE = Modals.ABSOLUTE | Modals.INCREMENTAL;
-export type GROUP_03 = POSITIONING_MODE;
-
-export interface ActiveModals {
-  // GROUP_00?: any;
-  GROUP_01: Modals.RAPID | Modals.FEED;
-  GROUP_02: Modals.XY | Modals.XZ | Modals.YZ;
-  GROUP_03: Modals.ABSOLUTE | Modals.INCREMENTAL;
+export interface ModalGroups {
+  [Modals.MOTION_CODES]: Modals.RAPID | Modals.FEED;
+  [Modals.PLANE_SELECTION]: Modals.XY | Modals.XZ | Modals.YZ;
+  [Modals.POSITIONING_MODE]: Modals.ABSOLUTE | Modals.INCREMENTAL;
 }
 
 export type ModalCodeGroups =
