@@ -10,7 +10,16 @@ import {
 } from "@/NcLexer";
 import { CannedCycle } from "@/NcProgram";
 import { gCodeStrings } from "@/NcSpec";
-import { CommentToken, ModalGroups,NcPosition, Tags, Tokens } from "@/types";"@/types";
+import {
+  CommentToken,
+  ModalCodeGroups,
+  ModalGroups,
+  NcPosition,
+  Tags,
+  Tokens
+} from "@/types";
+
+"@/types";
 
 export class NcBlock {
   readonly tags: Tags = new Set<string>();
@@ -58,6 +67,14 @@ export class NcBlock {
     return undefined;
   }
 
+  getModalGroup(
+    group: ModalCodeGroups
+  ): Partial<{ [K in keyof ModalGroups]: string[] }> {
+    return {
+      [group]: intersection(this.gCodes, gCodeStrings(group))
+    };
+  }
+
   get gCodes(): string[] {
     return filterByPrefix("G", this.tokens).map(token =>
       zeroPadAddress(token.text)
@@ -66,31 +83,10 @@ export class NcBlock {
 
   get modals(): ModalGroups {
     return {
-      GROUP_01: this.GROUP_01,
-      GROUP_02: this.GROUP_02,
-      GROUP_03: this.GROUP_03
+      ...this.getModalGroup("GROUP_01"),
+      ...this.getModalGroup("GROUP_02"),
+      ...this.getModalGroup("GROUP_03")
     };
-  }
-
-  get GROUP_01(): ModalGroups["GROUP_01"] {
-    const res = intersection(this.gCodes, gCodeStrings("GROUP_01"));
-    const code = res[0] as ModalGroups["GROUP_01"];
-
-    return code;
-  }
-
-  get GROUP_02(): ModalGroups["GROUP_02"] {
-    const res = intersection(this.gCodes, gCodeStrings("GROUP_02"));
-    const code = res[0] as ModalGroups["GROUP_02"];
-
-    return code;
-  }
-
-  get GROUP_03(): ModalGroups["GROUP_03"] {
-    const res = intersection(this.gCodes, gCodeStrings("GROUP_03"));
-    const code = res[0] as ModalGroups["GROUP_03"];
-
-    return code;
   }
 
   get stringTokens(): string[] {

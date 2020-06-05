@@ -16,13 +16,9 @@ import {
   Modals
 } from "@/NcSpec";
 import { Addresses } from "@/NcSpec/addresses";
-import {
-  CodeDefinition,
-  ModalGroups,
-  MovementEvent,
-  NcParserConfig,
-  NcPosition
-} from "@/types";
+import { CodeDefinition, NcParserConfig, NcPosition } from "@/types";
+import { MovementEvent } from "@/types/machine";
+import { ActiveModals, ModalCodeGroups } from "@/types/modals";
 
 import { NcBlock } from "./NcBlock";
 import { blockGenerator } from "./NcBlock/blockGenerator";
@@ -58,8 +54,8 @@ export class NcParser extends NcEventEmitter {
   private currPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
   private prevPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
 
-  private modals: ModalGroups = {
-    [Modals.MOTION_CODES]: Modals.RAPID,
+  private modals: ActiveModals = {
+    GROUP_01: Modals.RAPID,
     GROUP_02: Modals.XY,
     GROUP_03: Modals.ABSOLUTE
   };
@@ -237,7 +233,6 @@ export class NcParser extends NcEventEmitter {
     console.log(this.currBlock.modals);
 
     groups.forEach(group => {
-      // console.log(group);
       if (this.currBlock[group]) {
         this.modals[group] = this.currBlock[group];
 
