@@ -12,8 +12,19 @@ interface CannedCycleConfig {
 }
 
 export class CannedCycle {
-  static START_CODES = [73, 74, 81, 82, 83, 84, 85, 86, 87];
-  static RETRACT_CODES = [98, 99];
+  static START_CODES = [
+    "G73",
+    "G74",
+    "G81",
+    "G82",
+    "G83",
+    "G84",
+    "G85",
+    "G86",
+    "G87"
+  ];
+
+  static RETRACT_CODES = ["G98", "G99"];
 
   static fromBlock(block: NcBlock): CannedCycle {
     if (!block.isStartOfCannedCycle) {

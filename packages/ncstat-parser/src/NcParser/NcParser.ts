@@ -1,5 +1,5 @@
 import Debug from "debug";
-import { clone, eq, last } from "lodash/fp";
+import { clone, eq, isEmpty, last } from "lodash/fp";
 
 import { NcLexer, NcToken } from "@/NcLexer";
 import { CannedCycle, NcProgram, Tool, Toolpath } from "@/NcProgram";
@@ -16,9 +16,13 @@ import {
   Modals
 } from "@/NcSpec";
 import { Addresses } from "@/NcSpec/addresses";
-import { CodeDefinition, NcParserConfig, NcPosition } from "@/types";
+import {
+  CodeDefinition,
+  ModalGroups,
+  NcParserConfig,
+  NcPosition
+} from "@/types";
 import { MovementEvent } from "@/types/machine";
-import { ActiveModals, ModalCodeGroups } from "@/types/modals";
 
 import { NcBlock } from "./NcBlock";
 import { blockGenerator } from "./NcBlock/blockGenerator";
@@ -54,10 +58,16 @@ export class NcParser extends NcEventEmitter {
   private currPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
   private prevPosition: NcPosition = { X: 0, Y: 0, Z: 0, B: 0 };
 
-  private modals: ActiveModals = {
+  private modals: ModalGroups = {
     GROUP_01: Modals.RAPID,
     GROUP_02: Modals.XY,
-    GROUP_03: Modals.ABSOLUTE
+    GROUP_03: Modals.ABSOLUTE,
+    GROUP_05: "",
+    GROUP_06: "",
+    GROUP_07: "",
+    GROUP_08: "",
+    GROUP_10: "",
+    GROUP_12: ""
   };
 
   constructor(config?: Partial<NcParserConfig>) {
@@ -82,6 +92,9 @@ export class NcParser extends NcEventEmitter {
         curr: state.value
       });
 
+      this.debug(`[STATE] From: %s`, this.state);
+      this.debug(`[STATE] To: %s`, state.value);
+
       this.state = state.value;
     });
   }
@@ -96,12 +109,16 @@ export class NcParser extends NcEventEmitter {
     for (const block of this.yieldBlocks(source)) {
       this.currBlock = block;
 
+      this.debug(`[=====]`);
       this.debug(
-        `[PARSE] %d tokens <${this.currBlock}>`,
-        this.currBlock.length
+        `[PARSE] %d tokens < %s>`,
+        this.currBlock.length,
+        this.currBlock
       );
 
-      this.updateModals();
+      if (!isEmpty(this.currBlock.modals)) {
+        this.updateModals();
+      }
 
       // Example: O2134 ( NAME )
       if (this.currBlock.O) {
@@ -143,7 +160,7 @@ export class NcParser extends NcEventEmitter {
       }
 
       if (isInCannedCycle(this.state)) {
-        if (this.currBlock.G.includes(80)) {
+        if (this.currBlock.gCodes.includes("G80")) {
           this.debug("[ STOP] End of canned cycle");
           this.machine.send("END_CANNED_CYCLE");
         }
@@ -224,25 +241,9 @@ export class NcParser extends NcEventEmitter {
   }
 
   private updateModals(): void {
-    const groups = [
-      Modals.MOTION_CODES,
-      Modals.PLANE_SELECTION,
-      Modals.POSITIONING_MODE
-    ];
+    this.modals = { ...this.modals, ...this.currBlock?.modals };
 
-    console.log(this.currBlock.modals);
-
-    groups.forEach(group => {
-      if (this.currBlock[group]) {
-        this.modals[group] = this.currBlock[group];
-
-        this.debug(
-          `[MODAL] Setting %s to %s`,
-          group,
-          this.modals[group]
-        );
-      }
-    });
+    this.debug(`[MODAL] %o`, this.currBlock?.modals);
   }
 
   private *yieldBlocks(input: string): Generator<NcBlock> {
@@ -310,7 +311,7 @@ export class NcParser extends NcEventEmitter {
 
     this.$emitMovement(movement);
 
-    this.debug("[ MOVE] %s", motionCode, G_CODE_TABLE[motionCode]);
+    this.debug("[ MOVE] %s", G_CODE_TABLE[motionCode].desc);
     this.debug("[ FROM] %o", movement.from);
     this.debug("[   TO] %o", movement.to);
   }

@@ -9,17 +9,14 @@ import {
   prefixWith
 } from "@/NcLexer";
 import { CannedCycle } from "@/NcProgram";
-import { gCodeStrings } from "@/NcSpec";
+import { G_CODE, gCodeStrings } from "@/NcSpec";
 import {
   CommentToken,
-  ModalCodeGroups,
   ModalGroups,
   NcPosition,
   Tags,
   Tokens
 } from "@/types";
-
-"@/types";
 
 export class NcBlock {
   readonly tags: Tags = new Set<string>();
@@ -67,12 +64,8 @@ export class NcBlock {
     return undefined;
   }
 
-  getModalGroup(
-    group: ModalCodeGroups
-  ): Partial<{ [K in keyof ModalGroups]: string[] }> {
-    return {
-      [group]: intersection(this.gCodes, gCodeStrings(group))
-    };
+  getModalGroup(group: keyof ModalGroups): string[] {
+    return intersection(this.gCodes, gCodeStrings(group));
   }
 
   get gCodes(): string[] {
@@ -82,11 +75,15 @@ export class NcBlock {
   }
 
   get modals(): ModalGroups {
-    return {
-      ...this.getModalGroup("GROUP_01"),
-      ...this.getModalGroup("GROUP_02"),
-      ...this.getModalGroup("GROUP_03")
-    };
+    return Object.keys(G_CODE).reduce((accum, group: string) => {
+      const modals = this.getModalGroup(group);
+
+      if (modals.length > 0) {
+        accum[group] = modals;
+      }
+
+      return accum;
+    }, {} as ModalGroups);
   }
 
   get stringTokens(): string[] {
@@ -144,11 +141,11 @@ export class NcBlock {
 
   get hasMovement(): boolean {
     // @TODO Manage this conflict with G code groups
-    if (intersection([4, 10, 65], this.G).length > 0) {
+    if (intersection(["G04", "G10", "G65"], this.gCodes).length > 0) {
       return false;
     }
 
-    if (intersection(CannedCycle.START_CODES, this.G).length > 0) {
+    if (intersection(CannedCycle.START_CODES, this.gCodes).length > 0) {
       return false;
     }
 
@@ -161,10 +158,7 @@ export class NcBlock {
   }
 
   get cannedCycleStartCode(): string | undefined {
-    return intersection(
-      CannedCycle.START_CODES.map(prefixWith("G")),
-      this.tokens.map(token => token.text)
-    )[0];
+    return intersection(CannedCycle.START_CODES, this.stringTokens)[0];
   }
 
   get isNline(): boolean {
@@ -179,7 +173,7 @@ export class NcBlock {
     const token = findByType(Tokens.BLK_SKIP, this.tokens);
 
     if (token) {
-      return token.value;
+      return token.value as number;
     }
   }
 
@@ -207,15 +201,15 @@ export class NcBlock {
     return this.$value("F");
   }
 
-  // get G(): number[] {
-  //   return filterByPrefix("G", this.tokens).map(
-  //     token => token.value
-  //   ) as number[];
-  // }
-
-  get G(): NcToken[] {
-    return filterByPrefix("G", this.tokens);
+  get G(): number[] {
+    return filterByPrefix("G", this.tokens).map(
+      token => token.value
+    ) as number[];
   }
+
+  // get G(): NcToken[] {
+  //   return filterByPrefix("G", this.tokens);
+  // }
 
   get H(): number | undefined {
     return this.$value("H");
