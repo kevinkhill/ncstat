@@ -1,4 +1,7 @@
-import { NcBlock } from "../../NcParser/NcBlock";
+import { NcBlock } from "@/NcParser/NcBlock";
+import { defineGCode, getDefinition } from "@/NcSpec";
+import { CodeDefinition } from "@/types";
+
 import { Point } from "./Point";
 
 interface CannedCycleConfig {
@@ -54,7 +57,7 @@ export class CannedCycle {
   J?: number;
   K?: number;
 
-  private points: Point[] = [];
+  points: Point[] = [];
 
   constructor(config: CannedCycleConfig) {
     this.Z = config.Z;
@@ -66,31 +69,31 @@ export class CannedCycle {
     this.Q = config?.Q;
   }
 
-  getPeck(): number | undefined {
+  get definition(): CodeDefinition {
+    return defineGCode(this.cycleCommand);
+  }
+
+  get peck(): number | undefined {
     return this.Q;
   }
 
-  getDepth(): number | undefined {
+  get length(): number {
+    return this.points.length;
+  }
+
+  get depth(): number | undefined {
     return this.Z;
   }
 
-  getRetract(): number | undefined {
+  get retract(): number | undefined {
     return this.R;
   }
 
-  getFeedrate(): number | undefined {
+  get feedrate(): number | undefined {
     return this.F;
   }
 
   addPoint(obj: Point): void {
     this.points.push(obj);
-  }
-
-  getPoints(): Point[] {
-    return this.points;
-  }
-
-  getPointCount(): number {
-    return this.points.length;
   }
 }

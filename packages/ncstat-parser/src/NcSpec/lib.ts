@@ -34,22 +34,24 @@ export function define(desc: string, group?: string): CodeDefinition {
  * Return an M codes' definition
  *
  * @example ```
- *  gCode(10)  // "PROGRAMMABLE_OFFSET_INPUT"
+ *     defineGCode("G10")  // "PROGRAMMABLE_OFFSET_INPUT"
  * ```
  */
-export function defineGCode(input: number): CodeDefinition {
+export function defineGCode(input: string): CodeDefinition {
   return Maybe.fromFalsy(G_CODE_TABLE[input]).orDefault(
-    define("M_CODE_NOT_FOUND")
+    define("G_CODE_NOT_FOUND")
   );
 }
 
 /**
  * Return an M codes' definition
  *
- * @example ```mCode(30) // "PROGRAM_END"```
+ * @example ```
+ *     defineMCode("M30") // "PROGRAM_END"
+ * ```
  */
-export function defineMCode(input: number): CodeDefinition {
+export function defineMCode(input: string): CodeDefinition {
   return Maybe.fromFalsy(M_CODE_TABLE[input]).orDefault(
-    define("G_CODE_NOT_FOUND")
+    define("M_CODE_NOT_FOUND")
   );
 }

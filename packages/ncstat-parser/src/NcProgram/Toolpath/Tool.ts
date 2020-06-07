@@ -1,4 +1,8 @@
+import { makeDebugger } from "@/lib";
+
 import { Toolpath } from "./Toolpath";
+
+const debug = makeDebugger("parser:tool");
 
 export interface ToolDefinition {
   number: number;
@@ -13,6 +17,8 @@ export class Tool {
   constructor(public number = 0, public desc = "") {
     this.number = number;
     this.desc = desc;
+
+    debug(this.toString());
   }
 
   getToolpath(): Toolpath {

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { EventEmitter } from "eventemitter3";
 
-// import { makeDebugger } from "@/lib";
+import { makeDebugger } from "@/lib";
 import { NcToken } from "@/NcLexer";
 import { MovementEvent } from "@/types/machine";
 
@@ -23,7 +23,7 @@ export type NcEvents =
 //   curr: NcMachineStates;
 // }
 
-// const debug = makeDebugger(`lexer:event`);
+const debug = makeDebugger(`parser:event`);
 
 export class NcEventEmitter extends EventEmitter {
   protected $emitEndOfBlock() {
@@ -60,7 +60,8 @@ export class NcEventEmitter extends EventEmitter {
   }
 
   private $emit(event: NcEvents, ...args: unknown[]) {
-    // debug("Emitting: %o, %o", event, args);
+    // debug("Emitting: %o", event);
+    // debug("Payload: %o", args);
 
     this.emit<NcEvents>(event, ...args);
   }

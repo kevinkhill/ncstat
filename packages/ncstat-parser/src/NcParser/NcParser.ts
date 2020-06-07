@@ -1,28 +1,15 @@
-import Debug from "debug";
 import { clone, eq, isEmpty, last } from "lodash/fp";
 
 import { makeDebugger } from "@/lib";
-import { NcLexer, NcToken } from "@/NcLexer";
+import { NcLexer } from "@/NcLexer";
 import { CannedCycle, NcProgram, Tool, Toolpath } from "@/NcProgram";
 import {
   NcMachineState,
   NcMachineStateType,
   NcService
 } from "@/NcService";
-import {
-  define,
-  defineGCode,
-  defineMCode,
-  G_CODE_TABLE,
-  Modals
-} from "@/NcSpec";
-import { Addresses } from "@/NcSpec/addresses";
-import {
-  CodeDefinition,
-  ModalGroups,
-  NcParserConfig,
-  NcPosition
-} from "@/types";
+import { G_CODE_TABLE, Modals } from "@/NcSpec";
+import { ModalGroups, NcParserConfig, NcPosition } from "@/types";
 import { MovementEvent } from "@/types/machine";
 
 import { Mcode } from "./lib";
@@ -94,9 +81,7 @@ export class NcParser extends NcEventEmitter {
         curr: state.value
       });
 
-      const stateDebug = debug.extend("state");
-
-      stateDebug(`%o => %o`, this.state, state.value);
+      debug.extend("state")(`%o => %o`, this.state, state.value);
 
       this.state = state.value;
     });
@@ -106,15 +91,14 @@ export class NcParser extends NcEventEmitter {
     return this.lexer;
   }
 
-  async parse(source: string): Promise<NcProgram> {
+  parse(source: string): NcProgram {
     this.machine.start();
 
     for (const block of this.yieldBlocks(source)) {
       this.currBlock = block;
 
-      debug(`[=====]`);
-      debug(
-        `[PARSE] %o tokens <%s>`,
+      debug.extend("block")(
+        `%o tokens <%s>`,
         this.currBlock.length,
         this.currBlock
       );
@@ -148,7 +132,7 @@ export class NcParser extends NcEventEmitter {
 
       if (this.currBlock.$has("S")) {
         debug("[ ADDR] Spindle speed = %d", this.currBlock.S);
-        // this.currToolpath.spindleSpeed;
+        this.currToolpath.setSetRpms(this.currBlock.S);
       }
 
       if (this.currBlock.$has("F")) {
@@ -167,12 +151,12 @@ export class NcParser extends NcEventEmitter {
         this.currBlock.isStartOfCannedCycle &&
         isToolpathing(this.state)
       ) {
-        this.startCannedCycle(this.currBlock);
+        this.startCannedCycle();
       }
 
       if (isInCannedCycle(this.state)) {
         if (this.currBlock.gCodes.includes("G80")) {
-          debug("[ STOP] End of canned cycle");
+          // debug("[ STOP] End of canned cycle");
           this.machine.send("END_CANNED_CYCLE");
         }
 
@@ -190,24 +174,21 @@ export class NcParser extends NcEventEmitter {
       // This has been defined in the custom H&B posts
       if (this.currBlock.toString().startsWith("N")) {
         if (isToolpathing(this.state)) {
-          debug("[ STOP] End of toolpath");
           this.machine.send("END_TOOLPATH");
           this.program.toolpaths.push(this.currToolpath);
         }
 
         if (isIdle(this.state)) {
           this.machine.send("START_TOOLPATH");
-          debug("[START] Starting toolpath tracking");
 
           this.currToolpath = new Toolpath();
 
-          debug("[ TOOL] Tool definition found");
-          // const tool = Tool.create({
-          //   number: this.currBlock.N,
-          //   desc: this.currBlock.comment
-          // });
+          const tool = Tool.create({
+            number: this.currBlock.N,
+            desc: this.currBlock.comment
+          });
 
-          // this.currToolpath.setTool(tool);
+          this.currToolpath.setTool(tool);
         }
       }
 
@@ -221,24 +202,25 @@ export class NcParser extends NcEventEmitter {
          * Move the N line desc to this.currToolpath.desc
          */
         if (this.currBlock.hasToolChange) {
-          // if (this.currToolpath.tool) {
-          // if (this.currBlock.T) {
-          //   this.currToolpath.tool.number = this.currBlock.T;
-          // }
+          if (this.currToolpath.tool) {
+            if (this.currBlock.T) {
+              this.currToolpath.tool.number = this.currBlock.T;
+            }
 
-          if (this.currBlock.comment) {
-            this.currToolpath.description = this.currToolpath?.tool?.desc;
+            if (this.currBlock.comment) {
+              this.currToolpath.description = this.currToolpath?.tool?.desc;
+            }
           }
+
+          this.currToolpath.addBlock(this.currBlock);
         }
 
-        this.currToolpath.addBlock(this.currBlock);
+        this.program.appendBlock(this.currBlock);
+
+        this.prevBlock = this.currBlock;
+        // this.$emitBlock(block);
       }
-
-      this.program.appendBlock(this.currBlock);
-
-      this.prevBlock = this.currBlock;
-      // this.$emitBlock(block);
-    } // end of for
+    } // end-of-for
 
     this.machine.send("END_TOOLPATH");
     this.machine.stop();
@@ -254,15 +236,13 @@ export class NcParser extends NcEventEmitter {
   private handleMcode(): void {
     const addr = new Mcode(this.currBlock.M);
 
-    debug(`[--M--] %o`, addr.definition);
-
     this.$emitM(addr);
   }
 
   private updateModals(): void {
     this.modals = { ...this.modals, ...this.currBlock?.modals };
 
-    debug(`[MODAL] %o`, this.currBlock?.modals);
+    debug.extend("modal")(`%o`, this.currBlock?.modals);
   }
 
   private *yieldBlocks(input: string): Generator<NcBlock> {
@@ -271,31 +251,24 @@ export class NcParser extends NcEventEmitter {
 
   private setProgramName(name: string): void {
     debug(`[ PRG ] Name: %s`, name);
+
     this.program.name = name;
   }
 
-  private startCannedCycle(block: NcBlock): void {
+  private startCannedCycle(): void {
     this.machine.send("START_CANNED_CYCLE");
 
-    const cannedCycle = CannedCycle.fromBlock(block);
+    const cannedCycle = CannedCycle.fromBlock(
+      this.currBlock as NcBlock
+    );
+
+    debug.extend("canned-cycle")(
+      "%s %o",
+      cannedCycle.definition.desc,
+      cannedCycle.cycleCommand
+    );
 
     this.currToolpath.addCannedCycle(cannedCycle);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  private defineToken(token: NcToken): CodeDefinition {
-    switch (token.prefix) {
-      case "M":
-        return defineMCode(token.value as number);
-      case "G":
-        return defineGCode(token.value as number);
-      case "R":
-        return define(Addresses.R);
-      case "Q":
-        return define(Addresses.Q);
-      default:
-        return define("");
-    }
   }
 
   private updatePosition(newPosition: Partial<NcPosition>): void {
@@ -330,8 +303,10 @@ export class NcParser extends NcEventEmitter {
 
     this.$emitMovement(movement);
 
-    debug("[ MOVE] %s", G_CODE_TABLE[motionCode].desc);
-    debug("[ FROM] %o", movement.from);
-    debug("[   TO] %o", movement.to);
+    const debugMove = debug.extend("move");
+
+    debugMove("%s", G_CODE_TABLE[motionCode].desc);
+    debugMove("%o", movement.from);
+    debugMove("%o", movement.to);
   }
 }

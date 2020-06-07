@@ -1,11 +1,14 @@
 import { Token } from "ts-tokenizr";
 
+import { makeDebugger } from "@/lib";
 import {
   ParsedTokenizrValue,
   Tokens,
   TokenTypes,
   TokenValue
 } from "@/types";
+
+const debug = makeDebugger("lexer:token");
 
 export class NcToken {
   type: TokenTypes;
@@ -37,6 +40,8 @@ export class NcToken {
       this.prefix = value.prefix;
       this.value = parseFloat(value.value);
     }
+
+    debug("%s %o", this.type, this.text);
   }
 
   toString(): string {

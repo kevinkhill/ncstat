@@ -1,8 +1,14 @@
+import { makeDebugger } from "@/lib";
+
 import { NcBlock } from "../../NcParser/NcBlock";
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
 
+const debug = makeDebugger("parser:toolpath");
+
 export class Toolpath {
+  rpms?: number;
+
   static fromTool(tool: Tool): Toolpath {
     const toolpath = new Toolpath();
 
@@ -16,6 +22,8 @@ export class Toolpath {
 
   constructor(readonly blocks: NcBlock[] = []) {
     this.blocks = blocks;
+
+    debug("[ TOOL] Tool definition found");
   }
 
   get hasTool(): boolean {
@@ -26,6 +34,10 @@ export class Toolpath {
     this.tool = tool;
 
     return this;
+  }
+
+  setSetRpms(rpms: number | undefined): void {
+    this.rpms = rpms;
   }
 
   addBlock(block: NcBlock): this {

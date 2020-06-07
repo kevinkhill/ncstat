@@ -25,7 +25,7 @@ export class NcLexer extends EventEmitter {
     this.tokenizr = tokenizr;
     this.config = { ...NcLexer.defaults, ...config };
 
-    debug("Lexer created with config %o", this.config);
+    debug("Config: %o", this.config);
   }
 
   /**
@@ -45,7 +45,7 @@ export class NcLexer extends EventEmitter {
     this.tokenizr.debug(this.config.debug);
     this.tokenizr.input(input);
 
-    debug("Tokenizing input");
+    // debug("Tokenizing input");
 
     while ((token = this.getNextToken()) !== null) {
       if (token.isA("NEWLINE") && this.config.tokens.NEWLINE === false)
