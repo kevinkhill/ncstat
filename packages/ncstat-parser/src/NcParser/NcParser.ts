@@ -214,12 +214,11 @@ export class NcParser extends NcEventEmitter {
 
           this.currToolpath.addBlock(this.currBlock);
         }
-
-        this.program.appendBlock(this.currBlock);
-
-        this.prevBlock = this.currBlock;
-        // this.$emitBlock(block);
       }
+
+      // this.$emitBlock(block);
+      this.prevBlock = this.currBlock;
+      this.program.appendBlock(this.currBlock);
     } // end-of-for
 
     this.machine.send("END_TOOLPATH");

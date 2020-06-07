@@ -1,6 +1,6 @@
 import { makeDebugger } from "@/lib";
+import { NcBlock } from "@/NcParser";
 
-import { NcBlock } from "../../NcParser/NcBlock";
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
 

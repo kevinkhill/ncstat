@@ -156,6 +156,10 @@ export class NcBlock {
     );
   }
 
+  get retractCommand(): string {
+    return this.getModalGroup("GROUP_10")[0];
+  }
+
   get cannedCycleStartCode(): string | undefined {
     return intersection(CannedCycle.START_CODES, this.stringTokens)[0];
   }
@@ -174,6 +178,8 @@ export class NcBlock {
     if (token) {
       return token.value as number;
     }
+
+    return undefined;
   }
 
   get A(): number | undefined {

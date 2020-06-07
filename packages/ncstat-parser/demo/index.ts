@@ -32,18 +32,18 @@ const readFile = (file: string): Promise<string> =>
 
   // parser.getLexer().on("token", token => console.log(token));
   const contents = await readFile(DEMO_FILE);
-  const program: NcProgram = await parser.parse(contents);
+  const program: NcProgram = parser.parse(contents);
 
   // console.log(program.toString());
-  // console.log(program.getStats());
+  console.log(program.getStats());
   // console.log(
   //   program.tokens.map(token => ({
   //     text: token.text,
   //     definition: token.definition
   //   }))
   // );
-  program.blocks.forEach(block => {
-    // console.log(block);
+  program.toolpaths.forEach(toolpath => {
+    console.log(toolpath);
   });
 
   // program.withBlocks((block: NcBlock) => console.log(block));

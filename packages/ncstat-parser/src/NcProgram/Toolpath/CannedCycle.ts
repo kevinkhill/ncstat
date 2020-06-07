@@ -1,5 +1,5 @@
 import { NcBlock } from "@/NcParser/NcBlock";
-import { defineGCode, getDefinition } from "@/NcSpec";
+import { defineGCode } from "@/NcSpec";
 import { CodeDefinition } from "@/types";
 
 import { Point } from "./Point";
@@ -28,6 +28,7 @@ export class CannedCycle {
   ];
 
   static RETRACT_CODES = ["G98", "G99"];
+  definition: CodeDefinition;
 
   static fromBlock(block: NcBlock): CannedCycle {
     if (!block.isStartOfCannedCycle) {
@@ -41,7 +42,7 @@ export class CannedCycle {
       Z: block.Z,
       R: block.R,
       F: block.F,
-      retractCommand: block.retractCode as string,
+      retractCommand: block.retractCommand,
       cycleCommand: block.cannedCycleStartCode as string
     });
   }
@@ -67,10 +68,7 @@ export class CannedCycle {
     this.retractCommand = config.retractCommand;
 
     this.Q = config?.Q;
-  }
-
-  get definition(): CodeDefinition {
-    return defineGCode(this.cycleCommand);
+    this.definition = defineGCode(this.cycleCommand);
   }
 
   get peck(): number | undefined {
