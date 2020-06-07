@@ -1,17 +1,36 @@
-import { NcToken } from "@/NcLexer";
-import { Tokens } from "@/types";
+import { assertIsAddressToken, NcToken } from "@/NcLexer";
+import { define, getDefinition } from "@/NcSpec";
+import { CodeDefinition, Tokens } from "@/types";
+
+import { splitParse } from ".";
 
 export class Address {
   prefix: string;
   value: number;
 
-  constructor(token: NcToken) {
+  static fromString(address: string): Address | Mcode {
+    const { prefix, value } = splitParse(address);
+
+    return new Address(prefix, value);
+  }
+
+  static fromToken(token: NcToken): Address {
     if (token.type !== Tokens.ADDRESS) {
       throw Error(`Token must be of type "ADDR"`);
     }
 
-    this.prefix = token.value?.prefix;
-    this.value = token.value?.value;
+    assertIsAddressToken(token);
+
+    return new Address(token.prefix, token.value);
+  }
+
+  constructor(prefix: string, value: number) {
+    this.value = value;
+    this.prefix = prefix;
+  }
+
+  get definition(): CodeDefinition {
+    return getDefinition(this);
   }
 
   get isGcode(): boolean {

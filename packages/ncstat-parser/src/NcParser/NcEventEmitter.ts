@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { EventEmitter } from "eventemitter3";
 
+// import { makeDebugger } from "@/lib";
 import { NcToken } from "@/NcLexer";
 import { MovementEvent } from "@/types/machine";
 
+import { Address } from "./lib";
 import { NcBlock } from "./NcBlock";
 
 export type NcEvents =
+  | "M"
   | "eob"
   | "eof"
   | "token"
@@ -20,33 +23,45 @@ export type NcEvents =
 //   curr: NcMachineStates;
 // }
 
+// const debug = makeDebugger(`lexer:event`);
+
 export class NcEventEmitter extends EventEmitter {
   protected $emitEndOfBlock() {
-    this.emit<NcEvents>("eob");
+    this.$emit("eob");
   }
 
   protected $emitMovement(movement: MovementEvent) {
-    this.emit<NcEvents>("movement", movement);
+    this.$emit("movement", movement);
+  }
+
+  protected $emitM(mcode: Address) {
+    this.$emit("M", mcode);
   }
 
   protected $emitEndOfFile() {
-    this.emit<NcEvents>("eof");
+    this.$emit("eof");
   }
 
   protected $emitBlock(block: NcBlock) {
-    this.emit<NcEvents>("block", block);
+    this.$emit("block", block);
   }
 
   protected $emitToken(token: NcToken) {
-    this.emit<NcEvents>("token", token);
+    this.$emit("token", token);
   }
 
   // @TODO type this
   protected $emitStateChange(state: any) {
-    this.emit<NcEvents>("stateChange", state);
+    this.$emit("stateChange", state);
   }
 
   protected $emitError(error: Error) {
-    this.emit<NcEvents>("error", error);
+    this.$emit("error", error);
+  }
+
+  private $emit(event: NcEvents, ...args: unknown[]) {
+    // debug("Emitting: %o, %o", event, args);
+
+    this.emit<NcEvents>(event, ...args);
   }
 }

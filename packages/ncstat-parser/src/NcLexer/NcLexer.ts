@@ -1,8 +1,11 @@
 import { EventEmitter } from "eventemitter3";
-import { Token, Tokenizr } from "ts-tokenizr";
+import { Tokenizr } from "ts-tokenizr";
 
+import { makeDebugger } from "@/lib";
 import { NcToken, tokenizr } from "@/NcLexer";
 import { NcLexerConfig } from "@/types";
+
+const debug = makeDebugger("lexer");
 
 export class NcLexer extends EventEmitter {
   static readonly defaults = {
@@ -21,6 +24,8 @@ export class NcLexer extends EventEmitter {
     super();
     this.tokenizr = tokenizr;
     this.config = { ...NcLexer.defaults, ...config };
+
+    debug("Lexer created with config %o", this.config);
   }
 
   /**
@@ -35,10 +40,12 @@ export class NcLexer extends EventEmitter {
    * @emits token NcToken
    */
   *tokenize(input: string): Generator<NcToken> {
-    let token: Token | null;
+    let token: NcToken | null;
 
     this.tokenizr.debug(this.config.debug);
     this.tokenizr.input(input);
+
+    debug("Tokenizing input");
 
     while ((token = this.getNextToken()) !== null) {
       if (token.isA("NEWLINE") && this.config.tokens.NEWLINE === false)
@@ -53,10 +60,6 @@ export class NcLexer extends EventEmitter {
     }
   }
 
-  // private getNextToken(): Token | null {
-  //   return this.tokenizr.token();
-  // }
-
   /**
    * Wrap the generic Tokenizr token
    *
@@ -68,10 +71,6 @@ export class NcLexer extends EventEmitter {
   private getNextToken(): NcToken | null {
     const token = this.tokenizr.token();
 
-    if (token) {
-      return NcToken.from(token);
-    }
-
-    return null;
+    return token ? NcToken.from(token) : null;
   }
 }

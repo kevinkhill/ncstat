@@ -8,7 +8,8 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "dev": "cross-env DEBUG=ncstat:parser:* tsnd -r tsconfig-paths/register --clear --respawn ./demo",
+    "dev": "cross-env DEBUG=ncstat:* tsnd -r tsconfig-paths/register --clear --respawn ./demo",
+    "start": "DEBUG=ncstat:* tsnd -r tsconfig-paths/register --clear --respawn ./demo",
     "test": "jest",
     "build": "node ../../scripts/build.js"
   },

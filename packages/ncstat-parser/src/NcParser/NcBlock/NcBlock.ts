@@ -5,8 +5,7 @@ import {
   filterByPrefix,
   findByPrefix,
   findByType,
-  NcToken,
-  prefixWith
+  NcToken
 } from "@/NcLexer";
 import { CannedCycle } from "@/NcProgram";
 import { G_CODE, gCodeStrings } from "@/NcSpec";
@@ -75,7 +74,7 @@ export class NcBlock {
   }
 
   get modals(): ModalGroups {
-    return Object.keys(G_CODE).reduce((accum, group: string) => {
+    return Object.keys(G_CODE).reduce((accum, group) => {
       const modals = this.getModalGroup(group);
 
       if (modals.length > 0) {
