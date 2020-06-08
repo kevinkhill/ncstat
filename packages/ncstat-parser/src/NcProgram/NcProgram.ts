@@ -1,5 +1,6 @@
 import { get, map, max, min, reject, uniq } from "lodash/fp";
 
+import { zeroPad } from "@/lib";
 import { NcToken } from "@/NcLexer/NcToken";
 import { NcBlock } from "@/NcParser";
 import { AxesLimits, AxisLimits, HmcAxis, ProgramStats } from "@/types";
@@ -36,6 +37,36 @@ export class NcProgram {
   //   );
   // }
 
+  get header(): string[] {
+    const header: string[] = [];
+
+    for (const block of this.blocks.slice(2)) {
+      if (block.comment) header.push(block?.comment);
+      if (block.isEmpty) break;
+    }
+
+    return header;
+  }
+
+  queryHeader(
+    searchKey: string,
+    separator = " - "
+  ): string | undefined {
+    const comment = this.header.find(c => c.startsWith(searchKey));
+
+    return comment ? comment.split(separator)[1] : undefined;
+  }
+
+  get offsets(): string[] {
+    return this.blocks.reduce((accum: string[], block: NcBlock) => {
+      if (block.workOffset) {
+        accum.push(block.workOffset);
+      }
+
+      return accum;
+    }, [] as string[]);
+  }
+
   get toolpathCount(): number {
     return this.toolpaths.length;
   }
@@ -69,6 +100,12 @@ export class NcProgram {
 
   toString(): string {
     return this.blocks.join("\n");
+  }
+
+  toStringWithLineNumbers(): string {
+    return this.blocks
+      .map((value, index) => `N${zeroPad(index)} ${value}`)
+      .join("\n");
   }
 
   appendBlock(block: NcBlock): this {

@@ -30,3 +30,6 @@ export function findByType(
 ): NcToken | undefined {
   return tokens.find(token => token.isA(type));
 }
+
+export const getGcodes = filterByPrefix.bind(null, "G");
+export const getMcodes = filterByPrefix.bind(null, "M");

@@ -64,14 +64,13 @@ export class NcBlock {
     return undefined;
   }
 
-  getModalGroup(group: string): string[] | undefined {
-    // isValidModalGroup(group);
+  getModalByGroup(group: ModalGroupStrings): string | undefined {
+    isValidModalGroup(group);
 
-    if (group in Object.keys(G_CODE)) {
-      return intersection(
-        this.gCodes,
-        gCodeStrings(group as ModalGroupStrings)
-      );
+    const result = intersection(this.gCodes, gCodeStrings(group));
+
+    if (result.length > 0) {
+      return result[0];
     }
 
     return undefined;
@@ -84,14 +83,17 @@ export class NcBlock {
   }
 
   get modals(): ModalGroups {
-    return Object.keys(G_CODE).reduce((accum, group) => {
+    const groups = Object.keys(G_CODE);
+
+    // @TODO look into this
+    return groups.reduce((accum, group) => {
       isValidModalGroup(group);
 
-      const modals = this.getModalGroup(group);
+      const modal = this.getModalByGroup(group);
 
-      if (modals && modals.length > 0) {
-        // @ts-ignore
-        accum[group as ModalGroupStrings] = modals[0];
+      if (modal) {
+        // eslint-disable-next-line no-param-reassign
+        accum = Object.assign(accum, { [group]: modal });
       }
 
       return accum;
@@ -107,6 +109,7 @@ export class NcBlock {
   }
 
   get position(): Partial<NcPosition> {
+    // @TODO use a constant from somewhere for this
     const axes = ["X", "Y", "Z", "B"];
     const position: Partial<NcPosition> = {};
 
@@ -133,8 +136,19 @@ export class NcBlock {
     );
   }
 
+  // get isCommentBlock(): boolean {
+  //   return (
+  //     this.tokens[0]?.type === Tokens.COMMENT &&
+  //     this.tokens[1]?.type === Tokens.NEWLINE
+  //   );
+  // }
+
+  get isEmpty(): boolean {
+    return this.tokens.length === 0;
+  }
+
   get comment(): string | undefined {
-    const token: CommentToken | undefined = findByType(
+    const token: CommentToken = findByType(
       Tokens.COMMENT,
       this.tokens
     ) as CommentToken;
@@ -170,9 +184,11 @@ export class NcBlock {
   }
 
   get retractCommand(): string | undefined {
-    const modal = this.getModalGroup("GROUP_10");
+    return this.getModalByGroup("GROUP_10");
+  }
 
-    return modal ? modal[0] : undefined;
+  get workOffset(): string | undefined {
+    return this.getModalByGroup("GROUP_12");
   }
 
   get cannedCycleStartCode(): string | undefined {

@@ -2,7 +2,7 @@ import { Modals } from "@/NcSpec";
 
 export interface ModalGroups {
   // @TODO this is bad, FIX THIS
-  // [K: string]: string;
+  [K: string]: string;
 
   // motion
   GROUP_01: Modals.RAPID | Modals.FEED;
