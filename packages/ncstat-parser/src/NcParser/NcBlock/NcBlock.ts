@@ -1,6 +1,6 @@
 import { intersection } from "lodash/fp";
 
-import { zeroPadAddress } from "@/lib";
+import { isValidModalGroup, zeroPadAddress } from "@/lib";
 import {
   filterByPrefix,
   findByPrefix,
@@ -12,6 +12,7 @@ import { G_CODE, gCodeStrings } from "@/NcSpec";
 import {
   CommentToken,
   ModalGroups,
+  ModalGroupStrings,
   NcPosition,
   Tags,
   Tokens
@@ -63,8 +64,17 @@ export class NcBlock {
     return undefined;
   }
 
-  getModalGroup(group: keyof ModalGroups): string[] {
-    return intersection(this.gCodes, gCodeStrings(group));
+  getModalGroup(group: string): string[] | undefined {
+    // isValidModalGroup(group);
+
+    if (group in Object.keys(G_CODE)) {
+      return intersection(
+        this.gCodes,
+        gCodeStrings(group as ModalGroupStrings)
+      );
+    }
+
+    return undefined;
   }
 
   get gCodes(): string[] {
@@ -75,10 +85,13 @@ export class NcBlock {
 
   get modals(): ModalGroups {
     return Object.keys(G_CODE).reduce((accum, group) => {
+      isValidModalGroup(group);
+
       const modals = this.getModalGroup(group);
 
-      if (modals.length > 0) {
-        accum[group] = modals;
+      if (modals && modals.length > 0) {
+        // @ts-ignore
+        accum[group as ModalGroupStrings] = modals[0];
       }
 
       return accum;
@@ -124,7 +137,7 @@ export class NcBlock {
     const token: CommentToken | undefined = findByType(
       Tokens.COMMENT,
       this.tokens
-    );
+    ) as CommentToken;
 
     return token?.value;
   }
@@ -156,8 +169,10 @@ export class NcBlock {
     );
   }
 
-  get retractCommand(): string {
-    return this.getModalGroup("GROUP_10")[0];
+  get retractCommand(): string | undefined {
+    const modal = this.getModalGroup("GROUP_10");
+
+    return modal ? modal[0] : undefined;
   }
 
   get cannedCycleStartCode(): string | undefined {

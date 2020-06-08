@@ -113,7 +113,7 @@ export class NcParser extends NcEventEmitter {
 
       // Example: O2134 ( NAME )
       if (this.currBlock.O) {
-        debug("[ PRG ] Number: %d", this.currBlock.O);
+        debug.extend("program")("Number: %o", this.currBlock.O);
         this.program.number = this.currBlock.O;
 
         if (this.currBlock.comment) {
@@ -184,8 +184,8 @@ export class NcParser extends NcEventEmitter {
           this.currToolpath = new Toolpath();
 
           const tool = Tool.create({
-            number: this.currBlock.N,
-            desc: this.currBlock.comment
+            number: this.currBlock.N as number,
+            desc: this.currBlock.comment as string
           });
 
           this.currToolpath.setTool(tool);
@@ -233,7 +233,7 @@ export class NcParser extends NcEventEmitter {
   }
 
   private handleMcode(): void {
-    const addr = new Mcode(this.currBlock.M);
+    const addr = new Mcode(this.currBlock?.M as number);
 
     this.$emitM(addr);
   }
@@ -249,7 +249,7 @@ export class NcParser extends NcEventEmitter {
   }
 
   private setProgramName(name: string): void {
-    debug(`[ PRG ] Name: %s`, name);
+    debug.extend("program")(`Name: %o`, name);
 
     this.program.name = name;
   }

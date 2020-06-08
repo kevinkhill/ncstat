@@ -12,11 +12,9 @@ export const stripPrefix = (input: string): number =>
   parseInt(input.substring(1));
 
 export function getDefinition(address: Address): CodeDefinition {
-  if (address.prefix === "M") {
-    return defineMCode(address.value);
-  }
+  const lookupFn = address.prefix === "M" ? defineMCode : defineGCode;
 
-  return defineGCode(address.value);
+  return lookupFn(address.toString());
 }
 
 /**

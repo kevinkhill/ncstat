@@ -1,4 +1,4 @@
-import { ModalGroups } from "@/types";
+import { ModalGroupStrings } from "@/types";
 
 // motion
 const GROUP_01 = [
@@ -53,7 +53,7 @@ export const WORK_COORDINATE_SYSTEM = GROUP_12;
 /**
  * Arrays of G Codes, grouped by their respective GROUP_nn
  */
-export const G_CODE: Record<keyof ModalGroups, string[]> = {
+export const G_CODE: Record<ModalGroupStrings, string[]> = {
   GROUP_01,
   GROUP_02,
   GROUP_03,
@@ -68,13 +68,13 @@ export const G_CODE: Record<keyof ModalGroups, string[]> = {
 /**
  * Returns an array of G Codes, as strings, given the name of a group
  */
-export function gCodeStrings(group: keyof ModalGroups): string[] {
+export function gCodeStrings(group: ModalGroupStrings): string[] {
   return G_CODE[group];
 }
 
 /**
  * Returns an array of G Codes, as integers, given the name of a group
  */
-export function gCodeNumbers(group: keyof ModalGroups): number[] {
+export function gCodeNumbers(group: ModalGroupStrings): number[] {
   return G_CODE[group].map(code => parseInt(code.substring(1)));
 }

@@ -38,10 +38,10 @@ export class CannedCycle {
     }
 
     return new CannedCycle({
-      Q: block.Q,
-      Z: block.Z,
-      R: block.R,
-      F: block.F,
+      Q: block?.Q as number,
+      Z: block?.Z as number,
+      R: block?.R as number,
+      F: block?.F as number,
       retractCommand: block.retractCommand,
       cycleCommand: block.cannedCycleStartCode as string
     });

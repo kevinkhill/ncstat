@@ -1,4 +1,4 @@
-import { filter, get, map, max, min, reject, uniq } from "lodash/fp";
+import { get, map, max, min, reject, uniq } from "lodash/fp";
 
 import { NcToken } from "@/NcLexer/NcToken";
 import { NcBlock } from "@/NcParser";

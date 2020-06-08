@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { EventEmitter } from "eventemitter3";
 
-import { makeDebugger } from "@/lib";
+// import { makeDebugger } from "@/lib";
 import { NcToken } from "@/NcLexer";
 import { MovementEvent } from "@/types/machine";
 
@@ -23,7 +23,7 @@ export type NcEvents =
 //   curr: NcMachineStates;
 // }
 
-const debug = makeDebugger(`parser:event`);
+// const debug = makeDebugger(`parser:event`);
 
 export class NcEventEmitter extends EventEmitter {
   protected $emitEndOfBlock() {
