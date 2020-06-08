@@ -42,7 +42,7 @@ export class CannedCycle {
       Z: block?.Z as number,
       R: block?.R as number,
       F: block?.F as number,
-      retractCommand: block.retractCommand,
+      retractCommand: block.retractCommand as string,
       cycleCommand: block.cannedCycleStartCode as string
     });
   }
