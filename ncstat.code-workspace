@@ -21,21 +21,13 @@
     }
   ],
   "settings": {
-    "jest.disabledWorkspaceFolders": [
-      "<root>",
-      "ncstat",
-      "ncstat-parser",
-      "ncstat-cli",
-      "ncstat-server",
-      "ncstat-webui"
-    ],
     "eslint.format.enable": true,
     "eslint.packageManager": "yarn",
     "eslint.workingDirectories": [
       {
+        "changeProcessCWD": true,
         "pattern": "./packages/*/src"
       }
-    ],
-    "jest.autoEnable": false
+    ]
   }
 }

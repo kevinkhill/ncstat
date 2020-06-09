@@ -46,6 +46,10 @@ describe("Analysis", () => {
     expect(program.name).toBe("SIMPLE");
   });
 
+  it(`to have 1 toolpath`, () => {
+    expect(program.toolpathCount).toBe(1);
+  });
+
   it(`toolpath to be using "G54"`, () => {
     expect(program.offsets).toContain("G54");
   });
@@ -88,11 +92,13 @@ describe(`Header`, () => {
 });
 
 describe(`Toolpaths`, () => {
-  it(`to have 1 toolpath`, () => {
-    expect(program.toolpathCount).toBe(1);
+  const toolpath = program.getToolpath(0);
+
+  it(`to be an instance of Toolpath`, () => {
+    expect(toolpath).toBeInstanceOf(Toolpath);
   });
 
-  it(`to have 1 toolpath`, () => {
+  it(`to be an instance of Toolpath`, () => {
     const toolpath = program.getToolpath(0);
 
     expect(toolpath).toBeInstanceOf(Toolpath);
@@ -107,11 +113,11 @@ describe(`Tools`, () => {
   // });
 
   it(`tool number is 43`, () => {
-    expect(tools[0]?.number).toBe(43);
+    expect(tools[0].number).toBe(43);
   });
 
   it(`tool name is "#14 [.182"] DRILL, CARB, TSC"`, () => {
-    expect(tools[0]?.desc).toBe(`#14 [.182\"] DRILL, CARB, TSC`);
+    expect(tools[0].desc).toBe(`#14 [.182\"] DRILL, CARB, TSC`);
   });
 });
 

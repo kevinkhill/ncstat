@@ -8,4 +8,4 @@ export * from "./stats";
 export * from "./tokens";
 
 export type Tags = Set<string>;
-export type StringDict = Record<string, string>;
+export type StringDict = Record<string, string | undefined>;
