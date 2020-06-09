@@ -7,23 +7,22 @@ import { Tool } from "./Tool";
 const debug = makeDebugger("parser:toolpath");
 
 export class Toolpath {
-  rpms?: number;
-
   static fromTool(tool: Tool): Toolpath {
     const toolpath = new Toolpath();
 
     return toolpath.setTool(tool);
   }
 
-  tool?: Tool;
-  hasCoolant = false;
+  rpms?: number;
   description?: string;
+  tool = new Tool();
+  hasCoolant = false;
   cannedCycles: CannedCycle[] = [];
 
   constructor(readonly blocks: NcBlock[] = []) {
     this.blocks = blocks;
 
-    debug("[ TOOL] Tool definition found");
+    debug("Creating toolpath");
   }
 
   get hasTool(): boolean {

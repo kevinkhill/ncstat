@@ -8,11 +8,11 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest",
     "dev": "cross-env DEBUG=ncstat:* tsnd -r tsconfig-paths/register --clear --respawn ./demo",
-    "start": "DEBUG=ncstat:* tsnd -r tsconfig-paths/register --clear --respawn ./demo",
-    "test:basic": "yarn test basic.test",
-    "build": "node ../../scripts/build.js"
+    "start": "cross-env DEBUG=ncstat:* tsnd -r tsconfig-paths/register --clear --respawn ./demo",
+    "build": "node ../../scripts/build.js",
+    "test:NcProgram": "yarn test --watch NcProgram"
   },
   "dependencies": {
     "debug": "^4.1.1",

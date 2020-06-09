@@ -3,9 +3,15 @@ import { get, map, max, min, reject, uniq } from "lodash/fp";
 import { zeroPad } from "@/lib";
 import { NcToken } from "@/NcLexer/NcToken";
 import { NcBlock } from "@/NcParser";
-import { AxesLimits, AxisLimits, HmcAxis, ProgramStats } from "@/types";
+import {
+  AxesLimits,
+  AxisLimits,
+  HmcAxis,
+  ProgramStats,
+  StringDict
+} from "@/types";
 
-import { Toolpath } from "./Toolpath";
+import { Tool, Toolpath } from "./Toolpath";
 
 export class NcProgram {
   readonly blocks: NcBlock[] = [];
@@ -13,7 +19,9 @@ export class NcProgram {
 
   name: string | null = null;
   number!: number;
-
+  defaults = {
+    headerSeparator: " - "
+  };
   // constructor() {}
 
   get tokens(): NcToken[] {
@@ -37,24 +45,16 @@ export class NcProgram {
   //   );
   // }
 
-  get header(): string[] {
-    const header: string[] = [];
+  get header(): StringDict {
+    const header = this.getHeader();
 
-    for (const block of this.blocks.slice(2)) {
-      if (block.comment) header.push(block?.comment);
-      if (block.isEmpty) break;
-    }
+    return header.reduce((accum, line) => {
+      const [key, value] = line.split(this.defaults.headerSeparator);
 
-    return header;
-  }
+      accum[key] = value;
 
-  queryHeader(
-    searchKey: string,
-    separator = " - "
-  ): string | undefined {
-    const comment = this.header.find(c => c.startsWith(searchKey));
-
-    return comment ? comment.split(separator)[1] : undefined;
+      return accum;
+    }, {} as StringDict);
   }
 
   get offsets(): string[] {
@@ -128,6 +128,34 @@ export class NcProgram {
 
   withBlocks(fn: (block: NcBlock) => void): void {
     return this.blocks.forEach(fn);
+  }
+
+  queryHeader(searchKey: string): string | undefined {
+    const header = this.getHeader();
+    const comment = header.find(c => c.startsWith(searchKey));
+
+    return comment
+      ? comment.split(this.defaults.headerSeparator)[1]
+      : undefined;
+  }
+
+  getHeader(): string[] {
+    const header: string[] = [];
+
+    /**
+     * Skip over % and program number
+     * collect comments until a blank line is found
+     */
+    for (const block of this.blocks.slice(2)) {
+      if (block.comment) header.push(block?.comment);
+      if (block.isEmpty) break;
+    }
+
+    return header;
+  }
+
+  getTools(): Tool[] {
+    return this.toolpaths.map(toolpath => toolpath.tool);
   }
 
   getToolpath(index: number): Toolpath {
