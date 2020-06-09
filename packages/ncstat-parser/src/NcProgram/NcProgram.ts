@@ -1,4 +1,4 @@
-import { get, map, max, min, reject, uniq, prop } from "lodash/fp";
+import { get, map, max, min, reject, uniq } from "lodash/fp";
 
 import { zeroPad } from "@/lib";
 import { NcToken } from "@/NcLexer/NcToken";
@@ -11,13 +11,14 @@ import {
   StringDict
 } from "@/types";
 
-import { Tool, Toolpath } from "./Toolpath";
 import { NcRegion } from "./NcRegion";
+import { Tool, Toolpath } from "./Toolpath";
+
+export const HEADER_START_LINE = 2;
 
 export class NcProgram {
   readonly blocks: NcBlock[] = [];
   readonly toolpaths: Toolpath[] = [];
-  readonly HEADER_START_LINE = 2;
 
   name: string | null = null;
   number!: number;
@@ -73,6 +74,42 @@ export class NcProgram {
     }, {} as StringDict);
   }
 
+  get g10s(): string[] {
+    return this.reduceToArray((uses, block) => {
+      if (block.gCodes.includes("G10")) {
+        uses.push(block.toString());
+      }
+
+      return uses;
+    });
+  }
+
+  // get g10s(): string[] {
+  //   return reduce(
+  //     (uses, block: NcBlock) => {
+  //       if (block.gCodes.includes("G10")) {
+  //         uses.push(block.toString());
+  //       }
+
+  //       return uses;
+  //     },
+  //     [] as string[],
+  //     this.blocks
+  //   );
+  // }
+
+  get uses(): string[] {
+    return this.blocks.reduce((uses, block: NcBlock) => {
+      if (block.comment && block.comment.startsWith("USE")) {
+        const useText = block.comment.replace(/^USE/, "").trim();
+
+        uses.push(useText);
+      }
+
+      return uses;
+    }, [] as string[]);
+  }
+
   get offsets(): string[] {
     return this.blocks.reduce((accum: string[], block: NcBlock) => {
       if (block.workOffset) {
@@ -121,7 +158,7 @@ export class NcProgram {
      * program number, collecting comments until
      * a blank line is found.
      */
-    return this.collectCommentsFrom(this.HEADER_START_LINE);
+    return this.collectCommentsFrom(HEADER_START_LINE);
   }
 
   /**
@@ -138,8 +175,7 @@ export class NcProgram {
    * posted programs.
    */
   getSubHeader(): string[] {
-    const endLineNum =
-      this.HEADER_START_LINE + this.getHeader().length + 1;
+    const endLineNum = HEADER_START_LINE + this.getHeader().length + 1;
 
     return this.collectBlocksFrom(endLineNum).map(block =>
       block.toString()
@@ -158,10 +194,9 @@ export class NcProgram {
    */
   getNotes(): string[] {
     const endLineNum =
-      this.HEADER_START_LINE +
-      this.getHeader().length +
-      this.getSubHeader().length +
-      2;
+      HEADER_START_LINE +
+      (this.getHeader().length + 1) +
+      (this.getSubHeader().length + 1);
 
     return this.collectCommentsFrom(endLineNum);
   }
@@ -269,21 +304,33 @@ export class NcProgram {
    * Given a starting line and a predicate that will
    * test the block for an end condition.
    */
-  // @ts-ignore
-  private createRegionFrom(
+  createRegion(
     start: number,
-    endAt?: (block: NcBlock) => boolean
-  ): NcBlock[] {
-    const blocks: NcBlock[] = [];
+    endTest?: (block: NcBlock) => boolean
+  ): NcRegion {
+    const region = new NcRegion();
 
-    const test = endAt ?? prop("isEmpty");
+    const endFn = endTest ?? NcBlock.test.isEmptyBlock;
 
     for (const block of this.blocks.slice(start)) {
-      blocks.push(block);
-
-      if (test(block)) break;
+      if (endFn(block)) break;
+      region.push(block);
     }
 
-    return blocks;
+    return region;
+  }
+
+  /**
+   * Itterate the blocks with a reducer
+   */
+  private reduceToArray(
+    reducer: (
+      previousValue: string[],
+      currentValue: NcBlock,
+      currentIndex: number,
+      array: NcBlock[]
+    ) => string[]
+  ): string[] {
+    return this.blocks.reduce(reducer, [] as string[]);
   }
 }

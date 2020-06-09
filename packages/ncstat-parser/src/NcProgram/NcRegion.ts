@@ -9,8 +9,21 @@ export class NcRegion {
   blocks: NcBlock[] = [];
   endTestFn!: (block: NcBlock) => boolean;
 
-  constructor(private $blocks: NcBlock[]) {
+  constructor(private $blocks: NcBlock[] = []) {
     this.$blocks = $blocks;
+
+    // this.find = this.blocks.find;
+    // this.reduce = this.blocks.reduce;
+  }
+
+  get length(): number {
+    return this.blocks.length;
+  }
+
+  push(block: NcBlock): this {
+    this.blocks.push(block);
+
+    return this;
   }
 
   start(start: number): this {
@@ -23,7 +36,7 @@ export class NcRegion {
     return this;
   }
 
-  endAt(test: (block: NcBlock) => boolean) {
+  endAt(test: (block: NcBlock) => boolean): this {
     if (typeof this.start === "undefined") {
       throw Error("from() must be called before endAt()");
     }
@@ -49,9 +62,19 @@ export class NcRegion {
     return this;
   }
 
-  addBlock(block: NcBlock): this {
-    this.blocks.push(block);
+  toArray(): string[] {
+    return this.blocks.reduce((blocks, block) => {
+      if (block.comment && block.isCommentBlock) {
+        blocks.push(block.comment);
+      } else {
+        blocks.push(block.toString());
+      }
 
-    return this;
+      return blocks;
+    }, [] as string[]);
+  }
+
+  toString(): string {
+    return this.blocks.map(block => block.toString()).join("\n");
   }
 }

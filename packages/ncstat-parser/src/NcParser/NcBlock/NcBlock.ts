@@ -1,4 +1,4 @@
-import { intersection } from "lodash/fp";
+import { intersection, prop } from "lodash/fp";
 
 import { isValidModalGroup, zeroPadAddress } from "@/lib";
 import {
@@ -21,6 +21,10 @@ import {
 export class NcBlock {
   readonly tags: Tags = new Set<string>();
   readonly tokens: NcToken[] = [];
+
+  static test = {
+    isEmptyBlock: prop<NcBlock, "isEmpty">("isEmpty")
+  };
 
   static create(tokens: NcToken[]): NcBlock {
     return new NcBlock(tokens);
@@ -145,6 +149,12 @@ export class NcBlock {
 
   get isEmpty(): boolean {
     return this.tokens.length === 0;
+  }
+
+  get isCommentBlock(): boolean {
+    return (
+      this.tokens.length === 1 && this.tokens[0].isA(Tokens.COMMENT)
+    );
   }
 
   get comment(): string | undefined {

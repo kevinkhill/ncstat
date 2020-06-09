@@ -32,7 +32,7 @@ G0 G90 G54
 const parser = new NcParser();
 const program: NcProgram = parser.parse(simpleProgram);
 
-describe("Regions", () => {
+describe(`"Header" sections of the program`, () => {
   describe(`first region, identified as the "header"`, () => {
     it(`is 4 lines long`, () => {
       expect(program.getHeader()).toHaveLength(4);
@@ -48,6 +48,18 @@ describe("Regions", () => {
   describe(`third section, identified as "notes"`, () => {
     it(`is 4 lines long`, () => {
       expect(program.getNotes()).toHaveLength(4);
+    });
+  });
+
+  describe(`"USE" regions / comments`, () => {
+    it(`can have "( USES ... )" comments extracted`, () => {
+      expect(program.uses).toHaveLength(3);
+    });
+
+    it(`has uses comments extracted`, () => {
+      expect(program.uses[0]).toBe("TOOLEX");
+      expect(program.uses[1]).toBe("1.625 PARALLELS");
+      expect(program.uses[2]).toBe("RH STOPS");
     });
   });
 });
