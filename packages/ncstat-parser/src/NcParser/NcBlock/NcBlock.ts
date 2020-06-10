@@ -1,6 +1,6 @@
 import { intersection, prop } from "lodash/fp";
 
-import { isValidModalGroup, zeroPadAddress } from "@/lib";
+import { isValidModalGroup, unwrap, zeroPadAddress } from "@/lib";
 import {
   filterByPrefix,
   findByPrefix,
@@ -23,6 +23,7 @@ export const isEmptyBlock = prop<NcBlock, "isEmpty">("isEmpty");
 export class NcBlock {
   readonly tags: Tags = new Set<string>();
   readonly tokens: NcToken[] = [];
+  readonly sourceLine: number;
 
   static test = {
     isEmptyBlock: prop<NcBlock, "isEmpty">("isEmpty")
@@ -34,9 +35,17 @@ export class NcBlock {
 
   constructor(tokens: NcToken[]) {
     this.tokens = tokens;
+
+    this.sourceLine = this.tokens[0].line;
   }
 
-  toString(): string {
+  toString(options = { includeNewlines: false }): string {
+    if (options.includeNewlines) {
+      return this.stringTokens.join(" ");
+    }
+
+    this.stringTokens.pop();
+
     return this.stringTokens.join(" ");
   }
 
@@ -128,12 +137,8 @@ export class NcBlock {
     }, position);
   }
 
-  get tokenCount(): number | undefined {
+  get tokenCount(): number {
     return this.tokens.length;
-  }
-
-  get lineNumber(): number | undefined {
-    return this.N;
   }
 
   get hasComment(): boolean {
@@ -150,7 +155,9 @@ export class NcBlock {
   // }
 
   get isEmpty(): boolean {
-    return this.tokens.length === 0;
+    const tokenIsNewline = this.tokens[0].isA(Tokens.NEWLINE);
+
+    return this.tokens.length === 1 && tokenIsNewline;
   }
 
   get isCommentBlock(): boolean {
@@ -165,7 +172,11 @@ export class NcBlock {
       this.tokens
     ) as CommentToken;
 
-    return token?.value;
+    if (token?.value) {
+      return unwrap(token.value);
+    }
+
+    return undefined;
   }
 
   get hasToolCall(): boolean {

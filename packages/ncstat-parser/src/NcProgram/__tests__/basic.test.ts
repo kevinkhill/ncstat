@@ -29,11 +29,11 @@ M30
 const program = parseSource(simpleProgram);
 
 describe("Analysis", () => {
-  it(`has 42 tokens`, () => {
-    expect(program.tokenCount).toBe(42);
+  it(`has 65 tokens`, () => {
+    expect(program.tokenCount).toBe(65);
   });
 
-  it(`has 23 blocks / lines`, () => {
+  it(`has 23 blocks (lines)`, () => {
     expect(program.blockCount).toBe(23);
   });
 
@@ -119,31 +119,3 @@ describe(`Tools`, () => {
     expect(tools[0].desc).toBe(`#14 [.182\"] DRILL, CARB, TSC`);
   });
 });
-
-//   it.skip('can be output with line numbers "Nnnn"', () => {
-//     const numberedProgram = `%
-// N0001 O1234 (SIMPLE)
-// N0002 (DATE - JUN. 06 2020)
-// N0003 (TIME - 9:02 AM)
-// N0004 (MCX FILE - V:\\TEST\\EXAMPLE\\SIMPLE.MCAM)
-// N0005 (NC FILE - V:\\TEST\\EXAMPLE\\SIMPLE.NC)
-// N0006
-// N0007 43 ( #14 [.182"] DRILL, CARB, TSC )
-// N0008 T43 M6
-// N0009 M01 ( #14 [.182"] DRILL, CARB, TSC )
-// N0010 G0 G90 G54
-// N0011 X1.75 Y.19 S10495 M3
-// N0012 M50 (TSC COOLANT ON)
-// N0013 G4 X2.
-// N0014 G43 H43 Z1. T44
-// N0015 G98 G81 Z-.5631 R.1 F83.96
-// N0016 X.75
-// N0017 Y1.81
-// N0018 X1.75
-// N0019 G80
-// N0020 M5
-// N0021 G91 G28 Z0.
-// N0022 M30
-// %`
-//     expect(numberedProgram).toBe(program.toStringWithLineNumbers());
-//   })

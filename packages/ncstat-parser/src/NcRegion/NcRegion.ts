@@ -9,6 +9,9 @@ export class NcRegion {
   blocks: NcBlock[] = [];
   endTestFn!: (block: NcBlock) => boolean;
 
+  end!: number;
+  start!: number;
+
   constructor(private $blocks: NcBlock[] = []) {
     this.$blocks = $blocks;
   }
@@ -23,9 +26,9 @@ export class NcRegion {
     return this;
   }
 
-  start(start: number): this {
+  startAt(start: number): this {
     if (typeof start !== "number") {
-      throw Error("start() must be a number");
+      throw Error("startAt() must be a number");
     }
 
     this.startLine = start;
@@ -34,7 +37,7 @@ export class NcRegion {
   }
 
   endAt(test: (block: NcBlock) => boolean): this {
-    if (typeof this.start === "undefined") {
+    if (typeof this.startAt === "undefined") {
       throw Error("from() must be called before endAt()");
     }
 
@@ -44,7 +47,7 @@ export class NcRegion {
   }
 
   collect(): NcRegion {
-    if (typeof this.start === "undefined") {
+    if (typeof this.startAt === "undefined") {
       throw Error("start() must be called before collect()");
     }
 
@@ -79,22 +82,3 @@ export class NcRegion {
     }, [] as string[]);
   }
 }
-
-/**
- * Create a {@link NcRegion} factory
- *
- * This method takes a starting line as it's input
- * to produce a function that will create a {@link NcRegion}
- * starting from the bound line, consuming lines
- * untill a blank line
- */
-export const regionFactory = (start: number) => (
-  blocks: NcBlock[]
-): NcRegion => {
-  // eslint-disable-next-line prettier/prettier
-  return NcRegion
-    .fromBlocks(blocks)
-    .start(start)
-    .endAt(block => block.isEmpty)
-    .collect();
-};

@@ -1,7 +1,7 @@
 import { clone, eq, isEmpty, last } from "lodash/fp";
 
 import { makeDebugger } from "@/lib";
-import { NcLexer } from "@/NcLexer";
+import { NcLexer, NcToken } from "@/NcLexer";
 import { CannedCycle, NcProgram, Tool, Toolpath } from "@/NcProgram";
 import {
   NcMachineState,
@@ -9,12 +9,16 @@ import {
   NcService
 } from "@/NcService";
 import { G_CODE_TABLE, Modals } from "@/NcSpec";
-import { ModalGroups, NcParserConfig, NcPosition } from "@/types";
+import {
+  ModalGroups,
+  NcParserConfig,
+  NcPosition,
+  Tokens
+} from "@/types";
 import { MovementEvent } from "@/types/machine";
 
 import { Mcode } from "./lib";
 import { NcBlock } from "./NcBlock";
-import { blockGenerator } from "./NcBlock/blockGenerator";
 import { NcEventEmitter } from "./NcEventEmitter";
 
 const isIdle = eq(NcMachineState.IDLE);
@@ -245,7 +249,18 @@ export class NcParser extends NcEventEmitter {
   }
 
   private *yieldBlocks(input: string): Generator<NcBlock> {
-    yield* blockGenerator(this.lexer.tokenize(input));
+    let lineTokens: NcToken[] = [];
+
+    for (const token of this.lexer.tokenize(input)) {
+      lineTokens.push(token);
+
+      if (token.type === Tokens.NEWLINE) {
+        yield new NcBlock(lineTokens);
+
+        lineTokens = [];
+      }
+    }
+    // yield* blockGenerator(this.lexer.tokenize(input));
   }
 
   private setProgramName(name: string): void {

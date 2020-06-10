@@ -1,5 +1,7 @@
 import Debug from "debug";
 
+import { assertIsString } from "../../../ts-tokenizr/src/lib/guards";
+
 export * from "./guards";
 
 /**
@@ -20,6 +22,15 @@ export function zeroPadAddress(input: string): string {
  */
 export function zeroPad(input: number): string {
   return `0000${input}`.slice(-4);
+}
+
+export function unwrap(str?: string): string {
+  assertIsString(str);
+
+  return str
+    .replace("(", "")
+    .replace(")", "")
+    .trim();
 }
 
 export const debug = Debug("ncstat");

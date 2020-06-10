@@ -3,6 +3,7 @@ import { get, map, max, min, reject, uniq } from "lodash/fp";
 import { zeroPad } from "@/lib";
 import { NcToken } from "@/NcLexer/NcToken";
 import { NcBlock } from "@/NcParser";
+import { NcRegion, regionFactory } from "@/NcRegion";
 import {
   AxesLimits,
   AxisLimits,
@@ -11,7 +12,6 @@ import {
   StringDict
 } from "@/types";
 
-import { NcRegion, regionFactory } from "./NcRegion";
 import { Tool, Toolpath } from "./Toolpath";
 
 export const HEADER_START_LINE = 2;
@@ -127,6 +127,59 @@ export class NcProgram {
       Y: this.getAxisLimits("Y"),
       Z: this.getAxisLimits("Z")
     };
+  }
+
+  /**
+   * @TODO fix thiiiiiiiiiiiiis
+   */
+  get regions(): Array<{ from: number; to: number }> {
+    const regionSpans = [];
+
+    const firstRegionSpan = {
+      from: HEADER_START_LINE,
+      to: this.blankLines[0]
+    };
+
+    const lastRegionSpan = {
+      from: this.blankLines[this.blankLineCount - 1],
+      to: this.blockCount - 1
+    };
+
+    this.blankLines.forEach(lineNumber => {
+      if (idx === 1) {
+        return { from: firstRegionSpan.to, to: lineNumber };
+      }
+
+      if (idx === this.blankLines.length) {
+        return {
+          from: lastRegionSpan.from + 1,
+          to: lineNumber
+        };
+      }
+    });
+
+    return [
+      { from: HEADER_START_LINE, to: this.blankLines[0] },
+      {
+        from: this.blankLines[this.blankLineCount - 1],
+        to: this.blockCount - 1
+      }
+    ];
+  }
+
+  get blankLines(): number[] {
+    return this.blocks.reduce((accum, block) => {
+      if (block.isEmpty) {
+        accum.push(block.sourceLine - 1);
+      }
+
+      // console.log("===accum===", accum);
+      return accum;
+    }, [] as number[]);
+  }
+
+  get blankLineCount(): number {
+    return this.blankLines.length;
   }
 
   // get workOffsets(): number[] {
@@ -245,10 +298,6 @@ export class NcProgram {
   //   return this;
   // }
 
-  withBlocks(fn: (block: NcBlock) => void): void {
-    return this.blocks.forEach(fn);
-  }
-
   queryHeader(searchKey: string): string | undefined {
     const header = this.getHeader();
     const comment = header.find(c => c.startsWith(searchKey));
@@ -268,11 +317,6 @@ export class NcProgram {
       .join("\n");
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  get regionSeparations(): number[] {
-    return [1, 2];
-  }
-
   getRegion(): NcRegion {
     return this.getRegionFromLine(2);
   }
@@ -287,28 +331,6 @@ export class NcProgram {
     const getRegion = regionFactory(startLine);
 
     return getRegion(this.blocks);
-  }
-
-  /**
-   * Create a NcRegion from a start line and end test
-   *
-   * Given a starting line and a predicate that will
-   * test the block for an end condition.
-   */
-  createRegion(
-    start: number,
-    endTest?: (block: NcBlock) => boolean
-  ): NcRegion {
-    const region = new NcRegion();
-
-    const endFn = endTest ?? NcBlock.test.isEmptyBlock;
-
-    for (const block of this.blocks.slice(start)) {
-      if (endFn(block)) break;
-      region.push(block);
-    }
-
-    return region;
   }
 
   private collectCommentsFrom(start: number): string[] {
@@ -334,7 +356,7 @@ export class NcProgram {
   }
 
   /**
-   * Itterate the blocks with a reducer
+   * Iterate the blocks with a reducer
    */
   private reduceToArray(
     reducer: (
