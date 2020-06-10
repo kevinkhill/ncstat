@@ -1,7 +1,7 @@
 import { NcBlock } from "@/NcParser";
 
 export class NcRegion {
-  static create(blocks: NcBlock[]): NcRegion {
+  static fromBlocks(blocks: NcBlock[]): NcRegion {
     return new NcRegion(blocks);
   }
 
@@ -11,9 +11,6 @@ export class NcRegion {
 
   constructor(private $blocks: NcBlock[] = []) {
     this.$blocks = $blocks;
-
-    // this.find = this.blocks.find;
-    // this.reduce = this.blocks.reduce;
   }
 
   get length(): number {
@@ -47,19 +44,27 @@ export class NcRegion {
   }
 
   collect(): NcRegion {
-    if (
-      typeof this.start === "undefined" ||
-      typeof this.endTestFn === "undefined"
-    ) {
-      throw Error("from() & endAt() must be called before collect()");
+    if (typeof this.start === "undefined") {
+      throw Error("start() must be called before collect()");
     }
-    for (const block of this.$blocks.slice(this.startLine)) {
-      this.blocks.push(block);
 
+    if (typeof this.endTestFn === "undefined") {
+      // Use the user provided test to break a region
+      // Or use the default of a newline.
+      this.endTestFn = (block: NcBlock) => block.isEmpty;
+    }
+
+    for (const block of this.$blocks.slice(this.startLine)) {
       if (this.endTestFn(block)) break;
+
+      this.blocks.push(block);
     }
 
     return this;
+  }
+
+  toString(): string {
+    return this.blocks.map(block => block.toString()).join("\n");
   }
 
   toArray(): string[] {
@@ -73,8 +78,23 @@ export class NcRegion {
       return blocks;
     }, [] as string[]);
   }
-
-  toString(): string {
-    return this.blocks.map(block => block.toString()).join("\n");
-  }
 }
+
+/**
+ * Create a {@link NcRegion} factory
+ *
+ * This method takes a starting line as it's input
+ * to produce a function that will create a {@link NcRegion}
+ * starting from the bound line, consuming lines
+ * untill a blank line
+ */
+export const regionFactory = (start: number) => (
+  blocks: NcBlock[]
+): NcRegion => {
+  // eslint-disable-next-line prettier/prettier
+  return NcRegion
+    .fromBlocks(blocks)
+    .start(start)
+    .endAt(block => block.isEmpty)
+    .collect();
+};

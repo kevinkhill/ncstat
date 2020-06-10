@@ -11,7 +11,7 @@ import {
   StringDict
 } from "@/types";
 
-import { NcRegion } from "./NcRegion";
+import { NcRegion, regionFactory } from "./NcRegion";
 import { Tool, Toolpath } from "./Toolpath";
 
 export const HEADER_START_LINE = 2;
@@ -137,20 +137,11 @@ export class NcProgram {
   //   return filter("hasTool", this.toolpaths);
   // }
 
-  getRegion(start: number, end: number): NcRegion {
-    return NcRegion.create(this.blocks)
-      .start(start)
-      .endAt(block => {
-        return block.lineNumber === end;
-      })
-      .collect();
-  }
-
   /**
    * Get the header of the program
    *
-   * "header" is defined as the first group of
-   * comments found in the {@link NcProgram}
+   * "header" is defined as the first {@link NcRegion}
+   * of comments found in the {@link NcProgram}
    */
   getHeader(): string[] {
     /**
@@ -164,12 +155,11 @@ export class NcProgram {
   /**
    * Get the subheader of the program
    *
-   * "subheader" is defined as the second group of
-   * comments found in the {@link NcProgram}
+   * "subheader" is defined as the second {@link NcRegion};
+   * collected comments found in the {@link NcProgram}
    *
-   * Starting from the end of the "header"
-   * comments are collected until a blank
-   * line is found.
+   * Starting from the end of the "header" {@link NcRegion},
+   * comments are collected until a blank line is found.
    *
    * This is usually a block of G10 lines in H&B
    * posted programs.
@@ -184,12 +174,11 @@ export class NcProgram {
   /**
    * Get the notes of the program
    *
-   * "notes" is defined as the third group of
-   * comments found in the {@link NcProgram}
+   * "notes" is defined as a third {@link NcRegion};
+   * collected comments found in the {@link NcProgram}
    *
-   * Starting from the end of the "subheader"
-   * comments are collected until a blank
-   * line is found.
+   * Starting from the end of the "subheader" {@link NcRegion},
+   * comments are collected until a blank line is found.
    */
   getNotes(): string[] {
     const endLineNum =
@@ -279,26 +268,25 @@ export class NcProgram {
       .join("\n");
   }
 
-  private collectCommentsFrom(start: number): string[] {
-    const comments: string[] = [];
-
-    for (const block of this.blocks.slice(start)) {
-      if (block.isEmpty) break;
-      if (block.comment) comments.push(block?.comment);
-    }
-
-    return comments;
+  // eslint-disable-next-line class-methods-use-this
+  get regionSeparations(): number[] {
+    return [1, 2];
   }
 
-  private collectBlocksFrom(start: number): NcBlock[] {
-    const blocks: NcBlock[] = [];
+  getRegion(): NcRegion {
+    return this.getRegionFromLine(2);
+  }
 
-    for (const block of this.blocks.slice(start)) {
-      if (block.isEmpty) break;
-      blocks.push(block);
-    }
+  /**
+   * Extract lines as a {@link NcRegion}
+   *
+   * Given a starting line, this method will consume
+   * {@link NcBlock}s until it reaches an empty line.
+   */
+  getRegionFromLine(startLine: number): NcRegion {
+    const getRegion = regionFactory(startLine);
 
-    return blocks;
+    return getRegion(this.blocks);
   }
 
   /**
@@ -321,6 +309,28 @@ export class NcProgram {
     }
 
     return region;
+  }
+
+  private collectCommentsFrom(start: number): string[] {
+    const comments: string[] = [];
+
+    for (const block of this.blocks.slice(start)) {
+      if (block.isEmpty) break;
+      if (block.comment) comments.push(block?.comment);
+    }
+
+    return comments;
+  }
+
+  private collectBlocksFrom(start: number): NcBlock[] {
+    const blocks: NcBlock[] = [];
+
+    for (const block of this.blocks.slice(start)) {
+      if (block.isEmpty) break;
+      blocks.push(block);
+    }
+
+    return blocks;
   }
 
   /**

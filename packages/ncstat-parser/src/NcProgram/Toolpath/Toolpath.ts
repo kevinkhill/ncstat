@@ -1,12 +1,13 @@
 import { makeDebugger } from "@/lib";
 import { NcBlock } from "@/NcParser";
 
+import { NcRegion } from "../NcRegion";
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
 
 const debug = makeDebugger("parser:toolpath");
 
-export class Toolpath {
+export class Toolpath extends NcRegion {
   static fromTool(tool: Tool): Toolpath {
     const toolpath = new Toolpath();
 
@@ -20,7 +21,7 @@ export class Toolpath {
   cannedCycles: CannedCycle[] = [];
 
   constructor(readonly blocks: NcBlock[] = []) {
-    this.blocks = blocks;
+    super(blocks);
 
     debug("Creating toolpath");
   }

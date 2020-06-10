@@ -21,6 +21,12 @@
     }
   ],
   "settings": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false,
+      "references": false
+    },
     "eslint.format.enable": true,
     "eslint.packageManager": "yarn",
     "eslint.workingDirectories": [

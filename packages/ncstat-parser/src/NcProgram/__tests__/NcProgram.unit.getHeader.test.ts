@@ -1,4 +1,4 @@
-import { parseSource } from "./helpers";
+import { parseSource } from "@/lib/test-helpers";
 
 const simpleProgram = `%
 O1234 (SIMPLE)

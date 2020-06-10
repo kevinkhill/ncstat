@@ -1,6 +1,5 @@
+import { parseSource } from "@/lib/test-helpers";
 import { Toolpath } from "@/NcProgram";
-
-import { parseSource } from "./helpers";
 
 const simpleProgram = `%
 O1234 (SIMPLE)

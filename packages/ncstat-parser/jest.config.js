@@ -1,6 +1,11 @@
 module.exports = {
   rootDir: ".",
-  // projects: ["<rootDir>/packages/*/jest.config.js"],
+  setupFiles: [
+    "<rootDir>/src/lib/test-helpers.ts"
+  ],
+  globals: {
+    parseSource: true // test-helpers.ts
+  },
   coverageDirectory: "<rootDir>/coverage/",
   collectCoverageFrom: ["<rootDir>/src/**/*.ts"],
   modulePathIgnorePatterns: ["/build"],

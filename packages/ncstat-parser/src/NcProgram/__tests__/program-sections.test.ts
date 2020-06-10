@@ -1,4 +1,4 @@
-import { parseSource } from "./helpers";
+import { parseSource } from "@/lib/test-helpers";
 
 const simpleProgram = `%
 :0491(9566-49_RA_OP1)

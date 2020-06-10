@@ -18,6 +18,8 @@ import {
   Tokens
 } from "@/types";
 
+export const isEmptyBlock = prop<NcBlock, "isEmpty">("isEmpty");
+
 export class NcBlock {
   readonly tags: Tags = new Set<string>();
   readonly tokens: NcToken[] = [];

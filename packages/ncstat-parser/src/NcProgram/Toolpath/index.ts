@@ -1,5 +1,3 @@
-export * from "../lib";
-
 export { Toolpath } from "./Toolpath";
 export { Tool } from "./Tool";
 export { CannedCycle } from "./CannedCycle";

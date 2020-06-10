@@ -1,20 +1,45 @@
 {
-  "extends": "../../tsconfig.json",
+  // "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": [
+      "dom",
+      "es2017"
+    ],
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    // "isolatedModules": true,
+    "strict": true,
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    // "noImplicitAny": true,
+    "noImplicitThis": true,
     "baseUrl": ".",
     "rootDir": "./src",
     "outDir": "build",
-    "keyofStringsOnly": true,
-    "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
-    "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "keyofStringsOnly": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
-  "include": ["demo/*.ts", "src/**/*.ts", "src/*/__tests__/*.test.ts"]
+  "include": [
+    "demo/*.ts",
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
