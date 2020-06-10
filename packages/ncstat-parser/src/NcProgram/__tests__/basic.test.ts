@@ -1,12 +1,13 @@
-import { NcParser } from "@/NcParser";
-import { NcProgram, Toolpath } from "@/NcProgram";
+import { Toolpath } from "@/NcProgram";
+
+import { parseSource } from "./helpers";
 
 const simpleProgram = `%
 O1234 (SIMPLE)
 (DATE - JUN. 06 2020)
 (TIME - 9:02 AM)
-(MCX FILE - V:\TEST\EXAMPLE\SIMPLE.MCAM)
-(NC FILE - V:\TEST\EXAMPLE\SIMPLE.NC)
+(MCX FILE - V:\\TEST\\EXAMPLE\\SIMPLE.MCAM)
+(NC FILE - V:\\TEST\\EXAMPLE\\SIMPLE.NC)
 
 N43 ( #14 [.182"] DRILL, CARB, TSC )
 T43 M6
@@ -26,8 +27,7 @@ G91 G28 Z0.
 M30
 %`;
 
-const parser = new NcParser();
-const program: NcProgram = parser.parse(simpleProgram);
+const program = parseSource(simpleProgram);
 
 describe("Analysis", () => {
   it(`has 42 tokens`, () => {
@@ -71,11 +71,11 @@ describe(`Header`, () => {
   });
 
   it(`has the correct 3rd line`, () => {
-    expect(header[2]).toBe(`MCX FILE - V:\TEST\EXAMPLE\SIMPLE.MCAM`);
+    expect(header[2]).toBe(`MCX FILE - V:\\TEST\\EXAMPLE\\SIMPLE.MCAM`);
   });
 
   it(`has the correct 4th line`, () => {
-    expect(header[3]).toBe(`NC FILE - V:\TEST\EXAMPLE\SIMPLE.NC`);
+    expect(header[3]).toBe(`NC FILE - V:\\TEST\\EXAMPLE\\SIMPLE.NC`);
   });
 
   it(`can be queried, prg.queryHeader("TIME")`, () => {
@@ -87,22 +87,22 @@ describe(`Header`, () => {
   });
 
   it(`can be accessed as an array, prg.header["NC FILE"];`, () => {
-    expect(program.header["NC FILE"]).toBe(`V:\TEST\EXAMPLE\SIMPLE.NC`);
+    expect(program.header["NC FILE"]).toBe(
+      `V:\\TEST\\EXAMPLE\\SIMPLE.NC`
+    );
   });
 });
 
 describe(`Toolpaths`, () => {
-  const toolpath = program.getToolpath(0);
+  const toolpaths = program.getToolpaths();
 
   it(`to be an instance of Toolpath`, () => {
-    expect(toolpath).toBeInstanceOf(Toolpath);
+    expect(toolpaths[0]).toBeInstanceOf(Toolpath);
   });
 
-  it(`to be an instance of Toolpath`, () => {
-    const toolpath = program.getToolpath(0);
-
-    expect(toolpath).toBeInstanceOf(Toolpath);
-  });
+  // it.skip(`to be an instance of Toolpath`, () => {
+  //   expect(toolpaths[0].type).toBe();
+  // });
 });
 
 describe(`Tools`, () => {
@@ -126,8 +126,8 @@ describe(`Tools`, () => {
 // N0001 O1234 (SIMPLE)
 // N0002 (DATE - JUN. 06 2020)
 // N0003 (TIME - 9:02 AM)
-// N0004 (MCX FILE - V:\TEST\EXAMPLE\SIMPLE.MCAM)
-// N0005 (NC FILE - V:\TEST\EXAMPLE\SIMPLE.NC)
+// N0004 (MCX FILE - V:\\TEST\\EXAMPLE\\SIMPLE.MCAM)
+// N0005 (NC FILE - V:\\TEST\\EXAMPLE\\SIMPLE.NC)
 // N0006
 // N0007 43 ( #14 [.182"] DRILL, CARB, TSC )
 // N0008 T43 M6

@@ -1,5 +1,4 @@
-import { NcParser } from "@/NcParser";
-import { NcProgram } from "@/NcProgram";
+import { parseSource } from "./helpers";
 
 const simpleProgram = `%
 O1234 (SIMPLE)
@@ -12,8 +11,7 @@ N43 ( #14 [.182"] DRILL, CARB, TSC )
 M30
 %`;
 
-const parser = new NcParser();
-const program: NcProgram = parser.parse(simpleProgram);
+const program = parseSource(simpleProgram);
 
 describe(`Header`, () => {
   program.defaults.headerSeparator = " | ";

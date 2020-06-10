@@ -9,10 +9,10 @@ module.exports = {
   },
   testEnvironment: "node",
   testPathIgnorePatterns: [
-    "/demo/",
-    "/build/",
-    "/node_modules/",
-    "__tests__/utils.ts$"
+    "demo",
+    "build",
+    "node_modules",
+    "helpers.ts"
   ],
   transform: {
     "^.+\\.tsx?$": "ts-jest",

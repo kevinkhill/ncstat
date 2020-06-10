@@ -176,10 +176,9 @@ export class NcProgram {
    */
   getSubHeader(): string[] {
     const endLineNum = HEADER_START_LINE + this.getHeader().length + 1;
+    const blocks = this.collectBlocksFrom(endLineNum);
 
-    return this.collectBlocksFrom(endLineNum).map(block =>
-      block.toString()
-    );
+    return blocks.map(block => block.toString());
   }
 
   /**
@@ -203,6 +202,10 @@ export class NcProgram {
 
   getTools(): Tool[] {
     return this.toolpaths.map(toolpath => toolpath.tool);
+  }
+
+  getToolpaths(): Toolpath[] {
+    return this.toolpaths;
   }
 
   getToolpath(index: number): Toolpath {

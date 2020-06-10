@@ -1,5 +1,4 @@
-import { NcParser } from "@/NcParser";
-import { NcProgram } from "@/NcProgram";
+import { parseSource } from "./helpers";
 
 const simpleProgram = `%
 :0491(9566-49_RA_OP1)
@@ -29,8 +28,7 @@ M01 ( 2.5" FACE MILL ALUMINUM )
 G0 G90 G54
 %`;
 
-const parser = new NcParser();
-const program: NcProgram = parser.parse(simpleProgram);
+const program = parseSource(simpleProgram);
 
 describe(`"Header" sections of the program`, () => {
   describe(`first region, identified as the "header"`, () => {

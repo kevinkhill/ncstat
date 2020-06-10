@@ -1,5 +1,4 @@
-import { NcParser } from "@/NcParser";
-import { HEADER_START_LINE, NcProgram } from "@/NcProgram";
+import { parseSource } from "./helpers";
 
 const simpleProgram = `%
 :1234 (TEST)
@@ -14,18 +13,18 @@ M01 ( 2.5" FACE MILL ALUMINUM )
 G0 G90 G54
 %`;
 
-const parser = new NcParser();
-const program: NcProgram = parser.parse(simpleProgram);
+const program = parseSource(simpleProgram);
 
 describe(`createRegion() API`, () => {
-  const region = program.createRegion(
-    HEADER_START_LINE,
-    block => block.isEmpty
-  );
+  const region = program.createRegion(2, block => block.isEmpty);
 
   const regionArray = region.toArray();
 
-  it(`can have comments extracted from the region`, () => {
+  it(`has the right number of lines`, () => {
+    expect(regionArray).toHaveLength(3);
+  });
+
+  it(`can be accessed via .length have comments extracted from the region`, () => {
     expect(regionArray).toHaveLength(3);
   });
 
