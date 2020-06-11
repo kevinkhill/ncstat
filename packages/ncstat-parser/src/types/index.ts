@@ -9,3 +9,7 @@ export * from "./tokens";
 
 export type Tags = Set<string>;
 export type StringDict = Record<string, string | undefined>;
+export interface RegionSpan {
+  from: number;
+  to: number;
+}

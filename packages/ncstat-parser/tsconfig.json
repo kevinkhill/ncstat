@@ -1,16 +1,17 @@
 {
   // "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "outDir": "build",
     "target": "es2017",
     "module": "commonjs",
-    "lib": [
-      "dom",
-      "es2017"
-    ],
+    "lib": ["dom", "es2017"],
+    "sourceMap": true,
     "composite": true,
     "declaration": true,
     "declarationMap": true,
-    "emitDeclarationOnly": true,
+    // "emitDeclarationOnly": true,
     // "isolatedModules": true,
     "strict": true,
     /* Additional Checks */
@@ -24,22 +25,11 @@
     "resolveJsonModule": true,
     // "noImplicitAny": true,
     "noImplicitThis": true,
-    "baseUrl": ".",
-    "rootDir": "./src",
-    "outDir": "build",
-    "sourceMap": true,
     "keyofStringsOnly": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "demo/*.ts",
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["demo/*.ts", "src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

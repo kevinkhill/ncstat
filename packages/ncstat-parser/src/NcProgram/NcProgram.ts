@@ -9,6 +9,7 @@ import {
   AxisLimits,
   HmcAxis,
   ProgramStats,
+  RegionSpan,
   StringDict
 } from "@/types";
 
@@ -132,39 +133,17 @@ export class NcProgram {
   /**
    * @TODO fix thiiiiiiiiiiiiis
    */
-  get regions(): Array<{ from: number; to: number }> {
-    const regionSpans = [];
+  get regions(): RegionSpan[] {
+    const regionSpans: RegionSpan[] = [];
 
-    const firstRegionSpan = {
-      from: HEADER_START_LINE,
-      to: this.blankLines[0]
-    };
-
-    const lastRegionSpan = {
-      from: this.blankLines[this.blankLineCount - 1],
-      to: this.blockCount - 1
-    };
-
-    this.blankLines.forEach(lineNumber => {
-      if (idx === 1) {
-        return { from: firstRegionSpan.to, to: lineNumber };
-      }
-
-      if (idx === this.blankLines.length) {
-        return {
-          from: lastRegionSpan.from + 1,
-          to: lineNumber
-        };
-      }
+    [...this.blankLines, this.blockCount].forEach(lineNumber => {
+      regionSpans.push({
+        from: (regionSpans[regionSpans.length - 1]?.to ?? 0) + 2,
+        to: lineNumber - 1
+      });
     });
 
-    return [
-      { from: HEADER_START_LINE, to: this.blankLines[0] },
-      {
-        from: this.blankLines[this.blankLineCount - 1],
-        to: this.blockCount - 1
-      }
-    ];
+    return regionSpans;
   }
 
   get blankLines(): number[] {
