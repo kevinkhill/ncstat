@@ -21,22 +21,23 @@ import {
 export const isEmptyBlock = prop<NcBlock, "isEmpty">("isEmpty");
 
 export class NcBlock {
-  readonly tags: Tags = new Set<string>();
-  readonly tokens: NcToken[] = [];
-  readonly sourceLine: number;
+  static create(tokens: NcToken[]): NcBlock {
+    return new NcBlock(tokens);
+  }
 
   static test = {
     isEmptyBlock: prop<NcBlock, "isEmpty">("isEmpty")
   };
 
-  static create(tokens: NcToken[]): NcBlock {
-    return new NcBlock(tokens);
-  }
+  readonly tags: Tags = new Set<string>();
+  readonly tokens: NcToken[] = [];
+  readonly sourceLine: number;
 
   constructor(tokens: NcToken[]) {
     this.tokens = tokens;
 
-    this.sourceLine = this.tokens[0].line;
+    // Here we account for "%" being "line #0"
+    this.sourceLine = this.tokens[0].line - 1;
   }
 
   toString(options = { includeNewlines: false }): string {

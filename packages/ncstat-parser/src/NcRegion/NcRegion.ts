@@ -1,19 +1,27 @@
 import { NcBlock } from "@/NcParser";
 
+/**
+ * @TODO A Builder?
+ */
 export class NcRegion {
-  static fromBlocks(blocks: NcBlock[]): NcRegion {
+  static create(blocks: NcBlock[]): NcRegion {
     return new NcRegion(blocks);
   }
 
-  startLine = NaN;
-  blocks: NcBlock[] = [];
-  endTestFn!: (block: NcBlock) => boolean;
-
-  end!: number;
   start!: number;
+  end!: number;
 
-  constructor(private $blocks: NcBlock[] = []) {
-    this.$blocks = $blocks;
+  /**
+   * The "sourceLine - 1" is to ignore "%" as a line when referencing
+   * program lines, not literal lines.
+   */
+  constructor(public blocks: NcBlock[] = []) {
+    this.blocks = blocks;
+
+    if (blocks.length > 0) {
+      this.start = blocks[0].sourceLine;
+      this.end = blocks[blocks.length - 1].sourceLine;
+    }
   }
 
   get length(): number {
@@ -22,46 +30,6 @@ export class NcRegion {
 
   push(block: NcBlock): this {
     this.blocks.push(block);
-
-    return this;
-  }
-
-  startAt(start: number): this {
-    if (typeof start !== "number") {
-      throw Error("startAt() must be a number");
-    }
-
-    this.startLine = start;
-
-    return this;
-  }
-
-  endAt(test: (block: NcBlock) => boolean): this {
-    if (typeof this.startAt === "undefined") {
-      throw Error("from() must be called before endAt()");
-    }
-
-    this.endTestFn = test;
-
-    return this;
-  }
-
-  collect(): NcRegion {
-    if (typeof this.startAt === "undefined") {
-      throw Error("start() must be called before collect()");
-    }
-
-    if (typeof this.endTestFn === "undefined") {
-      // Use the user provided test to break a region
-      // Or use the default of a newline.
-      this.endTestFn = (block: NcBlock) => block.isEmpty;
-    }
-
-    for (const block of this.$blocks.slice(this.startLine)) {
-      if (this.endTestFn(block)) break;
-
-      this.blocks.push(block);
-    }
 
     return this;
   }

@@ -236,6 +236,20 @@ export class NcParser extends NcEventEmitter {
     return this.program;
   }
 
+  private *yieldBlocks(input: string): Generator<NcBlock> {
+    let lineTokens: NcToken[] = [];
+
+    for (const token of this.lexer.tokenize(input)) {
+      lineTokens.push(token);
+
+      if (token.type === Tokens.NEWLINE) {
+        yield NcBlock.create(lineTokens);
+
+        lineTokens = [];
+      }
+    }
+  }
+
   private handleMcode(): void {
     const addr = new Mcode(this.currBlock?.M as number);
 
@@ -246,21 +260,6 @@ export class NcParser extends NcEventEmitter {
     this.modals = { ...this.modals, ...this.currBlock?.modals };
 
     debug.extend("modal")(`%o`, this.currBlock?.modals);
-  }
-
-  private *yieldBlocks(input: string): Generator<NcBlock> {
-    let lineTokens: NcToken[] = [];
-
-    for (const token of this.lexer.tokenize(input)) {
-      lineTokens.push(token);
-
-      if (token.type === Tokens.NEWLINE) {
-        yield new NcBlock(lineTokens);
-
-        lineTokens = [];
-      }
-    }
-    // yield* blockGenerator(this.lexer.tokenize(input));
   }
 
   private setProgramName(name: string): void {

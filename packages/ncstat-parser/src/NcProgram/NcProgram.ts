@@ -3,13 +3,13 @@ import { get, map, max, min, reject, uniq } from "lodash/fp";
 import { zeroPad } from "@/lib";
 import { NcToken } from "@/NcLexer/NcToken";
 import { NcBlock } from "@/NcParser";
-import { NcRegion, regionFactory } from "@/NcRegion";
+import { NcRegion } from "@/NcRegion";
 import {
   AxesLimits,
   AxisLimits,
   HmcAxis,
+  LineSpan,
   ProgramStats,
-  RegionSpan,
   StringDict
 } from "@/types";
 
@@ -24,7 +24,8 @@ export class NcProgram {
   name: string | null = null;
   number!: number;
   defaults = {
-    headerSeparator: " - "
+    headerSeparator: " - ", // Taken from the default Mastercam post
+    ignoreProgramDelimeters: true // This will ignore "%" as line #1
   };
   // constructor() {}
 
@@ -130,11 +131,8 @@ export class NcProgram {
     };
   }
 
-  /**
-   * @TODO fix thiiiiiiiiiiiiis
-   */
-  get regions(): RegionSpan[] {
-    const regionSpans: RegionSpan[] = [];
+  get regionSpans(): LineSpan[] {
+    const regionSpans: LineSpan[] = [];
 
     [...this.blankLines, this.blockCount].forEach(lineNumber => {
       regionSpans.push({
@@ -146,19 +144,58 @@ export class NcProgram {
     return regionSpans;
   }
 
+  /**
+   * Get an array of all the blank line numbers in the program
+   *
+   * The line numbers are based from "%" as line #0
+   */
   get blankLines(): number[] {
     return this.blocks.reduce((accum, block) => {
       if (block.isEmpty) {
-        accum.push(block.sourceLine - 1);
+        accum.push(block.sourceLine);
       }
 
-      // console.log("===accum===", accum);
       return accum;
     }, [] as number[]);
   }
 
+  /**
+   * The number of blank lines in a program
+   */
   get blankLineCount(): number {
     return this.blankLines.length;
+  }
+
+  appendBlock(block: NcBlock): this {
+    this.blocks.push(block);
+
+    return this;
+  }
+
+  getAxisValues(axis: HmcAxis): number[] {
+    const values: number[] = uniq(map(get(axis), this.blocks));
+
+    return reject(isNaN, values);
+  }
+
+  getAxisLimits(axis: HmcAxis): AxisLimits {
+    const values = this.getAxisValues(axis);
+
+    return {
+      min: min(values) ?? NaN,
+      max: max(values) ?? NaN
+    };
+  }
+
+  /**
+   * Get a span of blocks, as an array from the program
+   *
+   * Line numbers are indexed from "%" as line #0
+   */
+  getLines(from: number, to: number): NcBlock[] {
+    const blocks = this.blocks.slice(from, to + 1);
+    // console.log(blocks);
+    return blocks;
   }
 
   // get workOffsets(): number[] {
@@ -221,33 +258,25 @@ export class NcProgram {
     return this.collectCommentsFrom(endLineNum);
   }
 
-  getTools(): Tool[] {
-    return this.toolpaths.map(toolpath => toolpath.tool);
+  /**
+   * Create a {@link NcRegion} from a span of lines
+   */
+  getRegion(from: number, to: number): NcRegion {
+    return NcRegion.create(this.getLines(from, to));
   }
 
-  getToolpaths(): Toolpath[] {
-    return this.toolpaths;
+  /**
+   * Parse the program for blank lines and slice into {@link NcRegion}
+   */
+  getRegions(): NcRegion[] {
+    return this.regionSpans.map(({ from, to }) =>
+      this.getRegion(from, to)
+    );
   }
 
-  getToolpath(index: number): Toolpath {
-    return this.toolpaths[index];
-  }
-
-  getAxisValues(axis: HmcAxis): number[] {
-    const values: number[] = uniq(map(get(axis), this.blocks));
-
-    return reject(isNaN, values);
-  }
-
-  getAxisLimits(axis: HmcAxis): AxisLimits {
-    const values = this.getAxisValues(axis);
-
-    return {
-      min: min(values) ?? NaN,
-      max: max(values) ?? NaN
-    };
-  }
-
+  /**
+   * Summary of the {@link NcProgram}
+   */
   getStats(): ProgramStats {
     return {
       limits: this.limits,
@@ -259,23 +288,17 @@ export class NcProgram {
     };
   }
 
-  appendBlock(block: NcBlock): this {
-    this.blocks.push(block);
-
-    return this;
+  getTools(): Tool[] {
+    return this.toolpaths.map(toolpath => toolpath.tool);
   }
 
-  // prependBlock(block: NcBlock): this {
-  //   this.blocks.unshift(block);
+  getToolpaths(): Toolpath[] {
+    return this.toolpaths;
+  }
 
-  //   return this;
-  // }
-
-  // loadBlocks(blocks: Iterable<NcBlock>): this {
-  //   this.blocks.push(...blocks);
-
-  //   return this;
-  // }
+  getToolpath(index: number): Toolpath {
+    return this.toolpaths[index];
+  }
 
   queryHeader(searchKey: string): string | undefined {
     const header = this.getHeader();
@@ -296,21 +319,17 @@ export class NcProgram {
       .join("\n");
   }
 
-  getRegion(): NcRegion {
-    return this.getRegionFromLine(2);
-  }
-
   /**
    * Extract lines as a {@link NcRegion}
    *
    * Given a starting line, this method will consume
    * {@link NcBlock}s until it reaches an empty line.
    */
-  getRegionFromLine(startLine: number): NcRegion {
-    const getRegion = regionFactory(startLine);
+  // getRegionFromLine(startLine: number): NcRegion {
+  //   const getRegion = regionFactory(startLine);
 
-    return getRegion(this.blocks);
-  }
+  //   return getRegion(this.blocks);
+  // }
 
   private collectCommentsFrom(start: number): string[] {
     const comments: string[] = [];
