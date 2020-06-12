@@ -1,9 +1,8 @@
 import { get, map, max, min, reject, uniq } from "lodash/fp";
 
 import { zeroPad } from "@/lib";
-import { NcToken } from "@/NcLexer/NcToken";
+import { NcToken } from "@/NcLexer";
 import { NcBlock } from "@/NcParser";
-import { NcRegion } from "@/NcRegion";
 import {
   AxesLimits,
   AxisLimits,
@@ -13,6 +12,7 @@ import {
   StringDict
 } from "@/types";
 
+import { NcRegion } from "./NcRegion";
 import { Tool, Toolpath } from "./Toolpath";
 
 export const HEADER_START_LINE = 2;

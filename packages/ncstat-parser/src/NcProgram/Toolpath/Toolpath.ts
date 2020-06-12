@@ -1,7 +1,7 @@
 import { makeDebugger } from "@/lib";
 import { NcBlock } from "@/NcParser";
 
-import { NcRegion } from "../../NcRegion/NcRegion";
+import { NcRegion } from "../NcRegion";
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
 

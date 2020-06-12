@@ -1,5 +1,6 @@
 import { parseSource } from "@/lib/test-helpers";
-import { NcRegion } from "@/NcRegion";
+
+import { NcRegion } from "../NcRegion";
 
 const program = parseSource(`%
 :1234 (TEST)
