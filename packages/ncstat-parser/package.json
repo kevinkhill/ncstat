@@ -9,6 +9,8 @@
   "types": "build/index.d.ts",
   "scripts": {
     "test": "jest",
+    "demo": "tsnd -r tsconfig-paths/register --clear --respawn ./demo",
+    "demo:vf10": "tsnd -r tsconfig-paths/register ./demo/vf10.ts",
     "dev": "cross-env DEBUG=ncstat:* tsnd -r tsconfig-paths/register --clear --respawn ./demo",
     "start": "cross-env DEBUG=ncstat:* tsnd -r tsconfig-paths/register --clear --respawn ./demo",
     "build": "node ../../scripts/build.js",

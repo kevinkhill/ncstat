@@ -29,7 +29,7 @@ export class NcBlock {
     isEmptyBlock: prop<NcBlock, "isEmpty">("isEmpty")
   };
 
-  readonly tags: Tags = new Set<string>();
+  // readonly tags: Tags = new Set<string>();
   readonly tokens: NcToken[] = [];
   readonly sourceLine: number;
 
@@ -50,17 +50,17 @@ export class NcBlock {
     return this.stringTokens.join(" ");
   }
 
-  $tag(tag: string): Tags {
-    return this.tags.add(tag);
-  }
+  // $tag(tag: string): Tags {
+  //   return this.tags.add(tag);
+  // }
 
-  $unTag(tag: string): boolean {
-    return this.tags.delete(tag);
-  }
+  // $unTag(tag: string): boolean {
+  //   return this.tags.delete(tag);
+  // }
 
-  $tagged(tag: string): boolean {
-    return this.tags.has(tag);
-  }
+  // $tagged(tag: string): boolean {
+  //   return this.tags.has(tag);
+  // }
 
   $has(prefix: string): boolean {
     // console.log("has", this.tokens);

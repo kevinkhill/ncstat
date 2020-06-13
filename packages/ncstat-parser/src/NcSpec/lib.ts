@@ -20,7 +20,7 @@ export function getDefinition(address: Address): CodeDefinition {
 /**
  * Helper method for creating {@link CodeDefinition}s
  */
-export function define(desc: string, group?: string): CodeDefinition {
+function define(desc: string, group?: string): CodeDefinition {
   if (group) {
     return { desc, group };
   }
