@@ -1,29 +1,27 @@
 "use strict";
 
-var _parser = require("@ncstat/parser");
+var _src = require("../../ncstat-parser/src");
 
 var _fs = _interopRequireDefault(require("fs"));
 
 var _path = _interopRequireDefault(require("path"));
 
-var _writeOut = require("./writeOut");
-
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-(async filepathArg => {
-  const parser = new _parser.NcParser({
-    debug: true
+(async args => {
+  const parser = new _src.NcParser({
+    debug: false
   });
   parser.on("error", console.error.bind(void 0));
 
-  const filepath = _path.default.resolve(filepathArg);
+  const filepath = _path.default.resolve(args[0]);
 
   const contents = await _fs.default.promises.readFile(
     filepath,
     "utf8"
   );
-  const program = parser.parse(contents);
-  (0, _writeOut.writeOut)(program);
-})(process.argv.slice(3).pop());
+  const program = parser.parse(contents); // console.log(program);
+  // console.log(parser.getLexer());
+})(process.argv.slice(3));

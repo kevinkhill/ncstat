@@ -16,14 +16,20 @@ function _interopRequireDefault(obj) {
 // eslint-disable-next-line import/no-namespace
 const router = new _router.default();
 exports.router = router;
-const parser = new _parser.NcParser();
+const config = {
+  debug: true,
+  lexerConfig: {
+    tokens: {
+      EOF: false
+    }
+  }
+};
+const parser = new _parser.NcParser(config);
 router.post("/tokenize", async ctx => {
   const body = ctx.request.body;
   if (!body.input) ctx.throw(400, ".input required");
   const lexer = parser.getLexer();
-  const tokens = lexer.tokenArray(body.input); // Chuck the EOF token
-
-  tokens.pop();
+  const tokens = lexer.tokenArray(body.input);
   ctx.body = {
     input: body.input,
     tokens

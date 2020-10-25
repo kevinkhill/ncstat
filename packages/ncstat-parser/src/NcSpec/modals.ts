@@ -1,4 +1,4 @@
-export const enum Modals {
+export enum Modals {
   // GROUP_00 = "NON_MODAL",
   // NON_MODAL = "GROUP_00",
 

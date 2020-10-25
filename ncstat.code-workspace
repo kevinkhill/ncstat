@@ -18,6 +18,9 @@
     },
     {
       "path": "packages/ncstat-parser"
+    },
+    {
+      "path": "packages/react-webui"
     }
   ],
   "settings": {

@@ -1,4 +1,4 @@
-export const enum Addresses {
+export enum Addresses {
   A = "FOURTH_AXIS",
   B = "FOURTH_AXIS",
   C = "FOURTH_AXIS",

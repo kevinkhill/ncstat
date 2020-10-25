@@ -1,6 +1,6 @@
 import { NcToken } from "@/NcLexer";
 
-export const enum Tokens {
+export enum Tokens {
   "EOF" = "EOF",
   "ADDRESS" = "ADDRESS",
   "COMMENT" = "COMMENT",
