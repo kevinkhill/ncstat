@@ -2,9 +2,8 @@ import fs from "fs";
 import path from "path";
 
 import { NcParser } from "@/NcParser";
-import { NcProgram } from "@/NcProgram";
 import { NcParserConfig } from "@/types";
-import { define, defineGCode } from "@/NcSpec";
+import { defineGCode } from "@/NcSpec";
 
 const DEMO_FILE = "VF10.NC";
 
@@ -34,21 +33,18 @@ const readFile = (file: string): Promise<string> =>
 
   const parser = new NcParser(config);
   const contents = await readFile(DEMO_FILE);
-  const program: NcProgram = parser.parse(contents);
-  // const json = JSON.stringify(program);
+  const program = parser.parse(contents);
+  const json = JSON.stringify(program);
   // console.log(json);
 
   program.tokens.forEach(token => {
-
     if (token.prefix === "G") {
-      const def = defineGCode(token.text);
-
       console.log({
-        def,
+        def: defineGCode(token.text),
         token: token.text,
       });
     }
   });
 
-  // writeFile("vf10.json", json);
+  writeFile("vf10.json", json);
 })();

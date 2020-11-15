@@ -1,5 +1,4 @@
 import fs from "fs";
-import map from "lodash/fp/map";
 import path from "path";
 
 import { NcParser } from "@/NcParser";

@@ -273,6 +273,10 @@ class NcProgram {
       this.getRegion(from, to)
     );
   }
+
+  getRegionFromLine(_lineNumber) {
+    return {};
+  }
   /**
    * Summary of the {@link NcProgram}
    */

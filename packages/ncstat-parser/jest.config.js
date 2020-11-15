@@ -1,8 +1,7 @@
 module.exports = {
   rootDir: ".",
-  setupFiles: [
-    "<rootDir>/src/lib/test-helpers.ts"
-  ],
+  preset: "ts-jest",
+  setupFiles: ["<rootDir>/src/lib/test-helpers.ts"],
   globals: {
     parseSource: true // test-helpers.ts
   },

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /* eslint-disable no-sync, @typescript-eslint/explicit-function-return-type */
 /**
  * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.

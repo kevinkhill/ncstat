@@ -35,30 +35,30 @@ describe.each`
   ${0}  | ${"PRG_DELIM"}  | ${"%"}
   ${1}  | ${"PRG_NUMBER"} | ${1234}
   ${2}  | ${"COMMENT"}    | ${"TEST PROGRAM"}
-  ${3}  | ${"ADDR"}       | ${["T", 43]}
-  ${4}  | ${"ADDR"}       | ${["M", 6]}
+  ${3}  | ${"ADDRESS"}    | ${["T", 43]}
+  ${4}  | ${"ADDRESS"}    | ${["M", 6]}
   ${5}  | ${"COMMENT"}    | ${`#14 [.182"] DRILL, CARB, TSC`}
-  ${6}  | ${"ADDR"}       | ${["G", 0]}
-  ${7}  | ${"ADDR"}       | ${["G", 90]}
-  ${8}  | ${"ADDR"}       | ${["G", 54]}
-  ${9}  | ${"ADDR"}       | ${["X", 0.75]}
-  ${10} | ${"ADDR"}       | ${["Y", 0.19]}
-  ${11} | ${"ADDR"}       | ${["S", 10495]}
-  ${12} | ${"ADDR"}       | ${["M", 3]}
-  ${13} | ${"ADDR"}       | ${["M", 50]}
+  ${6}  | ${"ADDRESS"}    | ${["G", 0]}
+  ${7}  | ${"ADDRESS"}    | ${["G", 90]}
+  ${8}  | ${"ADDRESS"}    | ${["G", 54]}
+  ${9}  | ${"ADDRESS"}    | ${["X", 0.75]}
+  ${10} | ${"ADDRESS"}    | ${["Y", 0.19]}
+  ${11} | ${"ADDRESS"}    | ${["S", 10495]}
+  ${12} | ${"ADDRESS"}    | ${["M", 3]}
+  ${13} | ${"ADDRESS"}    | ${["M", 50]}
   ${14} | ${"COMMENT"}    | ${"TSC COOLANT ON"};
-  ${15} | ${"ADDR"}       | ${["G", 43]}
-  ${16} | ${"ADDR"}       | ${["H", NaN]}
-  ${17} | ${"ADDR"}       | ${["Z", 1.0]}
-  ${18} | ${"ADDR"}       | ${["T", 44]}
-  ${19} | ${"ADDR"}       | ${["G", 98]}
-  ${20} | ${"ADDR"}       | ${["G", 81]}
-  ${21} | ${"ADDR"}       | ${["Z", -0.5631]}
-  ${22} | ${"ADDR"}       | ${["R", 0.1]}
-  ${23} | ${"ADDR"}       | ${["F", 83.96]}
-  ${24} | ${"ADDR"}       | ${["X", 5.0]}
-  ${25} | ${"ADDR"}       | ${["G", 80]}
-  ${26} | ${"ADDR"}       | ${["M", 30]}
+  ${15} | ${"ADDRESS"}    | ${["G", 43]}
+  ${16} | ${"ADDRESS"}    | ${["H", NaN]}
+  ${17} | ${"ADDRESS"}    | ${["Z", 1.0]}
+  ${18} | ${"ADDRESS"}    | ${["T", 44]}
+  ${19} | ${"ADDRESS"}    | ${["G", 98]}
+  ${20} | ${"ADDRESS"}    | ${["G", 81]}
+  ${21} | ${"ADDRESS"}    | ${["Z", -0.5631]}
+  ${22} | ${"ADDRESS"}    | ${["R", 0.1]}
+  ${23} | ${"ADDRESS"}    | ${["F", 83.96]}
+  ${24} | ${"ADDRESS"}    | ${["X", 5.0]}
+  ${25} | ${"ADDRESS"}    | ${["G", 80]}
+  ${26} | ${"ADDRESS"}    | ${["M", 30]}
   ${27} | ${"PRG_DELIM"}  | ${"%"}
   ${28} | ${"EOF"}        | ${""}
 `('created tokens with proper values', ({
@@ -71,8 +71,8 @@ describe.each`
       expect(token.type).toBe(type);
     });
 
-    if (token.type === "ADDR") {
-      const { prefix, value } = token.value;
+    if (token.type === "ADDRESS") {
+      const { prefix, value } = token;
       const [ expectedPrefix, expectedValue ] = expected;
 
       it(`prefix is "${prefix}"`, () => {

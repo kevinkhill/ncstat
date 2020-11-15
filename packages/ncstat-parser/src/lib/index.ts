@@ -1,7 +1,5 @@
 import Debug from "debug";
 
-import { assertIsString } from "../../../ts-tokenizr/src/lib/guards";
-
 export * from "./guards";
 
 /**
@@ -25,7 +23,9 @@ export function zeroPad(input: number): string {
 }
 
 export function unwrap(str?: string): string {
-  assertIsString(str);
+  if (typeof str !== "string") {
+    throw Error("Remove parenthesis from a string");
+  }
 
   return str
     .replace("(", "")

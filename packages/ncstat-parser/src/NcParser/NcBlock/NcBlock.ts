@@ -14,7 +14,6 @@ import {
   ModalGroups,
   ModalGroupStrings,
   NcPosition,
-  Tags,
   Tokens
 } from "@/types";
 

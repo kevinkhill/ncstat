@@ -5,9 +5,6 @@
       "name": "<root>"
     },
     {
-      "path": "packages/ts-tokenizr"
-    },
-    {
       "path": "packages/ncstat-cli"
     },
     {

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /* eslint-disable no-sync */
 /**
  * Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.

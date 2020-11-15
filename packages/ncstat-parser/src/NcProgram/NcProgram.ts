@@ -274,6 +274,10 @@ export class NcProgram {
     );
   }
 
+  // getRegionFromLine(_lineNumber: number): any {
+  //   return {};
+  // }
+
   /**
    * Summary of the {@link NcProgram}
    */

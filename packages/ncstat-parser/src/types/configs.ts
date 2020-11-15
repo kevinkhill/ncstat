@@ -1,8 +1,8 @@
-import { TokenType } from "./tokens";
+import { TokenTypes } from "./tokens";
 
 export interface NcLexerConfig {
   debug: boolean;
-  tokens: Partial<Record<TokenType, boolean>>;
+  tokens: Partial<Record<TokenTypes, boolean>>;
 }
 
 export interface NcParserConfig {

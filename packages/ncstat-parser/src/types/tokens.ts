@@ -2,7 +2,7 @@ import { NcToken } from "@/NcLexer";
 
 export enum Tokens {
   "EOF" = "EOF",
-  "ADDRESS" = "ADDRESS",
+    "ADDRESS" = "ADDRESS",
   "COMMENT" = "COMMENT",
   "NEWLINE" = "NEWLINE",
   "BLK_SKIP" = "BLK_SKIP",
