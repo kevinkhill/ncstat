@@ -23,14 +23,5 @@
     "purify-ts": "^0.16.0",
     "ts-tokenizr": "^1.1.1",
     "xstate": "^4.7.8"
-  },
-  "devDependencies": {
-    "@types/debug": "^4.1.5",
-    "@types/lodash": "^4.14.149",
-    "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-import-resolver-typescript": "^2.0.0",
-    "eslint-plugin-import": "^2.21.2",
-    "eslint-plugin-jest-formatting": "^1.2.0",
-    "tsconfig-paths": "^3.9.0"
   }
 }

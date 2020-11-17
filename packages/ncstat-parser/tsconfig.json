@@ -37,7 +37,7 @@
   },
   "include": [
     "demo/*.ts",
-    "src/**/*.ts"
+    "src/**/*.ts", "demo/TRM.js"
   ],
   "exclude": [
     "node_modules",
