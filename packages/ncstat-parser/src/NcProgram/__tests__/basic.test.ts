@@ -1,5 +1,5 @@
-import { parseSource } from "@/lib/test-helpers";
-import { Toolpath } from "@/NcProgram";
+import { parseSource } from "../../../testing/test-helpers";
+import { Toolpath } from "../Toolpath";
 
 const simpleProgram = `%
 O1234 (SIMPLE)
@@ -116,6 +116,7 @@ describe(`Tools`, () => {
   });
 
   it(`tool name is "#14 [.182"] DRILL, CARB, TSC"`, () => {
+    // eslint-disable-next-line no-useless-escape
     expect(tools[0].desc).toBe(`#14 [.182\"] DRILL, CARB, TSC`);
   });
 });

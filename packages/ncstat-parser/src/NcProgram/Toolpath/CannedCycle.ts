@@ -1,7 +1,6 @@
-import { NcBlock } from "@/NcParser/NcBlock";
-import { defineGCode } from "@/NcSpec";
-import { CodeDefinition } from "@/types";
-
+import { NcBlock } from "../../NcParser/NcBlock";
+import { defineGCode } from "../../NcSpec";
+import { CodeDefinition } from "../../types";
 import { Point } from "./Point";
 
 interface CannedCycleConfig {

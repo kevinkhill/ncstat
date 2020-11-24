@@ -1,66 +1,17 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _exportNames = {
-  parseNumber: true,
-  splitParse: true
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
-exports.parseNumber = parseNumber;
-exports.splitParse = splitParse;
-
-var _Address = require("./Address");
-
-Object.keys(_Address).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  if (key in exports && exports[key] === _Address[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _Address[key];
-    }
-  });
-});
-
-var _Mcode = require("./Mcode");
-
-Object.keys(_Mcode).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  if (key in exports && exports[key] === _Mcode[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _Mcode[key];
-    }
-  });
-});
-
-var _offsets = require("./offsets");
-
-Object.keys(_offsets).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  if (key in exports && exports[key] === _offsets[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _offsets[key];
-    }
-  });
-});
-
-function parseNumber(numberStr) {
-  return numberStr.includes(".")
-    ? parseFloat(numberStr)
-    : parseInt(numberStr);
-}
-
-function splitParse(address) {
-  return {
-    prefix: address.substring(0, 1),
-    value: parseNumber(address.substring(1))
-  };
-}
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./Address"), exports);
+__exportStar(require("./helpers"), exports);
+__exportStar(require("./Mcode"), exports);
+__exportStar(require("./offsets"), exports);
+//# sourceMappingURL=index.js.map

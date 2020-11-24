@@ -1,6 +1,5 @@
-import { NcProgram } from "..";
-
-import { parseSource } from "@/lib/test-helpers";
+import { parseSource } from "../../lib/test-helpers";
+import { NcProgram } from "../NcProgram";
 
 const simpleProgram = `%
 :0491(9566-49_RA_OP1)

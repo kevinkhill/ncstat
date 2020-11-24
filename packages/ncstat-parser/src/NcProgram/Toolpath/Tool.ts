@@ -1,6 +1,4 @@
-import { makeDebugger } from "@/lib";
-
-import { Toolpath } from "./Toolpath";
+import { makeDebugger } from "../../lib";
 
 const debug = makeDebugger("parser:tool");
 
@@ -19,12 +17,6 @@ export class Tool {
     this.desc = desc;
 
     debug(this.toString());
-  }
-
-  getToolpath(): Toolpath {
-    const toolpath = new Toolpath();
-
-    return toolpath.setTool(this);
   }
 
   getToolInfo(): [number, Tool] {

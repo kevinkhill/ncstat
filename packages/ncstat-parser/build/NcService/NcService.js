@@ -1,15 +1,7 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.NcService = void 0;
-
-var _xstate = require("xstate");
-
-var _NcStateMachine = require("./NcStateMachine");
-
-const NcService = (0, _xstate.interpret)(
-  _NcStateMachine.NcStateMachine
-);
-exports.NcService = NcService;
+const fsm_1 = require("@xstate/fsm");
+const NcStateMachine_1 = require("./NcStateMachine");
+exports.NcService = fsm_1.interpret(NcStateMachine_1.NcStateMachine);
+//# sourceMappingURL=NcService.js.map

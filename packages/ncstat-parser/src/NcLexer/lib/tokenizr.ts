@@ -1,20 +1,20 @@
 import { Tokenizr } from "ts-tokenizr";
 
-import { Tokens } from "@/types/tokens";
+import { Tokens } from "../../types/tokens";
 
 export const tokenizr = new Tokenizr();
 
 // Match "%", required for proper NC files
-tokenizr.rule(/%/, ctx => ctx.accept(Tokens.PRG_DELIM));
+tokenizr.rule(/%/, (ctx) => ctx.accept(Tokens.PRG_DELIM));
 
 // Match "["
-tokenizr.rule(/\[/, ctx => ctx.accept(Tokens.BRACKET_OPEN));
+tokenizr.rule(/\[/, (ctx) => ctx.accept(Tokens.BRACKET_OPEN));
 
 // Match "]"
-tokenizr.rule(/\]/, ctx => ctx.accept(Tokens.BRACKET_CLOSE));
+tokenizr.rule(/\]/, (ctx) => ctx.accept(Tokens.BRACKET_CLOSE));
 
 // Match "\n" at end of a line
-tokenizr.rule(/\n/, ctx => ctx.accept(Tokens.NEWLINE));
+tokenizr.rule(/\n/, (ctx) => ctx.accept(Tokens.NEWLINE));
 
 // Match "O1234", "O12345", ":1234"
 tokenizr.rule(/(O|:)(\d{4,5})/, (ctx, match) => {
@@ -43,6 +43,6 @@ tokenizr.rule(/\(\s*(.+?)\s*\)/, (ctx, match) => {
 });
 
 // Ignore " ", "<TAB>", "<CR>"
-tokenizr.rule(/[ \t\r]+/, ctx => ctx.ignore());
+tokenizr.rule(/[ \t\r]+/, (ctx) => ctx.ignore());
 
 // tokenizr.rule(/\/\/[^\r\n]*\r?\n/, ctx => ctx.ignore());

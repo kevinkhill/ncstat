@@ -1,57 +1,18 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _NcLexer = require("./NcLexer");
-
-Object.keys(_NcLexer).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _NcLexer[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _NcLexer[key];
-    }
-  });
-});
-
-var _NcParser = require("./NcParser");
-
-Object.keys(_NcParser).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _NcParser[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _NcParser[key];
-    }
-  });
-});
-
-var _NcProgram = require("./NcProgram");
-
-Object.keys(_NcProgram).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _NcProgram[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _NcProgram[key];
-    }
-  });
-});
-
-var _types = require("./types");
-
-Object.keys(_types).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _types[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _types[key];
-    }
-  });
-});
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./NcLexer"), exports);
+__exportStar(require("./NcParser"), exports);
+__exportStar(require("./NcProgram"), exports);
+__exportStar(require("./NcSpec"), exports);
+__exportStar(require("./types"), exports);
+//# sourceMappingURL=index.js.map

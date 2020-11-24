@@ -1,0 +1,1 @@
+{"version":3,"file":"Mcode.d.ts","sourceRoot":"","sources":["../../../src/NcParser/lib/Mcode.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,MAAM,WAAW,CAAC;AAIpC,qBAAa,KAAM,SAAQ,OAAO;IAChC,MAAM,SAAO;gBAED,KAAK,EAAE,MAAM;IAMzB,IAAI,OAAO,IAAI,OAAO,CAErB;IAED,IAAI,QAAQ,IAAI,OAAO,CAEtB;IAED,IAAI,cAAc,IAAI,OAAO,CAE5B;CACF"}

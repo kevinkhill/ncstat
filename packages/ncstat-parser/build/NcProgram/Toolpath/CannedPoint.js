@@ -1,3 +1,4 @@
+"use strict";
 // import { Block } from "./Block";
 // import { Point } from "./Point";
 // export class CannedPoint extends Point {
@@ -9,4 +10,4 @@
 //     this.R = block.values.R;
 //   }
 // }
-"use strict";
+//# sourceMappingURL=CannedPoint.js.map

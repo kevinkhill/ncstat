@@ -1,0 +1,1 @@
+{"version":3,"file":"blockGenerator.d.ts","sourceRoot":"","sources":["../../../src/NcParser/NcBlock/blockGenerator.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,OAAO,EAAE,MAAM,eAAe,CAAC;AAExC,OAAO,EAAE,OAAO,EAAE,MAAM,WAAW,CAAC;AAEpC,wBAAiB,cAAc,CAC7B,MAAM,EAAE,SAAS,CAAC,OAAO,CAAC,GACzB,SAAS,CAAC,OAAO,CAAC,CAWpB"}

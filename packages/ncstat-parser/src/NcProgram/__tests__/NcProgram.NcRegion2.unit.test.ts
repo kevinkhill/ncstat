@@ -1,4 +1,7 @@
-import { getDemoFileContents, parseSource } from "@/lib/test-helpers";
+import {
+  getDemoFileContents,
+  parseSource
+} from "../../lib/test-helpers";
 
 describe(`program.getRegions() of "./demo/TRM.NC"`, () => {
   const program = parseSource(getDemoFileContents("TRM.NC"));

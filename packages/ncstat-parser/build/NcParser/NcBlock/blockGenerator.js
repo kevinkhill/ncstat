@@ -1,23 +1,19 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.blockGenerator = blockGenerator;
-
-var _types = require("@/types");
-
-var _NcBlock = require("./NcBlock");
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.blockGenerator = void 0;
+const types_1 = require("../../types");
+const NcBlock_1 = require("./NcBlock");
 function* blockGenerator(tokens) {
-  let lineTokens = [];
-
-  for (const token of tokens) {
-    if (token.type === _types.Tokens.NEWLINE) {
-      yield new _NcBlock.NcBlock(lineTokens);
-      lineTokens = [];
-    } else {
-      lineTokens.push(token);
+    let lineTokens = [];
+    for (const token of tokens) {
+        if (token.type === types_1.Tokens.NEWLINE) {
+            yield new NcBlock_1.NcBlock(lineTokens);
+            lineTokens = [];
+        }
+        else {
+            lineTokens.push(token);
+        }
     }
-  }
 }
+exports.blockGenerator = blockGenerator;
+//# sourceMappingURL=blockGenerator.js.map

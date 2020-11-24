@@ -1,13 +1,15 @@
-import { EventEmitter } from "eventemitter3";
+// import Emittery from "emittery";
 import { Tokenizr } from "ts-tokenizr";
 
-import { makeDebugger } from "@/lib";
-import { NcToken, tokenizr } from "@/NcLexer";
-import { NcLexerConfig } from "@/types";
+import { makeDebugger } from "../lib";
+import { NcLexerConfig } from "../types";
+import { tokenizr } from "./lib/tokenizr";
+import { NcToken } from "./NcToken";
 
 const debug = makeDebugger("lexer");
 
-export class NcLexer extends EventEmitter {
+// export class NcLexer extends Emittery.Typed<{ token: NcToken }> {
+export class NcLexer {
   static readonly defaults = {
     debug: false,
     tokens: {
@@ -21,7 +23,7 @@ export class NcLexer extends EventEmitter {
   private readonly tokenizr: Tokenizr;
 
   constructor(config?: Partial<NcLexerConfig>) {
-    super();
+    // super();
     this.tokenizr = tokenizr;
     this.config = { ...NcLexer.defaults, ...config };
 
@@ -54,7 +56,7 @@ export class NcLexer extends EventEmitter {
       if (token.isA("EOF") && this.config.tokens.EOF === false)
         continue;
 
-      this.emit("token", token);
+      // this.emit("token", token);
 
       yield token;
     }

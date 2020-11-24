@@ -1,6 +1,5 @@
-import { makeDebugger } from "@/lib";
-import { NcBlock } from "@/NcParser";
-
+import { makeDebugger } from "../../lib";
+import { NcBlock } from "../../NcParser";
 import { NcRegion } from "../NcRegion";
 import { CannedCycle } from "./CannedCycle";
 import { Tool } from "./Tool";
@@ -36,7 +35,7 @@ export class Toolpath extends NcRegion {
     return this;
   }
 
-  setSetRpms(rpms: number | undefined): void {
+  setRpms(rpms: number | undefined): void {
     this.rpms = rpms;
   }
 

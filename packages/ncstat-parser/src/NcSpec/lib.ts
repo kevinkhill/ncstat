@@ -1,10 +1,5 @@
-// import { forEach } from "lodash";
-
-import { Maybe } from "purify-ts/Maybe";
-
-import { Address } from "@/NcParser";
-import { CodeDefinition } from "@/types";
-
+import { Address } from "../NcParser";
+import { CodeDefinition } from "../types";
 import { G_CODE_TABLE } from "./fanuc";
 import { M_CODE_TABLE } from "./mcodes";
 
@@ -20,7 +15,10 @@ export function getDefinition(address: Address): CodeDefinition {
 /**
  * Helper method for creating {@link CodeDefinition}s
  */
-function define(desc: string, group?: string): CodeDefinition {
+function createDefinition(
+  desc: string,
+  group?: string
+): CodeDefinition {
   if (group) {
     return { desc, group };
   }
@@ -36,9 +34,7 @@ function define(desc: string, group?: string): CodeDefinition {
  * ```
  */
 export function defineGCode(input: string): CodeDefinition {
-  return Maybe.fromFalsy(G_CODE_TABLE[input]).orDefault(
-    define("G_CODE_NOT_FOUND")
-  );
+  return G_CODE_TABLE[input] ?? createDefinition("G_CODE_NOT_FOUND");
 }
 
 /**
@@ -49,7 +45,23 @@ export function defineGCode(input: string): CodeDefinition {
  * ```
  */
 export function defineMCode(input: string): CodeDefinition {
-  return Maybe.fromFalsy(M_CODE_TABLE[input]).orDefault(
-    define("M_CODE_NOT_FOUND")
-  );
+  return M_CODE_TABLE[input] ?? createDefinition("M_CODE_NOT_FOUND");
+}
+
+/**
+ * Return an M codes' definition
+ *
+ * @example ```
+ *     define("G10")  // "PROGRAMMABLE_OFFSET_INPUT"
+ *     define("M09") // "COOLANT_OFF"
+ * ```
+ */
+export function define(input: string): CodeDefinition {
+  if (input.startsWith("M")) {
+    return defineMCode(input);
+  } else if (input.startsWith("G")) {
+    return defineGCode(input);
+  } else {
+    return createDefinition(`CODE_NOT_FOUND: ${input}`);
+  }
 }

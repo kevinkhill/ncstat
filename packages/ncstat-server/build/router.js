@@ -25,7 +25,7 @@ const config = {
   }
 };
 const parser = new _parser.NcParser(config);
-router.post("/tokenize", async ctx => {
+router.post("/tokenize", async (ctx) => {
   const body = ctx.request.body;
   if (!body.input) ctx.throw(400, ".input required");
   const lexer = parser.getLexer();
@@ -35,6 +35,6 @@ router.post("/tokenize", async ctx => {
     tokens
   };
 });
-router.get("/*", async ctx => {
+router.get("/*", async (ctx) => {
   ctx.body = "UP";
 });

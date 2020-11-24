@@ -1,9 +1,13 @@
-import fs from "fs";
-import path from "path";
+const fs = require("fs");
+const path = require("path");
 
-import { NcParser, NcParserConfig, defineGCode } from "../build";
+const {
+  NcParser,
+  NcParserConfig,
+  defineGCode
+} = require("../build/index.js");
 
-const DEMO_FILE = "VF10.NC";
+const DEMO_FILE = "TRM.NC";
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const writeFile = (file, data) => {
@@ -15,7 +19,8 @@ const writeFile = (file, data) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const readFile = file => fs.promises.readFile(path.join(__dirname, file), "utf8");
+const readFile = (file) =>
+  fs.promises.readFile(path.join(__dirname, file), "utf8");
 
 (async () => {
   const parser = new NcParser({
@@ -32,7 +37,7 @@ const readFile = file => fs.promises.readFile(path.join(__dirname, file), "utf8"
   const json = JSON.stringify(program);
   // console.log(json);
 
-  program.tokens.forEach(token => {
+  program.tokens.forEach((token) => {
     if (token.prefix === "G") {
       console.log({
         def: defineGCode(token.text),

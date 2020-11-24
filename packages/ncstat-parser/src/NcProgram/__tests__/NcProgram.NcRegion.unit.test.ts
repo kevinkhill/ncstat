@@ -1,5 +1,4 @@
-import { parseSource } from "@/lib/test-helpers";
-
+import { parseSource } from "../../lib/test-helpers";
 import { NcRegion } from "../NcRegion";
 
 const program = parseSource(`%
@@ -62,7 +61,7 @@ describe(`NcRegions`, () => {
 
     it("should be an array of NcRegions", () => {
       expect(
-        regions.every(region => region instanceof NcRegion)
+        regions.every((region) => region instanceof NcRegion)
       ).toBeTruthy();
     });
 

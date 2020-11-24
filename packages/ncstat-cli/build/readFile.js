@@ -11,7 +11,7 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-const readFile = async filepath => {
+const readFile = async (filepath) => {
   return (await _fs.default.promises.readFile(filepath)).toString();
 };
 

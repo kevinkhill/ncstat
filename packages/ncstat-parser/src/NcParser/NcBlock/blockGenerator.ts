@@ -1,6 +1,5 @@
-import { NcToken } from "@/NcLexer";
-import { Tokens } from "@/types";
-
+import { NcToken } from "../../NcLexer";
+import { Tokens } from "../../types";
 import { NcBlock } from "./NcBlock";
 
 export function* blockGenerator(

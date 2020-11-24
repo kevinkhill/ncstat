@@ -1,5 +1,4 @@
-import { NumericToken, StringToken } from "@/types/tokens";
-
+import { NumericToken, StringToken } from "../../types/tokens";
 import { NcToken } from "../NcToken";
 
 // function isNumericValue(val: any): boolean {

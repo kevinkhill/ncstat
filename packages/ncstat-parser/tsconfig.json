@@ -1,43 +1,37 @@
 {
   // "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "strict": true,
     "baseUrl": ".",
     "rootDir": ".",
     "outDir": "build",
-    "target": "es2017",
+    "target": "es2015",
     "module": "commonjs",
     "lib": [
       "dom",
-      "es2017"
+      "es2020"
     ],
     "sourceMap": true,
-    "composite": true,
     "declaration": true,
     "declarationMap": true,
-    // "emitDeclarationOnly": true,
-    // "isolatedModules": true,
-    "strict": true,
-    /* Additional Checks */
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+      /* Additional Checks */
+      // "noUnusedLocals": true,
+      // "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "noImplicitThis": true,
     "noImplicitReturns": true,
+    "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
     /* Module Resolution Options */
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    // "noImplicitAny": true,
-    "noImplicitThis": true,
-    "keyofStringsOnly": true,
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
+    "keyofStringsOnly": true
   },
   "include": [
     "demo/*.ts",
-    "src/**/*.ts", "demo/TRM.js"
+    "src/**/*.ts",
+    "testing/*.ts"
   ],
   "exclude": [
     "node_modules",

@@ -1,44 +1,16 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _NcProgram = require("./NcProgram");
-
-Object.keys(_NcProgram).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _NcProgram[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _NcProgram[key];
-    }
-  });
-});
-
-var _NcRegion = require("./NcRegion");
-
-Object.keys(_NcRegion).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _NcRegion[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _NcRegion[key];
-    }
-  });
-});
-
-var _Toolpath = require("./Toolpath");
-
-Object.keys(_Toolpath).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _Toolpath[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _Toolpath[key];
-    }
-  });
-});
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./NcProgram"), exports);
+__exportStar(require("./NcRegion"), exports);
+__exportStar(require("./Toolpath"), exports);
+//# sourceMappingURL=index.js.map

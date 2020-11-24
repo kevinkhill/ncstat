@@ -1,4 +1,4 @@
-import { CodeTable } from "@/types";
+import { CodeTable } from "../types";
 
 export const G_CODE_TABLE: CodeTable = {
   G00: {

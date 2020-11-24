@@ -1,5 +1,5 @@
-// import { NcBlock } from "@/NcBlock";
-// import { NcToken } from "@/NcLexer";
+// import { NcBlock } from "../NcBlock";
+// import { NcToken } from "../NcLexer";
 
 import { NcPosition } from "./axes";
 

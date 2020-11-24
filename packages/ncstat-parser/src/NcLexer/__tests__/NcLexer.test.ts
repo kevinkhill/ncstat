@@ -46,7 +46,7 @@ describe.each`
   ${11} | ${"ADDRESS"}    | ${["S", 10495]}
   ${12} | ${"ADDRESS"}    | ${["M", 3]}
   ${13} | ${"ADDRESS"}    | ${["M", 50]}
-  ${14} | ${"COMMENT"}    | ${"TSC COOLANT ON"};
+  ${14} | ${"COMMENT"}    | ${"TSC COOLANT ON"}
   ${15} | ${"ADDRESS"}    | ${["G", 43]}
   ${16} | ${"ADDRESS"}    | ${["H", NaN]}
   ${17} | ${"ADDRESS"}    | ${["Z", 1.0]}
@@ -61,9 +61,7 @@ describe.each`
   ${26} | ${"ADDRESS"}    | ${["M", 30]}
   ${27} | ${"PRG_DELIM"}  | ${"%"}
   ${28} | ${"EOF"}        | ${""}
-`('created tokens with proper values', ({
-  index, type, expected
-}) => {
+`("created tokens with proper values", ({ index, type, expected }) => {
   const token = tokens[index];
 
   describe(`token "${token.text}"`, () => {
@@ -73,7 +71,7 @@ describe.each`
 
     if (token.type === "ADDRESS") {
       const { prefix, value } = token;
-      const [ expectedPrefix, expectedValue ] = expected;
+      const [expectedPrefix, expectedValue] = expected;
 
       it(`prefix is "${prefix}"`, () => {
         expect(prefix).toBe(expectedPrefix);
@@ -89,5 +87,3 @@ describe.each`
     }
   });
 });
-
-

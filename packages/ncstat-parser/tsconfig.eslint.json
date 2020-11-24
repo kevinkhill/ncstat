@@ -6,12 +6,6 @@
     "./src/**/__tests__/**/*.test.ts"
   ],
   "exclude": [
-    "node_modules",
-    "build",
-    "config",
-    "doc",
-    "env",
-    "public",
-    "scripts"
+    "node_modules"
   ]
 }

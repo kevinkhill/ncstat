@@ -1,5 +1,4 @@
-import { makeDebugger } from "@/lib";
-
+import { makeDebugger } from "../../lib";
 import { Address } from "./Address";
 
 const debug = makeDebugger("parser:m-code");

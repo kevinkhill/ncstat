@@ -1,50 +1,30 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _exportNames = {
-  zeroPadAddress: true,
-  zeroPad: true,
-  unwrap: true,
-  debug: true,
-  makeDebugger: true
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
-exports.zeroPadAddress = zeroPadAddress;
-exports.zeroPad = zeroPad;
-exports.unwrap = unwrap;
-exports.makeDebugger = exports.debug = void 0;
-
-var _debug = _interopRequireDefault(require("debug"));
-
-var _guards = require("../../../ts-tokenizr/src/lib/guards");
-
-var _guards2 = require("./guards");
-
-Object.keys(_guards2).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  if (key in exports && exports[key] === _guards2[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _guards2[key];
-    }
-  });
-});
-
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
-
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.makeDebugger = exports.debug = exports.unwrap = exports.zeroPad = exports.zeroPadAddress = void 0;
+const debug_1 = __importDefault(require("debug"));
+__exportStar(require("./guards"), exports);
 /**
  * Pad a single digit address into a two digit
  *
  * @example zeroPadAddress("G1") // "G01"
  */
 function zeroPadAddress(input) {
-  return input ? input[0] + `00${input.slice(1)}`.slice(-2) : "";
+    return input ? input[0] + `00${input.slice(1)}`.slice(-2) : "";
 }
+exports.zeroPadAddress = zeroPadAddress;
 /**
  * Pad a single digit number with zeros
  *
@@ -52,25 +32,18 @@ function zeroPadAddress(input) {
  *
  * @example zeroPad(1) // "1"
  */
-
 function zeroPad(input) {
-  return `0000${input}`.slice(-4);
+    return `0000${input}`.slice(-4);
 }
-
+exports.zeroPad = zeroPad;
 function unwrap(str) {
-  (0, _guards.assertIsString)(str);
-  return str
-    .replace("(", "")
-    .replace(")", "")
-    .trim();
+    if (typeof str !== "string") {
+        throw Error("Remove parenthesis from a string");
+    }
+    return str.replace("(", "").replace(")", "").trim();
 }
-
-const debug = (0, _debug.default)("ncstat"); // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-
-exports.debug = debug;
-
-const makeDebugger = namespace => debug.extend(namespace); // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-// export const makeDebuggers = (namespaces: string[]) =>
-//   namespaces.map(ns => ({ [ns]: debug.extend(ns) }));
-
+exports.unwrap = unwrap;
+exports.debug = debug_1.default("ncstat");
+const makeDebugger = (namespace) => exports.debug.extend(namespace);
 exports.makeDebugger = makeDebugger;
+//# sourceMappingURL=index.js.map

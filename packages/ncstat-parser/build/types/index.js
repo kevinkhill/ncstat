@@ -1,109 +1,21 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _axes = require("./axes");
-
-Object.keys(_axes).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _axes[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _axes[key];
-    }
-  });
-});
-
-var _codes = require("./codes");
-
-Object.keys(_codes).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _codes[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _codes[key];
-    }
-  });
-});
-
-var _configs = require("./configs");
-
-Object.keys(_configs).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _configs[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _configs[key];
-    }
-  });
-});
-
-var _machine = require("./machine");
-
-Object.keys(_machine).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _machine[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _machine[key];
-    }
-  });
-});
-
-var _modals = require("./modals");
-
-Object.keys(_modals).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _modals[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _modals[key];
-    }
-  });
-});
-
-var _offsets = require("./offsets");
-
-Object.keys(_offsets).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _offsets[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _offsets[key];
-    }
-  });
-});
-
-var _stats = require("./stats");
-
-Object.keys(_stats).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _stats[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _stats[key];
-    }
-  });
-});
-
-var _tokens = require("./tokens");
-
-Object.keys(_tokens).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _tokens[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _tokens[key];
-    }
-  });
-});
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./axes"), exports);
+__exportStar(require("./codes"), exports);
+__exportStar(require("./configs"), exports);
+__exportStar(require("./machine"), exports);
+__exportStar(require("./modals"), exports);
+__exportStar(require("./offsets"), exports);
+__exportStar(require("./stats"), exports);
+__exportStar(require("./tokens"), exports);
+//# sourceMappingURL=index.js.map

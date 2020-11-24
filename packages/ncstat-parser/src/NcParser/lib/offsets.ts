@@ -1,4 +1,4 @@
-import { HmcWorkOffsets, VmcWorkOffsets } from "@/types";
+import { HmcWorkOffsets, VmcWorkOffsets } from "../../types";
 
 export function createVmcOffsets(): VmcWorkOffsets {
   const zeros = { X: 0, Y: 0, Z: 0 };

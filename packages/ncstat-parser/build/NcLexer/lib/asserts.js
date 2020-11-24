@@ -1,26 +1,20 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.assertIsAddressToken = assertIsAddressToken;
-exports.assertIsNumericToken = assertIsNumericToken;
-
-var _types = require("@/types");
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.assertIsNumericToken = exports.assertIsAddressToken = void 0;
+const types_1 = require("../../types");
 function isNumeric(arg) {
-  return !isNaN(parseFloat(arg)) && isFinite(arg);
+    return !isNaN(parseFloat(arg)) && isFinite(arg);
 }
-
 function assertIsAddressToken(token) {
-  if (token.type !== _types.Tokens.ADDRESS) {
-    throw Error("assertIsAddressToken");
-  }
+    if (token.type !== types_1.Tokens.ADDRESS) {
+        throw Error("assertIsAddressToken");
+    }
 }
-
+exports.assertIsAddressToken = assertIsAddressToken;
 function assertIsNumericToken(token) {
-  if (!isNumeric(token.value)) {
-    throw Error("assertIsNumericToken");
-  }
+    if (!isNumeric(token.value)) {
+        throw Error("assertIsNumericToken");
+    }
 }
+exports.assertIsNumericToken = assertIsNumericToken;
+//# sourceMappingURL=asserts.js.map

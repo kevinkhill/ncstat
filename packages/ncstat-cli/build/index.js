@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 Object.defineProperty(exports, "NcStatCli", {
   enumerable: true,
-  get: function() {
+  get: function () {
     return _NcStatCli.NcStatCli;
   }
 });

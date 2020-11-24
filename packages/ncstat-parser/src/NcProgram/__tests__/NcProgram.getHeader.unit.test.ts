@@ -1,4 +1,5 @@
-import { parseSource } from "@/lib/test-helpers";
+/* eslint-disable no-useless-escape */
+import { parseSource } from "../../../testing/test-helpers";
 
 const simpleProgram = `%
 O1234 (SIMPLE)

@@ -1,31 +1,15 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _NcBlock = require("./NcBlock");
-
-Object.keys(_NcBlock).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _NcBlock[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _NcBlock[key];
-    }
-  });
-});
-
-var _blockGenerator = require("./blockGenerator");
-
-Object.keys(_blockGenerator).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _blockGenerator[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _blockGenerator[key];
-    }
-  });
-});
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./blockGenerator"), exports);
+__exportStar(require("./NcBlock"), exports);
+//# sourceMappingURL=index.js.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"type-predicates.d.ts","sourceRoot":"","sources":["../../../src/NcLexer/lib/type-predicates.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,WAAW,EAAE,MAAM,oBAAoB,CAAC;AAC/D,OAAO,EAAE,OAAO,EAAE,MAAM,YAAY,CAAC;AAMrC,wBAAgB,cAAc,CAAC,KAAK,CAAC,EAAE,OAAO,GAAG,KAAK,IAAI,YAAY,CAErE;AAED,wBAAgB,aAAa,CAAC,KAAK,CAAC,EAAE,OAAO,GAAG,KAAK,IAAI,WAAW,CAEnE"}

@@ -1,4 +1,4 @@
-import { CodeTable } from "@/types";
+import { CodeTable } from "../types";
 
 export const M_CODE_TABLE: CodeTable = {
   0: { desc: "PROGRAM_STOP" },

@@ -1,4 +1,4 @@
-import { Modals } from "@/NcSpec";
+import { Modals } from "../NcSpec";
 
 export interface ModalGroups {
   // @TODO this is bad, FIX THIS

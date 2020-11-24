@@ -1,36 +1,35 @@
+import { interpret } from "@xstate/fsm";
+import Emittery from "emittery";
 import { clone, eq, isEmpty, last } from "lodash/fp";
 
-import { makeDebugger } from "@/lib";
-import { NcLexer, NcToken } from "@/NcLexer";
-import { CannedCycle, NcProgram, Tool, Toolpath } from "@/NcProgram";
-import {
-  NcMachineState,
-  NcMachineStateType,
-  NcService
-} from "@/NcService";
-import { G_CODE_TABLE, Modals } from "@/NcSpec";
+import { makeDebugger } from "../lib";
+import { NcLexer, NcToken } from "../NcLexer";
+import { CannedCycle, NcProgram, Tool, Toolpath } from "../NcProgram";
+import { NcServiceType, NcStateMachine } from "../NcService";
+import { G_CODE_TABLE, Modals } from "../NcSpec";
 import {
   ModalGroups,
   NcParserConfig,
   NcPosition,
   Tokens
-} from "@/types";
-import { MovementEvent } from "@/types/machine";
-
+} from "../types";
+import { MovementEvent } from "../types/machine";
 import { Mcode } from "./lib";
 import { NcBlock } from "./NcBlock";
-import { NcEventEmitter } from "./NcEventEmitter";
+import { DataEvents, PlainEvents } from "./NcParserEvents";
 
-const isIdle = eq(NcMachineState.IDLE);
-const isToolpathing = eq(NcMachineState.TOOLPATHING);
-const isInCannedCycle = eq(NcMachineState.IN_CANNED_CYCLE);
+const isIdle = eq(NcStateMachine.config.states.IDLE);
+const isToolpathing = eq(NcStateMachine.config.states.TOOLPATHING);
+const isInCannedCycle = eq(
+  NcStateMachine.config.states.IN_CANNED_CYCLE
+);
 
 const debug = makeDebugger("parser");
 
 /**
  * NcParser Class
  */
-export class NcParser extends NcEventEmitter {
+export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
   static readonly defaults = {
     debug: false,
     lexerConfig: NcLexer.defaults
@@ -40,9 +39,8 @@ export class NcParser extends NcEventEmitter {
 
   private lexer: NcLexer;
   private program: NcProgram;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private machine: any; // @TODO get this to work with `typeof NcService`;
-  private state: NcMachineStateType = "IDLE";
+  private machine: NcServiceType;
+  private state = "IDLE";
   private currToolpath!: Toolpath;
 
   private currBlock: NcBlock | null = null;
@@ -74,13 +72,13 @@ export class NcParser extends NcEventEmitter {
     this.lexer = new NcLexer(this.config.lexerConfig);
     this.program = new NcProgram();
     this.currToolpath = new Toolpath();
+    this.machine = interpret(NcStateMachine);
 
     // @TODO Bubble this event?
     // this.lexer.on("token", token => this.$emitToken(token));
 
-    this.machine = NcService;
-    this.machine.subscribe((state: { value: NcMachineStateType }) => {
-      this.$emitStateChange({
+    this.machine.subscribe((state) => {
+      this.emit("stateChange", {
         prev: this.state,
         curr: state.value
       });
@@ -112,7 +110,9 @@ export class NcParser extends NcEventEmitter {
       }
 
       if (this.currBlock.M) {
-        this.handleMcode();
+        const addr = new Mcode(this.currBlock?.M as number);
+
+        this.emit("mCode", addr);
       }
 
       // Example: O2134 ( NAME )
@@ -136,7 +136,7 @@ export class NcParser extends NcEventEmitter {
 
       if (this.currBlock.$has("S")) {
         debug("[ ADDR] Spindle speed = %d", this.currBlock.S);
-        this.currToolpath.setSetRpms(this.currBlock.S);
+        this.currToolpath.setRpms(this.currBlock.S);
       }
 
       if (this.currBlock.$has("F")) {
@@ -220,7 +220,7 @@ export class NcParser extends NcEventEmitter {
         }
       }
 
-      // this.$emitBlock(block);
+      this.emit("block", block);
       this.prevBlock = this.currBlock;
       this.program.appendBlock(this.currBlock);
     } // end-of-for
@@ -248,12 +248,6 @@ export class NcParser extends NcEventEmitter {
         lineTokens = [];
       }
     }
-  }
-
-  private handleMcode(): void {
-    const addr = new Mcode(this.currBlock?.M as number);
-
-    this.$emitM(addr);
   }
 
   private updateModals(): void {
@@ -314,7 +308,7 @@ export class NcParser extends NcEventEmitter {
       to: this.currPosition
     };
 
-    this.$emitMovement(movement);
+    this.emit("movement", movement);
 
     const debugMove = debug.extend("move");
 

@@ -1,2 +1,2 @@
-export * from "./NcBlock";
 export * from "./blockGenerator";
+export * from "./NcBlock";

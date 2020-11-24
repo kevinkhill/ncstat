@@ -1,4 +1,4 @@
-import Debug from "debug";
+import Debug, { Debugger } from "debug";
 
 export * from "./guards";
 
@@ -27,18 +27,10 @@ export function unwrap(str?: string): string {
     throw Error("Remove parenthesis from a string");
   }
 
-  return str
-    .replace("(", "")
-    .replace(")", "")
-    .trim();
+  return str.replace("(", "").replace(")", "").trim();
 }
 
 export const debug = Debug("ncstat");
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const makeDebugger = (namespace: string) =>
+export const makeDebugger = (namespace: string): Debugger =>
   debug.extend(namespace);
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-// export const makeDebuggers = (namespaces: string[]) =>
-//   namespaces.map(ns => ({ [ns]: debug.extend(ns) }));

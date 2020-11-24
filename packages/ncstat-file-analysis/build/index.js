@@ -10,7 +10,7 @@ function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
 }
 
-(async args => {
+(async (args) => {
   const parser = new _src.NcParser({
     debug: false
   });

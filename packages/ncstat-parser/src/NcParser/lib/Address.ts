@@ -1,8 +1,8 @@
-import { assertIsAddressToken, NcToken } from "@/NcLexer";
-import { getDefinition } from "@/NcSpec";
-import { CodeDefinition, Tokens } from "@/types";
-
-import { Mcode, splitParse } from ".";
+import { assertIsAddressToken, NcToken } from "../../NcLexer";
+import { getDefinition } from "../../NcSpec";
+import { CodeDefinition, Tokens } from "../../types";
+import { splitParse } from "./helpers";
+import { Mcode } from "./Mcode";
 
 export class Address {
   prefix: string;

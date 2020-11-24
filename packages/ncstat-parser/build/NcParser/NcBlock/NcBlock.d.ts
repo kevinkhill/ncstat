@@ -1,0 +1,64 @@
+import { NcToken } from "../../NcLexer";
+import { ModalGroups, ModalGroupStrings, NcPosition } from "../../types";
+export declare class NcBlock {
+    static create(tokens: NcToken[]): NcBlock;
+    static test: {
+        isEmptyBlock: import("lodash/fp").LodashProp1x1<NcBlock, "isEmpty">;
+    };
+    readonly tokens: NcToken[];
+    readonly sourceLine: number;
+    constructor(tokens: NcToken[]);
+    toString(options?: {
+        includeNewlines: boolean;
+    }): string;
+    $has(prefix: string): boolean;
+    $value(prefix: string): number | undefined;
+    getModalByGroup(group: ModalGroupStrings): string | undefined;
+    get gCodes(): string[];
+    get modals(): ModalGroups;
+    get stringTokens(): string[];
+    get length(): number;
+    get position(): Partial<NcPosition>;
+    get tokenCount(): number;
+    get hasComment(): boolean;
+    get isEmpty(): boolean;
+    get isCommentBlock(): boolean;
+    get comment(): string | undefined;
+    get hasToolCall(): boolean;
+    get hasToolChange(): boolean;
+    get hasMovement(): boolean;
+    get retractCommand(): string | undefined;
+    get workOffset(): string | undefined;
+    get cannedCycleStartCode(): string | undefined;
+    get isNline(): boolean;
+    get isStartOfCannedCycle(): boolean;
+    get skipLevel(): number | undefined;
+    get A(): number | undefined;
+    get B(): number | undefined;
+    get C(): number | undefined;
+    get D(): number | undefined;
+    get E(): number | undefined;
+    get F(): number | undefined;
+    get G(): number[];
+    get H(): number | undefined;
+    get I(): number | undefined;
+    get J(): number | undefined;
+    get K(): number | undefined;
+    get L(): number | undefined;
+    get M(): number | undefined;
+    get N(): number | undefined;
+    get O(): number | undefined;
+    get P(): number | undefined;
+    get Q(): number | undefined;
+    get R(): number | undefined;
+    get S(): number | undefined;
+    get T(): number | undefined;
+    get U(): number | undefined;
+    get V(): number | undefined;
+    get W(): number | undefined;
+    get X(): number | undefined;
+    get Y(): number | undefined;
+    get Z(): number | undefined;
+}
+export declare const isEmptyBlock: import("lodash/fp").LodashProp1x1<NcBlock, "isEmpty">;
+//# sourceMappingURL=NcBlock.d.ts.map

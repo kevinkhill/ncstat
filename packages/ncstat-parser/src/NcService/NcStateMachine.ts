@@ -1,42 +1,4 @@
-import { Machine } from "xstate";
-
-export type NcMachineStateType =
-  | "IDLE"
-  | "TOOLPATHING"
-  | "IN_CANNED_CYCLE";
-
-export const NcMachineState = {
-  IDLE: "IDLE",
-  TOOLPATHING: "TOOLPATHING",
-  IN_CANNED_CYCLE: "IN_CANNED_CYCLE"
-};
-
-// export enum NcMachineEvent {
-//   START_TOOLPATH = "START_TOOLPATH",
-//   END_TOOLPATH = "END_TOOLPATH",
-//   START_CANNED_CYCLE = "START_CANNED_CYCLE",
-//   END_CANNED_CYCLE = "END_CANNED_CYCLE"
-// }
-
-export type NcMachineEventType =
-  | "START_TOOLPATH"
-  | "END_TOOLPATH"
-  | "START_CANNED_CYCLE"
-  | "END_CANNED_CYCLE";
-
-export type NcMachineEvent =
-  | { type: "START_TOOLPATH" }
-  | { type: "END_TOOLPATH" }
-  | { type: "START_CANNED_CYCLE" }
-  | { type: "END_CANNED_CYCLE" };
-
-export interface NcMachineStateSchema {
-  states: {
-    IDLE: {};
-    TOOLPATHING: {};
-    IN_CANNED_CYCLE: {};
-  };
-}
+import { createMachine } from "@xstate/fsm";
 
 export interface NcMachineContext {
   position: {
@@ -45,10 +7,45 @@ export interface NcMachineContext {
   };
 }
 
-export const NcStateMachine = Machine<
+export type NcMachineEvent =
+  | { type: "START_TOOLPATH" }
+  | { type: "END_TOOLPATH" }
+  | { type: "START_CANNED_CYCLE" }
+  | { type: "END_CANNED_CYCLE" };
+
+export type NcMachineState =
+  | {
+      value: "IDLE";
+      context: NcMachineContext & {
+        position: {
+          curr: {
+            X: undefined;
+            Y: undefined;
+            Z: undefined;
+            B: undefined;
+          };
+          prev: {
+            X: undefined;
+            Y: undefined;
+            Z: undefined;
+            B: undefined;
+          };
+        };
+      };
+    }
+  | {
+      value: "TOOLPATHING";
+      context: NcMachineContext;
+    }
+  | {
+      value: "IN_CANNED_CYCLE";
+      context: NcMachineContext;
+    };
+
+export const NcStateMachine = createMachine<
   NcMachineContext,
-  NcMachineStateSchema,
-  NcMachineEvent
+  NcMachineEvent,
+  NcMachineState
 >({
   id: "ncstat",
   initial: "IDLE",

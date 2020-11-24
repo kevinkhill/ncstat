@@ -1,12 +1,12 @@
 import { Token } from "ts-tokenizr";
 
-import { makeDebugger } from "@/lib";
+import { makeDebugger } from "../lib";
 import {
   ParsedTokenizrValue,
   Tokens,
   TokenTypes,
   TokenValue
-} from "@/types";
+} from "../types";
 
 const debug = makeDebugger("lexer:token");
 

@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Token } from "ts-tokenizr";
 
-import { AddressToken, Tokens } from "@/types";
-
+import { AddressToken, Tokens } from "../../types";
 import { NcToken } from "../NcToken";
 
-function isNumeric(arg: any): boolean {
-  return !isNaN(parseFloat(arg)) && isFinite(arg);
+function isNumeric(arg: string | number | unknown): boolean {
+  return !isNaN(parseFloat(arg as string)) && isFinite(arg as number);
 }
 
 export function assertIsAddressToken(

@@ -5,11 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.writeOut = writeOut;
 
-const print = line => process.stdout.write(line);
+const print = (line) => process.stdout.write(line);
 
 function writeOut(program) {
   let blockCount = 1;
-  program.forEach(block => {
+  program.forEach((block) => {
     print("N" + ("0000" + blockCount).slice(-4) + ": ");
     print(`${block.toString()}\n`);
     blockCount++;

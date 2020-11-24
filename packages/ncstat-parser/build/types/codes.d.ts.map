@@ -1,0 +1,1 @@
+{"version":3,"file":"codes.d.ts","sourceRoot":"","sources":["../../src/types/codes.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,cAAc;IAC7B,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,CAAC,EAAE,MAAM,CAAC;CAChB;AAED,MAAM,WAAW,SAAS;IACxB,CAAC,CAAC,EAAE,MAAM,GAAG,cAAc,CAAC;CAC7B"}

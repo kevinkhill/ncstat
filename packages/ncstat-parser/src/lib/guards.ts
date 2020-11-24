@@ -1,5 +1,5 @@
-import { G_CODE_MODAL_GROUPS } from "@/NcSpec/gcodes";
-import { ModalGroupStrings } from "@/types";
+import { G_CODE_MODAL_GROUPS } from "../NcSpec/gcodes";
+import { ModalGroupStrings } from "../types";
 
 export function isNumber(x: unknown): x is number {
   return typeof x === "number";

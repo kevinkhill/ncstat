@@ -36,7 +36,7 @@ app.use(async (ctx, next) => {
   }
 });
 app.use(_router.router.routes());
-app.on("error", err => {
+app.on("error", (err) => {
   if (process.env.NODE_ENV !== "test") {
     console.log("sent error %s to the cloud", err.message);
     console.log(err);

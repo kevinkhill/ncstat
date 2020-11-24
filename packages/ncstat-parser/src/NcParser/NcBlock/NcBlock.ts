@@ -1,23 +1,21 @@
 import { intersection, prop } from "lodash/fp";
 
-import { isValidModalGroup, unwrap, zeroPadAddress } from "@/lib";
+import { isValidModalGroup, unwrap, zeroPadAddress } from "../../lib";
 import {
   filterByPrefix,
   findByPrefix,
   findByType,
   NcToken
-} from "@/NcLexer";
-import { CannedCycle } from "@/NcProgram";
-import { G_CODE, gCodeStrings } from "@/NcSpec";
+} from "../../NcLexer";
+import { CannedCycle } from "../../NcProgram";
+import { G_CODE, gCodeStrings } from "../../NcSpec";
 import {
   CommentToken,
   ModalGroups,
   ModalGroupStrings,
   NcPosition,
   Tokens
-} from "@/types";
-
-export const isEmptyBlock = prop<NcBlock, "isEmpty">("isEmpty");
+} from "../../types";
 
 export class NcBlock {
   static create(tokens: NcToken[]): NcBlock {
@@ -64,7 +62,7 @@ export class NcBlock {
   $has(prefix: string): boolean {
     // console.log("has", this.tokens);
     return (
-      this.tokens.filter(token => token.prefix === prefix).length > 0
+      this.tokens.filter((token) => token.prefix === prefix).length > 0
     );
     // return filterByPrefix(prefix, this.tokens).length > 0;
   }
@@ -92,7 +90,7 @@ export class NcBlock {
   }
 
   get gCodes(): string[] {
-    return filterByPrefix("G", this.tokens).map(token =>
+    return filterByPrefix("G", this.tokens).map((token) =>
       zeroPadAddress(token.text)
     );
   }
@@ -116,7 +114,7 @@ export class NcBlock {
   }
 
   get stringTokens(): string[] {
-    return this.tokens.map(token => token.text);
+    return this.tokens.map((token) => token.text);
   }
 
   get length(): number {
@@ -143,7 +141,8 @@ export class NcBlock {
 
   get hasComment(): boolean {
     return (
-      this.tokens.find(token => token.isA(Tokens.COMMENT)) !== undefined
+      this.tokens.find((token) => token.isA(Tokens.COMMENT)) !==
+      undefined
     );
   }
 
@@ -262,7 +261,7 @@ export class NcBlock {
 
   get G(): number[] {
     return filterByPrefix("G", this.tokens).map(
-      token => token.value
+      (token) => token.value
     ) as number[];
   }
 
@@ -346,3 +345,5 @@ export class NcBlock {
     return this.$value("Z");
   }
 }
+
+export const isEmptyBlock = prop<NcBlock, "isEmpty">("isEmpty");

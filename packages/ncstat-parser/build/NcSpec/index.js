@@ -1,70 +1,18 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _lib = require("./lib");
-
-Object.keys(_lib).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _lib[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _lib[key];
-    }
-  });
-});
-
-var _fanuc = require("./fanuc");
-
-Object.keys(_fanuc).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _fanuc[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _fanuc[key];
-    }
-  });
-});
-
-var _gcodes = require("./gcodes");
-
-Object.keys(_gcodes).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _gcodes[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _gcodes[key];
-    }
-  });
-});
-
-var _mcodes = require("./mcodes");
-
-Object.keys(_mcodes).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _mcodes[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _mcodes[key];
-    }
-  });
-});
-
-var _modals = require("./modals");
-
-Object.keys(_modals).forEach(function(key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _modals[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function() {
-      return _modals[key];
-    }
-  });
-});
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./fanuc"), exports);
+__exportStar(require("./gcodes"), exports);
+__exportStar(require("./lib"), exports);
+__exportStar(require("./mcodes"), exports);
+__exportStar(require("./modals"), exports);
+//# sourceMappingURL=index.js.map

@@ -38,7 +38,7 @@ function _applyDecoratedDescriptor(
   context
 ) {
   var desc = {};
-  Object.keys(descriptor).forEach(function(key) {
+  Object.keys(descriptor).forEach(function (key) {
     desc[key] = descriptor[key];
   });
   desc.enumerable = !!desc.enumerable;
@@ -49,7 +49,7 @@ function _applyDecoratedDescriptor(
   desc = decorators
     .slice()
     .reverse()
-    .reduce(function(desc, decorator) {
+    .reduce(function (desc, decorator) {
       return decorator(target, property, desc) || desc;
     }, desc);
   if (context && desc.initializer !== void 0) {
@@ -92,7 +92,7 @@ let NcLexerCommand =
         const parser = new _parser.NcParser({
           debug: this.debug
         });
-        parser.on("error", error => {
+        parser.on("error", (error) => {
           this.context.stderr.write(error.toString());
         });
         const lexer = parser.getLexer();
@@ -130,7 +130,7 @@ let NcLexerCommand =
       configurable: true,
       enumerable: true,
       writable: true,
-      initializer: function() {
+      initializer: function () {
         return false;
       }
     }

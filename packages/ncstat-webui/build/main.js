@@ -15,5 +15,5 @@ function _interopRequireDefault(obj) {
 _vue.default.config.productionTip = false;
 new _vue.default({
   vuetify: _vuetify.default,
-  render: h => h(_App.default)
+  render: (h) => h(_App.default)
 }).$mount("#app");
