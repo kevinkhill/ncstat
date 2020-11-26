@@ -11,10 +11,10 @@
       "path": "packages/ncstat-server"
     },
     {
-      "path": "packages/ncstat-webui"
+      "path": "packages/ncstat-parser"
     },
     {
-      "path": "packages/ncstat-parser"
+      "path": "packages/ncstat-webui"
     },
     {
       "path": "packages/react-webui"
