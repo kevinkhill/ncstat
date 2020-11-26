@@ -20,6 +20,14 @@
     "build": "tsc --project tsconfig.build.json",
     "test:NcProgram": "yarn test --watch NcProgram"
   },
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix './src/**/*.ts'"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "dependencies": {
     "@xstate/fsm": "^1.5.1",
     "debug": "^4.1.1",
