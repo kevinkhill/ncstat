@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "outDir": "./build",
+    "rootDir": "./src",
+    "target": "es2015",
+    "module": "commonjs",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "declaration": true,
+    "declarationMap": true,
+    "experimentalDecorators": true,
+    // "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "**/__tests__",
+    "**/__mocks__",
+  ]
+}

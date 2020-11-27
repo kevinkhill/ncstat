@@ -1,23 +1,7 @@
 {
   "folders": [
     {
-      "path": ".",
-      "name": "<root>"
-    },
-    {
-      "path": "packages/ncstat-cli"
-    },
-    {
-      "path": "packages/ncstat-server"
-    },
-    {
-      "path": "packages/ncstat-parser"
-    },
-    {
-      "path": "packages/ncstat-webui"
-    },
-    {
-      "path": "packages/react-webui"
+      "path": "."
     }
   ],
   "settings": {
@@ -26,14 +10,6 @@
       "comments": false,
       "strings": false,
       "references": false
-    },
-    "eslint.format.enable": true,
-    "eslint.packageManager": "yarn",
-    "eslint.workingDirectories": [
-      {
-        "changeProcessCWD": true,
-        "pattern": "./packages/*/src"
-      }
-    ]
+    }
   }
 }
