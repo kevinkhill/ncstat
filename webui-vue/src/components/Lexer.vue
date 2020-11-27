@@ -1,7 +1,7 @@
 <template>
   <Multipane class="custom-resizer" layout="vertical">
     <!-- Left Pane -->
-    <div class="pane" :style="{ minWidth: '20%', width: '40%' }">
+    <div class="pane" :style="{ minWidth: '20%', width: '30%' }">
       <p class="display-1">G Code</p>
       <v-textarea
         solo
@@ -21,7 +21,8 @@
     <!-- Right Pane -->
     <div class="pane" :style="{ flexGrow: 1 }">
       <v-tabs v-model="tab" background-color="transparent" grow>
-        <v-tab>Formatted Output</v-tab>
+        <v-tab>Raw</v-tab>
+        <v-tab>Formatted</v-tab>
         <v-tab>
           <v-badge color="deep-purple accent-6" :content="tokenCount">
             Tokens
@@ -30,7 +31,16 @@
       </v-tabs>
 
       <v-tabs-items v-model="tab">
-        <!-- Formatted Output -->
+        <!-- Raw -->
+        <v-tab-item>
+          <div class="raw">
+            <template v-for="(token, idx) in tokens">
+              <div :key="idx">{{ token.toString() }}</div>
+            </template>
+          </div>
+        </v-tab-item>
+
+        <!-- Formatted -->
         <v-tab-item>
           <div class="output">
             <template v-for="(token, idx) in tokens">
@@ -62,15 +72,12 @@
 
 <script lang="ts">
 import Vue from "vue";
-import debounce from "lodash-es/debounce";
-import { NcLexer } from "@ncstat/lexer";
+import Component from 'vue-class-component';
+import {Watch}from 'vue-property-decorator';
+import { NcLexer, NcToken } from "@ncstat/parser";
 import { Multipane, MultipaneResizer } from "vue-multipane";
 
-const lexer = new NcLexer({
-  newlineTokens: true
-});
-
-const input = `%
+const DEMO_INPUT = `%
 O1234 (TEST PROGRAM)
 
 N43 ( #14 [.182"] DRILL )
@@ -85,59 +92,59 @@ G80
 M30
 %`;
 
-export default Vue.extend({
+@Component({
   components: {
     Multipane,
     MultipaneResizer
-  },
-
-  data() {
-    return {
-      lexer,
-      input,
-      tab: null,
-      tokens: []
-    };
-  },
-
-  watch: {
-    input(newVal) {
-      this.$emit("input", { input: newVal });
-    },
-    tokens(newVal) {
-      this.$emit("token", { tokens: newVal });
+  }
+})
+export default class Lexer extends Vue {
+  lexer = new NcLexer({
+    tokens: {
+      NEWLINE:false
     }
-  },
+  });
 
-  computed: {
-    tokenCount() {
-      return this.tokens.length;
-    }
-  },
+  input = DEMO_INPUT;
+  tab!: null;
+  tokens: NcToken[] = [];
+
+  get tokenCount() {
+    return this.tokens.length;
+  }
 
   mounted() {
     this.tokenizeInput();
-  },
-
-  methods: {
-    reset() {
-      this.input = "";
-      this.tokens = [];
-    },
-    tokenizeInput(): void {
-      const tokens = this.lexer.tokenArray(this.input);
-
-      tokens.pop();
-
-      this.tokens = tokens;
-    },
-    update: debounce(function(input) {
-      this.input = input.toUpperCase();
-
-      this.tokenizeInput();
-    }, 300)
   }
-});
+
+  @Watch('input')
+  onInput(val: string, _oldVal: string) {
+    this.$emit("input", { input: val });
+  }
+
+  // onTokens(newVal) {
+  //   this.$emit("token", { tokens: newVal });
+  // }
+
+  reset() {
+    this.input = "";
+    this.tokens = [];
+  }
+
+  tokenizeInput(): void {
+    const tokens = this.lexer.tokens(this.input);
+
+    console.log(tokens);
+
+    this.tokens = tokens;
+  }
+
+  update(input: string) {
+    this.input = input.toUpperCase();
+
+    this.tokenizeInput();
+  }
+}
 </script>
 
 <style lang="scss">

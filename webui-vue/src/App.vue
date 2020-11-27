@@ -44,32 +44,25 @@
 </template>
 
 <script lang="ts">
+import { NcToken } from "@ncstat/parser";
 import Vue from "vue";
+import Component from "vue-class-component";
 import Lexer from "./components/Lexer.vue";
 
-export default Vue.extend({
-  name: "App",
-
+@Component({
   components: {
     Lexer
-  },
-
-  props: {
-    source: String
-  },
-
-  data: () => ({
-    drawer: null
-  }),
+  }
+})
+export default class App extends Vue {
+  drawer = null;
 
   created() {
     this.$vuetify.theme.dark = true;
-  },
-
-  methods: {
-    handleTokens({ tokens }) {
-      console.log(tokens);
-    }
   }
-});
+
+  handleTokens({ tokens }: { tokens: NcToken[]}) {
+    console.log(tokens);
+  }
+}
 </script>
