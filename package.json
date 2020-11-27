@@ -2,23 +2,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "ncstat": "node ./packages/ncstat-cli/bin/ncstat.js",
-    "build-clean": "rimraf ./packages/*/build ./packages/*/build-es5 ./packages/*/tsconfig.tsbuildinfo",
-    "prebuild": "yarn build:ts",
-    "build": "yarn node ./scripts/build.js",
-    "build:ts": "yarn node ./scripts/buildTs.js",
-    "build:webui": "cd ./packages/ncstat-webui && yarn build",
-    "clean-all": "rimraf ./node_modules && rimraf ./packages/*/node_modules && yarn clean-e2e && yarn build-clean",
+    "ncstat": "node ./cli/bin/ncstat.js",
+    "build:webui:vue": "cd webui-vue && yarn build",
+    "build:webui:react": "cd webui-react && yarn build",
+    "clean-all": "rimraf ./node_modules && rimraf ./*/node_modules && yarn clean-e2e && yarn build-clean",
     "clean-e2e": "yarn node ./scripts/cleanE2e.js",
     "jest-coverage": "yarn jest --coverage",
-    "lint": "eslint ./packages/**/src/*.ts --cache",
-    "lint:prettier": "yarn --silent lint:prettier:ci --fix",
-    "publish": "yarn build-clean && yarn build && lerna publish --silent",
     "test": "yarn lint && yarn jest",
-    "test:pkg": "yarn jest --testPathPattern",
     "watch": "yarn build && node ./scripts/watch.js",
-    "watch:ts": "yarn build:ts --watch",
-    "nuke": "find . -name 'node_modules' -type d -prune -print -exec rm -rf '{}' \\;"
+    "watch:ts": "yarn build:ts --watch"
   },
   "lint-staged": {
     "*.ts": "eslint --cache --fix"

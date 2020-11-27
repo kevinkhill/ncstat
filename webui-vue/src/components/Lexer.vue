@@ -48,24 +48,27 @@
 
         <!-- Tokens -->
         <v-tab-item>
-          <!-- <div class="tokens"> -->
-            <v-list dense>
-              <v-subheader>REPORTS</v-subheader>
-              <v-list-item-group
-                v-model="selectedItem"
-                color="primary"
-              >
-                <v-list-item
-                  v-for="(token, i) in tokens"
-                  :key="i"
-                >
-                  <v-list-item-content>
-                    <v-list-item-title v-text="`${token}`"></v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
-          <!-- </div> -->
+          <div class="tokens">
+            <v-simple-table dense>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      Token
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(token, i) in tokens"
+                    :key="i"
+                  >
+                    <td>{{ token }}</td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
+          </div>
         </v-tab-item>
       </v-tabs-items>
     </div>
