@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": "../configs/.eslintrc.js",
+  "extends": "../.eslintrc.js",
   "rules": {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",

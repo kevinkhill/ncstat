@@ -29,7 +29,7 @@ module.exports = {
     "@typescript-eslint"
   ],
   extends: [
-    "node",
+    // "node",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:import/errors",
