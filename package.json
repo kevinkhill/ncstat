@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "ncstat": "node ./cli/bin/ncstat.js",
-    "build:webui:vue": "cd webui-vue && yarn build",
-    "build:webui:react": "cd webui-react && yarn build",
+    "build:webui:vue": "cd webui-vue && npm run build",
+    "build:webui:react": "cd webui-react && npm run build",
     "clean-all": "rimraf ./node_modules && rimraf ./*/node_modules && yarn clean-e2e && yarn build-clean",
     "clean-e2e": "yarn node ./scripts/cleanE2e.js",
     "jest-coverage": "yarn jest --coverage",
