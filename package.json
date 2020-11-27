@@ -10,15 +10,10 @@
     "jest-coverage": "yarn jest --coverage",
     "test": "yarn lint && yarn jest",
     "watch": "yarn build && node ./scripts/watch.js",
-    "watch:ts": "yarn build:ts --watch"
-  },
-  "lint-staged": {
-    "*.ts": "eslint --cache --fix"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "watch:ts": "yarn build:ts --watch",
+    "open:site": "npx open-cli https://ncstat.netlify.app",
+    "open:github": "npx open-cli https://github.com/kevinkhill/ncstat",
+    "open:netlify": "npx open-cli https://app.netlify.com/sites/ncstat"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",

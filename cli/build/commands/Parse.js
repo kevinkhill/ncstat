@@ -53,6 +53,7 @@ __decorate([
     clipanion_1.Command.Boolean(`-d,--debug`)
 ], ParseCommand.prototype, "debug", void 0);
 __decorate([
-    clipanion_1.Command.Path(`parse`)
+    clipanion_1.Command.Path(`parse`),
+    clipanion_1.Command.Path(``)
 ], ParseCommand.prototype, "execute", null);
 exports.default = ParseCommand;

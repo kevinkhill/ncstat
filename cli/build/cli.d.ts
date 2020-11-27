@@ -1,3 +1,3 @@
 import { Cli } from "clipanion";
-export declare const NcStatCli: Cli<import("clipanion").BaseContext>;
+export declare const cli: Cli<import("clipanion").BaseContext>;
 //# sourceMappingURL=cli.d.ts.map

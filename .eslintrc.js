@@ -51,6 +51,12 @@ module.exports = {
     "max-len": [ERROR, MAX_LINE_LENGTH],
     "max-params": [ERROR, MAX_PARAMS],
 
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "sort-imports": "off",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
     //
     // @typescript-eslint/eslint-plugin
     //

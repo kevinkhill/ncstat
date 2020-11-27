@@ -1,7 +1,7 @@
 import { Cli, Command } from "clipanion";
 
-import LexCommand from "./commands/Lex";
-import ParseCommand from "./commands/Parse";
+import LexCommand from "./LexCommand";
+import ParseCommand from "./ParseCommand";
 
 export const cli = new Cli({
   binaryLabel: "Command line utility for @ncstat/parser",
@@ -16,5 +16,6 @@ cli.register(LexCommand);
 cli.register(ParseCommand);
 
 cli.runExit(process.argv.slice(2), {
+  // cwd: process.cwd(),
   ...Cli.defaultContext
 });
