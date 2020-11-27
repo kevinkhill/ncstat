@@ -1,16 +1,18 @@
-import fs from "fs";
 import { NcBlock, NcParser, NcProgram } from "@ncstat/parser";
 import { Command } from "clipanion";
+import fs from "fs";
 import path from "path";
+
+import { MyContext } from "./context";
 
 const readFile = fs.promises.readFile;
 
-export default class ParseCommand extends Command {
-  @Command.String({ required: true })
-  public filepath!: string;
+export default class ParseCommand extends Command<MyContext> {
+  @Command.Boolean(`--debug`)
+  debug = false;
 
-  @Command.Boolean(`-d,--debug`)
-  public debug = false;
+  @Command.String({ required: true })
+  filepath!: string;
 
   @Command.Path(`parse`)
   async execute(): Promise<void> {
@@ -20,7 +22,7 @@ export default class ParseCommand extends Command {
       this.context.stderr.write(error.toString());
     });
 
-    const resolved = path.resolve(__dirname, this.filepath);
+    const resolved = path.join(this.context.cwd, this.filepath);
 
     const contents = await readFile(resolved, "utf-8");
 

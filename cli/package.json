@@ -10,7 +10,12 @@
     "ncstat": "./build/index.js"
   },
   "scripts": {
-    "build": "tsc --project tsconfig.build.json"
+    "build": "tsc --project tsconfig.build.json",
+    "cli": "ts-node ./src/cli.ts",
+    "parse": "yarn cli parse",
+    "parse:A": "yarn cli parse ../ncfiles/A.NC",
+    "parse:B": "yarn cli parse ../ncfiles/B.NC",
+    "parse:C": "yarn cli parse ../ncfiles/C.NC"
   },
   "dependencies": {
     "@ncstat/parser": "../parser",
@@ -32,9 +37,11 @@
     "eslint-plugin-lodash-fp": "^2.2.0-a1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-simple-import-sort": "^6.0.1",
+    "esm": "^3.2.25",
     "jest": "^26.6.3",
     "prettier": "^2.2.0",
     "ts-jest": "^26.4.4",
+    "ts-node": "^9.0.0",
     "ts-node-dev": "^1.0.0",
     "typescript": "^4.1.2"
   }

@@ -70,7 +70,6 @@ module.exports = {
     "@typescript-eslint/no-object-literal-type-assertion": OFF,
     "@typescript-eslint/no-explicit-any": WARN,
     "@typescript-eslint/ban-types": ERROR,
-    "@typescript-eslint/ban-ts-ignore": ERROR,
     "@typescript-eslint/prefer-includes": ERROR,
     "@typescript-eslint/prefer-regexp-exec": ERROR,
     "@typescript-eslint/no-inferrable-types": ERROR,

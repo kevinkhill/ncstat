@@ -36,7 +36,6 @@
   ],
   "rules": {
     "sort-imports": "off",
-    "@typescript-eslint/ban-ts-ignore": "off",
     "import/no-extraneous-dependencies": "off",
     "newline-per-chained-call": [2, { "ignoreChainWithDepth": 3 }],
     "simple-import-sort/imports": "error",
