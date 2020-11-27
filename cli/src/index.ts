@@ -1,1 +1,1 @@
-export { NcStatCli } from "./cli";
+export { cli } from "./cli";
