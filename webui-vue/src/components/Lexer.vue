@@ -21,7 +21,6 @@
     <!-- Right Pane -->
     <div class="pane" :style="{ flexGrow: 1 }">
       <v-tabs v-model="tab" background-color="transparent" grow>
-        <v-tab>Raw</v-tab>
         <v-tab>Formatted</v-tab>
         <v-tab>
           <v-badge color="deep-purple accent-6" :content="tokenCount">
@@ -31,15 +30,6 @@
       </v-tabs>
 
       <v-tabs-items v-model="tab">
-        <!-- Raw -->
-        <v-tab-item>
-          <div class="raw">
-            <template v-for="(token, idx) in tokens">
-              <div :key="idx">{{ token.toString() }}</div>
-            </template>
-          </div>
-        </v-tab-item>
-
         <!-- Formatted -->
         <v-tab-item>
           <div class="output">
@@ -47,23 +37,35 @@
               <span
                 :key="idx"
                 class="token"
-                :class="[`${token.value.prefix}_CODE`, token.type]"
-                >{{ token.text }}</span
+                :class="[`${token.prefix}_CODE`, token.type]"
               >
-              <br v-if="token.type === 'NEWLINE'" />
+                <br v-if="token.type === 'NEWLINE'" />
+                <template v-else>{{ token.text }}</template>
+              </span>
             </template>
           </div>
         </v-tab-item>
 
         <!-- Tokens -->
         <v-tab-item>
-          <div class="tokens">
-            <ul>
-              <li :key="idx" v-for="(token, idx) in tokens">
-                {{ JSON.stringify(token) }}
-              </li>
-            </ul>
-          </div>
+          <!-- <div class="tokens"> -->
+            <v-list dense>
+              <v-subheader>REPORTS</v-subheader>
+              <v-list-item-group
+                v-model="selectedItem"
+                color="primary"
+              >
+                <v-list-item
+                  v-for="(token, i) in tokens"
+                  :key="i"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title v-text="`${token}`"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          <!-- </div> -->
         </v-tab-item>
       </v-tabs-items>
     </div>
@@ -99,14 +101,11 @@ M30
   }
 })
 export default class Lexer extends Vue {
-  lexer = new NcLexer({
-    tokens: {
-      NEWLINE:false
-    }
-  });
+  lexer = new NcLexer();
 
+  tab = null;
   input = DEMO_INPUT;
-  tab!: null;
+  selectedItem!: string;
   tokens: NcToken[] = [];
 
   get tokenCount() {

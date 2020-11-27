@@ -33,9 +33,9 @@
       </v-btn>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <Lexer @token="handleTokens" />
-    </v-content>
+    </v-main>
 
     <v-footer app>
       <span>&copy; 2020</span>
