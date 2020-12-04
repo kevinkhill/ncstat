@@ -7,3 +7,4 @@ yarn-error.log
 *.tsbuildinfo
 *.log
 *.cache
+.nyc_output

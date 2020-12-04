@@ -1,28 +1,25 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 const fs = require("fs");
 const path = require("path");
 
-const {
-  NcParser,
-  NcParserConfig,
-  defineGCode
-} = require("../build/index.js");
+const { NcParser, define } = require("../parser/build/index.js");
 
-const DEMO_FILE = "TRM.NC";
+async function readFile(file) {
+  const inFile = path.join(__dirname, "sources", file);
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const writeFile = (file, data) => {
+  return fs.promises.readFile(inFile, "utf8");
+}
+
+async function writeFile(file, data) {
   const outFile = path.join(__dirname, "output", file);
 
   console.log(`Writing to ${outFile}`);
 
   return fs.promises.writeFile(outFile, data);
-};
+}
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const readFile = (file) =>
-  fs.promises.readFile(path.join(__dirname, file), "utf8");
-
-(async () => {
+async function runDemo(demoSource) {
   const parser = new NcParser({
     debug: true,
     lexerConfig: {
@@ -32,7 +29,7 @@ const readFile = (file) =>
     }
   });
 
-  const contents = await readFile(DEMO_FILE);
+  const contents = await readFile(demoSource);
   const program = parser.parse(contents);
   const json = JSON.stringify(program);
   // console.log(json);
@@ -46,5 +43,7 @@ const readFile = (file) =>
     }
   });
 
-  writeFile("vf10.json", json);
-})();
+  // writeFile("vf10.json", json);
+}
+
+module.exports = runDemo;

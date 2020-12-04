@@ -1,7 +1,40 @@
 {
   "folders": [
     {
-      "path": "."
+      "path": ".",
+      "name": "<root>"
+    },
+    {
+      "path": "./demo",
+      "name": "NcStat Demos"
+    },
+    {
+      "path": "./ncfiles",
+      "name": "NC Files"
+    },
+    {
+      "path": "./cli",
+      "name":"NcStat CLI"
+    },
+    {
+      "path": "./parser",
+      "name":"NcParser"
+    },
+    {
+      "path": "./server-fastify",
+      "name":"Backend (Fastify)"
+    },
+    {
+      "path": "./server-koa",
+      "name":"Backend (KOA)"
+    },
+    {
+      "path": "./webui-vue",
+      "name": "Frontend (Vue)"
+    },
+    {
+      "path": "./webui-react",
+      "name": "Frontend (React)"
     }
   ],
   "settings": {

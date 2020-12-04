@@ -3,14 +3,8 @@ import { CodeDefinition } from "../types";
 import { G_CODE_TABLE } from "./fanuc";
 import { M_CODE_TABLE } from "./mcodes";
 
-export const stripPrefix = (input: string): number =>
-  parseInt(input.substring(1));
 
-export function getDefinition(address: Address): CodeDefinition {
-  const lookupFn = address.prefix === "M" ? defineMCode : defineGCode;
 
-  return lookupFn(address.toString());
-}
 
 /**
  * Helper method for creating {@link CodeDefinition}s
@@ -49,19 +43,15 @@ export function defineMCode(input: string): CodeDefinition {
 }
 
 /**
- * Return an M codes' definition
+ * Return the definition for a G or M code
  *
  * @example ```
- *     define("G10")  // "PROGRAMMABLE_OFFSET_INPUT"
- *     define("M09") // "COOLANT_OFF"
+ *     getDefinition("G10") // "PROGRAMMABLE_OFFSET_INPUT"
+ *     getDefinition("M09") // "COOLANT_OFF"
  * ```
  */
-export function define(input: string): CodeDefinition {
-  if (input.startsWith("M")) {
-    return defineMCode(input);
-  } else if (input.startsWith("G")) {
-    return defineGCode(input);
-  } else {
-    return createDefinition(`CODE_NOT_FOUND: ${input}`);
-  }
+ export function getDefinition(address: Address): CodeDefinition {
+  const lookupFn = address.prefix === "M" ? defineMCode : defineGCode;
+
+  return lookupFn(address.toString());
 }

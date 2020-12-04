@@ -30,6 +30,7 @@
     "debug": "^4.1.1",
     "emittery": "^0.7.2",
     "lodash": "^4.17.20",
+    "ts-pattern": "^1.1.0",
     "ts-tokenizr": "^1.1.1"
   },
   "devDependencies": {

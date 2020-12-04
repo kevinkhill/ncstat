@@ -1,0 +1,44 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tap test/**/*.test.js --watch",
+    "test:list": "tap test/**/*.test.js --reporter=list --watch",
+    "start": "fastify start -l info app.js",
+    "dev": "fastify start -w -l info -P app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@ncstat/parser": "../parser/build",
+    "@types/busboy": "^0.2.3",
+    "fastify": "^3.0.0",
+    "fastify-autoload": "^3.0.2",
+    "fastify-cli": "^2.5.1",
+    "fastify-formbody": "^5.0.0",
+    "fastify-multipart": "^3.3.1",
+    "fastify-plugin": "^3.0.0",
+    "make-promises-safe": "^5.1.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "eslint": "^7.14.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-simple-import-sort": "^6.0.0",
+    "prettier": "^2.2.1",
+    "tap": "^14.0.0",
+    "typescript": "^4.1.2"
+  }
+}
