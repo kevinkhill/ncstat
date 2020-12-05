@@ -1,7 +1,5 @@
 import { Address } from "../NcParser";
 import { CodeDefinition } from "../types";
-export declare const stripPrefix: (input: string) => number;
-export declare function getDefinition(address: Address): CodeDefinition;
 /**
  * Return an M codes' definition
  *
@@ -19,12 +17,12 @@ export declare function defineGCode(input: string): CodeDefinition;
  */
 export declare function defineMCode(input: string): CodeDefinition;
 /**
- * Return an M codes' definition
+ * Return the definition for a G or M code
  *
  * @example ```
- *     define("G10")  // "PROGRAMMABLE_OFFSET_INPUT"
- *     define("M09") // "COOLANT_OFF"
+ *     getDefinition("G10") // "PROGRAMMABLE_OFFSET_INPUT"
+ *     getDefinition("M09") // "COOLANT_OFF"
  * ```
  */
-export declare function define(input: string): CodeDefinition;
+export declare function getDefinition(address: Address): CodeDefinition;
 //# sourceMappingURL=lib.d.ts.map

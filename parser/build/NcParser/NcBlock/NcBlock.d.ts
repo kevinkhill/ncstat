@@ -3,7 +3,7 @@ import { ModalGroups, ModalGroupStrings, NcPosition } from "../../types";
 export declare class NcBlock {
     static create(tokens: NcToken[]): NcBlock;
     static test: {
-        isEmptyBlock: any;
+        isEmptyBlock: import("lodash/fp").LodashProp1x1<NcBlock, "isEmpty">;
     };
     readonly tokens: NcToken[];
     readonly sourceLine: number;
@@ -60,5 +60,5 @@ export declare class NcBlock {
     get Y(): number | undefined;
     get Z(): number | undefined;
 }
-export declare const isEmptyBlock: any;
+export declare const isEmptyBlock: import("lodash/fp").LodashProp1x1<NcBlock, "isEmpty">;
 //# sourceMappingURL=NcBlock.d.ts.map

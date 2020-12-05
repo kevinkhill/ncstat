@@ -19,6 +19,13 @@ exports.tokenizr.rule(/(O|:)(\d{4,5})/, (ctx, match) => {
         value: parseInt(match[2])
     });
 });
+// Match "M5", "M01"
+exports.tokenizr.rule(/M([\d]+)/, (ctx, match) => {
+    ctx.accept(tokens_1.Tokens.M_CODE, {
+        prefix: "M",
+        value: parseInt(match[1])
+    });
+});
 // Match "A1", "B2.0", "X41.2142"
 exports.tokenizr.rule(/([A-NP-Z])([#-]*[0-9.]+)(?![^(]*\))/, (ctx, match) => {
     ctx.accept(tokens_1.Tokens.ADDRESS, {

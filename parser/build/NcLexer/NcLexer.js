@@ -18,7 +18,8 @@ class NcLexer {
      * the tokenize generator method.
      */
     tokens(input) {
-        return Array.from(this.tokenize(input));
+        const tokenGenerator = this.tokenize(input);
+        return Array.from(tokenGenerator);
     }
     /**
      * @emits token NcToken

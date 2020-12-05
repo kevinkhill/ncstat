@@ -4,6 +4,7 @@ exports.Tokens = void 0;
 var Tokens;
 (function (Tokens) {
     Tokens["EOF"] = "EOF";
+    Tokens["M_CODE"] = "M_CODE";
     Tokens["ADDRESS"] = "ADDRESS";
     Tokens["COMMENT"] = "COMMENT";
     Tokens["NEWLINE"] = "NEWLINE";

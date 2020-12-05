@@ -1,6 +1,7 @@
 import { NcToken } from "../NcLexer";
 export declare enum Tokens {
     "EOF" = "EOF",
+    "M_CODE" = "M_CODE",
     "ADDRESS" = "ADDRESS",
     "COMMENT" = "COMMENT",
     "NEWLINE" = "NEWLINE",
@@ -31,5 +32,9 @@ export interface CommentToken extends StringToken {
 export interface AddressToken extends NumericToken {
     type: Tokens.ADDRESS;
     prefix: string;
+}
+export interface MCodeToken extends NumericToken {
+    type: Tokens.M_CODE;
+    prefix: "M";
 }
 //# sourceMappingURL=tokens.d.ts.map
