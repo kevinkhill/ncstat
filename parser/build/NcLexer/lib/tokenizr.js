@@ -27,7 +27,7 @@ exports.tokenizr.rule(/M([\d]+)/, (ctx, match) => {
     });
 });
 // Match "A1", "B2.0", "X41.2142"
-exports.tokenizr.rule(/([A-NP-Z])([#-]*[0-9.]+)(?![^(]*\))/, (ctx, match) => {
+exports.tokenizr.rule(/([A-LNP-Z])([#-]*[0-9.]+)(?![^(]*\))/, (ctx, match) => {
     ctx.accept(tokens_1.Tokens.ADDRESS, {
         prefix: match[1],
         value: parseFloat(match[2])
