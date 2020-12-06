@@ -4,7 +4,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 8,
     sourceType: "module",
-    project: "./tsconfig.json"
+    project: "tsconfig.json"
   },
   env: {
     es6: true,
@@ -66,7 +66,6 @@ module.exports = {
     "@typescript-eslint/no-misused-promises": "error",
     "@typescript-eslint/consistent-type-definitions": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
-    "@typescript-eslint/prefer-string-starts-ends-with": "error",
     "@typescript-eslint/array-type": [
       "error",
       { default: "array-simple" }
@@ -93,7 +92,8 @@ module.exports = {
     // eslint-plugin-simple-import-sort
     //
 
-    "simple-import-sort/sort": "error",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
 
     //
     // eslint-plugin-import
@@ -135,7 +135,9 @@ module.exports = {
     {
       files: ["*.js"],
       rules: {
-        "import/no-commonjs": "off"
+        "simple-import-sort/imports": "off",
+        // "import/no-commonjs": "off",
+        "import/order": ["error", { "newlines-between": "always" }]
       }
     },
     {

@@ -4,7 +4,21 @@ const path = require("path");
 const AutoLoad = require("fastify-autoload");
 
 module.exports = async function (fastify, opts) {
-  // Stuff
+  // fastify.addHook("onRequest", (request, reply, done) => {
+  //   if (request.headers["content-type"] === "text/plain") {
+  //     Object.assign(request, { isPlain: true });
+  //   }
+
+  //   if (request.headers["content-type"] === "application/json") {
+  //     Object.assign(request, { isJson: true });
+  //   }
+
+  //   done();
+  // });
+
+  // fastify.setErrorHandler((error, request, reply) => {
+  //   reply.send(error);
+  // });
 
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused

@@ -3,9 +3,6 @@ import { CodeDefinition } from "../types";
 import { G_CODE_TABLE } from "./fanuc";
 import { M_CODE_TABLE } from "./mcodes";
 
-
-
-
 /**
  * Helper method for creating {@link CodeDefinition}s
  */
@@ -50,7 +47,7 @@ export function defineMCode(input: string): CodeDefinition {
  *     getDefinition("M09") // "COOLANT_OFF"
  * ```
  */
- export function getDefinition(address: Address): CodeDefinition {
+export function getDefinition(address: Address): CodeDefinition {
   const lookupFn = address.prefix === "M" ? defineMCode : defineGCode;
 
   return lookupFn(address.toString());

@@ -14,27 +14,35 @@
     },
     {
       "path": "./cli",
-      "name":"NcStat CLI"
+      "name": "NcStat CLI"
     },
     {
       "path": "./parser",
-      "name":"NcParser"
-    },
-    {
-      "path": "./server-fastify",
-      "name":"Backend (Fastify)"
+      "name": "NcParser"
     },
     {
       "path": "./server-koa",
-      "name":"Backend (KOA)"
+      "name": "Backend (KOA)"
     },
     {
-      "path": "./webui-vue",
-      "name": "Frontend (Vue)"
+      "path": "./server-fastify",
+      "name": "Backend (Fastify)"
+    },
+    {
+      "path": "./server-express",
+      "name": "Backend (Express)"
+    },
+    {
+      "path": "./api",
+      "name": "Backend (Serverless)"
     },
     {
       "path": "./webui-react",
       "name": "Frontend (React)"
+    },
+    {
+      "path": "./webui-vue",
+      "name": "Frontend (Vue)"
     }
   ],
   "settings": {
@@ -44,5 +52,26 @@
       "strings": false,
       "references": false
     }
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build Parser",
+        "options": {
+          "cwd": "${cwd}/parser"
+        },
+        "type": "shell",
+        "command": "yarn build"
+      },
+      {
+        "label": "Build Vue Site",
+        "options": {
+          "cwd": "${cwd}/webui-vue"
+        },
+        "type": "shell",
+        "command": "yarn build"
+      }
+    ]
   }
 }

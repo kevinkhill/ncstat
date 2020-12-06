@@ -8,3 +8,5 @@ yarn-error.log
 *.log
 *.cache
 .nyc_output
+
+.vercel

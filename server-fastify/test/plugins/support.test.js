@@ -1,15 +1,15 @@
-"use strict";
-
 const { test } = require("tap");
 const Fastify = require("fastify");
+const { NcLexer } = require("@ncstat/parser");
+
 const Support = require("../../plugins/support");
 
-test("support works standalone", async (t) => {
+test("support provides the lexer", async (t) => {
   const fastify = Fastify();
   fastify.register(Support);
 
   await fastify.ready();
-  t.equal(fastify.someSupport(), "hugs");
+  t.true(fastify.lexer() instanceof NcLexer);
 });
 
 // You can also use plugin with opts in fastify v2

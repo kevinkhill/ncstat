@@ -28,7 +28,12 @@ function build(t) {
   return app;
 }
 
+function getSampleNcCode() {
+  return require("../../ncfiles/sample");
+}
+
 module.exports = {
   config,
-  build
+  build,
+  getSampleNcCode
 };

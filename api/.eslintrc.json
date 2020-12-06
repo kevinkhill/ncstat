@@ -3,10 +3,10 @@
   "overrides": [
     {
       "files": [
-        "*.js"
+        "*.ts"
       ],
       "rules": {
-        "simple-import-sort/sort": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/explicit-function-return-type": "off"
       }
     }

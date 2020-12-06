@@ -1,5 +1,7 @@
 module.exports = async function (fastify, _opts) {
-  fastify.get("/", async () => {
-    return { ncstat: "v0.0.1" };
+  fastify.get("/", async (_req) => {
+    return {
+      ncstat: "v0.0.1"
+    };
   });
 };

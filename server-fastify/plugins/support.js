@@ -1,4 +1,4 @@
-"use strict";
+const { NcLexer } = require("@ncstat/parser");
 
 const fp = require("fastify-plugin");
 
@@ -6,7 +6,14 @@ const fp = require("fastify-plugin");
 // to export the decorators to the outer scope
 
 module.exports = fp(async function (fastify, opts) {
-  fastify.decorate("someSupport", function () {
-    return "hugs";
+  fastify.decorate("lexer", function () {
+    return new NcLexer({
+      ...{
+        tokens: {
+          EOF: false
+        }
+      },
+      ...opts
+    });
   });
 });
