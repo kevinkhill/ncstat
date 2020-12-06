@@ -15,9 +15,9 @@
     "demo:trm": "node ./demo/runner.js TRM.NC",
     "demo:405": "node ./demo/runner.js 405.NC",
     "demo:vf10": "node ./demo/runner.js VF10.NC",
-    "open:site": "npx open-cli https://ncstat.netlify.app",
+    "open:site": "npx open-cli https://ncstat.vercel.app",
     "open:github": "npx open-cli https://github.com/kevinkhill/ncstat",
-    "open:netlify": "npx open-cli https://app.netlify.com/sites/ncstat"
+    "open:netlify": "npx open-cli https://vercel.com/kevinkhill/ncstat"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
