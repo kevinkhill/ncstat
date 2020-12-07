@@ -18,7 +18,7 @@
     "parse:C": "yarn cli parse ../ncfiles/C.NC"
   },
   "dependencies": {
-    "@ncstat/parser": "../parser",
+    "@ncstat/parser": "*",
     "clipanion": "^2.6.2"
   },
   "devDependencies": {

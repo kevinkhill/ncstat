@@ -11,6 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@ncstat/parser": "*",
     "express": "^4.17.1"
   },
   "devDependencies": {
