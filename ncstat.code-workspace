@@ -2,7 +2,7 @@
   "folders": [
     {
       "path": ".",
-      "name": "<root>"
+      "name": "Project Root"
     },
     {
       "path": "./demo",
@@ -13,23 +13,23 @@
       "name": "NC Files"
     },
     {
-      "path": "./cli",
+      "path": "./packages/ncstat-cli",
       "name": "NcStat CLI"
     },
     {
-      "path": "./parser",
+      "path": "./packages/ncstat-parser",
       "name": "NcParser"
     },
     {
-      "path": "./server-koa",
+      "path": "./backends/ncstat-api-koa",
       "name": "Backend (KOA)"
     },
     {
-      "path": "./server-fastify",
+      "path": "./backends/ncstat-api-fastify",
       "name": "Backend (Fastify)"
     },
     {
-      "path": "./server-express",
+      "path": "./backends/ncstat-api-express",
       "name": "Backend (Express)"
     },
     {
@@ -37,11 +37,11 @@
       "name": "Backend (Serverless)"
     },
     {
-      "path": "./webui-react",
+      "path": "./frontends/webui-react",
       "name": "Frontend (React)"
     },
     {
-      "path": "./webui-vue",
+      "path": "./frontends/webui-vue",
       "name": "Frontend (Vue)"
     }
   ],
