@@ -1,21 +1,22 @@
 {
   "name": "@ncstat/parser",
   "version": "1.0.0",
-  "description": "Static NC file parser and analyzer",
+  "description": "Static NC file parser",
   "author": "Kevin Hill",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "source": "src/index.ts",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
     "test": "jest",
-    "lint": "eslint 'src/**/*.ts'",
-    "start": "yarn build && node ./demo/TRM.js",
-    "predemo": "rimraf ./build/*",
     "dev": "tsc-watch --project tsconfig.build.json --onSuccess \"node ./demo/TRM.js\"",
-    "build": "tsc --project tsconfig.build.json",
-    "test:NcProgram": "yarn test --watch NcProgram"
+    "start": "yarn build && node ./demo.js",
+    "lint": "eslint 'src/**/*.ts'",
+    "fix": "yarn lint --fix",
+    "clean": "rimraf ./build/*",
+    "prebuild": "yarn clean",
+    "build": "tsc --project tsconfig.build.json"
   },
   "lint-staged": {
     "*.ts": "eslint --cache --fix './src/**/*.ts'"
@@ -42,6 +43,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-simple-import-sort": "^6.0.0",
+    "nodemon": "^2.0.6",
     "np": "^7.0.0",
     "prettier": "^2.1.2",
     "rollup": "^2.33.3",

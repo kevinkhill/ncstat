@@ -14,9 +14,9 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-      /* Additional Checks */
-      // "noUnusedLocals": true,
-      // "noUnusedParameters": true,
+    /* Additional Checks */
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
     "noImplicitAny": false,
     "noImplicitThis": true,
     "noImplicitReturns": true,
@@ -29,11 +29,11 @@
     "keyofStringsOnly": true
   },
   "include": [
-    "demo/*.ts",
     "src/**/*.ts",
     "testing/*.ts"
   ],
   "exclude": [
+    "demo.js",
     "node_modules",
     "**/__tests__"
   ]

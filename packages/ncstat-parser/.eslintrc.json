@@ -37,13 +37,30 @@
   "rules": {
     "sort-imports": "off",
     "import/no-extraneous-dependencies": "off",
-    "newline-per-chained-call": [2, { "ignoreChainWithDepth": 3 }],
+    "newline-per-chained-call": [
+      2,
+      {
+        "ignoreChainWithDepth": 3
+      }
+    ],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
     "import/first": "error",
     "import/newline-after-import": "error",
     "import/no-duplicates": "error",
-
     "import/no-unresolved": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "demo.js"
+      ],
+      "env": {
+        "node": true
+      },
+      "rules": {
+        "@typesctipt-eslint/no-var-requires": "off"
+      }
+    }
+  ]
 }
