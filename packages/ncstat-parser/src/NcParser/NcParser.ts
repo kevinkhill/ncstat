@@ -77,7 +77,7 @@ export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
     // @TODO Bubble this event?
     // this.lexer.on("token", token => this.$emitToken(token));
 
-    this.machine.subscribe((state) => {
+    this.machine.subscribe(state => {
       this.emit("stateChange", {
         prev: this.state,
         curr: state.value

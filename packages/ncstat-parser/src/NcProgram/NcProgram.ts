@@ -133,7 +133,7 @@ export class NcProgram {
   get regionSpans(): LineSpan[] {
     const regionSpans: LineSpan[] = [];
 
-    [...this.blankLines, this.blockCount].forEach((lineNumber) => {
+    [...this.blankLines, this.blockCount].forEach(lineNumber => {
       regionSpans.push({
         from: (regionSpans[regionSpans.length - 1]?.to ?? 0) + 2,
         to: lineNumber - 1
@@ -236,7 +236,7 @@ export class NcProgram {
     const endLineNum = HEADER_START_LINE + this.getHeader().length + 1;
     const blocks = this.collectBlocksFrom(endLineNum);
 
-    return blocks.map((block) => block.toString());
+    return blocks.map(block => block.toString());
   }
 
   /**
@@ -292,7 +292,7 @@ export class NcProgram {
   }
 
   getTools(): Tool[] {
-    return this.toolpaths.map((toolpath) => toolpath.tool);
+    return this.toolpaths.map(toolpath => toolpath.tool);
   }
 
   getToolpaths(): Toolpath[] {
@@ -305,7 +305,7 @@ export class NcProgram {
 
   queryHeader(searchKey: string): string | undefined {
     const header = this.getHeader();
-    const comment = header.find((c) => c.startsWith(searchKey));
+    const comment = header.find(c => c.startsWith(searchKey));
 
     return comment
       ? comment.split(this.defaults.headerSeparator)[1]

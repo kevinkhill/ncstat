@@ -61,7 +61,7 @@ describe(`NcRegions`, () => {
 
     it("should be an array of NcRegions", () => {
       expect(
-        regions.every((region) => region instanceof NcRegion)
+        regions.every(region => region instanceof NcRegion)
       ).toBeTruthy();
     });
 

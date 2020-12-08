@@ -8,7 +8,7 @@ export type DataEvents = {
   token: NcToken;
   mCode: Address;
   block: NcBlock;
-  stateChange: any;
+  stateChange: unknown;
   movement: MovementEvent;
 };
 

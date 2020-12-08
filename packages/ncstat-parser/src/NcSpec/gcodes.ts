@@ -76,7 +76,7 @@ export function gCodeStrings(group: ModalGroupStrings): string[] {
  * Returns an array of G Codes, as integers, given the name of a group
  */
 export function gCodeNumbers(group: ModalGroupStrings): number[] {
-  return G_CODE[group].map((code) => parseInt(code.substring(1)));
+  return G_CODE[group].map(code => parseInt(code.substring(1)));
 }
 
 export const G_CODE_MODAL_GROUPS: string[] = Object.keys(G_CODE);

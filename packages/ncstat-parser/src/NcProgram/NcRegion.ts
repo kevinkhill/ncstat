@@ -35,7 +35,7 @@ export class NcRegion {
   }
 
   toString(): string {
-    return this.blocks.map((block) => block.toString()).join("\n");
+    return this.blocks.map(block => block.toString()).join("\n");
   }
 
   toArray(): string[] {

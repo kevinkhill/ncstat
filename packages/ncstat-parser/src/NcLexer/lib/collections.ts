@@ -13,21 +13,21 @@ export function filterByPrefix(
   prefix: string,
   tokens: NcToken[]
 ): NcToken[] {
-  return tokens.filter((token) => getPrefix(token) === prefix);
+  return tokens.filter(token => getPrefix(token) === prefix);
 }
 
 export function findByPrefix(
   prefix: string,
   tokens: NcToken[]
 ): NcToken | undefined {
-  return tokens.find((token) => getPrefix(token) === prefix);
+  return tokens.find(token => getPrefix(token) === prefix);
 }
 
 export function findByType(
   type: TokenTypes,
   tokens: NcToken[]
 ): NcToken | undefined {
-  return tokens.find((token) => token.isA(type));
+  return tokens.find(token => token.isA(type));
 }
 
 export const getGcodes = filterByPrefix.bind(null, "G");

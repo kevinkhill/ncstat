@@ -14,27 +14,20 @@ G98 G81 Z-.5631 R.1 F83.96
 X5.
 G80
 M30
-%`
+%`;
 
 const program = parser.parse(input);
 
-if (process.argv[1] === "json") {
-  const json = JSON.stringify(program, null, 2);
+console.log(`\nIdentifying "G" codes within this sample`);
+console.log(`\n${input}\n`);
+console.log(`Code | Group          | Description`);
+console.log(`-----+----------------+-----------------------`);
+program.tokens
+  .filter(t => t.prefix === "G")
+  .forEach(token => {
+    const def = getDefinition(token.text);
+    const code = token.text.padStart(3, " ");
+    const group = (def.group || "").padEnd(14, " ");
 
-  console.log(json);
-} else {
-  console.log(`\nIdentifying "G" codes within this sample`);
-  console.log(`\n${input}\n`);
-  console.log(`==> NcParser ==>\n`);
-  console.log(`Code | Group          | Description`);
-  console.log(`-----+----------------+-----------------------`);
-  program.tokens
-    .filter(t => t.prefix === "G")
-    .forEach(token => {
-      const def = getDefinition(token.text);
-      const code = token.text.padStart(3, " ");
-      const group = (def.group || "").padEnd(14, " ");
-
-      console.log(` ${code} | ${group} | ${def.desc}`);
-    });
-}
+    console.log(` ${code} | ${group} | ${def.desc}`);
+  });

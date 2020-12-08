@@ -1,24 +1,31 @@
 {
   "name": "@ncstat/parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Static NC file parser",
-  "author": "Kevin Hill",
+  "author": "Kevin Hill <kevinkhill@gmail.com> (https://github.com/kevinkhill)",
   "license": "MIT",
   "private": false,
   "source": "src/index.ts",
   "main": "build/index.js",
   "unpkg": "build/index.js",
   "cdnjs": "build/index.js",
+  "browser": "build/index.js",
   "types": "build/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevinkhill/ncstat.git",
+    "directory": "parser"
+  },
   "scripts": {
-    "test": "jest",
-    "dev": "tsc-watch --project tsconfig.build.json --onSuccess \"node ./demo/TRM.js\"",
-    "start": "yarn build && node ./demo.js",
-    "lint": "eslint 'src/**/*.ts'",
-    "fix": "yarn lint --fix",
+    "build": "tsc --project tsconfig.build.json",
     "clean": "rimraf ./build/*",
+    "demo": "node ./demo.js",
+    "dev": "tsc-watch --project tsconfig.build.json --onSuccess \"node ./demo.js\"",
+    "start": "yarn build && yarn demo",
+    "test": "jest",
+    "lint": "eslint 'src/**/*.ts'",
     "prebuild": "yarn clean",
-    "build": "tsc --project tsconfig.build.json"
+    "fix": "yarn lint --fix"
   },
   "lint-staged": {
     "*.ts": "eslint --cache --fix './src/**/*.ts'"
@@ -33,7 +40,6 @@
     "debug": "^4.1.1",
     "emittery": "^0.7.2",
     "lodash": "^4.17.20",
-    "ts-pattern": "^1.1.0",
     "ts-tokenizr": "^1.1.1"
   },
   "devDependencies": {
