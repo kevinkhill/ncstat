@@ -7,6 +7,8 @@
   "private": false,
   "source": "src/index.ts",
   "main": "build/index.js",
+  "unpkg": "build/index.js",
+  "cdnjs": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
     "test": "jest",
