@@ -16,6 +16,7 @@
     "demo:trm": "node ./demo/runner.js TRM.NC",
     "demo:405": "node ./demo/runner.js 405.NC",
     "demo:vf10": "node ./demo/runner.js VF10.NC",
+    "parser:push": "gitsbt push ncstat-parser",
     "push:parser": "git subtree pull --squash --prefix=packages/ncstat-parser/ ncstat-parser main",
     "pull:parser": "git subtree push --prefix=packages/ncstat-parser/ ncstat-parser main",
     "open:site": "npx open-cli https://ncstat.vercel.app",
