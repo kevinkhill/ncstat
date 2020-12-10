@@ -1,7 +1,6 @@
 ## [@ncstat/parser](https://github.com/kevinkhill/ncstat/tree/main/packages/ncstat-parser)
 [![NPM](https://nodei.co/npm/@ncstat/parser.png)](https://npmjs.org/package/@ncstat/parser)
-![NPM License](https://img.shields.io/npm/l/@ncstat/parser)
-![Github Stars](https://img.shields.io/github/stars/kevinkhill/ncstat?style=social) ![Github Forks](https://img.shields.io/github/forks/kevinkhill/ncstat?style=social)
+![NPM License](https://img.shields.io/npm/l/@ncstat/parser) ![Github Stars](https://img.shields.io/github/stars/kevinkhill/ncstat?style=social) ![Github Forks](https://img.shields.io/github/forks/kevinkhill/ncstat?style=social)
 
 A tool lexing and parsing NC files for the purpose of static analysis
 
