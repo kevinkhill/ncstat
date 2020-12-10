@@ -1,0 +1,7 @@
+{
+  "mysubtree": {
+    "localFolder": "packages/ncstat-parser",
+    "repository": "git@github.com:ncstat/parser.git",
+    "branch": "main"
+  }
+}
