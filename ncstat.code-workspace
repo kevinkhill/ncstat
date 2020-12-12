@@ -33,17 +33,17 @@
       "name": "Backend (Express)"
     },
     {
-      "path": "./api",
-      "name": "Backend (Serverless)"
-    },
-    {
       "path": "./frontends/webui-react",
       "name": "Frontend (React)"
     },
     {
       "path": "./frontends/webui-vue",
       "name": "Frontend (Vue)"
-    }
+    },
+    {
+      "path": "./frontends/webui-vue/api",
+      "name": "Backend (Serverless)"
+    },
   ],
   "settings": {
     "editor.quickSuggestions": {
