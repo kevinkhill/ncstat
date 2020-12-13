@@ -6,7 +6,8 @@
     "start": "yarn serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "upload": "curl -X POST -H 'Content-Type: text/plain' --data-binary '@../../ncfiles/A.NC' localhost:3000/api/upload"
   },
   "dependencies": {
     "@ncstat/parser": "*",
@@ -28,6 +29,7 @@
     "@vue/cli-service": "~4.2.0",
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^5.0.1",
+    "bent": "^7.3.12",
     "gitmoji-cli": "^3.2.12",
     "node-sass": "^4.13.1",
     "sass": "^1.19.0",

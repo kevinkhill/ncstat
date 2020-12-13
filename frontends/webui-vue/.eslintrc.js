@@ -1,18 +1,43 @@
+const path = require("path");
+
 module.exports = {
+  root: true,
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaVersion: 8,
+    sourceType: "module",
+    project: path.resolve(__dirname, "tsconfig.json")
+  },
   env: {
+    es6: true,
     node: true
   },
-  extends: [
-    "../.eslintrc.js",
-    "plugin:vue/essential",
-    "eslint:recommended",
-    "@vue/typescript/recommended",
-    "@vue/prettier",
-    "@vue/prettier/@typescript-eslint"
+  plugins: [
+    "node",
+    "jest",
+    "import",
+    "prettier",
+    "lodash-fp",
+    "jest-formatting",
+    "simple-import-sort",
+    "@typescript-eslint"
   ],
-  parserOptions: {
-    ecmaVersion: 2020
-  },
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:import/errors",
+    "plugin:import/typescript",
+    "plugin:jest-formatting/strict",
+    "plugin:lodash-fp/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:vue/essential",
+    "@vue/typescript/recommended",
+    "prettier",
+    "@vue/prettier",
+    "@vue/prettier/@typescript-eslint",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended" // KEEP THIS LAST
+  ],
   rules: {
     "no-console":
       process.env.NODE_ENV === "production" ? "error" : "off",
