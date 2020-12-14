@@ -2,9 +2,10 @@ const path = require("path");
 
 module.exports = {
   root: true,
-  parser: "@typescript-eslint/parser",
+  parser: "vue-eslint-parser",
   parserOptions: {
     ecmaVersion: 8,
+    parser: "@typescript-eslint/parser",
     sourceType: "module",
     project: path.resolve(__dirname, "tsconfig.json")
   },
@@ -13,6 +14,7 @@ module.exports = {
     node: true
   },
   plugins: [
+    "vue",
     "node",
     "jest",
     "import",

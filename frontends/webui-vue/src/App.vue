@@ -34,7 +34,7 @@
     </v-app-bar>
 
     <v-main>
-      <Lexer @token="handleTokens" />
+      <MainPage @token="handleTokens" />
     </v-main>
 
     <v-footer app>
@@ -44,14 +44,15 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { NcToken } from "@ncstat/parser";
 import Vue from "vue";
 import Component from "vue-class-component";
-import Lexer from "./components/Lexer.vue";
+import MainPage from "./components/MainPage.vue";
 
 @Component({
   components: {
-    Lexer
+    MainPage
   }
 })
 export default class App extends Vue {
@@ -61,7 +62,7 @@ export default class App extends Vue {
     this.$vuetify.theme.dark = true;
   }
 
-  handleTokens({ tokens }: { tokens: NcToken[]}) {
+  handleTokens({ tokens }: { tokens: NcToken[] }) {
     console.log(tokens);
   }
 }
