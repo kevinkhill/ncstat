@@ -21,48 +21,88 @@
 
     <!-- Right Pane -->
     <div class="pane" :style="{ flexGrow: 1 }">
-      <v-tabs v-model="tab" background-color="transparent" grow>
-        <v-tab>
-          <v-badge color="deep-purple accent-6" :content="blockCount">
-            Blocks
-          </v-badge>
-        </v-tab>
-        <v-tab>Analysis</v-tab>
-      </v-tabs>
+      <div class="d-flex flex-column mb-6">
+        <v-container>
+          <v-tabs v-model="tab" background-color="transparent" grow>
+            <v-tab>Formatted</v-tab>
+            <v-tab>Comments</v-tab>
+            <v-tab>
+              <v-badge
+                color="deep-purple accent-6"
+                :content="tokenCount"
+              >
+                Tokens
+              </v-badge>
+            </v-tab>
+          </v-tabs>
 
-      <v-tabs-items v-model="tab">
-        <!-- Blocks -->
-        <v-tab-item>
-          <div class="blocks">
-            <v-simple-table dense>
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th class="text-left">Block</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr :key="i" v-for="(block, i) in program.blocks">
-                    <td>{{ block }}</td>
-                  </tr>
-                </tbody>
-              </template>
-            </v-simple-table>
-          </div>
-        </v-tab-item>
+          <v-tabs-items v-model="tab">
+            <!-- Formatted -->
+            <v-tab-item>
+              <div class="output">
+                <template v-for="(token, idx) in tokens">
+                  <span
+                    :key="idx"
+                    class="token"
+                    :class="[`${token.prefix}_CODE`, token.type]"
+                  >
+                    <br v-if="token.type === 'NEWLINE'" />
+                    <template v-else>{{ token.text }}</template>
+                  </span>
+                </template>
+              </div>
+            </v-tab-item>
 
-        <!-- Analysis -->
-        <v-tab-item>
-          <div class="output">
-            <h1>{{ program.title }}</h1>
-          </div>
-        </v-tab-item>
-      </v-tabs-items>
+            <!-- Comments -->
+            <v-tab-item>
+              <div>
+                <v-card :key="i" v-for="(c, i) in comments">
+                  <v-card-title>{{ c }}</v-card-title>
+                </v-card>
+              </div>
+            </v-tab-item>
+
+            <!-- Tokens -->
+            <v-tab-item>
+              <div class="tokens">
+                <v-simple-table dense>
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">Token</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr :key="i" v-for="(token, i) in tokens">
+                        <td>{{ token }}</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </div>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-container>
+        <v-container fluid>
+          <v-switch
+            v-model="switch1"
+            :label="`Switch 1: ${switch1.toString()}`"
+          ></v-switch>
+          <v-switch
+            v-model="switch2"
+            :label="`Switch 2: ${switch2.toString()}`"
+          ></v-switch>
+        </v-container>
+        <!-- <v-card :key="n" v-for="n in 3" class="pa-2" outlined tile>
+          Flex item {{ n }}
+        </v-card> -->
+      </div>
     </div>
   </Multipane>
 </template>
 
 <script lang="ts">
+import { NcToken } from "@ncstat/parser";
 import { NcParser, NcProgram } from "@ncstat/parser";
 import Vue from "vue";
 import Component from "vue-class-component";
@@ -92,16 +132,25 @@ M30
 })
 export default class MainPage extends Vue {
   parser = new NcParser();
-  program: NcProgram | null = null;
+  program?: NcProgram;
+  tokens: NcToken[] = [];
+  comments: string[] = [];
+
   tab = null;
   input = DEMO_INPUT;
   selectedItem!: string;
+  switch1 = true;
+  switch2 = false;
 
   get blockCount(): number {
     return this.program?.blocks.length ?? 0;
   }
 
-  mounted(): void {
+  get tokenCount(): number {
+    return this.tokens.length ?? 0;
+  }
+
+  created(): void {
     this.parseInput();
   }
 
@@ -116,11 +165,19 @@ export default class MainPage extends Vue {
 
   reset(): void {
     this.input = "";
-    this.program = null;
+    this.program = undefined;
   }
 
   parseInput(): void {
-    this.program = this.parser.parse(this.input);
+    try {
+      this.program = this.parser.parse(this.input);
+      this.tokens = this.parser.getLexer().tokens(this.input);
+      this.comments = this.tokens
+        .filter(t => t.type === "COMMENT")
+        .map(t => t.text);
+    } catch (err) {
+      console.error(err);
+    }
 
     console.log(this.program);
 
@@ -136,6 +193,7 @@ export default class MainPage extends Vue {
 </script>
 
 <style lang="scss">
+@import "@/assets/scss/_tokens";
 .pane,
 textarea,
 .output {
