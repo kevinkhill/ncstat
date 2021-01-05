@@ -24,6 +24,14 @@
       <div class="d-flex flex-column mb-6">
         <v-container>
           <v-tabs v-model="tab" background-color="transparent" grow>
+            <v-tab>
+              <v-badge
+                color="deep-purple accent-6"
+                :content="toolpathCount"
+              >
+                Toolpaths
+              </v-badge>
+            </v-tab>
             <v-tab>Formatted</v-tab>
             <v-tab>Comments</v-tab>
             <v-tab>
@@ -37,6 +45,13 @@
           </v-tabs>
 
           <v-tabs-items v-model="tab">
+            <!-- Toolpaths -->
+            <v-tab-item>
+              <div>
+                <Toolpaths :toolpaths="program.toolpaths" />
+              </div>
+            </v-tab-item>
+
             <!-- Formatted -->
             <v-tab-item>
               <div class="output">
@@ -102,12 +117,11 @@
 </template>
 
 <script lang="ts">
-import { NcToken } from "@ncstat/parser";
-import { NcParser, NcProgram } from "@ncstat/parser";
-import Vue from "vue";
-import Component from "vue-class-component";
+import { NcToken, NcParser, NcProgram } from "@ncstat/parser";
+import { Vue, Component, Watch } from "vue-property-decorator";
 import { Multipane, MultipaneResizer } from "vue-multipane";
-import { Watch } from "vue-property-decorator";
+
+import Toolpaths from "./Toolpaths.vue";
 
 const DEMO_INPUT = `%
 O1234 (TEST PROGRAM)
@@ -126,6 +140,7 @@ M30
 
 @Component({
   components: {
+    Toolpaths,
     Multipane,
     MultipaneResizer
   }
@@ -144,6 +159,10 @@ export default class MainPage extends Vue {
 
   get blockCount(): number {
     return this.program?.blocks.length ?? 0;
+  }
+
+  get toolpathCount(): number {
+    return this.program?.toolpaths.length ?? 0;
   }
 
   get tokenCount(): number {
@@ -179,9 +198,7 @@ export default class MainPage extends Vue {
       console.error(err);
     }
 
-    console.log(this.program);
-
-    // this.blocks = this.program.blocks;
+    //console.log(this.program);
   }
 
   update(input: string): void {
