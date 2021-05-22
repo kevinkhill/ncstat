@@ -3,11 +3,9 @@
   "compilerOptions": {
     "rootDir": "./src",
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": true
   },
-  "include": [
-    "**/*.ts"
-  ],
+  "include": ["**/*.ts"],
   "exclude": [
     "node_modules",
     "**/__tests__",

@@ -1,7 +1,7 @@
 module.exports = {
   rootDir: ".",
   preset: "ts-jest",
-  setupFiles: ["<rootDir>/src/lib/test-helpers.ts"],
+  //setupFiles: ["<rootDir>/src/lib/test-helpers.ts"],
   globals: {
     parseSource: true // test-helpers.ts
   },
@@ -19,7 +19,7 @@ module.exports = {
     "helpers.ts"
   ],
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
-    "^.+\\.jsx?$": "babel-jest"
+    "^.+\\.tsx?$": "ts-jest"
+    // "^.+\\.jsx?$": "babel-jest"
   }
 };

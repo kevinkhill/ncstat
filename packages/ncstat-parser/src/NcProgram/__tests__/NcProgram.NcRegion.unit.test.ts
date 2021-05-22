@@ -1,7 +1,7 @@
-import { parseSource } from "../../lib/test-helpers";
+import { NcParser } from "../../NcParser";
 import { NcRegion } from "../NcRegion";
 
-const program = parseSource(`%
+const source = `%
 :1234 (TEST)
 (DATE - JUN. 09 2020)
 (TIME - 7:45 AM)
@@ -24,7 +24,7 @@ N115 ( 2.5" FACE MILL ALUMINUM )
 T115 M106
 M01 ( 2.5" FACE MILL ALUMINUM )
 G0 G90 G54
-%`);
+%`;
 
 const BLANK_LINES = [5, 8, 12, 17];
 const REGION_SPANS = [
@@ -40,6 +40,8 @@ const REGION_SPANS = [
  * way, starting from 1 as the program number and name line
  */
 describe(`NcRegions`, () => {
+  const program = NcParser.parse(source);
+
   it(`should have the right number of values`, () => {
     expect(program.blankLines).toHaveLength(4);
   });

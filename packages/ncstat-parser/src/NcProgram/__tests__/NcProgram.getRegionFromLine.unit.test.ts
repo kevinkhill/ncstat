@@ -1,5 +1,4 @@
-import { parseSource } from "../../lib/test-helpers";
-import { NcProgram } from "../NcProgram";
+import { NcParser } from "../../NcParser";
 
 const simpleProgram = `%
 :0491(9566-49_RA_OP1)
@@ -27,9 +26,10 @@ M01 ( 2.5" FACE MILL ALUMINUM )
 G0 G90 G54
 %`;
 
-const program: NcProgram = parseSource(simpleProgram);
+const program = NcParser.parse(simpleProgram);
 
 describe.skip(`program.getRegionFromLine()`, () => {
+  //@ts-expect-error
   const region = program.getRegionFromLine(7);
   const regionArray = region.toArray();
 

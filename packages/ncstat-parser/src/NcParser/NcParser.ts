@@ -1,4 +1,5 @@
 import { interpret } from "@xstate/fsm";
+
 import Emittery from "emittery";
 import { clone, eq, isEmpty, last } from "lodash/fp";
 
@@ -60,6 +61,10 @@ export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
     GROUP_10: "",
     GROUP_12: ""
   };
+
+  static parse(input: string): NcProgram {
+    return (new NcParser()).parse(input);
+  }
 
   constructor(config?: Partial<NcParserConfig>) {
     super();
@@ -197,7 +202,7 @@ export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
       }
 
       if (isToolpathing(this.state) || isInCannedCycle(this.state)) {
-        if ([8, 50].includes(this.currBlock.M as number)) {
+        if ([8, 88, 50].includes(this.currBlock.M as number)) {
           this.currToolpath.hasCoolant = true;
         }
 

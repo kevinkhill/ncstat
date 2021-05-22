@@ -18,18 +18,12 @@ tokenizr.rule(/\n/, ctx => ctx.accept(Tokens.NEWLINE));
 
 // Match "O1234", "O12345", ":1234"
 tokenizr.rule(/(O|:)(\d{4,5})/, (ctx, match) => {
-  ctx.accept(Tokens.PRG_NUMBER, {
-    prefix: "O",
-    value: parseInt(match[2])
-  });
+  ctx.accept(Tokens.PRG_NUMBER, parseInt(match[2]));
 });
 
 // Match "M5", "M01"
 tokenizr.rule(/M([\d]+)/, (ctx, match) => {
-  ctx.accept(Tokens.M_CODE, {
-    prefix: "M",
-    value: parseInt(match[1])
-  });
+  ctx.accept(Tokens.M_CODE, parseInt(match[1]));
 });
 
 // Match "A1", "B2.0", "X41.2142"

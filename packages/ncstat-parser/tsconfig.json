@@ -1,5 +1,4 @@
 {
-  // "extends": "../../tsconfig.json",
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
@@ -7,10 +6,7 @@
     "outDir": "build",
     "target": "es2015",
     "module": "commonjs",
-    "lib": [
-      "dom",
-      "es2020"
-    ],
+    "lib": ["dom", "es2020"],
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
@@ -26,15 +22,9 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "keyofStringsOnly": true
+    "keyofStringsOnly": true,
+    "types": ["jest", "node"]
   },
-  "include": [
-    "src/**/*.ts",
-    "testing/*.ts"
-  ],
-  "exclude": [
-    "demo.js",
-    "node_modules",
-    "**/__tests__"
-  ]
+  "include": ["src/**/*.ts", "testing/*.ts"],
+  "exclude": ["demo.js", "node_modules"]
 }

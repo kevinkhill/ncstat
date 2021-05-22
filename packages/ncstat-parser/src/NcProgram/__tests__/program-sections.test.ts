@@ -1,6 +1,6 @@
-import { parseSource } from "../../lib/test-helpers";
+import { NcParser } from "../../NcParser";
 
-const simpleProgram = `%
+const source = `%
 :0491(9566-49_RA_OP1)
 (DATE - JUN. 09 2020)
 (TIME - 7:45 AM)
@@ -28,7 +28,7 @@ M01 ( 2.5" FACE MILL ALUMINUM )
 G0 G90 G54
 %`;
 
-const program = parseSource(simpleProgram);
+const program = NcParser.parse(source);
 
 describe(`"Header" sections of the program`, () => {
   describe(`first region, identified as the "header"`, () => {

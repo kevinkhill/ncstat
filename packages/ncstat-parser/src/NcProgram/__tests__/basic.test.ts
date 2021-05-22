@@ -1,4 +1,4 @@
-import { parseSource } from "../../../testing/test-helpers";
+import { NcParser } from "../../NcParser";
 import { Toolpath } from "../Toolpath";
 
 const simpleProgram = `%
@@ -26,7 +26,7 @@ G91 G28 Z0.
 M30
 %`;
 
-const program = parseSource(simpleProgram);
+const program = NcParser.parse(simpleProgram);
 
 describe("Analysis", () => {
   it(`has 65 tokens`, () => {

@@ -11,31 +11,37 @@ import {
 const debug = makeDebugger("lexer:token");
 
 export class NcToken {
+  prefix = "";
+
   type: TokenTypes;
   text: string;
   pos: number;
   line: number;
   column: number;
   value: TokenValue;
-  prefix?: string;
+
+  private _token: Token;
+
+  // get prefix(): string {
+  //   return this.value?.prefix ?? "";
+  // }
 
   static from(token: Token): NcToken {
     return new NcToken(token);
   }
 
   constructor(token: Token) {
-    this.type = token.type as TokenTypes;
-    this.value = token.value as TokenValue;
-    this.text = token.text;
-    this.pos = token.pos;
-    this.line = token.line;
-    this.column = token.column;
+    this._token = token;
 
-    if (
-      token.type === Tokens.ADDRESS ||
-      token.type === Tokens.PRG_NUMBER
-    ) {
-      const value = token.value as ParsedTokenizrValue;
+    this.pos = this._token.pos;
+    this.text = this._token.text;
+    this.line = this._token.line;
+    this.column = this._token.column;
+    this.type = this._token.type as TokenTypes;
+    this.value = this._token.value as TokenValue;
+
+    if (this._token.type === Tokens.ADDRESS) {
+      const value = this._token.value as ParsedTokenizrValue;
 
       this.prefix = value.prefix;
       this.value = parseFloat(value.value);

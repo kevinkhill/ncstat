@@ -48,8 +48,3 @@ export interface AddressToken extends NumericToken {
   type: Tokens.ADDRESS;
   prefix: string;
 }
-
-export interface MCodeToken extends NumericToken {
-  type: Tokens.M_CODE;
-  prefix: "M";
-}

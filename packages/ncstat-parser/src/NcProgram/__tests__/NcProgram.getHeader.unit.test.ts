@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import { parseSource } from "../../../testing/test-helpers";
+import { NcParser } from "../../NcParser";
 
 const simpleProgram = `%
 O1234 (SIMPLE)
@@ -12,7 +12,7 @@ N43 ( #14 [.182"] DRILL, CARB, TSC )
 M30
 %`;
 
-const program = parseSource(simpleProgram);
+const program = NcParser.parse(simpleProgram);
 
 describe(`Header`, () => {
   program.defaults.headerSeparator = " | ";
