@@ -11,14 +11,14 @@ import {
 const debug = makeDebugger("lexer:token");
 
 export class NcToken {
-  prefix = "";
-
   type: TokenTypes;
   text: string;
   pos: number;
   line: number;
   column: number;
   value: TokenValue;
+
+  prefix!: string;
 
   private _token: Token;
 
@@ -45,6 +45,16 @@ export class NcToken {
 
       this.prefix = value.prefix;
       this.value = parseFloat(value.value);
+    }
+
+    if (this._token.type === Tokens.M_CODE) {
+      this.prefix = "M";
+      this.value = this._token.value as number;
+    }
+
+    if (this._token.type === Tokens.PRG_NUMBER) {
+      this.prefix = "O";
+      this.value = this._token.value as number;
     }
 
     debug("%s %o", this.type, this.text);

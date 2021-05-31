@@ -1,4 +1,4 @@
-import { intersection, prop } from "lodash/fp";
+import { find, includes, intersection, prop } from "lodash/fp";
 
 import { isValidModalGroup, unwrap, zeroPadAddress } from "../../lib";
 import {
@@ -14,7 +14,8 @@ import {
   ModalGroups,
   ModalGroupStrings,
   NcPosition,
-  Tokens
+  Tokens,
+  TokenTypes
 } from "../../types";
 
 export class NcBlock {
@@ -60,22 +61,26 @@ export class NcBlock {
   // }
 
   $has(prefix: string): boolean {
-    // console.log("has", this.tokens);
-    return (
-      this.tokens.filter(token => token.prefix === prefix).length > 0
-    );
-    // return filterByPrefix(prefix, this.tokens).length > 0;
+    return Boolean(find(["prefix", prefix], this.tokens));
   }
 
   $value(prefix: string): number | undefined {
-    const token = findByPrefix(prefix, this.tokens);
-
-    if (token) {
-      return token.value as number;
+    for (const token of this.tokens) {
+      if (token.prefix === prefix) {
+        return token.value as number;
+      }
     }
 
     return undefined;
   }
+
+  // hasToken(tokenType: TokenTypes) {
+  //   return includes(["type", tokenType], this.tokens);
+  // }
+
+  // getToken(tokenType: TokenTypes): NcToken {
+  //   return find(["type", tokenType], this.tokens);
+  // }
 
   getModalByGroup(group: ModalGroupStrings): string | undefined {
     isValidModalGroup(group);

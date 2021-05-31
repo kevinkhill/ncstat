@@ -26,6 +26,7 @@ export class NcProgram {
     headerSeparator: " - ", // Taken from the default Mastercam post
     ignoreProgramDelimeters: true // This will ignore "%" as line #1
   };
+
   // constructor() {}
 
   get tokens(): NcToken[] {

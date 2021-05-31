@@ -18,6 +18,7 @@ import { MovementEvent } from "../types/machine";
 import { Mcode } from "./lib";
 import { NcBlock } from "./NcBlock";
 import { DataEvents, PlainEvents } from "./NcParserEvents";
+import { Token } from 'ts-tokenizr';
 
 const isIdle = eq(NcStateMachine.config.states.IDLE);
 const isToolpathing = eq(NcStateMachine.config.states.TOOLPATHING);
@@ -62,8 +63,8 @@ export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
     GROUP_12: ""
   };
 
-  static parse(input: string): NcProgram {
-    return (new NcParser()).parse(input);
+  static parse(input: string, config?: Partial<NcParserConfig>): NcProgram {
+    return (new NcParser(config)).parse(input);
   }
 
   constructor(config?: Partial<NcParserConfig>) {
@@ -122,8 +123,7 @@ export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
 
       // Example: O2134 ( NAME )
       if (this.currBlock.O) {
-        debug.extend("program")("Number: %o", this.currBlock.O);
-        this.program.number = this.currBlock.O;
+        this.setProgramNumber(this.currBlock.O);
 
         if (this.currBlock.comment) {
           this.setProgramName(this.currBlock.comment);
@@ -265,6 +265,12 @@ export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
     debug.extend("program")(`Name: %o`, name);
 
     this.program.name = name;
+  }
+
+  private setProgramNumber(number: number): void {
+    debug.extend("program")(`Number: %o`, number);
+
+    this.program.number = number;
   }
 
   private startCannedCycle(): void {

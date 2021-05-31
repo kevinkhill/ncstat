@@ -1,7 +1,7 @@
 module.exports = {
   rootDir: ".",
   preset: "ts-jest",
-  //setupFiles: ["<rootDir>/src/lib/test-helpers.ts"],
+  // setupFiles: ["<rootDir>/testing/test-helpers.ts"],
   globals: {
     parseSource: true // test-helpers.ts
   },
@@ -21,5 +21,7 @@ module.exports = {
   transform: {
     "^.+\\.tsx?$": "ts-jest"
     // "^.+\\.jsx?$": "babel-jest"
-  }
+  },
+  coverageDirectory: "coverage",
+  collectCoverageFrom: ["src/**/*.{ts,js}", "!src/**/*.d.ts"]
 };
