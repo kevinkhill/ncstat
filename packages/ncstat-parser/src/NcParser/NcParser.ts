@@ -6,7 +6,7 @@ import { clone, eq, isEmpty, last } from "lodash/fp";
 import { makeDebugger } from "../lib";
 import { NcLexer, NcToken } from "../NcLexer";
 import { CannedCycle, NcProgram, Tool, Toolpath } from "../NcProgram";
-import { NcServiceType, NcStateMachine } from "../NcService";
+import { NcMachineState, NcServiceType, NcStateMachine } from "../NcService";
 import { G_CODE_TABLE, Modals } from "../NcSpec";
 import {
   ModalGroups,
@@ -18,13 +18,10 @@ import { MovementEvent } from "../types/machine";
 import { Mcode } from "./lib";
 import { NcBlock } from "./NcBlock";
 import { DataEvents, PlainEvents } from "./NcParserEvents";
-import { Token } from 'ts-tokenizr';
 
-const isIdle = eq(NcStateMachine.config.states.IDLE);
-const isToolpathing = eq(NcStateMachine.config.states.TOOLPATHING);
-const isInCannedCycle = eq(
-  NcStateMachine.config.states.IN_CANNED_CYCLE
-);
+const isIdle = eq("IDLE");
+const isToolpathing = eq("TOOLPATHING");
+const isInCannedCycle = eq("IN_CANNED_CYCLE");
 
 const debug = makeDebugger("parser");
 
@@ -34,6 +31,7 @@ const debug = makeDebugger("parser");
 export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
   static readonly defaults = {
     debug: false,
+    coolantCodes: [8, 88, 50],
     lexerConfig: NcLexer.defaults
   };
 
@@ -115,6 +113,7 @@ export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
         this.updateModals();
       }
 
+      //@TODO whats the point of this?
       if (this.currBlock.M) {
         const addr = new Mcode(this.currBlock?.M as number);
 
@@ -171,16 +170,14 @@ export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
 
         if (this.currBlock.hasMovement) {
           const point = clone(this.currPosition);
-          const lastCC = last(
-            this.currToolpath.cannedCycles
-          ) as CannedCycle;
 
-          lastCC.addPoint(point);
+          this.currToolpath.cannedCycles[this.currToolpath.cannedCycles.length - 1].addPoint(point);
         }
       }
 
       // Tracking toolpaths (tools) via Nxxx lines with a comment
       // This has been defined in the custom H&B posts
+      // I have no idea how to customize this yet...
       if (this.currBlock.toString().startsWith("N")) {
         if (isToolpathing(this.state)) {
           this.machine.send("END_TOOLPATH");
@@ -196,13 +193,13 @@ export class NcParser extends Emittery.Typed<DataEvents, PlainEvents> {
             number: this.currBlock.N as number,
             desc: this.currBlock.comment as string
           });
-
+          console.log(tool);
           this.currToolpath.setTool(tool);
         }
       }
 
       if (isToolpathing(this.state) || isInCannedCycle(this.state)) {
-        if ([8, 88, 50].includes(this.currBlock.M as number)) {
+        if (this.config.coolantCodes.includes(this.currBlock.M as number)) {
           this.currToolpath.hasCoolant = true;
         }
 

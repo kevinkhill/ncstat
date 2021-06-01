@@ -18,6 +18,7 @@ module.exports = {
     "node_modules",
     "helpers.ts"
   ],
+  testEnvironment: "node",
   transform: {
     "^.+\\.tsx?$": "ts-jest"
     // "^.+\\.jsx?$": "babel-jest"

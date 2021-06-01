@@ -7,5 +7,6 @@ export interface NcLexerConfig {
 
 export interface NcParserConfig {
   debug: boolean;
+  coolantCodes: number[];
   lexerConfig: Partial<NcLexerConfig>;
 }
